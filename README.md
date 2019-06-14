@@ -48,4 +48,14 @@ On playoff matches it shows the Challonge brackets instead of the standings.
 
 ![Match Page](https://i.imgur.com/v53gBLH.png)
 
-To be continued...
+## How to install (frontend only)
+
+1. Install [NodeJS](https://nodejs.org) and NPM (should come with Node). Any version will do as long as it's not too old I guess.
+2. Clone the repo.
+3. ``cd`` into ``frontend``.
+4. Run ``npm i`` to install all the dependencies.
+
+## Usage (frontend only)
+
+1. ``npm start`` creates a web server on port 3000 that has hot reloading, which means every time you hit save the page will reload.
+2. Once you're ready to deploy to production, run ``npm run build``. It will create static files at /build that you can upload to your web server.
