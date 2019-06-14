@@ -331,7 +331,7 @@ export const resultColumns = [
         Header: 'Torneo',
         accessor: 'torneo',
         Cell: row => {
-            return <div><img id='torneoimg' height='16px' src={getTournamentIcon(row.row._original.torneo)} alt={row.row._original.torneo}></img> {row.row._original.torneo} </div>
+            return <div style={{display: 'flex', justifyContent: 'center'}}><img id='torneoimg' height='16px' src={getTournamentIcon(row.row._original.torneo)} alt={row.row._original.torneo}></img> <div className='torneo'>{row.row._original.torneo}</div></div>
         },
         filterable: true,
         width: 300
