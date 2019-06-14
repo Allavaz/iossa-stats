@@ -470,6 +470,7 @@ table tr td {
 
 .torneologo {
   padding-left: 5px;
+  justify-content: center;
 }
 
 #coltorneo {
