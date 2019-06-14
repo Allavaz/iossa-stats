@@ -1,4 +1,4 @@
-# IOSoccer Sudamérica Stats
+# [IOSoccer Sudamérica Stats](https://stats.iosoccer-sa.bid)
 
 Web app that tracks matches, standings, individual stats and rankings for the South American IOSoccer Community.
 
