@@ -1,10 +1,6 @@
 # [IOSoccer Sudamérica Stats](https://stats.iosoccer-sa.bid)
 
-Web app that tracks matches, standings, individual stats and rankings for the South American IOSoccer Community.
-
-![IOSoccer Sudamérica homepage](https://i.imgur.com/U6rmm0B.png)
-
-Made with the **MERN** stack:
+Web app that tracks matches, standings, individual stats and rankings for the South American IOSoccer Community, made with the **MERN** stack:
 - NodeJS
 - Express
 - React
@@ -30,7 +26,7 @@ Made with [Create React App](https://github.com/facebook/create-react-app), the 
 
 Shows the last 20 matches played and has a right sidebar with the standings of our ongoing leagues and group stages.
 
-![Homepage](https://i.imgur.com/U6rmm0B.png)
+![Homepage](https://i.imgur.com/UD1Z91z.png)
 
 ### Individual stats
 
