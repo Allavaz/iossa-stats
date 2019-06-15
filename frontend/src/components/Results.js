@@ -80,7 +80,11 @@ export default class Results extends Component {
 
         if (this.state.search) {
             data = data.filter(row => {
-                return row.teams[0].teamname.toLowerCase().includes(this.state.search.toLowerCase()) || row.teams[1].teamname.toLowerCase().includes(this.state.search.toLowerCase())
+                return (
+                    row.teams[0].teamname.toLowerCase().includes(this.state.search.toLowerCase()) || 
+                    row.teams[1].teamname.toLowerCase().includes(this.state.search.toLowerCase()) || 
+                    row.torneo.toLowerCase().includes(this.state.search.toLowerCase())
+                )
             })
         }
 
@@ -92,15 +96,14 @@ export default class Results extends Component {
                     <input 
                         value={this.state.search}
                         onChange={e => this.setState({search: e.target.value})}
-                        placeholder='Buscar...'
+                        placeholder='Buscar…'
                         style={{
                             borderTop: '1px solid rgba(0,0,0,.1)',
                             borderLeft: '1px solid rgba(0,0,0,.1)',
                             borderRight: '1px solid rgba(0,0,0,.1)',
                             borderBottom: '0px solid rgba(0,0,0,.1)',
-                            width: 'calc(100% - 12px)',
                             fontSize: '11pt',
-                            padding: '5px'
+                            padding: '5px',
                         }}
                     />
                     <ReactTableFixedColumns
