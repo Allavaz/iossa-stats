@@ -21,12 +21,12 @@ export default class Results extends Component {
 
     constructor() {
         super();
-        this.state = {isLoading: true, category: '', temporada: 'total'};
-    }
-
-    filterMethod = (filter, row) => {
-        const id = filter.pivotId || filter.id;
-        return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+        this.state = {
+            isLoading: true, 
+            category: '', 
+            temporada: 'total', 
+            search: ''
+        };
     }
 
     componentDidMount() {
@@ -76,14 +76,36 @@ export default class Results extends Component {
     render() {
         const TheadComponent = props => null;
 
+        let data = this.state.data;
+
+        if (this.state.search) {
+            data = data.filter(row => {
+                return row.teams[0].teamname.toLowerCase().includes(this.state.search.toLowerCase()) || row.teams[1].teamname.toLowerCase().includes(this.state.search.toLowerCase())
+            })
+        }
+
         return ( this.state.isLoading ? <div className='content' id='loader'><center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center></div> : 
             <div className='content'>
                 <Selector prop1={this.selectTorneo} prop2={this.selectTemporada} prop3={this.state.temporada}></Selector>
                 <div style={{opacity: this.state.matchesLoading ? 0.5 : 1}}>
                     <h3>RESULTADOS {this.state.category}</h3>
+                    <input 
+                        value={this.state.search}
+                        onChange={e => this.setState({search: e.target.value})}
+                        placeholder='Buscar...'
+                        style={{
+                            borderTop: '1px solid rgba(0,0,0,.1)',
+                            borderLeft: '1px solid rgba(0,0,0,.1)',
+                            borderRight: '1px solid rgba(0,0,0,.1)',
+                            borderBottom: '0px solid rgba(0,0,0,.1)',
+                            width: 'calc(100% - 12px)',
+                            fontSize: '11pt',
+                            padding: '5px'
+                        }}
+                    />
                     <ReactTableFixedColumns
                         className='-striped -highlight'
-                        data={this.state.data}
+                        data={data}
                         TheadComponent={TheadComponent}
                         columns={resultColumns} 
                         resizable={false}
@@ -93,7 +115,6 @@ export default class Results extends Component {
                         pageText={'Página'}
                         ofText={'de'}
                         rowsText={'filas'}
-                        defaultFilterMethod={this.filterMethod}
                         showPageSizeOptions={false}
                         defaultPageSize={20}
                         getTrProps={(state, rowInfo, column, instance) => ({
