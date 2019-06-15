@@ -481,12 +481,82 @@ table tr td {
   justify-content: flex-end;
 }
 
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 350px) {
   #header {
     display: none;
   }
 
+  #fullteamname {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #nav-logo {
+    display: table-cell;
+  }
+  
+  .bigClubLogo {
+    height: 96px;
+  }
+
+  .content {
+    margin-top: 50px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .matchContainer {
+    margin-top: 70px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .torneo {
+    display: none;
+  }
+
+  .torneologo {
+    justify-content: center;
+    padding: 0;
+  }
+
+  #coltorneo {
+    width: 30px;
+  }
+
+  .linebreak {
+    display: block;
+  }
+
+  .hamburguer {
+    display: block;
+  }
+
+  #nav-item {
+    flex: 1 0 auto;
+  }
+
   #teamname {
+    display: none;
+  }
+
+  #shortname{
+    display: initial;
+  }
+
+  .content, .matchContainer {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media only screen and (min-width: 351px) and (max-width: 550px) {
+  #header {
+    display: none;
+  }
+
+  #fullteamname {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -529,9 +599,6 @@ table tr td {
   #coltorneo {
     width: 30px;
   }
-}
-
-@media only screen and (max-width: 520px) {
 
   .linebreak {
     display: block;
@@ -543,20 +610,5 @@ table tr td {
 
   #nav-item {
     flex: 1 0 auto;
-  }
-}
-
-@media only screen and (max-width: 350px) {
-  #teamname {
-    display: none;
-  }
-
-  #shortname{
-    display: initial;
-  }
-
-  .content, .matchContainer {
-    margin-left: 0;
-    margin-right: 0;
   }
 }
