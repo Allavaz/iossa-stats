@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { playersColumns } from '../Columns'
 import Selector from './Selector';
+import { filterMethod } from '../Utils'
 
 library.add(faSpinner);
 
@@ -69,11 +70,6 @@ export default class Players extends Component {
         }
     }
 
-    filterMethod = (filter, row) => {
-        const id = filter.pivotId || filter.id;
-        return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-    }
-
     render() {
         return ( this.state.isLoading ? <div className='content' id='loader'><center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center></div> :
             <div className='content'>
@@ -91,7 +87,7 @@ export default class Players extends Component {
                         pageText={'Página'}
                         ofText={'de'}
                         rowsText={'filas'}
-                        defaultFilterMethod={this.filterMethod}
+                        defaultFilterMethod={filterMethod}
                         showPageSizeOptions={false}
                         defaultPageSize={13}
                     />

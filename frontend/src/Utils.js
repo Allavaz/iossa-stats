@@ -53,3 +53,8 @@ exports.percentage = function(x,y){
 		return (Math.round((x/y)*100))
 	}
 }
+
+exports.filterMethod = (filter, row) => {
+	const id = filter.pivotId || filter.id;
+	return row[id] !== undefined ? String(row[id].toLowerCase()).includes(filter.value.toLowerCase()) : true;
+}
