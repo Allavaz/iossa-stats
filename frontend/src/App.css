@@ -481,7 +481,7 @@ table tr td {
   justify-content: flex-end;
 }
 
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 400px) {
   #header {
     display: none;
   }
@@ -551,7 +551,7 @@ table tr td {
   }
 }
 
-@media only screen and (min-width: 351px) and (max-width: 550px) {
+@media only screen and (min-width: 391px) and (max-width: 550px) {
   #header {
     display: none;
   }

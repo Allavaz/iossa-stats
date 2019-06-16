@@ -5,14 +5,22 @@ import { plus } from '../Utils';
 export default class FullPositions extends Component {
     state = {
         data: [],
-        isLoading: true
     };
 
     componentDidMount() {
         axios.get('https://stats.iosoccer-sa.bid/api/positions/' + this.props.table).then(res => {
-            this.setState({data: res.data, isLoading: false});
+            this.setState({data: res.data});
             this.props.callback();
         });
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.table !== this.props.table) {
+            axios.get('https://stats.iosoccer-sa.bid/api/positions/' + this.props.table).then(res => {
+                this.setState({data: res.data});
+                this.props.callback();
+            });
+        }
     }
 
     render() {

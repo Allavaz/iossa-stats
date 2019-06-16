@@ -24,13 +24,13 @@ export default class Results extends Component {
         this.state = {
             isLoading: true, 
             category: '', 
-            temporada: 'total', 
+            temporada: 't3', 
             search: ''
         };
     }
 
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/matches/t3').then(res => {
+        axios.get('https://stats.iosoccer-sa.bid/api/matches/' + this.state.temporada).then(res => {
 			this.setState({data: res.data, isLoading: false});
 		});
 		document.title = "Resultados | IOSoccer Sudamérica";

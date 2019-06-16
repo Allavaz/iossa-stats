@@ -16,13 +16,13 @@ export default class Top10 extends Component {
 
     constructor(){
 		super();
-		this.state = {isLoading: true, top10Loading: false, category: 'TOTALES', temporada: 'total'};
+		this.state = {isLoading: true, top10Loading: false, category: 'TOTALES', temporada: 't3'};
 	}
     
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/top10goals/t3').then(res => {
+        axios.get('https://stats.iosoccer-sa.bid/api/top10goals/' + this.state.temporada).then(res => {
             this.setState({data: res.data})
-            axios.get('https://stats.iosoccer-sa.bid/api/top10assists/t3').then(res => {
+            axios.get('https://stats.iosoccer-sa.bid/api/top10assists/' + this.state.temporada).then(res => {
                 this.setState({data2: res.data, isLoading: false})
             });
         });

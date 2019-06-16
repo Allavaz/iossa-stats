@@ -23,11 +23,16 @@ export default class Players extends Component {
 
     constructor(){
 		super();
-		this.state = {isLoading: true, playersLoading: false, category: 'TOTALES', temporada: 'total'};
+		this.state = {
+            isLoading: true, 
+            playersLoading: false, 
+            category: 'TOTALES', 
+            temporada: 't3'
+        };
 	}
     
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/players/t3').then(res => {
+        axios.get('https://stats.iosoccer-sa.bid/api/players/' + this.state.temporada).then(res => {
             this.setState({data: res.data, isLoading: false});
         });
         document.title = 'Estadísticas | IOSoccer Sudamérica';

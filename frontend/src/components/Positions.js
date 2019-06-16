@@ -3,37 +3,49 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import FullPositions from './FullPositions';
+import { tablas } from '../Tablas'
 
 library.add(faSpinner);
 
 export default class Positions extends Component {
-
-    state = {
-        loadingItems: 6
-    };
+    
+    constructor() {
+        super();
+        this.state = {
+            temporada: tablas.t3,
+            loadingItems: tablas.t3.length,
+        };
+    }
 
     componentDidMount() {
         document.title = 'Posiciones | IOSoccer Sudamérica';
     }
 
     reduceLoadingItems = () => {
-		this.setState({loadingItems: this.state.loadingItems - 1});
-	}
+        this.setState({loadingItems: this.state.loadingItems - 1});
+    }
+    
+    selectTemporada = () => {
+        var selector = document.getElementById('selector');
+        var value = selector.options[selector.selectedIndex].value;
+        this.setState({loadingItems: tablas[value].length})
+        this.setState({temporada: tablas[value]});
+    }
 
     render() {
+        console.log(this.state.temporada)
         return ( 
-            <div>
+            <div className='content'>
+                <select id='selector' defaultValue='t3' onChange={this.selectTemporada}>
+                    <option value='t3'>Temporada 3</option>
+                    <option value='t2'>Temporada 2</option>
+                </select>            
                 <div className='content' id='loader' style={{display: this.state.loadingItems > 0 ? 'block' : 'none'}}>
-					<center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
-				</div>
-                <div className='content' style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
+                    <center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
+                </div>
+                <div style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
                     <div className='colCon'>
-                        <FullPositions table='d1t3' torneo='Liga D1 T3' callback={this.reduceLoadingItems}></FullPositions>
-                        <FullPositions table='d2t3' torneo='Liga D2 T3' callback={this.reduceLoadingItems}></FullPositions>
-                        <FullPositions table='maradeit3a' torneo='Copa Maradei T3 - Grupo A' callback={this.reduceLoadingItems}></FullPositions>
-                        <FullPositions table='maradeit3b' torneo='Copa Maradei T3 - Grupo B' callback={this.reduceLoadingItems}></FullPositions>
-                        <FullPositions table='maradeit3c' torneo='Copa Maradei T3 - Grupo C' callback={this.reduceLoadingItems}></FullPositions>
-                        <FullPositions table='maradeit3d' torneo='Copa Maradei T3 - Grupo D' callback={this.reduceLoadingItems}></FullPositions>
+                        {this.state.temporada.map(item => <FullPositions table={item.table} torneo={item.name} callback={this.reduceLoadingItems}></FullPositions>)}
                     </div>
                 </div>
             </div>
