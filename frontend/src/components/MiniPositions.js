@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { api } from '../api';
 
 export default class MiniPositions extends Component {
     state = {

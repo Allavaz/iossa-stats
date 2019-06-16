@@ -9,7 +9,7 @@ import FullPositions from './FullPositions';
 import MatchIndividualStats from './MatchIndividualStats';
 import Vod from './Vod';
 import Challonge from './Challonge';
-import { api } from '../../api';
+import { api } from '../api';
 
 library.add(faSpinner)
 

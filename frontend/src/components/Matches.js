@@ -3,7 +3,7 @@ import axios from 'axios';
 import MatchRow from './MatchRow';
 import { Link } from 'react-router-dom';
 import { fecha } from '../Utils';
-import { api } from '../../api';
+import { api } from '../api';
 
 export default class Matches extends Component {
 

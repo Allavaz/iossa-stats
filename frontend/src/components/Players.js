@@ -10,7 +10,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { playersColumns } from '../Columns'
 import Selector from './Selector';
 import { filterMethod } from '../Utils';
-import { api } from '../../api';
+import { api } from '../api';
 
 library.add(faSpinner);
 

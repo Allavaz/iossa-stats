@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { plus } from '../Utils';
-import { api } from '../../api';
+import { api } from '../api';
 
 export default class FullPositions extends Component {
     state = {
