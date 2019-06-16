@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Selector from './Selector';
+import { api } from '../../api';
 
 library.add(faSpinner);
 
@@ -20,9 +21,9 @@ export default class Top10 extends Component {
 	}
     
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/top10goals/' + this.state.temporada).then(res => {
+        axios.get(api + 'top10goals/' + this.state.temporada).then(res => {
             this.setState({data: res.data})
-            axios.get('https://stats.iosoccer-sa.bid/api/top10assists/' + this.state.temporada).then(res => {
+            axios.get(api + 'top10assists/' + this.state.temporada).then(res => {
                 this.setState({data2: res.data, isLoading: false})
             });
         });
@@ -31,9 +32,9 @@ export default class Top10 extends Component {
 
     selectTorneo = (arg) => {
         this.setState({top10Loading: true});
-        axios.get('https://stats.iosoccer-sa.bid/api/top10goals/' + arg).then(res => {
+        axios.get(api + 'top10goals/' + arg).then(res => {
             this.setState({data: res.data});
-            axios.get('https://stats.iosoccer-sa.bid/api/top10assists/' + arg).then(res => {
+            axios.get(api + 'top10assists/' + arg).then(res => {
                 if (arg.startsWith('all') || arg.startsWith('t')) {
                     this.setState({category: 'TOTALES'});
                 } else if (arg.startsWith('d1')) {

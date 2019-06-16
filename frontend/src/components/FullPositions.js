@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { plus } from '../Utils';
+import { api } from '../../api';
 
 export default class FullPositions extends Component {
     state = {
@@ -8,7 +9,7 @@ export default class FullPositions extends Component {
     };
 
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/positions/' + this.props.table).then(res => {
+        axios.get(api + 'positions/' + this.props.table).then(res => {
             this.setState({data: res.data});
             this.props.callback();
         });
@@ -16,7 +17,7 @@ export default class FullPositions extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.table !== this.props.table) {
-            axios.get('https://stats.iosoccer-sa.bid/api/positions/' + this.props.table).then(res => {
+            axios.get(api + 'positions/' + this.props.table).then(res => {
                 this.setState({data: res.data});
                 this.props.callback();
             });

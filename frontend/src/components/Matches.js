@@ -3,6 +3,7 @@ import axios from 'axios';
 import MatchRow from './MatchRow';
 import { Link } from 'react-router-dom';
 import { fecha } from '../Utils';
+import { api } from '../../api';
 
 export default class Matches extends Component {
 
@@ -12,7 +13,7 @@ export default class Matches extends Component {
     };
 
     componentDidMount(){
-		axios.get('https://stats.iosoccer-sa.bid/api/matches/20').then(res => {
+		axios.get(api + 'matches/20').then(res => {
             this.setState({data: res.data, isLoading: false});
             this.props.callback();
 		});

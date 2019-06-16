@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Selector from './Selector'
 import { resultColumns } from '../Columns';
+import { api } from '../../api';
 
 library.add(faSpinner);
 
@@ -30,7 +31,7 @@ export default class Results extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/matches/' + this.state.temporada).then(res => {
+        axios.get(api + 'matches/' + this.state.temporada).then(res => {
 			this.setState({data: res.data, isLoading: false});
 		});
 		document.title = "Resultados | IOSoccer Sudamérica";
@@ -38,7 +39,7 @@ export default class Results extends Component {
 
     selectTorneo = (arg) => {
 		this.setState({matchesLoading: true});
-		axios.get('https://stats.iosoccer-sa.bid/api/matches/' + arg).then(res => {
+		axios.get(api + 'matches/' + arg).then(res => {
             if (arg.startsWith('all') || arg.startsWith('t')) {
                 this.setState({category: 'TOTALES'});
             } else if (arg.startsWith('d1')) {

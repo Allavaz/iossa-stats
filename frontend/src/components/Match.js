@@ -9,6 +9,7 @@ import FullPositions from './FullPositions';
 import MatchIndividualStats from './MatchIndividualStats';
 import Vod from './Vod';
 import Challonge from './Challonge';
+import { api } from '../../api';
 
 library.add(faSpinner)
 
@@ -23,7 +24,7 @@ export default class Match extends Component {
 	}
 
 	componentDidMount(){
-		axios.get('https://stats.iosoccer-sa.bid/api/match/' + this.props.match.params.id).then(res => {
+		axios.get(api + 'match/' + this.props.match.params.id).then(res => {
 			this.setState({data: res.data});
 			switch (this.state.data.torneo) {
 				case "Liga D1 - Temporada 2":

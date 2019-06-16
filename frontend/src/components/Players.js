@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { playersColumns } from '../Columns'
 import Selector from './Selector';
-import { filterMethod } from '../Utils'
+import { filterMethod } from '../Utils';
+import { api } from '../../api';
 
 library.add(faSpinner);
 
@@ -32,7 +33,7 @@ export default class Players extends Component {
 	}
     
     componentDidMount() {
-        axios.get('https://stats.iosoccer-sa.bid/api/players/' + this.state.temporada).then(res => {
+        axios.get(api + 'players/' + this.state.temporada).then(res => {
             this.setState({data: res.data, isLoading: false});
         });
         document.title = 'Estadísticas | IOSoccer Sudamérica';
@@ -40,7 +41,7 @@ export default class Players extends Component {
 
     selectTorneo = (arg) => {
         this.setState({playersLoading: true});
-        axios.get('https://stats.iosoccer-sa.bid/api/players/' + arg).then(res => {
+        axios.get(api + 'players/' + arg).then(res => {
             if (arg.startsWith('all') || arg.startsWith('t')) {
                 this.setState({category: 'TOTALES'});
             } else if (arg.startsWith('d1')) {

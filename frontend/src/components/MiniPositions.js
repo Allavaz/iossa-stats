@@ -7,7 +7,7 @@ export default class MiniPositions extends Component {
     };
 
     componentDidMount() {
-        axios.get("https://stats.iosoccer-sa.bid/api/positions/" + this.props.torneo).then(res => {
+        axios.get(api + 'positions/' + this.props.torneo).then(res => {
             this.setState({data: res.data});
             this.props.callback();
         });
