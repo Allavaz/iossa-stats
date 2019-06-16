@@ -92,20 +92,20 @@ export default class Results extends Component {
             <div className='content'>
                 <Selector prop1={this.selectTorneo} prop2={this.selectTemporada} prop3={this.state.temporada}></Selector>
                 <div style={{opacity: this.state.matchesLoading ? 0.5 : 1}}>
-                    <h3>RESULTADOS {this.state.category}</h3>
-                    <input 
-                        value={this.state.search}
-                        onChange={e => this.setState({search: e.target.value})}
-                        placeholder='Buscar…'
-                        style={{
-                            borderTop: '1px solid rgba(0,0,0,.1)',
-                            borderLeft: '1px solid rgba(0,0,0,.1)',
-                            borderRight: '1px solid rgba(0,0,0,.1)',
-                            borderBottom: '0px solid rgba(0,0,0,.1)',
-                            fontSize: '11pt',
-                            padding: '5px',
-                        }}
-                    />
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                        <h3 style={{display: 'inline', marginRight: '10px'}}>RESULTADOS {this.state.category}</h3>
+                        <input 
+                            value={this.state.search}
+                            onChange={e => this.setState({search: e.target.value})}
+                            placeholder='Buscar equipo/torneo…'
+                            style={{
+                                border: '1px solid rgba(0,0,0,.1)',
+                                fontSize: '11pt',
+                                padding: '5px',
+                                height:'20px'
+                            }}
+                        />
+                    </div>
                     <ReactTableFixedColumns
                         className='-striped -highlight'
                         data={data}
