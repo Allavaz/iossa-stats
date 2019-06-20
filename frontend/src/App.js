@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import './App.css'
-import Players from './Components/Players'
-import Header from './Components/Header'
-import Navigation from './Components/Navigation'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import React, { Component } from 'react';
+import './App.css';
+import Players from './Components/Players';
+import Header from './Components/Header';
+import Navigation from './Components/Navigation';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NotFound from './Pages/NotFound'
 import Positions from './Components/Positions';
 import Home from './Components/Home';
