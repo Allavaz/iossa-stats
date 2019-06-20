@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import './App.css'
-import Players from './components/Players'
-import Header from './components/Header'
-import Navigation from './components/Navigation'
+import Players from './Components/Players'
+import Header from './Components/Header'
+import Navigation from './Components/Navigation'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import NotFound from './Pages/NotFound'
-import Positions from './components/Positions';
-import Home from './components/Home';
-import Match from './components/Match';
-import Footer from './components/Footer'
-import Top10 from './components/Top10';
-import Results from './components/Results';
+import Positions from './Components/Positions';
+import Home from './Components/Home';
+import Match from './Components/Match';
+import Footer from './Components/Footer'
+import Top10 from './Components/Top10';
+import Results from './Components/Results';
 
 class App extends Component {
 
