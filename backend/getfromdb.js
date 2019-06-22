@@ -70,7 +70,7 @@ exports.getMatches = function(id, res) {
     client.connect((err, client) => {
         const db = client.db(dbname);
         db.collection('matchesaux')
-            .find(id === '20' ? {} : queries[arg])
+            .find(id === '20' ? {} : queries[id])
             .sort({'fecha': -1})
             .project({'fecha': 1, 'torneo': 1, 'teams': 1})
             .limit(20)
