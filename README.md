@@ -16,7 +16,7 @@ The database is running on MongoDB, where all the matches are stored and complex
 
 ![MongoDB Compass screenshot](https://i.imgur.com/pnpu2Um.png)
 
-Finally, the backend serves as a REST API retrieving information from the database using the MongoDB NodeJS Native Driver and returning it as a JSON that will be used by the frontend.
+Finally, the backend serves as a REST API retrieving information from the database using the [MongoDB Node.js Native Driver](https://mongodb.github.io/node-mongodb-native/) and returning it as a JSON that will be used by the frontend.
 
 ## Frontend
 
