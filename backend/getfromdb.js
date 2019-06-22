@@ -18,7 +18,7 @@ exports.getPlayers = function(id, res) {
             .toArray((err, docs) => {
                 res.json(docs);
                 client.close();
-        });
+            });
     });
 }
 
@@ -61,7 +61,7 @@ exports.getPositions = function(id, res) {
             .toArray((err, docs) => {
                 res.json(docs);
                 client.close();
-        });
+            });
     });
 }
 
@@ -78,29 +78,32 @@ exports.getMatches = function(id, res) {
                 res.json(docs);
                 client.close();
             });
-    })
+    });
 }
 
-exports.getMatchID = function(id, res){
+exports.getMatchFromID = function(id, res){
     const client = new MongoClient(url, { useNewUrlParser: true })
     client.connect((err, client) => {
-        const db = client.db(dbname)
-        const o_id = new ObjectId(id)
+        const db = client.db(dbname);
+        const o_id = new ObjectId(id);
         db.collection('matchesaux')
-            .find({_id: o_id})
-            .toArray((err, docs) => {
-                res.json(docs[0]);
+            .findOne({"_id": o_id}, (err, doc) => {
+                res.json(doc);
                 client.close();
             });
-    })
+    });
 }
 
-exports.getPlayerID = function(id, res){
+exports.getPlayerFromID = function(id, res){
     const client = new MongoClient(url, { useNewUrlParser: true })
     client.connect((err, client) => {
-        db.collection('players').find({"_id": id}).toArray((err, docs) => {
-            res.json(docs[0]);
-            client.close();
-        })
-    })
+        const db = client.db(dbname);
+        const o_id = new ObjectId(id);
+        db.collection('matchesaux')
+            .aggregate(playersagg('all'))
+            .findOne({"_id": o_id}, (err, doc) => {
+                res.json(doc);
+                client.close();
+            });
+    });
 }

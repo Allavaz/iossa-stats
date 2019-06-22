@@ -71,11 +71,11 @@ app.get('/api/matches/:id', (req, res) => {
 });
 
 app.get('/api/match/:id', (req, res) => {
-	rdb.getMatchID(req.params.id, res);
+	rdb.getMatchFromID(req.params.id, res);
 });
 
 app.get('/api/player/:id', (req, res) => {
-	rdb.getPlayerID(req.params.id, res);
+	rdb.getPlayerFromID(req.params.id, res);
 });
 
 app.use(express.static(path.join(__dirname, 'build')));
