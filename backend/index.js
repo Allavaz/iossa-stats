@@ -11,25 +11,25 @@ const { endpoint, key } = require('./db.json');
 app.use(cors());
 
 app.post('/postupload', (req, res) => {
-	var form = formidable.IncomingForm()
+	var form = formidable.IncomingForm();
 	form.parse(req, (err, fields, files) => {
 		if (fields.pw === key) {
 			fs.readFile(files.upload.path, (err, data) => {
 				try {
-					var json = JSON.parse(data)
-					db.pushToDB(json, files.upload.name, fields.torneo, fields.vod, res)
+					var json = JSON.parse(data);
+					db.pushToDB(json, files.upload.name, fields.torneo, fields.vod, res);
 				} catch(e) {
-					res.end('Invalid file. Try again. ' + e)
+					res.end('Invalid file. Try again. ' + e);
 				}		
-			})
+			});
 		} else {
-			res.end('Wrong password')
+			res.end('Wrong password');
 		}
-	})
+	});
 });
 
 app.get('/' + endpoint, (req, res) => {
-	res.writeHead(200, {'content-type': 'text/html'})
+	res.writeHead(200, {'content-type': 'text/html'});
 	res.end(
 		'<form id="uploadForm" action="/postupload" enctype="multipart/form-data" method="post">'+
 		'<input type="file" name="upload" accept=".json"><br></br>'+
@@ -47,7 +47,7 @@ app.get('/' + endpoint, (req, res) => {
 		'<input type="password" id="pw" name="pw" placeholder="Clave"></input><br></br>'+
 		'<input type="submit">'+
 		'</form>'
-	  )
+	  );
 });
 
 app.get('/api/players/:id', (req, res) => {
