@@ -2,7 +2,7 @@
 
 backend/db.json
 backend/node_modules
-backend/aggregations
+backend/aggregations_txt
 backend/.env
 
 # frontend
