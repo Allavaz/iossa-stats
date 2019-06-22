@@ -1,12 +1,12 @@
-const express = require ('express');
+const express = require('express');
 const app = express();
-const formidable = require ('formidable');
+const formidable = require('formidable');
 const fs = require('fs');
-const db = require('./sendtodb');
-const rdb = require('./getfromdb');
+const db = require('./PushToDB');
+const rdb = require('./GetFromDB');
 const cors = require('cors');
 const path = require('path');
-const { endpoint, key } = require('./db.json')
+const { endpoint, key } = require('./db.json');
 
 app.use(cors());
 

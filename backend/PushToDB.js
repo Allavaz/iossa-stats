@@ -1,4 +1,4 @@
-const rt = require('./removetag');
+const rt = require('./RemoveTag');
 const MongoClient = require('mongodb').MongoClient;
 const { host, user, pw, dbname } = require('./db.json');
 const encuser = encodeURIComponent(user);
@@ -6,7 +6,7 @@ const encpw = encodeURIComponent(pw);
 const authMechanism = 'DEFAULT';
 const url = `mongodb://${encuser}:${encpw}@${host}:27017/?authMechanism=${authMechanism}`;
 const client = new MongoClient(url, {useNewUrlParser: true});
-const { calcPercentages, calcIndivPossession } = require('./utils');
+const { calcPercentages, calcIndivPossession } = require('./Utils');
 
 exports.pushToDB = function (json, filename, torneo, vod, res) {
     if (vod == "") {
