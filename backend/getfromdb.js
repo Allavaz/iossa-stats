@@ -71,6 +71,7 @@ exports.getMatches = function(id, res) {
         const db = client.db(dbname);
         if (id === '20') {
             db.collection('matchesaux')
+            .find({})
             .sort({'fecha': -1})
             .project({'fecha': 1, 'torneo': 1, 'teams': 1})
             .limit(20)
