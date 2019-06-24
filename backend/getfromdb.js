@@ -69,8 +69,8 @@ exports.getMatches = function(id, res) {
     const client = new MongoClient(url, { useNewUrlParser: true });
     client.connect((err, client) => {
         const db = client.db(dbname);
-        db.collection('matchesaux')
-            .find(id === '20' ? {} : queries[id])
+        if (id === '20') {
+            db.collection('matchesaux')
             .sort({'fecha': -1})
             .project({'fecha': 1, 'torneo': 1, 'teams': 1})
             .limit(20)
@@ -78,6 +78,16 @@ exports.getMatches = function(id, res) {
                 res.json(docs);
                 client.close();
             });
+        } else {
+            db.collection('matchesaux')
+            .find(queries[id])
+            .sort({'fecha': -1})
+            .project({'fecha': 1, 'torneo': 1, 'teams': 1})
+            .toArray((err, docs) => {
+                res.json(docs);
+                client.close();
+            });
+        }
     });
 }
 
