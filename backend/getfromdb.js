@@ -7,6 +7,8 @@ const authMechanism = 'DEFAULT';
 const url = `mongodb://${encuser}:${encpw}@${host}:27017/?authMechanism=${authMechanism}`;
 const positionsagg = require('./Aggregations/Positions');
 const playersagg = require('./Aggregations/Players');
+const top10goalsagg = require('./Aggregations/Top10Goals');
+const top10assistsagg = require('./Aggregations/Top10Assists');
 const queries = require('./Aggregations/Queries');
 
 exports.getPlayers = function(id, res) {
@@ -27,7 +29,7 @@ exports.getTop10Goals = function(id, res) {
     client.connect((err, client) => {
         const db = client.db(dbname);
         db.collection('matchesaux')
-            .find({})
+            .aggregate(top10assistsagg(id))
             .sort({'goals': -1, 'matches': 1})
             .limit(10)
             .toArray((err, docs) => {
@@ -42,7 +44,7 @@ exports.getTop10Assists = function(id, res) {
     client.connect((err, client) => {
         const db = client.db(dbname);
         db.collection('matchesaux')
-            .find({})
+            .aggregate(top10assistsagg(id))
             .sort({'assists': -1, 'matches': 1})
             .limit(10)
             .toArray((err, docs) => {
