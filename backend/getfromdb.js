@@ -29,7 +29,7 @@ exports.getTop10Goals = function(id, res) {
     client.connect((err, client) => {
         const db = client.db(dbname);
         db.collection('matchesaux')
-            .aggregate(top10assistsagg(id))
+            .aggregate(top10goalsagg(id))
             .sort({'goals': -1, 'matches': 1})
             .limit(10)
             .toArray((err, docs) => {
