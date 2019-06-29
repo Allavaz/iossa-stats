@@ -3,7 +3,7 @@ import EventIcon from './EventIcon';
 
 export default function MatchEvent(props) {
     if (props.side === 'home') {
-        if (props.item.team === 'home' || (props.item.team === 'away' && props.item.event === 'OWN GOAL')) {
+        if ((props.item.team === 'home' && props.item.event !== 'OWN GOAL') || (props.item.team === 'away' && props.item.event === 'OWN GOAL')) {
             return (
                 <li key={props.index}>
                     <div className='matchevent'>
@@ -15,7 +15,7 @@ export default function MatchEvent(props) {
             return null;
         }
     } else {
-        if (props.item.team === 'away' || (props.item.team === 'home' && props.item.event === 'OWN GOAL')) {
+        if ((props.item.team === 'away' && props.item.event !== 'OWN GOAL') || (props.item.team === 'home' && props.item.event === 'OWN GOAL')) {
             return (
                 <li key={props.index}>
                     <div className='matchevent'>
