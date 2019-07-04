@@ -32,22 +32,6 @@ exports.fecha = function(str) {
 	return (day + "/" + month + "/" + year)
 }
 
-exports.getTournamentIcon = function(tournament) {
-	if (tournament.includes("Liga D1")) {
-		return "tournaments/ligad1.png"
-	} else if (tournament.includes("Liga D2")) {
-		return "tournaments/ligad2.png"
-	} else if (tournament.includes("Copa Master")) {
-		return "tournaments/copamaster.png"
-	} else if (tournament.includes("Recopa Master")) {
-		return "tournaments/recopamaster.png"
-	} else if (tournament.includes("Copa Maradei")) {
-		return "tournaments/copamaradei.png"
-	} else {
-		return "tournaments/none.png"
-	}
-}
-
 exports.percentage = function(x,y){
 	if (y === 0) {
 		return (0)
