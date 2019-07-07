@@ -24,6 +24,10 @@ export const tablas = {
             'table': 'maradeit3d',
             'name': 'Copa Maradei T3 - Grupo D'
         },
+        {
+            'table': 'americat3',
+            'name': 'Copa America T3'
+        }
     ],
     t2: [
         {

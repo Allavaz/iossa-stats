@@ -6,7 +6,8 @@ const fullnames = {
 	'maradeit3a': 'Copa Maradei T3 - Grupo A',
 	'maradeit3b': 'Copa Maradei T3 - Grupo B',
 	'maradeit3c': 'Copa Maradei T3 - Grupo C',
-	'maradeit3d': 'Copa Maradei T3 - Grupo D'
+	'maradeit3d': 'Copa Maradei T3 - Grupo D',
+	'americat3': 'Copa America T3'
 };
 
 module.exports = (arg) => {
