@@ -9,7 +9,7 @@ library.add(faSpinner)
 
 export default class Home extends Component {
 	state = {
-		loadingItems: 7
+		loadingItems: 8
 	};
 
 	componentDidMount(){
@@ -32,6 +32,7 @@ export default class Home extends Component {
 							<Matches callback={this.reduceLoadingItems}></Matches>
 						</div>
 						<div className='secondCol' id='minitablas'>
+							<MiniPositions torneo='americat3' header='Copa America T3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d1t3' header='liga d1 t3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d2t3' header='liga d2 t3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='maradeit3a' header='copa maradei - grupo a' callback={this.reduceLoadingItems}></MiniPositions>
