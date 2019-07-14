@@ -16,6 +16,7 @@ export default function Footer() {
             </tr>
           </tbody>
         </table>
+        <p>Hecho con ♥ por Allavaz.</p>
       </center>
 			</div>
     </div>
