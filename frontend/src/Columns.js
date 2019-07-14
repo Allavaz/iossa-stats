@@ -53,7 +53,7 @@ export const playersColumns = [
         Header: 'Precisión de Pases',
         accessor: 'passescompleted',
         Cell: row => {
-            return Math.round((row.row._original.passescompleted/row.row._original.passes)*100)+'%'
+            return isNaN(row.row._original.passescompleted/row.row._original.passes) ? '0%' : Math.round((row.row._original.passescompleted/row.row._original.passes)*100)+'%'
         },
         width: 150
     },
@@ -193,7 +193,7 @@ export const matchIndivStatsColumns = [
 		Header: 'Precisión de Pases',
 		accessor: 'statistics.passescompleted',
 		Cell: row => {
-			return Math.round((row.row._original.statistics.passescompleted/row.row._original.statistics.passes)*100)+'%'
+			return isNaN(row.row._original.statistics.passescompleted/row.row._original.statistics.passes) ? '0%' : Math.round((row.row._original.statistics.passescompleted/row.row._original.statistics.passes)*100)+'%'
 		},
 		width: 150
 	},
@@ -240,7 +240,7 @@ export const matchIndivStatsColumns = [
 		accessor: 'statistics.distancecovered',
 		width: 200,
 		Cell: row => {
-			return (Math.round(row.row._original.statistics.distancecovered)/1000)+ " km"
+			return (Math.round(row.row._original.statistics.distancecovered)/1000) + " km"
 		}
 	},
 	{
@@ -248,7 +248,7 @@ export const matchIndivStatsColumns = [
 		accessor: 'statistics.possession',
 		width: 130,
 		Cell: row => {
-			return Math.round(row.row._original.statistics.possession)+ "%"
+			return Math.round(row.row._original.statistics.possession) + "%"
 		}
 	},
 	{
