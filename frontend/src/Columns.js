@@ -236,17 +236,17 @@ export const matchIndivStatsColumns = [
 		width: 80
 	},
 	{
-		Header: 'Prom. Distancia Recorrida',
+		Header: 'Distancia Recorrida',
 		accessor: 'statistics.distancecovered',
-		width: 200,
+		width: 150,
 		Cell: row => {
 			return (Math.round(row.row._original.statistics.distancecovered)/1000) + " km"
 		}
 	},
 	{
-		Header: 'Prom. Posesión',
+		Header: 'Posesión',
 		accessor: 'statistics.possession',
-		width: 130,
+		width: 80,
 		Cell: row => {
 			return Math.round(row.row._original.statistics.possession) + "%"
 		}
