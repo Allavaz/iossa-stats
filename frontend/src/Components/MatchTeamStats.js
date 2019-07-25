@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 import { percentage } from '../Utils';
 
 export default function MatchTeamStats(props) {

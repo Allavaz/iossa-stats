@@ -1,5 +1,5 @@
-import React, { Component } from './node_modules/react';
-import axios from './node_modules/axios';
+import React, { Component } from 'react';
+import axios from 'axios';
 import { plus } from '../Utils';
 import { api } from '../api';
 
