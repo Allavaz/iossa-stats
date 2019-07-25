@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from './node_modules/react';
+import axios from './node_modules/axios';
 import MatchRow from './MatchRow';
-import { Link } from 'react-router-dom';
+import { Link } from './node_modules/react-router-dom';
 import { fecha } from '../Utils';
 import { api } from '../api';
 

@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
-import withFixedColumns from 'react-table-hoc-fixed-columns';
-import 'react-table-hoc-fixed-columns/lib/styles.css';
+import React from './node_modules/react';
+import ReactTable from './node_modules/react-table';
+import './node_modules/react-table/react-table.css';
+import withFixedColumns from './node_modules/react-table-hoc-fixed-columns';
+import './node_modules/react-table-hoc-fixed-columns/lib/styles.css';
 import { matchIndivStatsColumns } from '../Columns';
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);

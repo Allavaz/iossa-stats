@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import React, { Component } from './node_modules/react';
+import { library } from './node_modules/@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from './node_modules/@fortawesome/react-fontawesome';
+import { faSpinner } from './node_modules/@fortawesome/free-solid-svg-icons';
 import FullPositions from './FullPositions';
 import { tablas } from '../Tablas'
 
