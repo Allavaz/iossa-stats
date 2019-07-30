@@ -39,18 +39,21 @@ export default class Top10 extends Component {
         axios.get(api + 'top10goals/' + arg).then(res => {
             this.setState({data: res.data});
             axios.get(api + 'top10assists/' + arg).then(res => {
-                if (arg.startsWith('all') || arg.startsWith('t')) {
-                    this.setState({category: 'TOTALES'});
-                } else if (arg.startsWith('d1')) {
-                    this.setState({category: 'LIGA D1'});
-                } else if (arg.startsWith('d2')) {
-                    this.setState({category: 'LIGA D2'});
-                } else if (arg.startsWith('master')) {
-                    this.setState({category: 'COPA MASTER'});
-                } else if (arg.startsWith('maradei')) {
-                    this.setState({category: 'COPA MARADEI'});
-                }
-                this.setState({data2: res.data, top10Loading: false});
+                axios.get(api + 'top10rusticos/' + arg).then(res => {
+                    if (arg.startsWith('all') || arg.startsWith('t')) {
+                        this.setState({category: 'TOTALES'});
+                    } else if (arg.startsWith('d1')) {
+                        this.setState({category: 'LIGA D1'});
+                    } else if (arg.startsWith('d2')) {
+                        this.setState({category: 'LIGA D2'});
+                    } else if (arg.startsWith('master')) {
+                        this.setState({category: 'COPA MASTER'});
+                    } else if (arg.startsWith('maradei')) {
+                        this.setState({category: 'COPA MARADEI'});
+                    }
+                    this.setState({data3: res.data, top10Loading: false});
+                })
+                this.setState({data2: res.data});
             });
         });
     }
