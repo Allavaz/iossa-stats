@@ -85,7 +85,7 @@ h5 {
 }
 
 .headerContent {
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -94,7 +94,7 @@ h5 {
   margin-bottom: 10px;
   margin-right: 0;
   margin-left: 0;
-  max-width: 800px;
+  max-width: 630px;
   overflow-x: auto;
 }
 
@@ -223,7 +223,7 @@ h5 {
 
 #table-nav {
   border-collapse: collapse;
-  max-width: 1100px;
+  max-width: 900px;
   float: left;
   margin: 0 auto;
 }
@@ -245,9 +245,9 @@ th, tr {
 .colCon {
   display: flex;
   flex-wrap: wrap;
-  max-width: 1110px;
+  max-width: 910px;
   margin: auto;
-  justify-content: space-evenly;
+  justify-content: space-between;
   overflow: visible;
   align-content: flex-start
 }
@@ -288,7 +288,7 @@ th, tr {
 }
 
 .matchContainer {
-  max-width: 1100px;
+  max-width: 900px;
   padding-left: 10px;
   padding-right: 10px;
   margin: auto;
@@ -347,7 +347,7 @@ th, tr {
 }
 
 #footer-text {
-  max-width: 1100px;
+  max-width: 900px;
   margin: auto;
   vertical-align: middle;
   color: rgb(196, 196, 196);
@@ -368,7 +368,7 @@ th, tr {
 .content {
   padding-left: 10px;
   padding-right: 10px;
-  max-width: 1100px;
+  max-width: 900px;
   margin: auto;
 }
 
@@ -470,7 +470,7 @@ table tr td {
 }
 
 #coltorneo {
-  width: 220px;
+  width: 150px;
 }
 
 #home {

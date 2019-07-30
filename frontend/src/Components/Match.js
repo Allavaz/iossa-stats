@@ -84,7 +84,7 @@ export default class Match extends Component {
 				<div>
 					<div className='colCon'>
 						<div className='contentCol'>
-							<MatchTeamStats data={this.state.data} style={{maxWidth: this.state.isCopa ? '1100px' : '610px'}}></MatchTeamStats>
+							<MatchTeamStats data={this.state.data} style={{maxWidth: this.state.isCopa ? '900px' : '410px'}}></MatchTeamStats>
 							{this.state.isCopa && this.state.challonge != null ? <Challonge id={this.state.challonge}></Challonge> : null}
 						</div>
 						{this.state.isCopa ? null : 

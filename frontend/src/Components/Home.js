@@ -28,10 +28,10 @@ export default class Home extends Component {
 				</div>
 				<div className='content' style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
 					<div className='colCon'>
-						<div className='contentCol'>
+						<div>
 							<Matches callback={this.reduceLoadingItems}></Matches>
 						</div>
-						<div className='secondCol' id='minitablas'>
+						<div>
 							<MiniPositions torneo='americat3' header='Copa America T3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d1t3' header='liga d1 t3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d2t3' header='liga d2 t3' callback={this.reduceLoadingItems}></MiniPositions>

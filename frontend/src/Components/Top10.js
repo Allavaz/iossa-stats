@@ -82,7 +82,7 @@ export default class Top10 extends Component {
             <div className='content'>
                 <Selector prop1={this.selectTorneo} prop2={this.selectTemporada} prop3={this.state.temporada}></Selector>
                 <div className='top10Container' style={{opacity: this.state.top10Loading ? 0.5 : 1}}>
-                    <div className='colCon'>
+                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
                         <div>
                             <center><h3>TOP 10 GOLEADORES {this.state.category}</h3>
                             <div className='divDataTable'>
