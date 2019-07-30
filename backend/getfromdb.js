@@ -9,6 +9,7 @@ const positionsagg = require('./Aggregations/Positions');
 const playersagg = require('./Aggregations/Players');
 const top10goalsagg = require('./Aggregations/Top10Goals');
 const top10assistsagg = require('./Aggregations/Top10Assists');
+const top10rusticosagg = require('./Aggregations/Top10Rusticos');
 const queries = require('./Aggregations/Queries');
 
 exports.getPlayers = function(id, res) {
@@ -46,6 +47,21 @@ exports.getTop10Assists = function(id, res) {
         db.collection('matchesaux')
             .aggregate(top10assistsagg(id))
             .sort({'assists': -1, 'matches': 1})
+            .limit(10)
+            .toArray((err, docs) => {
+                res.json(docs);
+                client.close();
+            });
+    });
+}
+
+exports.getTop10Rusticos = function(id, res) {
+    const client = new MongoClient(url, { useNewUrlParser: true });
+    client.connect((err, client) => {
+        const db = client.db(dbname);
+        db.collection('matchesaux')
+            .aggregate(top10rusticosagg(id))
+            .sort({'redcards': -1, 'yellowcards': -1, 'fouls': 1, 'matches': 1})
             .limit(10)
             .toArray((err, docs) => {
                 res.json(docs);

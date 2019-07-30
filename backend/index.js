@@ -63,6 +63,10 @@ app.get('/api/top10assists/:id', (req, res) => {
 	rdb.getTop10Assists(req.params.id, res);
 });
 
+app.get('/api/top10rusticos/:id', (req, res) => {
+	rdb.getTop10Rusticos(req.params.id, res);
+});
+
 app.get('/api/positions/:id', (req, res) => {
 	rdb.getPositions(req.params.id, res);
 });

@@ -12,7 +12,8 @@ export default class Top10 extends Component {
 
     state = {
         data: [],
-        data2: []
+        data2: [],
+        data3: []
     };
 
     constructor(){
@@ -22,9 +23,12 @@ export default class Top10 extends Component {
     
     componentDidMount() {
         axios.get(api + 'top10goals/' + this.state.temporada).then(res => {
-            this.setState({data: res.data})
+            this.setState({data: res.data});
             axios.get(api + 'top10assists/' + this.state.temporada).then(res => {
-                this.setState({data2: res.data, isLoading: false})
+                axios.get(api + 'top10rusticos/' + this.state.temporada).then(res => {
+                    this.setState({data3: res.data, isLoading: false});
+                })
+                this.setState({data2: res.data});
             });
         });
         document.title = 'Top 10 | IOSoccer Sudamérica';
@@ -102,7 +106,7 @@ export default class Top10 extends Component {
                             </div></center>
                         </div>
                         <div className='secondCol'>
-                        <center><h3>TOP 10 ASISTIDORES {this.state.category}</h3>
+                            <center><h3>TOP 10 ASISTIDORES {this.state.category}</h3>
                             <div className='divDataTable' style={{maxWidth: '450px'}}>
                                 <table className='dataTable' id='statstable'>
                                     <thead>
@@ -120,6 +124,35 @@ export default class Top10 extends Component {
                                                 <td><div className='teamlogo' style={{display:'inline-flex', paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='90px'>{item.assists}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div></center>
+                        </div>
+                        <div className='secondCol'>
+                            <center><h3>TOP 10 RÚSTICOS {this.state.category}</h3>
+                            <div className='divDataTable' style={{maxWidth: '450px'}}>
+                                <table className='dataTable' id='statstable'>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Jugador</th>
+                                            <th>Partidos</th>
+                                            <th>Faltas</th>
+                                            <th>Amarillas</th>
+                                            <th>Rojas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.data3.map((item, index) => (
+                                            <tr key={item._id}>
+                                                <td width='25px'>{index+1}</td>
+                                                <td><div className='teamlogo' style={{display:'inline-flex', paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
+                                                <td width='75px'>{item.matches}</td>
+                                                <td width='90px'>{item.fouls}</td>
+                                                <td width='90px'>{item.yellowcards}</td>
+                                                <td width='90px'>{item.redcards}</td>
                                             </tr>
                                         ))}
                                     </tbody>
