@@ -85,7 +85,7 @@ export default class Top10 extends Component {
                     <div className='colCon'>
                         <div className='contentCol'>
                             <center><h3>TOP 10 GOLEADORES {this.state.category}</h3>
-                            <div className='divDataTable' style={{maxWidth: '450px'}}>
+                            <div className='divDataTable' style={{maxWidth: '350px'}}>
                                 <table className='dataTable' id='statstable'>
                                     <thead>
                                         <tr>
@@ -99,7 +99,7 @@ export default class Top10 extends Component {
                                         {this.state.data.map((item, index) => (
                                             <tr key={item._id}>
                                                 <td width='25px'>{index+1}</td>
-                                                <td><div className='teamlogo' style={{display:'inline-flex', paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
+                                                <td><div className='teamlogo' style={{paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='70px'>{item.goals}</td>
                                             </tr>
@@ -110,7 +110,7 @@ export default class Top10 extends Component {
                         </div>
                         <div className='secondCol'>
                             <center><h3>TOP 10 ASISTIDORES {this.state.category}</h3>
-                            <div className='divDataTable' style={{maxWidth: '450px'}}>
+                            <div className='divDataTable' style={{maxWidth: '350px'}}>
                                 <table className='dataTable' id='statstable'>
                                     <thead>
                                         <tr>
@@ -124,7 +124,7 @@ export default class Top10 extends Component {
                                         {this.state.data2.map((item, index) => (
                                             <tr key={item._id}>
                                                 <td width='25px'>{index+1}</td>
-                                                <td><div className='teamlogo' style={{display:'inline-flex', paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
+                                                <td><div className='teamlogo' style={{paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='90px'>{item.assists}</td>
                                             </tr>
@@ -151,7 +151,7 @@ export default class Top10 extends Component {
                                         {this.state.data3.map((item, index) => (
                                             <tr key={item._id}>
                                                 <td width='25px'>{index+1}</td>
-                                                <td><div className='teamlogo' style={{display:'inline-flex', paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
+                                                <td><div className='teamlogo' style={{paddingRight: '5px'}}><img height='16px' src={item.teaminfo[0].logo} alt={item._id}></img> {item.name}</div></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='90px'>{item.fouls}</td>
                                                 <td width='90px'>{item.yellowcards}</td>
