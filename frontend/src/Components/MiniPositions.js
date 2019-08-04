@@ -16,7 +16,7 @@ export default class MiniPositions extends Component {
 
     render() {
         return ( this.state.data === [] ? null :
-            <div>
+            <div style={{flexGrow: 1}}>
             <h3>{this.props.header.toUpperCase()}</h3>
             <div className='divDataTable'>
                 <table className='dataTable'>
