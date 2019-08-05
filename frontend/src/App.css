@@ -244,7 +244,7 @@ th, tr {
 .colCon {
   display: flex;
   flex-wrap: wrap;
-  max-width: 910px;
+  max-width: 920px;
   margin: auto;
   justify-content: space-between;
   overflow: visible;
@@ -314,7 +314,6 @@ th, tr {
 #divStatsTable{
   overflow: visible;
 }
-
 
 #statsTable{
   padding-right: 5px;

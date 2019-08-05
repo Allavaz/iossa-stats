@@ -82,17 +82,17 @@ export default class Match extends Component {
 			<div className='matchContainer'>
 				<MatchCard data={this.state.data}></MatchCard>
 				<div>
-					<div className='colCon'>
-						<div className='contentCol'>
-							<MatchTeamStats data={this.state.data} style={{maxWidth: this.state.isCopa ? '900px' : '410px'}}></MatchTeamStats>
+					<div className='colCon' style={{margin: '-10px'}}>
+						<div style={{flexBasis: this.state.isCopa ? '900px' : '410px', margin: '10px', flexGrow: 9999}}>
+							<MatchTeamStats data={this.state.data}></MatchTeamStats>
 							{this.state.isCopa && this.state.challonge != null ? <Challonge id={this.state.challonge}></Challonge> : null}
 						</div>
 						{this.state.isCopa ? null : 
-							<div className='secondCol'>
+							<div style={{flexGrow: 1}}>
 								<div className='content' id='loader' style={{display: this.state.isTableLoading ? 'block' : 'none'}}>
 									<center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800', width: '100%'}}></FontAwesomeIcon></center>
 								</div>
-								<div style={{display: this.state.isTableLoading ? 'none' : 'block'}}>
+								<div style={{display: this.state.isTableLoading ? 'none' : 'block', margin: '10px', flexGrow: 1}}>
 									<FullPositions table={this.state.table} torneo={this.state.data.torneo} callback={() => {this.setState({isTableLoading: false})}}></FullPositions>
 								</div>
 							</div>}
