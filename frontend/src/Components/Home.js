@@ -29,7 +29,7 @@ export default class Home extends Component {
 				<div className='content' style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
 					<div className='colCon' style={{margin: '-10px'}}>
 						<Matches callback={this.reduceLoadingItems}></Matches>
-						<div style={{margin: '10px'}}>
+						<div style={{margin: '10px', flexGrow: 1}}>
 							<MiniPositions torneo='americat3' header='Copa America T3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d1t3' header='liga d1 t3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d2t3' header='liga d2 t3' callback={this.reduceLoadingItems}></MiniPositions>
