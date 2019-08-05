@@ -27,11 +27,9 @@ export default class Home extends Component {
 					<center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
 				</div>
 				<div className='content' style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
-					<div className='colCon'>
-						<div style={{flexGrow: 3}}>
-							<Matches callback={this.reduceLoadingItems}></Matches>
-						</div>
-						<div style={{flexGrow: 1}}>
+					<div className='colCon' style={{margin: '-10px'}}>
+						<Matches callback={this.reduceLoadingItems}></Matches>
+						<div style={{margin: '10px'}}>
 							<MiniPositions torneo='americat3' header='Copa America T3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d1t3' header='liga d1 t3' callback={this.reduceLoadingItems}></MiniPositions>
 							<MiniPositions torneo='d2t3' header='liga d2 t3' callback={this.reduceLoadingItems}></MiniPositions>

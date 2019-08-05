@@ -21,19 +21,17 @@ export default class Matches extends Component {
     
     render() {
         return ( this.state.isLoading ? null :
-            <div>
-                <div className='matchesContainer'>
-                    {this.state.data.map((item, id, array) => (
-                        <div key={id}>
-                            <h3 style={{display: id === 0 || fecha(array[id].fecha) !== fecha(array[id-1].fecha) ? 'block' : 'none'}}>RESULTADOS DEL {fecha(item.fecha)}</h3>
-                            <div className='divDataTable' id='divMatchesTable' key={id}>
-                                <MatchRow data={item}></MatchRow>
-                            </div>
+            <div className='matchesContainer' style={{flexBasis: '620px', flexGrow: 9999, margin: '10px'}}>
+                {this.state.data.map((item, id, array) => (
+                    <div key={id}>
+                        <h3 style={{display: id === 0 || fecha(array[id].fecha) !== fecha(array[id-1].fecha) ? 'block' : 'none'}}>RESULTADOS DEL {fecha(item.fecha)}</h3>
+                        <div className='divDataTable' id='divMatchesTable' key={id}>
+                            <MatchRow data={item}></MatchRow>
                         </div>
-                    ))}
-                    <br></br>
-                    <center><button className='boton'><Link to="/resultados">Ver más...</Link></button></center>
-                </div>
+                    </div>
+                ))}
+                <br></br>
+                <center><button className='boton'><Link to="/resultados">Ver más...</Link></button></center>
             </div>
         );
     }
