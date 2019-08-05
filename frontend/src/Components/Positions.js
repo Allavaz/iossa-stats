@@ -44,8 +44,8 @@ export default class Positions extends Component {
                     <center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
                 </div>
                 <div style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
-                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
-                        {this.state.temporada.map(item => <FullPositions table={item.table} torneo={item.name} callback={this.reduceLoadingItems}></FullPositions>)}
+                    <div style={{display: 'flex', flexWrap: 'wrap', margin: '-10px'}}>
+                        {this.state.temporada.map(item => <FullPositions table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{margin: '10px', flexGrow: 1, flexBasis: '200px'}}></FullPositions>)}
                     </div>
                 </div>
             </div>

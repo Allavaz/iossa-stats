@@ -26,9 +26,9 @@ export default class FullPositions extends Component {
 
     render() {
         return (
-            <div>
+            <div style={this.props.style}>
             <h3>POSICIONES {this.props.torneo.toUpperCase()}</h3>
-            <div className='divDataTable' style={this.props.style}>
+            <div className='divDataTable'>
                 <table className='dataTable'>
                 <thead>
                     <tr>
