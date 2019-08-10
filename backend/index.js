@@ -40,7 +40,7 @@ app.get('/' + endpoint, (req, res) => {
 		'<option name="torneo" value="Copa Maradei T3 - Grupo B">Copa Maradei T3 - Grupo B</option>'+
 		'<option name="torneo" value="Copa Maradei T3 - Grupo C">Copa Maradei T3 - Grupo C</option>'+
 		'<option name="torneo" value="Copa Maradei T3 - Grupo D">Copa Maradei T3 - Grupo D</option>'+
-		'<option name="torneo" value="Copa Maradei T3">Copa Maradei T3 - Eliminatorias</option>'+
+		'<option name="torneo" value="Copa Maradei T3 - Eliminatorias">Copa Maradei T3 - Eliminatorias</option>'+
 		'<option name="torneo" value="Copa Master T3">Copa Master T3</option>'+
 		'<option name="torneo" value="Copa America T3">Copa America T3</option>'+
 		'</select><br></br>'+
