@@ -460,6 +460,8 @@ table tr td {
 
 .torneo {
   margin-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .torneologo {
