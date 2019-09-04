@@ -12,6 +12,8 @@ module.exports = {
         $or: [
             {'torneo': 'Liga D1 T3'},
             {'torneo': 'Liga D2 T3'},
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Ida)'},
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Vuelta)'},
             {'torneo': 'Copa Master T3'},
             {'torneo': 'Copa Maradei T3 - Grupo A'},
             {'torneo': 'Copa Maradei T3 - Grupo B'},
@@ -30,7 +32,9 @@ module.exports = {
     'd2': {
         $or: [
             {'torneo': 'Liga D2 - Temporada 1'},
-            {'torneo': 'Liga D2 T3'}
+            {'torneo': 'Liga D2 T3'},
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Ida)'},
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Vuelta)'}
         ]
     },
     'master': {
@@ -64,7 +68,11 @@ module.exports = {
         'torneo': 'Liga D1 T3'
     },
     'd2t3': {
-        'torneo': 'Liga D2 T3'
+        $or: [
+            {'torneo': 'Liga D2 T3'},
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Ida)'},
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Vuelta)'}
+        ]
     },
     'mastert3': {
         'torneo': 'Copa Master T3'
