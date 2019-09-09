@@ -19,7 +19,9 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Grupo B'},
             {'torneo': 'Copa Maradei T3 - Grupo C'},
             {'torneo': 'Copa Maradei T3 - Grupo D'},
-            {'torneo': 'Copa Maradei T3 - Eliminatorias'}
+            {'torneo': 'Copa Maradei T3 - Eliminatorias'},
+            {'torneo': 'Supercopa Master T3'},
+            {'torneo': 'Supercopa Master T3 (Repechaje)'}
         ]
     },
     'd1': {
@@ -41,6 +43,12 @@ module.exports = {
         $or: [
             {'torneo': 'Copa Master 2019'},
             {'torneo': 'Copa Master T3'}
+        ]
+    },
+    'supercopamaster': {
+        $or: [
+            {'torneo': 'Supercopa Master T3'},
+            {'torneo': 'Supercopa Master T3 (Repechaje)'}
         ]
     },
     'maradei': {
@@ -76,6 +84,12 @@ module.exports = {
     },
     'mastert3': {
         'torneo': 'Copa Master T3'
+    },
+    'supercopamastert3': {
+        $or: [
+            {'torneo': 'Supercopa Master T3'},
+            {'torneo': 'Supercopa Master T3 (Repechaje)'}
+        ]
     },
     'maradeit3': {
         $or: [

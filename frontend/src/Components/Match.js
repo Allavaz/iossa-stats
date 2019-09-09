@@ -70,7 +70,7 @@ export default class Match extends Component {
 					this.setState({isCopa: false, isLoading: false, table: 'americat3'});
 					break;
 				default:
-					this.setState({data2: ["e"], isCopa: false, isLoading: false});
+					this.setState({isCopa: false, isLoading: false});
 					break;
 			}
 			document.title = this.state.data.teams[0].teamname + ' vs ' + this.state.data.teams[1].teamname + ' | IOSoccer Sudamérica';
@@ -87,7 +87,7 @@ export default class Match extends Component {
 							<MatchTeamStats data={this.state.data}></MatchTeamStats>
 							{this.state.isCopa && this.state.challonge != null ? <Challonge id={this.state.challonge}></Challonge> : null}
 						</div>
-						{this.state.isCopa ? null : 
+						{this.state.isCopa || this.state.table === undefined ? null : 
 							<div style={{flexGrow: 1}}>
 								<div className='content' id='loader' style={{display: this.state.isTableLoading ? 'block' : 'none'}}>
 									<center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800', width: '100%'}}></FontAwesomeIcon></center>

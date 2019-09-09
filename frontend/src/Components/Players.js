@@ -52,6 +52,8 @@ export default class Players extends Component {
                 this.setState({category: 'COPA MASTER'});
             } else if (arg.startsWith('maradei')) {
                 this.setState({category: 'COPA MARADEI'});
+            } else if (arg.startsWith('supercopamaster')) {
+                this.setState({category: 'SUPERCOPA MASTER'});
             }
             this.setState({data: res.data, playersLoading: false});
         });
