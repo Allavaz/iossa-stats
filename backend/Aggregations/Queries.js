@@ -21,14 +21,18 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Grupo D'},
             {'torneo': 'Copa Maradei T3 - Eliminatorias'},
             {'torneo': 'Supercopa Master T3'},
-            {'torneo': 'Supercopa Master T3 (Repechaje)'}
+            {'torneo': 'Supercopa Master T3 (Repechaje)'},
+            {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
+            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'}
         ]
     },
     'd1': {
         $or: [
             {'torneo': 'Liga D1 - Temporada 2'},
             {'torneo': 'Liga D1 - Temporada 2 (Desempate)'},
-            {'torneo': 'Liga D1 T3'}
+            {'torneo': 'Liga D1 T3'},
+            {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
+            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'}
         ]
     },
     'd2': {
@@ -73,7 +77,11 @@ module.exports = {
         'torneo': 'Copa Master 2019'
     },
     'd1t3': {
-        'torneo': 'Liga D1 T3'
+        $or: [
+            {'torneo': 'Liga D1 T3'},
+            {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
+            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'}
+        ]
     },
     'd2t3': {
         $or: [
