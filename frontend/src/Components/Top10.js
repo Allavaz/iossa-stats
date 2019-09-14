@@ -50,6 +50,10 @@ export default class Top10 extends Component {
                         this.setState({category: 'COPA MASTER'});
                     } else if (arg.startsWith('maradei')) {
                         this.setState({category: 'COPA MARADEI'});
+                    } else if (arg.startsWith('supercopamaster')) {
+                        this.setState({category: 'SUPERCOPA MASTER'});
+                    } else if (arg.startsWith('recopamaster')) {
+                        this.setState({category: 'RECOPA MASTER'});
                     }
                     this.setState({data3: res.data, top10Loading: false});
                 })
