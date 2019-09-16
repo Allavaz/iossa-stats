@@ -24,7 +24,8 @@ module.exports = {
             {'torneo': 'Supercopa Master T3'},
             {'torneo': 'Supercopa Master T3 (Repechaje)'},
             {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
-            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'}
+            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'},
+            {'torneo': 'Recopa Master T3'}
         ]
     },
     'd1': {
