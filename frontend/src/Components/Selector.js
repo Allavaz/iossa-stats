@@ -26,6 +26,7 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('d2t3')}>Liga D2</button>
                     <button className='boton' onClick={() => props.prop1('mastert3')}>Copa Master</button>
                     <button className='boton' onClick={() => props.prop1('maradeit3')}>Copa Maradei</button>
+                    <button className='boton' onClick={() => props.prop1('recopamastert3')}>Recopa Master</button>
                     <button className='boton' onClick={() => props.prop1('supercopamastert3')}>Supercopa Master</button>
                 </div>
             </div>
