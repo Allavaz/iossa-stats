@@ -17,6 +17,8 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('maradei')}>Copa Maradei</button>
                     <button className='boton' onClick={() => props.prop1('recopamaster')}>Recopa Master</button>
                     <button className='boton' onClick={() => props.prop1('supercopamaster')}>Supercopa Master</button>
+                    <button className='boton' onClick={() => props.prop1('copaamerica')}>Copa America</button>
+                    <button className='boton' onClick={() => props.prop1('copadelsur')}>Copa del Sur</button>
                 </div>
             </div>
             <div className='t3' style={{display: props.prop3 === 't3' ? 'block' : 'none'}}>
@@ -28,6 +30,8 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('maradeit3')}>Copa Maradei</button>
                     <button className='boton' onClick={() => props.prop1('recopamastert3')}>Recopa Master</button>
                     <button className='boton' onClick={() => props.prop1('supercopamastert3')}>Supercopa Master</button>
+                    <button className='boton' onClick={() => props.prop1('copaamericat3')}>Copa America</button>
+                    <button className='boton' onClick={() => props.prop1('copadelsurt3')}>Copa del Sur</button>
                 </div>
             </div>
             <div className='t2' style={{display: props.prop3 === 't2' ? 'block' : 'none'}}>

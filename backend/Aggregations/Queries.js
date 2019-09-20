@@ -25,7 +25,9 @@ module.exports = {
             {'torneo': 'Supercopa Master T3 (Repechaje)'},
             {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
             {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'},
-            {'torneo': 'Recopa Master T3'}
+            {'torneo': 'Recopa Master T3'},
+            {'torneo': 'Copa America T3'},
+            {'torneo': 'Copa del Sur T3'}
         ]
     },
     'd1': {
@@ -61,6 +63,16 @@ module.exports = {
         $or: [
             {'torneo': 'Recopa Master 2019'},
             {'torneo': 'Recopa Master T3'}
+        ]
+    },
+    'copaamerica': {
+        $or: [
+            {'torneo': 'Copa America T3'}
+        ]
+    },
+    'copadelsur': {
+        $or: [
+            {'torneo': 'Copa del Sur T3'}
         ]
     },
     'maradei': {
@@ -122,5 +134,14 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Eliminatorias'}
         ]
     },
-
+    'copaamericat3': {
+        $or: [
+            {'torneo': 'Copa America T3'}
+        ]
+    },
+    'copadelsurt3': {
+        $or: [
+            {'torneo': 'Copa del Sur T3'}
+        ]
+    }
 }

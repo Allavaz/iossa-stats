@@ -43,6 +43,7 @@ app.get('/' + endpoint, (req, res) => {
 		'<option name="torneo" value="Copa Maradei T3 - Eliminatorias">Copa Maradei T3 - Eliminatorias</option>'+
 		'<option name="torneo" value="Copa Master T3">Copa Master T3</option>'+
 		'<option name="torneo" value="Supercopa Master T3">Supercopa Master T3</option>'+
+		'<option name="torneo" value="Copa del Sur T3">Copa del Sur T3</option>'+
 		'</select><br></br>'+
 		'<input type="text" id="vod" name="vod" size="24" placeholder="ID del VOD (Ej: lQMMnMvnMLk)"></input><br></br>'+
 		'<input type="password" id="pw" name="pw" placeholder="Clave"></input><br></br>'+
