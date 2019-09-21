@@ -13,6 +13,8 @@ exports.getTournamentIcon = function(tournament) {
 		return "tournaments/copaamerica.png"
 	} else if (tournament.includes("Supercopa Master")) {
 		return "tournaments/supercopamaster.png"
+	} else if (tournament.includes("Copa del Sur")) {
+		return "tournaments/copadelsur.png"
 	} else {
 		return "tournaments/none.png"
 	}

@@ -69,6 +69,9 @@ export default class Match extends Component {
 				case "Copa America T3":
 					this.setState({isCopa: false, isLoading: false, table: 'americat3'});
 					break;
+				case "Copa del Sur T3":
+					this.setState({isCopa: true, challonge: "copadelsur", isLoading: false});
+					break;
 				default:
 					this.setState({isCopa: false, isLoading: false});
 					break;
