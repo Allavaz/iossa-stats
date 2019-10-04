@@ -34,16 +34,8 @@ app.get('/' + endpoint, (req, res) => {
 		'<form id="uploadForm" action="/postupload" enctype="multipart/form-data" method="post">'+
 		'<input type="file" name="upload" accept=".json"><br></br>'+
 		'<select name="torneo" class="select">'+
-		'<option name="torneo" value="Liga D1 T3">Liga D1 T3</option>'+
-		'<option name="torneo" value="Liga D2 T3">Liga D2 T3</option>'+
-		'<option name="torneo" value="Copa Maradei T3 - Grupo A">Copa Maradei T3 - Grupo A</option>'+
-		'<option name="torneo" value="Copa Maradei T3 - Grupo B">Copa Maradei T3 - Grupo B</option>'+
-		'<option name="torneo" value="Copa Maradei T3 - Grupo C">Copa Maradei T3 - Grupo C</option>'+
-		'<option name="torneo" value="Copa Maradei T3 - Grupo D">Copa Maradei T3 - Grupo D</option>'+
-		'<option name="torneo" value="Copa Maradei T3 - Eliminatorias">Copa Maradei T3 - Eliminatorias</option>'+
-		'<option name="torneo" value="Copa Master T3">Copa Master T3</option>'+
-		'<option name="torneo" value="Supercopa Master T3">Supercopa Master T3</option>'+
-		'<option name="torneo" value="Copa del Sur T3">Copa del Sur T3</option>'+
+		'<option name="torneo" value="Liga D1 T4">Liga D1 T4</option>'+
+		'<option name="torneo" value="Liga D2 T4">Liga D2 T4</option>'+
 		'</select><br></br>'+
 		'<input type="text" id="vod" name="vod" size="24" placeholder="ID del VOD (Ej: lQMMnMvnMLk)"></input><br></br>'+
 		'<input type="password" id="pw" name="pw" placeholder="Clave"></input><br></br>'+
