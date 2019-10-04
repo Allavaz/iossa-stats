@@ -11,6 +11,7 @@ import Match from './Components/Match';
 import Footer from './Components/Footer'
 import Top10 from './Components/Top10';
 import Results from './Components/Results';
+import Upload from './Components/Upload';
 
 class App extends Component {
 
@@ -18,20 +19,23 @@ class App extends Component {
 	return (
 		<Router>
 			<div>
-				<Navigation/>
-				<Header/>
-			</div>
-			<Switch>
-				<Route exact path='/' component={Home} />
-				<Route exact path='/individuales' component={Players} />
-				<Route exact path='/top10' component={Top10} />
-				<Route exact path='/posiciones' component={Positions} />
-				<Route exact path='/partido/:id' component={Match} />
-				<Route exact path='/resultados' component={Results} />
-				<Route component={NotFound} />
-			</Switch>
-			<div>
-				<Footer/>
+				<div>
+					<Navigation/>
+					<Header/>
+				</div>
+				<Switch>
+					<Route exact path='/' component={Home} />
+					<Route exact path='/individuales' component={Players} />
+					<Route exact path='/top10' component={Top10} />
+					<Route exact path='/posiciones' component={Positions} />
+					<Route exact path='/partido/:id' component={Match} />
+					<Route exact path='/resultados' component={Results} />
+					<Route exact path='/test' component={Upload} />
+					<Route component={NotFound} />
+				</Switch>
+				<div>
+					<Footer/>
+				</div>
 			</div>
 		</Router>
 	);
