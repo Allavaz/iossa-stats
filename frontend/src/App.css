@@ -52,6 +52,32 @@ h5 {
   margin-top: 15px;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 330px;
+  padding: 10px 25px 15px 25px;
+}
+
+.cartel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 355px;
+  align-items: center;
+}
+
+.cartel * {
+  padding: 15px;
+}
+
+.campo {
+  padding: 7.5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 #selector option {
   background: white;
 }

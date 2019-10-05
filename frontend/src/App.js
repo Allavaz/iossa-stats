@@ -12,6 +12,7 @@ import Footer from './Components/Footer'
 import Top10 from './Components/Top10';
 import Results from './Components/Results';
 import Upload from './Components/Upload';
+import Endpoint from './endpoint';
 
 class App extends Component {
 
@@ -30,7 +31,7 @@ class App extends Component {
 					<Route exact path='/posiciones' component={Positions} />
 					<Route exact path='/partido/:id' component={Match} />
 					<Route exact path='/resultados' component={Results} />
-					<Route exact path='/test' component={Upload} />
+					<Route exact path={Endpoint} component={Upload} />
 					<Route component={NotFound} />
 				</Switch>
 				<div>
