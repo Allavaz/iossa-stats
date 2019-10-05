@@ -33,7 +33,6 @@ export default class Positions extends Component {
     }
 
     render() {
-        console.log(this.state.temporada)
         return ( 
             <div className='content'>
                 <select id='selector' defaultValue='t4' onChange={this.selectTemporada}>
