@@ -12,8 +12,8 @@ export default class Positions extends Component {
     constructor() {
         super();
         this.state = {
-            temporada: tablas.t3,
-            loadingItems: tablas.t3.length,
+            temporada: tablas.t4,
+            loadingItems: tablas.t4.length,
         };
     }
 
@@ -36,7 +36,8 @@ export default class Positions extends Component {
         console.log(this.state.temporada)
         return ( 
             <div className='content'>
-                <select id='selector' defaultValue='t3' onChange={this.selectTemporada}>
+                <select id='selector' defaultValue='t4' onChange={this.selectTemporada}>
+                    <option value='t4'>Temporada 4</option>
                     <option value='t3'>Temporada 3</option>
                     <option value='t2'>Temporada 2</option>
                 </select>            

@@ -30,13 +30,20 @@ module.exports = {
             {'torneo': 'Copa del Sur T3'}
         ]
     },
+    't4': {
+        $or: [
+            {'torneo': 'Liga D1 T4'},
+            {'torneo': 'Liga D2 T4'},
+        ]
+    },
     'd1': {
         $or: [
             {'torneo': 'Liga D1 - Temporada 2'},
             {'torneo': 'Liga D1 - Temporada 2 (Desempate)'},
             {'torneo': 'Liga D1 T3'},
             {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
-            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'}
+            {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'},
+            {'torneo': 'Liga D1 T4'}
         ]
     },
     'd2': {
@@ -44,7 +51,8 @@ module.exports = {
             {'torneo': 'Liga D2 - Temporada 1'},
             {'torneo': 'Liga D2 T3'},
             {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Ida)'},
-            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Vuelta)'}
+            {'torneo': 'Liga D2 T3 - Desempate 3er Puesto (Vuelta)'},
+            {'torneo': 'Liga D2 T4'}
         ]
     },
     'master': {
@@ -88,6 +96,16 @@ module.exports = {
         $or: [
             {'torneo': 'Liga D1 - Temporada 2'},
             {'torneo': 'Liga D1 - Temporada 2 (Desempate)'},
+        ]
+    },
+    'd1t4': {
+        $or: [
+            {'torneo': 'Liga D1 T4'},
+        ]
+    },
+    'd2t4': {
+        $or: [
+            {'torneo': 'Liga D2 T4'},
         ]
     },
     'd2t1': {
