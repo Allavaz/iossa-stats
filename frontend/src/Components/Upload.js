@@ -41,7 +41,6 @@ export default function Upload() {
 				}
 			})
 			.catch((error) => {
-				console.log(error.toString());
 				setError(error.toString());
 				setStatus(-2);
 			});
