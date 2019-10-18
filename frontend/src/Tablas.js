@@ -1,4 +1,14 @@
 export const tablas = {
+    t4: [
+        {
+            'table': 'd1t4',
+            'name': 'Liga D1 T4'
+        },
+        {
+            'table': 'd2t4',
+            'name': 'Liga D2 T4'
+        },
+    ],
     t3: [
         {
             'table': 'd1t3',

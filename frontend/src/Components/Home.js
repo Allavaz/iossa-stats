@@ -9,7 +9,7 @@ library.add(faSpinner)
 
 export default class Home extends Component {
 	state = {
-		loadingItems: 8
+		loadingItems: 3
 	};
 
 	componentDidMount(){
@@ -30,13 +30,8 @@ export default class Home extends Component {
 					<div className='colCon' style={{margin: '-10px'}}>
 						<Matches callback={this.reduceLoadingItems}></Matches>
 						<div style={{margin: '10px', flexGrow: 1}}>
-							<MiniPositions torneo='d1t3' header='liga d1 t3' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='d2t3' header='liga d2 t3' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit3a' header='copa maradei - grupo a' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit3b' header='copa maradei - grupo b' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit3c' header='copa maradei - grupo c' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit3d' header='copa maradei - grupo d' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='americat3' header='Copa America T3' callback={this.reduceLoadingItems}></MiniPositions>
+							<MiniPositions torneo='d1t4' header='liga d1 t4' callback={this.reduceLoadingItems}></MiniPositions>
+							<MiniPositions torneo='d2t4' header='liga d2 t4' callback={this.reduceLoadingItems}></MiniPositions>
 						</div>
 					</div>
 				</div>
