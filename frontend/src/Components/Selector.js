@@ -24,7 +24,7 @@ export default function Selector(props) {
             </div>
             <div className='t4' style={{display: props.prop3 === 't4' ? 'block' : 'none'}}>
                 <div className='botonera'>
-                    <button className='boton' onClick={() => props.prop1('t2')}>Totales</button>
+                    <button className='boton' onClick={() => props.prop1('t4')}>Totales</button>
                     <button className='boton' onClick={() => props.prop1('d1t4')}>Liga D1</button>
                     <button className='boton' onClick={() => props.prop1('d2t4')}>Liga D2</button>
                 </div>
