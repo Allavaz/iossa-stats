@@ -3,8 +3,9 @@ import React from 'react';
 export default function Selector(props) {
     return (
         <div className='torSelect'>
-            <select id='selector' defaultValue='t3' onChange={props.prop2}>
+            <select id='selector' defaultValue='t4' onChange={props.prop2}>
                 <option value='total'>Totales</option>
+                <option value='t4'>Temporada 4</option>
                 <option value='t3'>Temporada 3</option>
                 <option value='t2'>Temporada 2</option>
             </select>
@@ -19,6 +20,13 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('supercopamaster')}>Supercopa Master</button>
                     <button className='boton' onClick={() => props.prop1('copaamerica')}>Copa America</button>
                     <button className='boton' onClick={() => props.prop1('copadelsur')}>Copa del Sur</button>
+                </div>
+            </div>
+            <div className='t4' style={{display: props.prop3 === 't4' ? 'block' : 'none'}}>
+                <div className='botonera'>
+                    <button className='boton' onClick={() => props.prop1('t4')}>Totales</button>
+                    <button className='boton' onClick={() => props.prop1('d1t4')}>Liga D1</button>
+                    <button className='boton' onClick={() => props.prop1('d2t4')}>Liga D2</button>
                 </div>
             </div>
             <div className='t3' style={{display: props.prop3 === 't3' ? 'block' : 'none'}}>

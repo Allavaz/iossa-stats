@@ -3,6 +3,8 @@ const fullnames = {
 	'd2t1': 'Liga D2 - Temporada 1',
 	'd1t3': 'Liga D1 T3',
 	'd2t3': 'Liga D2 T3',
+	'd1t4': 'Liga D1 T4',
+	'd2t4': 'Liga D2 T4',
 	'maradeit3a': 'Copa Maradei T3 - Grupo A',
 	'maradeit3b': 'Copa Maradei T3 - Grupo B',
 	'maradeit3c': 'Copa Maradei T3 - Grupo C',

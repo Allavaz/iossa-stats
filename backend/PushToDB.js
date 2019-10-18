@@ -262,10 +262,16 @@ exports.pushToDB = function (json, filename, torneo, vod, res) {
                         'matchevents': matchevents
                     }, (err, r) => {
                         if (err === null) {
-                            res.end('Successfully pushed to Database. ID: ' + r.ops[0]._id);
+                            res.json({
+                                status: 'success',
+                                id: r.ops[0]._id
+                            });
                             client.close();
                         } else {
-                            res.end(err);
+                            res.json({
+                                status: 'error',
+                                error: err
+                            });
                             client.close();
                         }
                     });
