@@ -20,6 +20,7 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('supercopamaster')}>Supercopa Master</button>
                     <button className='boton' onClick={() => props.prop1('copaamerica')}>Copa America</button>
                     <button className='boton' onClick={() => props.prop1('copadelsur')}>Copa del Sur</button>
+                    <button className='boton' onClick={() => props.prop1('cg')}>Copa Gubero</button>
                 </div>
             </div>
             <div className='t4' style={{display: props.prop3 === 't4' ? 'block' : 'none'}}>
@@ -27,6 +28,7 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('t4')}>Totales</button>
                     <button className='boton' onClick={() => props.prop1('d1t4')}>Liga D1</button>
                     <button className='boton' onClick={() => props.prop1('d2t4')}>Liga D2</button>
+                    <button className='boton' onClick={() => props.prop1('cgt4')}>Copa Gubero</button>
                 </div>
             </div>
             <div className='t3' style={{display: props.prop3 === 't3' ? 'block' : 'none'}}>

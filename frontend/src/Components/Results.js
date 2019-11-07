@@ -58,6 +58,8 @@ export default class Results extends Component {
                 this.setState({category: 'COPA AMERICA'});
             } else if (arg.startsWith('copadelsur')) {
                 this.setState({category: 'COPA DEL SUR'});
+            } else if (arg.startsWith('cg')) {
+                this.setState({category: 'COPA GUBERO'});
             }
 			this.setState({data: res.data, matchesLoading: false});
 		});
