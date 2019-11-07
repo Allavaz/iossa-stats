@@ -7,7 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const torneos = [
 	'Liga D1 T4',
-	'Liga D2 T4'
+	'Liga D2 T4',
+	'Copa Gubero T4',
+	'Liga D1 T4 - (Desempate)',
+	'Liga D1 T4 - Promoción'
 ]
 
 export default function Upload() {

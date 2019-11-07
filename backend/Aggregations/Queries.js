@@ -34,6 +34,9 @@ module.exports = {
         $or: [
             {'torneo': 'Liga D1 T4'},
             {'torneo': 'Liga D2 T4'},
+            {'torneo': 'Copa Gubero T4'},
+            {'torneo': 'Liga D1 T4 - (Desempate)'},
+            {'torneo': 'Liga D1 T4 - Promoción'}
         ]
     },
     'd1': {
@@ -43,7 +46,9 @@ module.exports = {
             {'torneo': 'Liga D1 T3'},
             {'torneo': 'Liga D1 T3 - Promoción (Ida)'},
             {'torneo': 'Liga D1 T3 - Promoción (Vuelta)'},
-            {'torneo': 'Liga D1 T4'}
+            {'torneo': 'Liga D1 T4'},
+            {'torneo': 'Liga D1 T4 - (Desempate)'},
+            {'torneo': 'Liga D1 T4 - Promoción'}
         ]
     },
     'd2': {
@@ -92,6 +97,11 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Eliminatorias'}
         ]
     },
+    'cg': {
+        $or: [
+            {'torneo': 'Copa Gubero T4'}
+        ]
+    },
     'd1t2': {
         $or: [
             {'torneo': 'Liga D1 - Temporada 2'},
@@ -101,11 +111,18 @@ module.exports = {
     'd1t4': {
         $or: [
             {'torneo': 'Liga D1 T4'},
+            {'torneo': 'Liga D1 T4 - (Desempate)'},
+            {'torneo': 'Liga D1 T4 - Promoción'}
         ]
     },
     'd2t4': {
         $or: [
             {'torneo': 'Liga D2 T4'},
+        ]
+    },
+    'cgt4': {
+        $or: [
+            {'torneo': 'Copa Gubero T4'},
         ]
     },
     'd2t1': {
