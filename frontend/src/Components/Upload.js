@@ -63,7 +63,7 @@ export default function Upload() {
 		default:
 			return (
 				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '280px'}}>
+					<div className='whitespace' style={{padding: '0', width: '310px'}}>
 						<div className='form'>
 							<h3 style={{marginBottom: 0}}>Cargar Partido</h3>
 							<div><input type="file" onChange={(e) => setFile(e.target.files[0])} accept=".json"></input></div>
