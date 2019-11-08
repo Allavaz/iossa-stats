@@ -72,6 +72,18 @@ export default class Match extends Component {
 				case "Copa del Sur T3":
 					this.setState({isCopa: true, challonge: "copadelsur", isLoading: false});
 					break;
+				case "Liga D1 T4":
+					this.setState({isCopa: false, isLoading: false, table: 'd1t4'});
+					break;
+				case "Liga D1 T4 - (Desempate)":
+					this.setState({isCopa: false, isLoading: false, table: 'd1t4'});
+					break;
+				case "Liga D2 T4":
+					this.setState({isCopa: false, isLoading: false, table: 'd2t4'});
+					break;
+				case "Copa Gubero T4":
+					this.setState({isCopa: true, challonge: "copagubero", isLoading: false});
+					break;
 				default:
 					this.setState({isCopa: false, isLoading: false});
 					break;
