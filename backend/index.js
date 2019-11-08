@@ -6,7 +6,7 @@ const db = require('./PushToDB');
 const rdb = require('./GetFromDB');
 const cors = require('cors');
 const path = require('path');
-const { endpoint, key } = require('./db.json');
+const { key } = require('./db.json');
 
 app.use(cors());
 
