@@ -48,5 +48,33 @@ export const tablas = {
             'table': 'd2t1',
             'name': 'Liga D2 T1'
         },
+    ],
+    t1: [
+        {
+            'table': 'd1t1',
+            'name': 'Liga D1 T1'
+        },
+        {
+            'table': 'maradeit1a',
+            'name': 'Copa Maradei T1 - Grupo A'
+        },
+        {
+            'table': 'maradeit1b',
+            'name': 'Copa Maradei T1 - Grupo B'
+        },
+        {
+            'table': 'maradeit1c',
+            'name': 'Copa Maradei T1 - Grupo C'
+        },
+    ],
+    t0: [
+        {
+            'table': 'ddht0',
+            'name': 'Liga de Honor T0'
+        },
+        {
+            'table': 'lmt0',
+            'name': 'Liga Master T0'
+        },
     ]
 }
