@@ -70,7 +70,7 @@ export const tablas = {
     t0: [
         {
             'table': 'ddht0',
-            'name': 'Liga de Honor T0'
+            'name': 'Division de Honor T0'
         },
         {
             'table': 'lmt0',
