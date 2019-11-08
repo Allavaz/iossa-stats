@@ -5,12 +5,17 @@ const fullnames = {
 	'd2t3': 'Liga D2 T3',
 	'd1t4': 'Liga D1 T4',
 	'd2t4': 'Liga D2 T4',
-	'cgt4': 'Copa Gubero T4',
 	'maradeit3a': 'Copa Maradei T3 - Grupo A',
 	'maradeit3b': 'Copa Maradei T3 - Grupo B',
 	'maradeit3c': 'Copa Maradei T3 - Grupo C',
 	'maradeit3d': 'Copa Maradei T3 - Grupo D',
 	'americat3': 'Copa America T3'
+	'd1t1': 'Liga D1 T1',
+	'maradeit1a': 'Copa Maradei T1 - Grupo A',
+	'maradeit1b': 'Copa Maradei T1 - Grupo B',
+	'maradeit1c': 'Copa Maradei T1 - Grupo C',
+	'lmt0': 'Liga Master T0',
+	'ddht0': 'Division de Honor T0',
 };
 
 module.exports = (arg) => {
