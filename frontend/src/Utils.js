@@ -17,6 +17,8 @@ exports.getTournamentIcon = function(tournament) {
 		return "tournaments/copadelsur.png"
 	} else if (tournament.includes("Copa Gubero")) {
 		return "tournaments/cg.png"
+	} else if (tournament.includes("Recopa Master T0")) {
+		return "tournaments/recopamastert0.png"
 	} else {
 		return "tournaments/none.png"
 	}
