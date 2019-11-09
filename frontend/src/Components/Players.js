@@ -62,6 +62,10 @@ export default class Players extends Component {
                 this.setState({category: 'COPA DEL SUR'});
             } else if (arg.startsWith('cg')) {
                 this.setState({category: 'COPA GUBERO'});
+            } else if (arg.startsWith('lm')) {
+                this.setState({category: 'LIGA MASTER'});
+            } else if (arg.startsWith('ddh')) {
+                this.setState({category: 'DIVISION DE HONOR'});
             }
             this.setState({data: res.data, playersLoading: false});
         });
@@ -82,6 +86,12 @@ export default class Players extends Component {
                 break;
             case 't2':
                 this.selectTorneo('t2');
+                break;
+            case 't1':
+                this.selectTorneo('t1');
+                break;
+            case 't0':
+                this.selectTorneo('t0');
                 break;
             default:
                 this.selectTorneo('all');
