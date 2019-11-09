@@ -19,6 +19,12 @@ exports.getTournamentIcon = function(tournament) {
 		return "tournaments/cg.png"
 	} else if (tournament.includes("Recopa Master T0")) {
 		return "tournaments/recopamastert0.png"
+	} else if (tournament.includes("Liga Master T0")) {
+		return "tournaments/ligamaster.png"
+	} else if (tournament.includes("Division de Honor T0")) {
+		return "tournaments/ddh.png"
+	} else if (tournament.includes("Recopa Master T0")) {
+		return "tournaments/recopamastert0.png"
 	} else {
 		return "tournaments/none.png"
 	}
