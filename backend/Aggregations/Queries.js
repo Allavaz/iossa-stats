@@ -1,5 +1,21 @@
 module.exports = {
     'all': {},
+    't0': {
+        $or: [
+            {'torneo': 'Liga Master T0'},
+            {'torneo': 'Division de Honor T0'},
+            {'torneo': 'Recopa Master T0'}
+        ]
+    },
+    't1': {
+        $or: [
+            {'torneo': 'Liga D1 T1'},
+            {'torneo': 'Copa Maradei T1 - Eliminatorias'},
+            {'torneo': 'Copa Maradei T1 - Grupo A'},
+            {'torneo': 'Copa Maradei T1 - Grupo B'},
+            {'torneo': 'Copa Maradei T1 - Grupo C'}
+        ]
+    },
     't2': {
         $or: [
             {'torneo': 'Liga D1 - Temporada 2'},
@@ -41,6 +57,7 @@ module.exports = {
     },
     'd1': {
         $or: [
+            {'torneo': 'Liga D1 T1'},
             {'torneo': 'Liga D1 - Temporada 2'},
             {'torneo': 'Liga D1 - Temporada 2 (Desempate)'},
             {'torneo': 'Liga D1 T3'},
@@ -75,7 +92,8 @@ module.exports = {
     'recopamaster': {
         $or: [
             {'torneo': 'Recopa Master 2019'},
-            {'torneo': 'Recopa Master T3'}
+            {'torneo': 'Recopa Master T3'},
+            {'torneo': 'Recopa Master T0'}
         ]
     },
     'copaamerica': {
@@ -94,7 +112,11 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Grupo B'},
             {'torneo': 'Copa Maradei T3 - Grupo C'},
             {'torneo': 'Copa Maradei T3 - Grupo D'},
-            {'torneo': 'Copa Maradei T3 - Eliminatorias'}
+            {'torneo': 'Copa Maradei T3 - Eliminatorias'},
+            {'torneo': 'Copa Maradei T1 - Eliminatorias'},
+            {'torneo': 'Copa Maradei T1 - Grupo A'},
+            {'torneo': 'Copa Maradei T1 - Grupo B'},
+            {'torneo': 'Copa Maradei T1 - Grupo C'}
         ]
     },
     'cg': {
@@ -106,6 +128,11 @@ module.exports = {
         $or: [
             {'torneo': 'Liga D1 - Temporada 2'},
             {'torneo': 'Liga D1 - Temporada 2 (Desempate)'},
+        ]
+    },
+    'd1t1': {
+        $or: [
+            {'torneo': 'Liga D1 T1'},
         ]
     },
     'd1t4': {
@@ -160,6 +187,9 @@ module.exports = {
     'recopamastert3': {
         'torneo': 'Recopa Master T3'
     },
+    'recopamastert0': {
+        'torneo': 'Recopa Master T0'
+    },
     'maradeit3': {
         $or: [
             {'torneo': 'Copa Maradei T3 - Grupo A'},
@@ -167,6 +197,24 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Grupo C'},
             {'torneo': 'Copa Maradei T3 - Grupo D'},
             {'torneo': 'Copa Maradei T3 - Eliminatorias'}
+        ]
+    },
+    'maradeit1': {
+        $or: [
+            {'torneo': 'Copa Maradei T1 - Eliminatorias'},
+            {'torneo': 'Copa Maradei T1 - Grupo A'},
+            {'torneo': 'Copa Maradei T1 - Grupo B'},
+            {'torneo': 'Copa Maradei T1 - Grupo C'}
+        ]
+    },
+    'lmt0': {
+        $or: [
+            {'torneo': 'Liga Master T0'}
+        ]
+    },
+    'ddht0': {
+        $or: [
+            {'torneo': 'Division de Honor T0'}
         ]
     },
     'copaamericat3': {
