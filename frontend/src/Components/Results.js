@@ -85,6 +85,12 @@ export default class Results extends Component {
             case 't2':
                 this.selectTorneo('t2');
                 break;
+            case 't1':
+                this.selectTorneo('t1');
+                break;
+            case 't0':
+                this.selectTorneo('t0');
+                break;
             default:
                 this.selectTorneo('all');
                 break;
