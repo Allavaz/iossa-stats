@@ -67,7 +67,7 @@ export default function Upload() {
 						<div className='form'>
 							<h3 style={{marginBottom: 0}}>Cargar Partido</h3>
 							<div><input type="file" onChange={(e) => setFile(e.target.files[0])} accept=".json"></input></div>
-							<div><select style={{marginTop: 0}} id="selector" name="torneo" onChange={(e) => setTorneo(e.target.value)}>
+							<div><select style={{marginTop: 0, width: '260px'}} id="selector" name="torneo" onChange={(e) => setTorneo(e.target.value)}>
 								{torneos.map((e) => (
 									<option key={e} name='torneo' value={e}>{e}</option>
 								))}
