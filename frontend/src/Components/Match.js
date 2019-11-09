@@ -27,6 +27,27 @@ export default class Match extends Component {
 		axios.get(api + 'match/' + this.props.match.params.id).then(res => {
 			this.setState({data: res.data});
 			switch (this.state.data.torneo) {
+				case "Liga Master T0":
+					this.setState({isCopa: false, isLoading: false, table: 'lmt0'});
+					break;
+				case "Division de Honor T0":
+					this.setState({isCopa: false, isLoading: false, table: 'ddht0'});
+					break;
+				case "Copa Maradei T1 - Grupo A":
+					this.setState({isCopa: false, isLoading: false, table: 'maradeit1a'});
+					break;
+				case "Copa Maradei T1 - Grupo B":
+					this.setState({isCopa: false, isLoading: false, table: 'maradeit1b'});
+					break;
+				case "Copa Maradei T1 - Grupo C":
+					this.setState({isCopa: false, isLoading: false, table: 'maradeit1c'});
+					break;
+				case "Copa Maradei T1":
+					this.setState({isCopa: true, challonge: "Copamaradei2018", isLoading: false});
+					break;
+				case "Liga D1 T1":
+					this.setState({isCopa: false, isLoading: false, table: 'd1t1'});
+					break;
 				case "Liga D1 - Temporada 2":
 					this.setState({isCopa: false, isLoading: false, table: 'd1t2'});
 					break;
