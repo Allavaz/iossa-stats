@@ -10,7 +10,7 @@ module.exports = {
     't1': {
         $or: [
             {'torneo': 'Liga D1 T1'},
-            {'torneo': 'Copa Maradei T1'},
+            {'torneo': 'Copa Maradei T1 - Eliminatorias'},
             {'torneo': 'Copa Maradei T1 - Grupo A'},
             {'torneo': 'Copa Maradei T1 - Grupo B'},
             {'torneo': 'Copa Maradei T1 - Grupo C'}
@@ -113,7 +113,7 @@ module.exports = {
             {'torneo': 'Copa Maradei T3 - Grupo C'},
             {'torneo': 'Copa Maradei T3 - Grupo D'},
             {'torneo': 'Copa Maradei T3 - Eliminatorias'},
-            {'torneo': 'Copa Maradei T1'},
+            {'torneo': 'Copa Maradei T1 - Eliminatorias'},
             {'torneo': 'Copa Maradei T1 - Grupo A'},
             {'torneo': 'Copa Maradei T1 - Grupo B'},
             {'torneo': 'Copa Maradei T1 - Grupo C'}
@@ -201,7 +201,7 @@ module.exports = {
     },
     'maradeit1': {
         $or: [
-            {'torneo': 'Copa Maradei T1'},
+            {'torneo': 'Copa Maradei T1 - Eliminatorias'},
             {'torneo': 'Copa Maradei T1 - Grupo A'},
             {'torneo': 'Copa Maradei T1 - Grupo B'},
             {'torneo': 'Copa Maradei T1 - Grupo C'}
