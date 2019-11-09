@@ -8,6 +8,8 @@ export default function Selector(props) {
                 <option value='t4'>Temporada 4</option>
                 <option value='t3'>Temporada 3</option>
                 <option value='t2'>Temporada 2</option>
+                <option value='t1'>Temporada 1</option>
+                <option value='t0'>Temporada 0</option>
             </select>
             <div className='total' style={{display: props.prop3 === 'total' ? 'block' : 'none'}}>
                 <div className='botonera'>
@@ -21,6 +23,8 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('copaamerica')}>Copa America</button>
                     <button className='boton' onClick={() => props.prop1('copadelsur')}>Copa del Sur</button>
                     <button className='boton' onClick={() => props.prop1('cg')}>Copa Gubero</button>
+                    <button className='boton' onClick={() => props.prop1('lm')}>Liga Master</button>
+                    <button className='boton' onClick={() => props.prop1('ddh')}>Division de Honor</button>
                 </div>
             </div>
             <div className='t4' style={{display: props.prop3 === 't4' ? 'block' : 'none'}}>
@@ -51,6 +55,21 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('d2t1')}>Liga D2</button>
                     <button className='boton' onClick={() => props.prop1('master2019')}>Copa Master</button>
                     <button className='boton' onClick={() => props.prop1('recopamaster2019')}>Recopa Master</button>
+                </div>
+            </div>
+            <div className='t1' style={{display: props.prop3 === 't1' ? 'block' : 'none'}}>
+                <div className='botonera'>
+                    <button className='boton' onClick={() => props.prop1('t1')}>Totales</button>
+                    <button className='boton' onClick={() => props.prop1('d1t1')}>Liga D1</button>
+                    <button className='boton' onClick={() => props.prop1('maradeit1')}>Copa Maradei</button>
+                </div>
+            </div>
+            <div className='t0' style={{display: props.prop3 === 't0' ? 'block' : 'none'}}>
+                <div className='botonera'>
+                    <button className='boton' onClick={() => props.prop1('t0')}>Totales</button>
+                    <button className='boton' onClick={() => props.prop1('lmt0')}>Liga Master</button>
+                    <button className='boton' onClick={() => props.prop1('ddht0')}>Division de Honor</button>
+                    <button className='boton' onClick={() => props.prop1('recopamastert0')}>Recopa Master</button>
                 </div>
             </div>
         </div>
