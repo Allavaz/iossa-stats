@@ -39,6 +39,8 @@ export default class Positions extends Component {
                     <option value='t4'>Temporada 4</option>
                     <option value='t3'>Temporada 3</option>
                     <option value='t2'>Temporada 2</option>
+                    <option value='t1'>Temporada 1</option>
+                    <option value='t0'>Temporada 0</option>
                 </select>            
                 <div className='content' id='loader' style={{display: this.state.loadingItems > 0 ? 'block' : 'none'}}>
                     <center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
