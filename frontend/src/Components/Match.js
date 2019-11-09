@@ -42,7 +42,7 @@ export default class Match extends Component {
 				case "Copa Maradei T1 - Grupo C":
 					this.setState({isCopa: false, isLoading: false, table: 'maradeit1c'});
 					break;
-				case "Copa Maradei T1":
+				case "Copa Maradei T1 - Eliminatorias":
 					this.setState({isCopa: true, challonge: "Copamaradei2018", isLoading: false});
 					break;
 				case "Liga D1 T1":
