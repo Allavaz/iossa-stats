@@ -3,7 +3,8 @@ module.exports = {
     't0': {
         $or: [
             {'torneo': 'Liga Master T0'},
-            {'torneo': 'Division de Honor T0'}
+            {'torneo': 'Division de Honor T0'},
+            {'torneo': 'Recopa Master T0'}
         ]
     },
     't1': {
@@ -91,7 +92,8 @@ module.exports = {
     'recopamaster': {
         $or: [
             {'torneo': 'Recopa Master 2019'},
-            {'torneo': 'Recopa Master T3'}
+            {'torneo': 'Recopa Master T3'},
+            {'torneo': 'Recopa Master T0'}
         ]
     },
     'copaamerica': {
@@ -184,6 +186,9 @@ module.exports = {
     },
     'recopamastert3': {
         'torneo': 'Recopa Master T3'
+    },
+    'recopamastert0': {
+        'torneo': 'Recopa Master T0'
     },
     'maradeit3': {
         $or: [
