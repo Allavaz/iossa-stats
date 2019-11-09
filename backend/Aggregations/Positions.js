@@ -9,7 +9,7 @@ const fullnames = {
 	'maradeit3b': 'Copa Maradei T3 - Grupo B',
 	'maradeit3c': 'Copa Maradei T3 - Grupo C',
 	'maradeit3d': 'Copa Maradei T3 - Grupo D',
-	'americat3': 'Copa America T3'
+	'americat3': 'Copa America T3',
 	'd1t1': 'Liga D1 T1',
 	'maradeit1a': 'Copa Maradei T1 - Grupo A',
 	'maradeit1b': 'Copa Maradei T1 - Grupo B',
