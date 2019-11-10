@@ -1,5 +1,6 @@
 import React from 'react';
 import { percentage } from '../Utils';
+import Teams from '../Teams';
 
 export default function MatchTeamStats(props) {
     return (
@@ -7,9 +8,9 @@ export default function MatchTeamStats(props) {
             <table className='dataTable' id='teamstatstable'>
                 <thead>
                     <tr>
-                        <th><img height='16px' alt={props.data.teams[0].teamname} src={props.data.teams[0].teaminfo.logo}></img></th>
+                        <th><img height='16px' alt={props.data.teams[0].teamname} src={`/clubs/${Teams[props.data.teams[0].teamname].toLowerCase()}.png`}></img></th>
                         <th width='250px'>ESTADÍSTICAS DEL EQUIPO</th>
-                        <th><img height='16px' alt={props.data.teams[1].teamname} src={props.data.teams[1].teaminfo.logo}></img></th>
+                        <th><img height='16px' alt={props.data.teams[1].teamname} src={`/clubs/${Teams[props.data.teams[1].teamname].toLowerCase()}.png`}></img></th>
                     </tr>
                 </thead>
                 <tbody>

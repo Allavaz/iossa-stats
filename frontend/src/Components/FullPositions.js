@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { plus } from '../Utils';
 import { api } from '../api';
+import Teams from '../Teams';
 
 export default class FullPositions extends Component {
     state = {
@@ -48,7 +49,7 @@ export default class FullPositions extends Component {
                     {this.state.data.map((item, index) => (
                     <tr key={item._id}>
                         <td>{index + 1}</td>
-                        <td><div className='teamlogo'><img height='16px' style={{marginLeft: '0px'}} src={item.teaminfo.logo} alt={item._id}></img> <div id='teamname'>{item._id}</div><div id='shortname'>{item.teaminfo.shortname}</div></div></td>
+                        <td><div className='teamlogo'><img height='16px' style={{marginLeft: '0px'}} src={`/clubs/${Teams[item._id].toLowerCase()}.png`} alt={item._id}></img> <div id='teamname'>{item._id}</div><div id='shortname'>{Teams[item._id]}</div></div></td>
                         <td>{item.PJ}</td>
                         <td>{item.Pts}</td>
 						<td>{item.GF}</td>

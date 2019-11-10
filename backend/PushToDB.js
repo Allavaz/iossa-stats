@@ -158,8 +158,6 @@ exports.pushToDB = function (json, filename, torneo, vod, res) {
         }
 
         let matchevents = [];
-        let hometeaminfo = {};
-        let awayteaminfo = {};
 
         for (let i = 0; i < json.matchData.matchEvents.length; i++) {
             if (json.matchData.matchEvents[i].event == "GOAL" || json.matchData.matchEvents[i].event == "OWN GOAL" || json.matchData.matchEvents[i].event == "YELLOW CARD" || json.matchData.matchEvents[i].event == "RED CARD" || json.matchData.matchEvents[i].event == "SECOND YELLOW") {
@@ -177,105 +175,97 @@ exports.pushToDB = function (json, filename, torneo, vod, res) {
 
         client.connect((err, client) => {
             const db = client.db(dbname);
-            db.collection('teams').find({_id: json.matchData.teams[0].matchTotal.name}).toArray((err, docs) => {
-                hometeaminfo = docs[0];
-                db.collection('teams').find({_id: json.matchData.teams[1].matchTotal.name}).toArray((err, docs) => {
-                    awayteaminfo = docs[0];
-                    db.collection('matchesaux').insertOne({
-                        'filename': filename,
-                        'fecha': date,
-                        'torneo': torneo,
-                        'vod': vod,
-                        'teams': [{
-                                'teamname': json.matchData.teams[0].matchTotal.name,
-                                'side': json.matchData.teams[0].matchTotal.side,
-                                'score': json.matchData.teams[0].matchTotal.statistics[12],
-                                'scorereceived': json.matchData.teams[1].matchTotal.statistics[12],
-                                'result': homeresult,
-                                'statistics': {
-                                    'shots': json.matchData.teams[0].matchTotal.statistics[7],
-                                    'shotsontarget': json.matchData.teams[0].matchTotal.statistics[8],
-                                    'possession': calcPercentages(json.matchData.teams[0].matchTotal.statistics[22], json.matchData.teams[1].matchTotal.statistics[22])[0],
-                                    'passes': json.matchData.teams[0].matchTotal.statistics[15],
-                                    'passescompleted': json.matchData.teams[0].matchTotal.statistics[9],
-                                    'fouls': json.matchData.teams[0].matchTotal.statistics[2],
-                                    'yellowcards': json.matchData.teams[0].matchTotal.statistics[1],
-                                    'redcards': json.matchData.teams[0].matchTotal.statistics[0],
-                                    'offsides': json.matchData.teams[0].matchTotal.statistics[11],
-                                    'corners': json.matchData.teams[0].matchTotal.statistics[18],
-                                    'throwins': json.matchData.teams[0].matchTotal.statistics[19],
-                                    'penalties': json.matchData.teams[0].matchTotal.statistics[17],
-                                    'freekicks': json.matchData.teams[0].matchTotal.statistics[16],
-                                    'foulssuffered': json.matchData.teams[0].matchTotal.statistics[3],
-                                    'goalsconceded': json.matchData.teams[0].matchTotal.statistics[6],
-                                    'interceptions': json.matchData.teams[0].matchTotal.statistics[10],
-                                    'owngoals': json.matchData.teams[0].matchTotal.statistics[13],
-                                    'tackles': json.matchData.teams[0].matchTotal.statistics[4],
-                                    'tacklescompleted': json.matchData.teams[0].matchTotal.statistics[5],
-                                    'saves': json.matchData.teams[0].matchTotal.statistics[20],
-                                    'savescaught': json.matchData.teams[0].matchTotal.statistics[24],
-                                    'distancecovered': json.matchData.teams[0].matchTotal.statistics[23],
-                                    'assists': json.matchData.teams[0].matchTotal.statistics[14],
-                                    'goalkicks': json.matchData.teams[0].matchTotal.statistics[21]
+            db.collection('matchesaux').insertOne({
+                'filename': filename,
+                'fecha': date,
+                'torneo': torneo,
+                'vod': vod,
+                'teams': [{
+                        'teamname': json.matchData.teams[0].matchTotal.name,
+                        'side': json.matchData.teams[0].matchTotal.side,
+                        'score': json.matchData.teams[0].matchTotal.statistics[12],
+                        'scorereceived': json.matchData.teams[1].matchTotal.statistics[12],
+                        'result': homeresult,
+                        'statistics': {
+                            'shots': json.matchData.teams[0].matchTotal.statistics[7],
+                            'shotsontarget': json.matchData.teams[0].matchTotal.statistics[8],
+                            'possession': calcPercentages(json.matchData.teams[0].matchTotal.statistics[22], json.matchData.teams[1].matchTotal.statistics[22])[0],
+                            'passes': json.matchData.teams[0].matchTotal.statistics[15],
+                            'passescompleted': json.matchData.teams[0].matchTotal.statistics[9],
+                            'fouls': json.matchData.teams[0].matchTotal.statistics[2],
+                            'yellowcards': json.matchData.teams[0].matchTotal.statistics[1],
+                            'redcards': json.matchData.teams[0].matchTotal.statistics[0],
+                            'offsides': json.matchData.teams[0].matchTotal.statistics[11],
+                            'corners': json.matchData.teams[0].matchTotal.statistics[18],
+                            'throwins': json.matchData.teams[0].matchTotal.statistics[19],
+                            'penalties': json.matchData.teams[0].matchTotal.statistics[17],
+                            'freekicks': json.matchData.teams[0].matchTotal.statistics[16],
+                            'foulssuffered': json.matchData.teams[0].matchTotal.statistics[3],
+                            'goalsconceded': json.matchData.teams[0].matchTotal.statistics[6],
+                            'interceptions': json.matchData.teams[0].matchTotal.statistics[10],
+                            'owngoals': json.matchData.teams[0].matchTotal.statistics[13],
+                            'tackles': json.matchData.teams[0].matchTotal.statistics[4],
+                            'tacklescompleted': json.matchData.teams[0].matchTotal.statistics[5],
+                            'saves': json.matchData.teams[0].matchTotal.statistics[20],
+                            'savescaught': json.matchData.teams[0].matchTotal.statistics[24],
+                            'distancecovered': json.matchData.teams[0].matchTotal.statistics[23],
+                            'assists': json.matchData.teams[0].matchTotal.statistics[14],
+                            'goalkicks': json.matchData.teams[0].matchTotal.statistics[21]
 
-                                },
-                                'playerStatistics': homePlayerStatistics,
-                                'teaminfo': hometeaminfo
-                            },
-                            {
-                                'teamname': json.matchData.teams[1].matchTotal.name,
-                                'side': json.matchData.teams[1].matchTotal.side,
-                                'score': json.matchData.teams[1].matchTotal.statistics[12],
-                                'scorereceived': json.matchData.teams[0].matchTotal.statistics[12],
-                                'result': awayresult,
-                                'statistics': {
-                                    'shots': json.matchData.teams[1].matchTotal.statistics[7],
-                                    'shotsontarget': json.matchData.teams[1].matchTotal.statistics[8],
-                                    'possession': calcPercentages(json.matchData.teams[0].matchTotal.statistics[22], json.matchData.teams[1].matchTotal.statistics[22])[1],
-                                    'passes': json.matchData.teams[1].matchTotal.statistics[15],
-                                    'passescompleted': json.matchData.teams[1].matchTotal.statistics[9],
-                                    'fouls': json.matchData.teams[1].matchTotal.statistics[2],
-                                    'yellowcards': json.matchData.teams[1].matchTotal.statistics[1],
-                                    'redcards': json.matchData.teams[1].matchTotal.statistics[0],
-                                    'offsides': json.matchData.teams[1].matchTotal.statistics[11],
-                                    'corners': json.matchData.teams[1].matchTotal.statistics[18],
-                                    'throwins': json.matchData.teams[1].matchTotal.statistics[19],
-                                    'penalties': json.matchData.teams[1].matchTotal.statistics[17],
-                                    'freekicks': json.matchData.teams[1].matchTotal.statistics[16],
-                                    'foulssuffered': json.matchData.teams[1].matchTotal.statistics[3],
-                                    'goalsconceded': json.matchData.teams[1].matchTotal.statistics[6],
-                                    'interceptions': json.matchData.teams[1].matchTotal.statistics[10],
-                                    'owngoals': json.matchData.teams[1].matchTotal.statistics[13],
-                                    'tackles': json.matchData.teams[1].matchTotal.statistics[4],
-                                    'tacklescompleted': json.matchData.teams[1].matchTotal.statistics[5],
-                                    'saves': json.matchData.teams[1].matchTotal.statistics[20],
-                                    'savescaught': json.matchData.teams[1].matchTotal.statistics[24],
-                                    'distancecovered': json.matchData.teams[1].matchTotal.statistics[23],
-                                    'assists': json.matchData.teams[1].matchTotal.statistics[14],
-                                    'goalkicks': json.matchData.teams[1].matchTotal.statistics[21]
-                                },
-                                'playerStatistics': awayPlayerStatistics,
-                                'teaminfo': awayteaminfo
-                            }
-                        ],
-                        'players': players,
-                        'matchevents': matchevents
-                    }, (err, r) => {
-                        if (err === null) {
-                            res.json({
-                                status: 'success',
-                                id: r.ops[0]._id
-                            });
-                            client.close();
-                        } else {
-                            res.json({
-                                status: 'error',
-                                error: err
-                            });
-                            client.close();
-                        }
+                        },
+                        'playerStatistics': homePlayerStatistics
+                    },
+                    {
+                        'teamname': json.matchData.teams[1].matchTotal.name,
+                        'side': json.matchData.teams[1].matchTotal.side,
+                        'score': json.matchData.teams[1].matchTotal.statistics[12],
+                        'scorereceived': json.matchData.teams[0].matchTotal.statistics[12],
+                        'result': awayresult,
+                        'statistics': {
+                            'shots': json.matchData.teams[1].matchTotal.statistics[7],
+                            'shotsontarget': json.matchData.teams[1].matchTotal.statistics[8],
+                            'possession': calcPercentages(json.matchData.teams[0].matchTotal.statistics[22], json.matchData.teams[1].matchTotal.statistics[22])[1],
+                            'passes': json.matchData.teams[1].matchTotal.statistics[15],
+                            'passescompleted': json.matchData.teams[1].matchTotal.statistics[9],
+                            'fouls': json.matchData.teams[1].matchTotal.statistics[2],
+                            'yellowcards': json.matchData.teams[1].matchTotal.statistics[1],
+                            'redcards': json.matchData.teams[1].matchTotal.statistics[0],
+                            'offsides': json.matchData.teams[1].matchTotal.statistics[11],
+                            'corners': json.matchData.teams[1].matchTotal.statistics[18],
+                            'throwins': json.matchData.teams[1].matchTotal.statistics[19],
+                            'penalties': json.matchData.teams[1].matchTotal.statistics[17],
+                            'freekicks': json.matchData.teams[1].matchTotal.statistics[16],
+                            'foulssuffered': json.matchData.teams[1].matchTotal.statistics[3],
+                            'goalsconceded': json.matchData.teams[1].matchTotal.statistics[6],
+                            'interceptions': json.matchData.teams[1].matchTotal.statistics[10],
+                            'owngoals': json.matchData.teams[1].matchTotal.statistics[13],
+                            'tackles': json.matchData.teams[1].matchTotal.statistics[4],
+                            'tacklescompleted': json.matchData.teams[1].matchTotal.statistics[5],
+                            'saves': json.matchData.teams[1].matchTotal.statistics[20],
+                            'savescaught': json.matchData.teams[1].matchTotal.statistics[24],
+                            'distancecovered': json.matchData.teams[1].matchTotal.statistics[23],
+                            'assists': json.matchData.teams[1].matchTotal.statistics[14],
+                            'goalkicks': json.matchData.teams[1].matchTotal.statistics[21]
+                        },
+                        'playerStatistics': awayPlayerStatistics
+                    }
+                ],
+                'players': players,
+                'matchevents': matchevents
+            }, (err, r) => {
+                if (err === null) {
+                    res.json({
+                        status: 'success',
+                        id: r.ops[0]._id
                     });
-                });
+                    client.close();
+                } else {
+                    res.json({
+                        status: 'error',
+                        error: err
+                    });
+                    client.close();
+                }
             });
         });
     }
