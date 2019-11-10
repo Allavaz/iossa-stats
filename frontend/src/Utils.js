@@ -38,7 +38,7 @@ exports.plus = function(n) {
 
 exports.fecha = function(str) {
 	var year = str.slice(0, 4)
-    var month = str.slice(5, 7)
+	var month = str.slice(5, 7)
 	var day = str.slice(8, 10)
 	
 	return (day + "/" + month + "/" + year)
