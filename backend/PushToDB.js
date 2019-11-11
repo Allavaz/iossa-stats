@@ -26,8 +26,7 @@ exports.pushToDB = function(files, torneo, vod, res) {
         db.collection('matchesaux').insertMany(documents, (err, r) => {
             if (err === null) {
                 res.json({
-                    status: 'success',
-                    id: r.ops[0]._id
+                    status: 'success'
                 });
                 client.close();
             } else {
