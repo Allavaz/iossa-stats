@@ -32,7 +32,8 @@ exports.removeTag = function(tag) {
                 "XSN",
                 "Is",
                 "AFCA",
-                "RM"]
+                "RM",
+                "AFKA"]
 
     for (let i=0; i<tags.length; i++) {
         var tag = tag.replace(tags[i], "")
