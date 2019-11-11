@@ -2,7 +2,9 @@ const queries = require('./Queries');
 
 module.exports = (arg) => {
 	return (
-		[{$match: queries[arg]}, {$project: {
+		[{$match: queries[arg]}, 
+		{$sort: {fecha: 1}},
+		{$project: {
 				players: 1
 			}}, {$unwind: {
 				path: '$players',
