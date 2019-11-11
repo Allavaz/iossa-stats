@@ -8,7 +8,7 @@ export default {
     'Caballeros de la Birra': 'LCB',
     'Caballeros De La Birra': 'LCB',
     'Chicago Me Limpio': 'CML',
-    'Coldchester United FC': 'CUFC',
+    'Colchester United FC': 'CUFC',
     'Cold Chest FC': 'CCFC',
     'Defensores Del Bidon': 'CADB',
     'Defensores Del Doctor': 'CADD',
