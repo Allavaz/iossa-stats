@@ -1,5 +1,5 @@
 export default {
-    'AFC Academia': 'AFC',
+    'AFC Academia': 'AFCA',
     'Argentina': 'ARG',
     'Atletico Madrid': 'ATL',
     'Blue Giants': 'BG',
