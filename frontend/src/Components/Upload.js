@@ -3,6 +3,7 @@ import { api } from '../api';
 import axios from 'axios';
 import { faCheckCircle, faExclamationTriangle, faSpinner, faKey } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 const torneos = [
 	'Liga D1 T4',
@@ -93,6 +94,7 @@ export default function Upload() {
 						<div className='cartel'>
 							<FontAwesomeIcon icon={faCheckCircle} color='grey' size='5x'></FontAwesomeIcon>
 							<div style={{color: 'grey'}}>Partido(s) cargado(s) correctamente.</div>
+							<div><Link to='/resultados'><button style={{margin: 0}} className='boton'>Resultados</button></Link></div>
 						</div>
 					</div>
 				</div>
