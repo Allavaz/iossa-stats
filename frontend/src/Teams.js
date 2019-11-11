@@ -25,6 +25,7 @@ export default {
     'Layuve': 'LYV',
     'Los Halcones': 'LHFC',
     'MEIWA': 'MFC',
+    'Meiwa': 'MFC',
     'Mateors Gaming': 'MG',
     'Meteors Gaming': 'MG',
     'Modo Diablo': 'MD',
