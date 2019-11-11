@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { api } from '../api';
 import axios from 'axios';
-import { faCheckCircle, faExclamationTriangle, faSpinner, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
@@ -27,7 +27,8 @@ export default function Upload() {
 	const [vod, setVod] = useState(null);
 	const [file, setFile] = useState(null);
 	const [status, setStatus] = useState(0);
-	const [error, setError] = useState(null);
+	const bRef = useRef(null);
+	const sRef = useRef(null);
 
 	function submit(torneo, pw, vod, file) {
 		let fd = new FormData();
@@ -37,34 +38,31 @@ export default function Upload() {
 		if (file === null) {
 			alert('No seleccionaste ningun archivo.')
 		} else {
+			bRef.current.disabled = true;
+			sRef.current.style.display = 'inline';
 			for (let i=0; i<file.length; i++) {
 				fd.append('upload', file[i])
 			}
-			setStatus(2);
 			axios.post(api + 'postupload', fd).then((res) => {
 				if (res.data.status === 'success') {
 					setStatus(1);
 				} else if (res.data === 'Wrong password') {
-					setStatus(-1);
+					alert('Contraseña incorrecta!');
 				} else {
-					setError(res.data.error.toString());
-					setStatus(-2);
+					console.error(res.data.error);
+					alert('Ocurrió un error. Revisá la consola.');
 				}
+				bRef.current.disabled = false;
+				sRef.current.style.display = 'none';
 			})
 			.catch((error) => {
-				setError(error.toString());
-				setStatus(-2);
+				console.error(error);
+				bRef.current.disabled = false;
+				sRef.current.style.display = 'none';
+				alert('Ocurrió un error. Revisá la consola.');
 			});
+			
 		}
-	}
-
-	function retry() {
-		setTorneo(torneos[0]);
-		setPw(null);
-		setVod(null);
-		setFile(null);
-		setError(null);
-		setStatus(0);
 	}
 
 	switch (status) {
@@ -82,7 +80,7 @@ export default function Upload() {
 							</select></div>
 							<div><input className='campo' type="text" onChange={(e) => setVod(e.target.value)} size="24" placeholder="ID del VOD (Ej: lQMMnMvnMLk)"></input></div>
 							<div><input className='campo' type="password" onChange={(e) => setPw(e.target.value)} placeholder="Contraseña"></input></div>
-							<div><button className='boton' onClick={() => submit(torneo, pw, vod, file)}>Enviar</button></div>
+							<div><button className='boton' ref={bRef} onClick={() => submit(torneo, pw, vod, file)}>Enviar</button> <span ref={sRef} style={{display: 'none'}}><FontAwesomeIcon icon={faSpinner} spin color='#ff9800'></FontAwesomeIcon></span></div>
 						</div>
 					</div>
 				</div>
@@ -95,41 +93,6 @@ export default function Upload() {
 							<FontAwesomeIcon icon={faCheckCircle} color='grey' size='5x'></FontAwesomeIcon>
 							<div style={{color: 'grey'}}>Partido(s) cargado(s) correctamente.</div>
 							<div><Link to='/resultados'><button style={{margin: 0}} className='boton'>Resultados</button></Link></div>
-						</div>
-					</div>
-				</div>
-			)
-		case 2:
-			return (
-				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
-						<div className='cartel'>
-							<FontAwesomeIcon icon={faSpinner} spin color='#ff9800' size='5x'></FontAwesomeIcon>
-						</div>
-					</div>
-				</div>
-			)
-		case -1:
-			return (
-				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
-						<div className='cartel'>
-							<FontAwesomeIcon icon={faKey} color='grey' size='5x'></FontAwesomeIcon>
-							<div style={{color: 'grey'}}>Contraseña incorrecta.</div>
-							<div><button style={{margin: 0}} onClick={() => retry()} className='boton'>Reintentar</button></div>
-						</div>
-					</div>
-				</div>
-			)
-		case -2:
-			return (
-				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
-						<div className='cartel'>
-							<FontAwesomeIcon icon={faExclamationTriangle} color='grey' size='5x'></FontAwesomeIcon>
-							<div style={{color: 'grey'}}>Ocurrió un error:</div>
-							<div style={{color: 'grey', fontFamily: 'monospace'}}>{error}</div>
-							<div><button style={{margin: 0}} onClick={() => retry()} className='boton'>Reintentar</button></div>
 						</div>
 					</div>
 				</div>
