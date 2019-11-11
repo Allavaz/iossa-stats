@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../api';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { faCheckCircle, faExclamationTriangle, faSpinner, faKey } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -20,26 +19,26 @@ export default function Upload() {
 	const [file, setFile] = useState(null);
 	const [status, setStatus] = useState(0);
 	const [error, setError] = useState(null);
-	const [id, setId] = useState(null);
 
 	function submit(torneo, pw, vod, file) {
 		let fd = new FormData();
 		fd.append('torneo', torneo);
 		fd.append('vod', vod);
 		fd.append('pw', pw);
-		fd.append('upload', file);
 		if (file === null) {
 			alert('No seleccionaste ningun archivo.')
 		} else {
+			for (let i=0; i<file.length; i++) {
+				fd.append('upload', file[i])
+			}
 			setStatus(2);
 			axios.post(api + 'postupload', fd).then((res) => {
 				if (res.data.status === 'success') {
-					setId(res.data.id);
 					setStatus(1);
 				} else if (res.data === 'Wrong password') {
 					setStatus(-1);
 				} else {
-					setError(res.data.error);
+					setError(res.data.error.toString());
 					setStatus(-2);
 				}
 			})
@@ -66,7 +65,7 @@ export default function Upload() {
 					<div className='whitespace' style={{padding: '0', width: '310px'}}>
 						<div className='form'>
 							<h3 style={{marginBottom: 0}}>Cargar Partido</h3>
-							<div><input type="file" onChange={(e) => setFile(e.target.files[0])} accept=".json"></input></div>
+							<div><input type="file" multiple onChange={(e) => setFile(e.target.files)} accept=".json"></input></div>
 							<div><select style={{marginTop: 0, width: '260px'}} id="selector" name="torneo" onChange={(e) => setTorneo(e.target.value)}>
 								{torneos.map((e) => (
 									<option key={e} name='torneo' value={e}>{e}</option>
@@ -82,11 +81,10 @@ export default function Upload() {
 		case 1:
 			return (
 				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '280px', textAlign: 'center', minHeight: '355px'}}>
+					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
 						<div className='cartel'>
 							<FontAwesomeIcon icon={faCheckCircle} color='grey' size='5x'></FontAwesomeIcon>
-							<div style={{color: 'grey'}}>Partido cargado correctamente.</div>
-							<div><Link to={'/partido/' + id}><button style={{margin: 0}} className='boton'>Ir al partido</button></Link></div>
+							<div style={{color: 'grey'}}>Partido(s) cargado(s) correctamente.</div>
 						</div>
 					</div>
 				</div>
@@ -94,7 +92,7 @@ export default function Upload() {
 		case 2:
 			return (
 				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '280px', textAlign: 'center', minHeight: '355px'}}>
+					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
 						<div className='cartel'>
 							<FontAwesomeIcon icon={faSpinner} spin color='#ff9800' size='5x'></FontAwesomeIcon>
 						</div>
@@ -104,7 +102,7 @@ export default function Upload() {
 		case -1:
 			return (
 				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '280px', textAlign: 'center', minHeight: '355px'}}>
+					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
 						<div className='cartel'>
 							<FontAwesomeIcon icon={faKey} color='grey' size='5x'></FontAwesomeIcon>
 							<div style={{color: 'grey'}}>Contraseña incorrecta.</div>
@@ -116,7 +114,7 @@ export default function Upload() {
 		case -2:
 			return (
 				<div className='content'>
-					<div className='whitespace' style={{padding: '0', width: '280px', textAlign: 'center', minHeight: '355px'}}>
+					<div className='whitespace' style={{padding: '0', width: '310px', textAlign: 'center', minHeight: '355px'}}>
 						<div className='cartel'>
 							<FontAwesomeIcon icon={faExclamationTriangle} color='grey' size='5x'></FontAwesomeIcon>
 							<div style={{color: 'grey'}}>Ocurrió un error:</div>

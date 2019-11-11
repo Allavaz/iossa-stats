@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const formidable = require('formidable');
-const fs = require('fs');
 const db = require('./PushToDB');
 const rdb = require('./GetFromDB');
 const cors = require('cors');
@@ -12,16 +11,14 @@ app.use(cors());
 
 app.post('/api/postupload', (req, res) => {
 	var form = formidable.IncomingForm();
+	form.multiples = true;
 	form.parse(req, (err, fields, files) => {
 		if (fields.pw === key) {
-			fs.readFile(files.upload.path, (err, data) => {
-				try {
-					var json = JSON.parse(data);
-					db.pushToDB(json, files.upload.name, fields.torneo, fields.vod, res);
-				} catch(e) {
-					res.end(e);
-				}		
-			});
+			try {
+				db.pushToDB(files.upload, fields.torneo, fields.vod, res);
+			} catch(e) {
+				res.end(e);
+			}
 		} else {
 			res.end('Wrong password');
 		}
