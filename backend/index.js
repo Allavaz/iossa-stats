@@ -17,7 +17,8 @@ app.post('/api/postupload', (req, res) => {
 			try {
 				db.pushToDB(files.upload, fields.torneo, fields.vod, res);
 			} catch(e) {
-				res.end(e);
+				console.error(e);
+				res.end(e.toString());
 			}
 		} else {
 			res.end('Wrong password');
