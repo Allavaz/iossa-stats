@@ -6,6 +6,7 @@ export default {
     'Bravona': 'BV',
     'Brazil': 'BRA',
     'Caballeros de la Birra': 'LCB',
+    'Caballeros De La Birra': 'LCB',
     'Chicago Me Limpio': 'CML',
     'Coldchester United FC': 'CUFC',
     'Cold Chest FC': 'CCFC',
