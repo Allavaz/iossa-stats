@@ -9,7 +9,15 @@ const torneos = [
 	'Liga D2 T4',
 	'Copa Gubero T4',
 	'Liga D1 T4 - (Desempate)',
-	'Liga D1 T4 - Promoción'
+	'Liga D1 T4 - Promoción',
+	'Division de Honor T0',
+	'Liga Master T0',
+	'Recopa Master T0',
+	'Liga D1 T1',
+	'Copa Maradei T1 - Grupo A',
+	'Copa Maradei T1 - Grupo B',
+	'Copa Maradei T1 - Grupo C',
+	'Copa Maradei T1 - Eliminatorias'
 ]
 
 export default function Upload() {
