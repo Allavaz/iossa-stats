@@ -29,7 +29,8 @@ exports.removeTag = function(tag) {
                 "JFa.",
                 "MFC",
                 "LHF",
-                "XSN"]
+                "XSN",
+                "Is"]
 
     for (let i=0; i<tags.length; i++) {
         var tag = tag.replace(tags[i], "")
