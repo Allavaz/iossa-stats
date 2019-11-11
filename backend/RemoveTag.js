@@ -27,7 +27,8 @@ exports.removeTag = function(tag) {
                 "FFC",
                 "ECPG",
                 "JFa.",
-                "MFC"]
+                "MFC",
+                "LHF"]
 
     for (let i=0; i<tags.length; i++) {
         var tag = tag.replace(tags[i], "")
