@@ -4,15 +4,12 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import withFixedColumns from 'react-table-hoc-fixed-columns';
 import 'react-table-hoc-fixed-columns/lib/styles.css';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { playersColumns } from '../Columns';
 import Selector from './Selector';
 import { filterMethod } from '../Utils';
 import { api } from '../api';
-
-library.add(faSpinner);
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 

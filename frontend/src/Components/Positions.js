@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import FullPositions from './FullPositions';
 import { tablas } from '../Tablas'
-
-library.add(faSpinner);
 
 export default class Positions extends Component {
     
