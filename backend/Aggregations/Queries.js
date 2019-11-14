@@ -83,6 +83,16 @@ module.exports = {
             {'torneo': 'Copa Master T3'}
         ]
     },
+	'lm': {
+        $or: [
+            {'torneo': 'Liga Master T0'}
+        ]
+    },
+    'ddh': {
+        $or: [
+            {'torneo': 'Division de Honor T0'}
+        ]
+    },
     'supercopamaster': {
         $or: [
             {'torneo': 'Supercopa Master T3'},
