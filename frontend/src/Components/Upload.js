@@ -18,13 +18,14 @@ const torneos = [
 	'Copa Maradei T1 - Grupo A',
 	'Copa Maradei T1 - Grupo B',
 	'Copa Maradei T1 - Grupo C',
-	'Copa Maradei T1 - Eliminatorias'
+	'Copa Maradei T1 - Eliminatorias',
+	'TEST'
 ]
 
 export default function Upload() {
 	const [torneo, setTorneo] = useState(torneos[0]);
 	const [pw, setPw] = useState(null);
-	const [vod, setVod] = useState(null);
+	const [vod, setVod] = useState('');
 	const [file, setFile] = useState(null);
 	const [status, setStatus] = useState(0);
 	const bRef = useRef(null);
@@ -48,12 +49,14 @@ export default function Upload() {
 					setStatus(1);
 				} else if (res.data === 'Wrong password') {
 					alert('Contraseña incorrecta!');
+					bRef.current.disabled = false;
+					sRef.current.style.display = 'none';
 				} else {
 					console.error(res.data.error);
 					alert('Ocurrió un error. Revisá la consola.');
+					bRef.current.disabled = false;
+					sRef.current.style.display = 'none';
 				}
-				bRef.current.disabled = false;
-				sRef.current.style.display = 'none';
 			})
 			.catch((error) => {
 				console.error(error);
