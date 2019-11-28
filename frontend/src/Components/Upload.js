@@ -18,8 +18,7 @@ const torneos = [
 	'Copa Maradei T1 - Grupo A',
 	'Copa Maradei T1 - Grupo B',
 	'Copa Maradei T1 - Grupo C',
-	'Copa Maradei T1 - Eliminatorias',
-	'TEST'
+	'Copa Maradei T1 - Eliminatorias'
 ]
 
 export default function Upload() {
