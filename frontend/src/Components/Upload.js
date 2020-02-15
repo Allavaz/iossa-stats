@@ -27,7 +27,7 @@ export default function Upload() {
 	const [pw, setPw] = useState(null);
 	const [vod, setVod] = useState('');
 	const [file, setFile] = useState(null);
-	const [status, setStatus] = useState(0);
+	const [status, setStatus] = useState(1);
 	const [cTor, setcTor] = useState(false);
 	const bRef = useRef(null);
 	const sRef = useRef(null);
@@ -77,6 +77,14 @@ export default function Upload() {
 		}
 	}
 
+	function reset() {
+		setTorneo(torneos[0]);
+		setVod('');
+		setStatus(0);
+		setcTor(false);
+		setFile(null);
+	}
+
 	switch (status) {
 		default:
 			return (
@@ -106,6 +114,7 @@ export default function Upload() {
 							<FontAwesomeIcon icon={faCheckCircle} color='grey' size='5x'></FontAwesomeIcon>
 							<div style={{color: 'grey'}}>Partido(s) cargado(s) correctamente.</div>
 							<div><Link to='/resultados'><button style={{margin: 0}} className='boton'>Resultados</button></Link></div>
+							<div><button style={{margin: 0}} className='boton' onClick={() => reset()}>Cargar más</button></div>
 						</div>
 					</div>
 				</div>
