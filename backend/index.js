@@ -26,6 +26,10 @@ app.post('/api/postupload', (req, res) => {
 	});
 });
 
+app.get('/api/everything', (req, res) => {
+	rdb.getEverything(res);
+});
+
 app.get('/api/players/:id', (req, res) => {
 	rdb.getPlayers(req.params.id, res);
 });

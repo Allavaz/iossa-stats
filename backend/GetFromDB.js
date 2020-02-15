@@ -12,6 +12,18 @@ const top10assistsagg = require('./Aggregations/Top10Assists');
 const top10rusticosagg = require('./Aggregations/Top10Rusticos');
 const queries = require('./Aggregations/Queries');
 
+exports.getEverything = function(res) {
+    const client = new MongoClient(url, { useNewUrlParser: true });
+    client.connect((err, client) => {
+        const db = client.db(dbname);
+        db.collection('matchesaux').find({})
+            .toArray((err, docs) => {
+                res.json(docs);
+                client.close();
+            });
+    });
+}
+
 exports.getPlayers = function(id, res) {
     const client = new MongoClient(url, { useNewUrlParser: true });
     client.connect((err, client) => {
