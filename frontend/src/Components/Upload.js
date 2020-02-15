@@ -27,7 +27,7 @@ export default function Upload() {
 	const [pw, setPw] = useState(null);
 	const [vod, setVod] = useState('');
 	const [file, setFile] = useState(null);
-	const [status, setStatus] = useState(1);
+	const [status, setStatus] = useState(0);
 	const [cTor, setcTor] = useState(false);
 	const bRef = useRef(null);
 	const sRef = useRef(null);
