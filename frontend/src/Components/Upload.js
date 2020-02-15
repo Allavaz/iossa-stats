@@ -18,7 +18,8 @@ const torneos = [
 	'Copa Maradei T1 - Grupo A',
 	'Copa Maradei T1 - Grupo B',
 	'Copa Maradei T1 - Grupo C',
-	'Copa Maradei T1 - Eliminatorias'
+	'Copa Maradei T1 - Eliminatorias',
+	'Otro'
 ]
 
 export default function Upload() {
@@ -27,6 +28,7 @@ export default function Upload() {
 	const [vod, setVod] = useState('');
 	const [file, setFile] = useState(null);
 	const [status, setStatus] = useState(0);
+	const [cTor, setcTor] = useState(false);
 	const bRef = useRef(null);
 	const sRef = useRef(null);
 
@@ -66,6 +68,15 @@ export default function Upload() {
 		}
 	}
 
+	function setTor(e) {
+		if (e === 'Otro') {
+			setcTor(true);
+		} else {
+			setcTor(false);
+			setTorneo(e);
+		}
+	}
+
 	switch (status) {
 		default:
 			return (
@@ -74,11 +85,12 @@ export default function Upload() {
 						<div className='form'>
 							<h3 style={{marginBottom: 0}}>Cargar Partido</h3>
 							<div><input type="file" multiple onChange={(e) => setFile(e.target.files)} accept=".json"></input></div>
-							<div><select style={{marginTop: 0, width: '260px'}} id="selector" name="torneo" onChange={(e) => setTorneo(e.target.value)}>
+							<div><select style={{marginTop: 0, width: '260px'}} id="selector" name="torneo" onChange={(e) => setTor(e.target.value)}>
 								{torneos.map((e) => (
 									<option key={e} name='torneo' value={e}>{e}</option>
 								))}
 							</select></div>
+							<div style={{display: cTor ? 'block' : 'none'}}><input className='campo' type="torneo" onChange={(e) => setTorneo(e.target.value)} size="24" placeholder="Torneo"></input></div>
 							<div><input className='campo' type="text" onChange={(e) => setVod(e.target.value)} size="24" placeholder="ID del VOD (Ej: lQMMnMvnMLk)"></input></div>
 							<div><input className='campo' type="password" onChange={(e) => setPw(e.target.value)} placeholder="Contraseña"></input></div>
 							<div><button className='boton' ref={bRef} onClick={() => submit(torneo, pw, vod, file)}>Enviar</button> <span ref={sRef} style={{display: 'none'}}><FontAwesomeIcon icon={faSpinner} spin color='#ff9800'></FontAwesomeIcon></span></div>
