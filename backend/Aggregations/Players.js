@@ -102,11 +102,6 @@ module.exports = (arg) => {
 			}}, {$sort: {
 				team: 1,
 				name: 1
-			}}, {$lookup: {
-				from: 'teams',
-				localField: 'team',
-				foreignField: '_id',
-				as: 'teaminfo'
 			}}]
 	);
 }
