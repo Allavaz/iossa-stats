@@ -16,7 +16,7 @@ export default class Top10 extends Component {
 
     constructor(){
 		super();
-		this.state = {isLoading: true, top10Loading: false, category: 'TOTALES', temporada: 't4'};
+		this.state = {isLoading: true, top10Loading: false, category: 'TOTALES', temporada: 't5'};
 	}
     
     componentDidMount() {
