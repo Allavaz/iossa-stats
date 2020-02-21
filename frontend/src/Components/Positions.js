@@ -9,8 +9,8 @@ export default class Positions extends Component {
     constructor() {
         super();
         this.state = {
-            temporada: tablas.t4,
-            loadingItems: tablas.t4.length,
+            temporada: tablas.t5,
+            loadingItems: tablas.t5.length,
         };
     }
 
