@@ -25,7 +25,7 @@ export default class Players extends Component {
             isLoading: true, 
             playersLoading: false, 
             category: 'TOTALES', 
-            temporada: 't4'
+            temporada: 't5'
         };
 	}
     
