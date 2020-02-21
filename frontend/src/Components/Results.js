@@ -22,7 +22,7 @@ export default class Results extends Component {
         this.state = {
             isLoading: true, 
             category: '', 
-            temporada: 't4', 
+            temporada: 't5', 
             search: ''
         };
     }
