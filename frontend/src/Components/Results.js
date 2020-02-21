@@ -22,7 +22,7 @@ export default class Results extends Component {
         this.state = {
             isLoading: true, 
             category: '', 
-            temporada: 't4', 
+            temporada: 't5', 
             search: ''
         };
     }
@@ -51,6 +51,8 @@ export default class Results extends Component {
                 this.setState({category: 'SUPERCOPA MASTER'});
             } else if (arg.startsWith('recopamaster')) {
                 this.setState({category: 'RECOPA MASTER'});
+            } else if (arg.startsWith('recopamaradei')) {
+                this.setState({category: 'RECOPA MARADEI'});
             } else if (arg.startsWith('copaamerica')) {
                 this.setState({category: 'COPA AMERICA'});
             } else if (arg.startsWith('copadelsur')) {
@@ -72,6 +74,9 @@ export default class Results extends Component {
         switch (selector.options[selector.selectedIndex].value) {
             case 'total':
                 this.selectTorneo('all');
+                break;
+            case 't5':
+                this.selectTorneo('t5');
                 break;
             case 't4':
                 this.selectTorneo('t4');
