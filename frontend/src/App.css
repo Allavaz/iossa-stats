@@ -634,3 +634,10 @@ table tr td {
     flex: 1 0 auto;
   }
 }
+
+.profilepicture * {
+  border: solid #ffc163;
+  border-radius: 5px;
+  width: 128px;
+  height: 128px;
+}
