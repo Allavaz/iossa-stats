@@ -3,7 +3,7 @@ import React from 'react';
 export default function Selector(props) {
     return (
         <div className='torSelect'>
-            <select id='selector' defaultValue='t4' onChange={props.prop2}>
+            <select id='selector' defaultValue='t5' onChange={props.prop2}>
                 <option value='total'>Totales</option>
                 <option value='t5'>Temporada 5</option>
                 <option value='t4'>Temporada 4</option>
