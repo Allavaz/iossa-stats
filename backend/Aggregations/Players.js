@@ -3,7 +3,7 @@ const queries = require('./Queries');
 module.exports = (arg) => {
 	return (
 		[{$match: queries[arg]}, 
-		{$sort: {fecha: 1}},
+		{$sort: {fecha: -1}},
 		{$project: {
 				players: 1
 			}}, {$unwind: {
@@ -13,13 +13,13 @@ module.exports = (arg) => {
 			}}, {$group: {
 				_id: '$players.info.steam_id',
 				name: {
-					$last: '$players.info.name'
+					$first: '$players.info.name'
 				},
 				steamID: {
 					$last: '$players.info.steam_id'
 				},
 				team: {
-					$last: '$players.info.team'
+					$first: '$players.info.team'
 				},
 				matches: {
 					$sum: 1
