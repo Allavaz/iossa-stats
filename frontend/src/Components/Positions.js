@@ -32,7 +32,7 @@ export default class Positions extends Component {
     render() {
         return ( 
             <div className='content'>
-                <select id='selector' defaultValue='t4' onChange={this.selectTemporada}>
+                <select id='selector' defaultValue='t5' onChange={this.selectTemporada}>
                     <option value='t5'>Temporada 5</option>
                     <option value='t4'>Temporada 4</option>
                     <option value='t3'>Temporada 3</option>
