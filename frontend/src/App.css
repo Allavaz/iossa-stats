@@ -636,8 +636,9 @@ table tr td {
 }
 
 .profilepicture * {
-  border: solid #ffc163;
-  border-radius: 5px;
+  box-shadow: 0px 2px 10px #ddd;
+  border-radius: 64px;
+  border: 1px solid #ccc;
   width: 128px;
   height: 128px;
 }

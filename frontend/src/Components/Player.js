@@ -29,6 +29,7 @@ export default class Player extends Component {
                 })
                 this.setState({data2: res.data});
             });
+            document.title = `${this.state.data[0].name} | IOSoccer Sudamérica`
         });
     }
     

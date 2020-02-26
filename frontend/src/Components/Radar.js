@@ -11,18 +11,22 @@ export default function Radar(props) {
         cc: 'Capacidad Creativa'
     }
 
+    const att = Attributes(props.data[0]);
+
     let data = [
         {
             data: {
-                pf: Attributes(props.data[0]).PF,
-                ad: Attributes(props.data[0]).AD,
-                cc: Attributes(props.data[0]).CC
+                pf: att.PF*att.coeff,
+                ad: att.AD*att.coeff,
+                cc: att.CC*att.coeff
             },
             meta: {
                 color: '#ff9800'
             }
         }
     ]
+
+    console.log(att);
 
     return (
         <RadarChart

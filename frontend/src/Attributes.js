@@ -30,10 +30,11 @@ export default function Attributes(props) {
     return ({
         "nombre": props.name,
         "partidos": props.matches,
-        "PF": Math.round(poderOfensivo(props)*coeff), 
+        "PF": poderOfensivo(props), 
         //"PJ": participacionJuego(jsons[i]), 
-        "AD": Math.round(aporteDefensivo(props)*coeff), 
-        "CC": Math.round(capacidadCreativa(props)*coeff),
+        "AD": aporteDefensivo(props), 
+        "CC": capacidadCreativa(props),
+        "coeff": coeff
         //"valoracion": avg(jsons[i])
     })   
 }
