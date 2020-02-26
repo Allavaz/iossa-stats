@@ -1,9 +1,11 @@
 const queries = require('./Queries');
 
-module.exports = (arg) => {
+module.exports = (steamid, arg) => {
 	return (
-		[{$match: queries[arg]}, 
+		[{$match: queries[arg]},
 		{$sort: {fecha: -1}},
+		{$match: {"players.info.steam_id": steamid}},
+		{$limit: 15},
 		{$project: {
 				players: 1
 			}}, {$unwind: {

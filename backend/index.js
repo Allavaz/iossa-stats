@@ -6,6 +6,7 @@ const rdb = require('./GetFromDB');
 const cors = require('cors');
 const path = require('path');
 const { key } = require('./db.json');
+const steam = require('./steam');
 
 app.use(cors());
 
@@ -58,9 +59,21 @@ app.get('/api/match/:id', (req, res) => {
 	rdb.getMatchFromID(req.params.id, res);
 });
 
-app.get('/api/player/:id', (req, res) => {
-	rdb.getPlayerFromID(req.params.id, res);
+app.get('/api/player/:id/:torneo', (req, res) => {
+	rdb.getPlayerFromID(req.params.id, req.params.torneo, res);
 });
+
+app.get('/api/playerlast15/:id/:torneo', (req, res) => {
+	rdb.getPlayerLast15FromID(req.params.id, req.params.torneo, res);
+});
+
+app.get('/api/playerslast15/', (req, res) => {
+	rdb.getPlayersLast15(res);
+});
+
+app.get('/api/getsteaminfo/:id', (req, res) => {
+	steam.getSteamInfo(req.params.id, res);
+})
 
 app.use(express.static(path.join(__dirname, 'build')));
 

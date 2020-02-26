@@ -7,6 +7,7 @@ const authMechanism = 'DEFAULT';
 const url = `mongodb://${encuser}:${encpw}@${host}:27017/?authMechanism=${authMechanism}`;
 const positionsagg = require('./Aggregations/Positions');
 const playersagg = require('./Aggregations/Players');
+const playerlast15agg = require('./Aggregations/PlayerLast15');
 const top10goalsagg = require('./Aggregations/Top10Goals');
 const top10assistsagg = require('./Aggregations/Top10Assists');
 const top10rusticosagg = require('./Aggregations/Top10Rusticos');
@@ -135,16 +136,53 @@ exports.getMatchFromID = function(id, res){
     });
 }
 
-exports.getPlayerFromID = function(id, res){
+exports.getPlayerFromID = function(id, torneo, res){
     const client = new MongoClient(url, { useNewUrlParser: true })
     client.connect((err, client) => {
         const db = client.db(dbname);
-        const o_id = new ObjectId(id);
         db.collection('matchesaux')
-            .aggregate(playersagg('all'))
-            .findOne({"_id": o_id}, (err, doc) => {
+            .aggregate(playersagg(torneo))
+            .match({"_id": id})
+            .toArray((err, doc) => {
                 res.json(doc);
                 client.close();
             });
     });
+}
+
+exports.getPlayerLast15FromID = function(id, torneo, res){
+    const client = new MongoClient(url, { useNewUrlParser: true })
+    client.connect((err, client) => {
+        const db = client.db(dbname);
+        db.collection('matchesaux')
+            .aggregate(playerlast15agg(id, torneo))
+            .match({"_id": id})
+            .toArray((err, doc) => {
+                res.json(doc);
+                client.close();
+            });
+    });
+}
+
+exports.getPlayersLast15 = async function(res){
+    const client = new MongoClient(url, { useNewUrlParser: true })
+    let c = await client.connect();
+    const db = c.db(dbname);
+    let playerids = await db.collection('matchesaux').aggregate(playersagg('all')).project({"_id": 1}).toArray()
+    console.log(playerids);
+    let result = []
+    for (let i=0; i<playerids.length; i++) {
+        let doc = await db.collection('matchesaux')
+                        .aggregate(playerlast15agg(playerids[i]._id, 'all'))
+                        .match({"_id": playerids[i]._id})
+                        .toArray()
+        console.log(doc);
+        if (doc[0].matches < 15) {
+
+        } else {
+            result.push(doc[0]);
+        }
+    }
+    res.json(result);
+    client.close();
 }

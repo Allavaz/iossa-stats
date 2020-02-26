@@ -8,7 +8,7 @@ export const playersColumns = [
         accessor: 'team',
         width: 200,
         Cell: row => {
-            return <div className='teamlogo' style={{display:'inline-flex', paddingRight: '5px'}}><img height='16px' src={`clubs/${Teams[row.row._original.team].toLowerCase()}.png`} alt={row.row._id}></img> {row.row.team}</div>
+            return <div className='teamlogo' style={{justifyContent: 'center', paddingRight: '5px'}}><img height='16px' src={`clubs/${Teams[row.row._original.team].toLowerCase()}.png`} alt={row.row._id}></img> {row.row.team}</div>
         },
         filterable: true
     },

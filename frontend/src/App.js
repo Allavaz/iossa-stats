@@ -13,6 +13,7 @@ import Top10 from './Components/Top10';
 import Results from './Components/Results';
 import Upload from './Components/Upload';
 import Endpoint from './endpoint';
+import Player from './Components/Player';
 
 class App extends Component {
 
@@ -31,6 +32,7 @@ class App extends Component {
 					<Route exact path='/posiciones' component={Positions} />
 					<Route exact path='/partido/:id' component={Match} />
 					<Route exact path='/resultados' component={Results} />
+					<Route exact path='/jugador/:id' component={Player} />
 					<Route exact path={Endpoint} component={Upload} />
 					<Route component={NotFound} />
 				</Switch>

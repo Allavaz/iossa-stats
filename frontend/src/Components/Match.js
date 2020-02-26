@@ -102,6 +102,21 @@ export default class Match extends Component {
 				case "Copa Gubero T4":
 					this.setState({isCopa: true, challonge: "copagubero", isLoading: false});
 					break;
+				case "Liga Master T5":
+					this.setState({isCopa: false, isLoading: false, table: 'lmt5'});
+					break;
+				case "Division de Honor T5":
+					this.setState({isCopa: false, isLoading: false, table: 'ddht5'});
+					break;
+				case "Copa Maradei T5 - Grupo A":
+					this.setState({isCopa: false, isLoading: false, table: 'maradeit5a'});
+					break;
+				case "Copa Maradei T5 - Grupo B":
+					this.setState({isCopa: false, isLoading: false, table: 'maradeit5b'});
+					break;
+				case "Copa Maradei T5 - Grupo C":
+					this.setState({isCopa: false, isLoading: false, table: 'maradeit5c'});
+					break;
 				default:
 					this.setState({isCopa: false, isLoading: false});
 					break;
