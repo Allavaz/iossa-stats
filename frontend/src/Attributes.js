@@ -2,10 +2,6 @@ function poderOfensivo(data) {
     return Math.round((data.goals*15+data.shotsontarget+data.assists*10)/data.matches);
 }
 
-/* function participacionJuego(data) {
-    return Math.round((((data.distancecovered/data.matches)*.25)+((data.possession/100)*data.matches))*100/40);
-} */
-
 function aporteDefensivo(data) {
     return Math.round((data.interceptions/data.matches)*2.5+(data.tacklescompleted/data.matches));
 }
@@ -20,10 +16,6 @@ function findcoeff(data) {
 
     return 1/max;
 }
-
-/* function avg(data) {
-    return Math.round((poderOfensivo(data)+participacionJuego(data)+aporteDefensivo(data)+capacidadCreativa(data))/4)
-} */
 
 export default function Attributes(props) {
     let coeff = findcoeff(props);

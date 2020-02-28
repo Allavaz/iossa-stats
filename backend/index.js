@@ -63,17 +63,13 @@ app.get('/api/player/:id/:torneo', (req, res) => {
 	rdb.getPlayerFromID(req.params.id, req.params.torneo, res);
 });
 
-app.get('/api/playerlast15/:id/:torneo', (req, res) => {
-	rdb.getPlayerLast15FromID(req.params.id, req.params.torneo, res);
-});
-
-app.get('/api/playerslast15/', (req, res) => {
-	rdb.getPlayersLast15(res);
-});
-
 app.get('/api/getsteaminfo/:id', (req, res) => {
 	steam.getSteamInfo(req.params.id, res);
-})
+});
+
+app.get('/api/getplayermatches/:id', (req, res) => {
+	rdb.getPlayerMatchesFromID(req.params.id, res);
+});
 
 app.use(express.static(path.join(__dirname, 'build')));
 

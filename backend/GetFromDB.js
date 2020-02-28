@@ -150,39 +150,13 @@ exports.getPlayerFromID = function(id, torneo, res){
     });
 }
 
-exports.getPlayerLast15FromID = function(id, torneo, res){
-    const client = new MongoClient(url, { useNewUrlParser: true })
-    client.connect((err, client) => {
-        const db = client.db(dbname);
-        db.collection('matchesaux')
-            .aggregate(playerlast15agg(id, torneo))
-            .match({"_id": id})
-            .toArray((err, doc) => {
-                res.json(doc);
-                client.close();
-            });
-    });
-}
-
-exports.getPlayersLast15 = async function(res){
+exports.getPlayerMatchesFromID = async function(id, res) {
     const client = new MongoClient(url, { useNewUrlParser: true })
     let c = await client.connect();
     const db = c.db(dbname);
-    let playerids = await db.collection('matchesaux').aggregate(playersagg('all')).project({"_id": 1}).toArray()
-    console.log(playerids);
-    let result = []
-    for (let i=0; i<playerids.length; i++) {
-        let doc = await db.collection('matchesaux')
-                        .aggregate(playerlast15agg(playerids[i]._id, 'all'))
-                        .match({"_id": playerids[i]._id})
-                        .toArray()
-        console.log(doc);
-        if (doc[0].matches < 15) {
-
-        } else {
-            result.push(doc[0]);
-        }
-    }
-    res.json(result);
-    client.close();
+    let matches = await db.collection('matchesaux')
+        .find({"players.info.steam_id": id})
+        .sort({fecha: -1})
+        .toArray()
+    res.json(matches);
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { fecha, getTournamentIcon } from './Utils';
+import { Link } from 'react-router-dom';
 import Teams from './Teams';
 
 export const playersColumns = [
@@ -17,7 +18,10 @@ export const playersColumns = [
         accessor: 'name',
         fixed: 'left',
         width: 150,
-        filterable: true
+        filterable: true,
+        Cell: row => {
+            return <Link to={`/jugador/${row.row._original._id}`}>{row.row._original.name}</Link>
+        }
     },
     {
         Header: 'Partidos',
@@ -162,7 +166,10 @@ export const matchIndivStatsColumns = [
 		Header: 'Jugador',
 		accessor: 'info.name',
 		fixed: 'left',
-		width: 100,
+        width: 100,
+        Cell: row => {
+            return <Link to={`/jugador/${row.row._original.info.steam_id}`}>{row.row._original.info.name}</Link>
+        }
 	},
 	{
 		Header: 'Goles',

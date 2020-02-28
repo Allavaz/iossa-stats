@@ -5,6 +5,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Selector from './Selector';
 import { api } from '../api';
 import Teams from '../Teams';
+import { Link } from 'react-router-dom';
 
 export default class Top10 extends Component {
 
@@ -125,7 +126,7 @@ export default class Top10 extends Component {
                                         {this.state.data.map((item, index) => (
                                             <tr key={item._id}>
                                                 <td width='25px'>{index+1}</td>
-                                                <td><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={`/clubs/${Teams[item.team].toLowerCase()}.png`} alt={item._id}></img> {item.name}</div></td>
+                                                <td><Link to={`jugador/${item._id}`}><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={`/clubs/${Teams[item.team].toLowerCase()}.png`} alt={item._id}></img> {item.name}</div></Link></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='70px'>{item.goals}</td>
                                             </tr>
@@ -150,7 +151,7 @@ export default class Top10 extends Component {
                                         {this.state.data2.map((item, index) => (
                                             <tr key={item._id}>
                                                 <td width='25px'>{index+1}</td>
-                                                <td><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={`/clubs/${Teams[item.team].toLowerCase()}.png`} alt={item._id}></img> {item.name}</div></td>
+                                                <td><Link to={`jugador/${item._id}`}><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={`/clubs/${Teams[item.team].toLowerCase()}.png`} alt={item._id}></img> {item.name}</div></Link></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='90px'>{item.assists}</td>
                                             </tr>
@@ -177,7 +178,7 @@ export default class Top10 extends Component {
                                         {this.state.data3.map((item, index) => (
                                             <tr key={item._id}>
                                                 <td width='25px'>{index+1}</td>
-                                                <td><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={`/clubs/${Teams[item.team].toLowerCase()}.png`} alt={item._id}></img> {item.name}</div></td>
+                                                <td><Link to={`jugador/${item._id}`}><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={`/clubs/${Teams[item.team].toLowerCase()}.png`} alt={item._id}></img> {item.name}</div></Link></td>
                                                 <td width='75px'>{item.matches}</td>
                                                 <td width='75px'>{item.fouls}</td>
                                                 <td width='75px'>{item.yellowcards}</td>
