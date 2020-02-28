@@ -639,14 +639,16 @@ table tr td {
   box-shadow: 0px 2px 10px #ddd;
   border-radius: 5px;
   border: 1px solid #ccc;
-  width: 128px;
-  height: 128px;
+  width: 150px;
+  height: 150px;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .stat {
   padding: 5px;
-  width: 90px;
+  width: 64px;
   margin-bottom: 10px;
 }
 
