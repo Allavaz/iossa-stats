@@ -27,8 +27,9 @@ export default class Home extends Component {
 					<div className='colCon' style={{margin: '-10px'}}>
 						<Matches callback={this.reduceLoadingItems}></Matches>
 						<div style={{margin: '10px', flexGrow: 1}}>
-							<MiniPositions torneo='d1t4' header='liga d1 t4' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='d2t4' header='liga d2 t4' callback={this.reduceLoadingItems}></MiniPositions>
+							<MiniPositions torneo='maradeit5a' header='Copa Maradei T5 - Grupo A' callback={this.reduceLoadingItems}></MiniPositions>
+							<MiniPositions torneo='maradeit5b' header='Copa Maradei T5 - Grupo B' callback={this.reduceLoadingItems}></MiniPositions>
+							<MiniPositions torneo='maradeit5c' header='Copa Maradei T5 - Grupo C' callback={this.reduceLoadingItems}></MiniPositions>
 						</div>
 					</div>
 				</div>
