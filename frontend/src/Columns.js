@@ -325,7 +325,7 @@ export const resultColumns = [
         Header: 'Visitante',
         accessor: 'teams[1].teamname',
         Cell: row => {
-            return <div className='teamlogo' id='away'><img height='16px' src={`/clubs/${Teams[row.row._original.teams[1].teamname].toLowerCase()}.png`} alt={row.row._original.teams[1].teamname}></img> <div id='teamname'>{row.row._original.teams[1].teamname}</div><div id='shortname'>{Teams[row.row._original.teams[0].teamname]}</div></div>
+            return <div className='teamlogo' id='away'><img height='16px' src={`/clubs/${Teams[row.row._original.teams[1].teamname].toLowerCase()}.png`} alt={row.row._original.teams[1].teamname}></img> <div id='teamname'>{row.row._original.teams[1].teamname}</div><div id='shortname'>{Teams[row.row._original.teams[1].teamname]}</div></div>
         }
     },
     {
