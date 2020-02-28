@@ -4,11 +4,12 @@ import 'react-table/react-table.css';
 import withFixedColumns from 'react-table-hoc-fixed-columns';
 import 'react-table-hoc-fixed-columns/lib/styles.css';
 import { matchIndivStatsColumns } from '../Columns';
+import { useHistory } from 'react-router-dom';
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
 export default function MatchIndividualStats(props) {
-	console.log(props.data.playerStatistics)
+	const history = useHistory();
     return (
         <div>
             <h3>ESTADÍSTICAS INDIVIDUALES - {props.data.teamname.toString().toUpperCase()}</h3>
@@ -28,7 +29,7 @@ export default function MatchIndividualStats(props) {
 					minRows={0}
 					getTrProps={(state, rowInfo, column, instance) => ({
 						onClick: e => {
-							window.location.assign('/jugador/' + rowInfo.original.info.steam_id);
+							history.push('/jugador/' + rowInfo.original.info.steam_id);
 						},
 						style: {
 							cursor: 'pointer'
