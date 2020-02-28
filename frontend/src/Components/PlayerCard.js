@@ -15,9 +15,9 @@ export default function PlayerCard(props) {
 						<div style={{marginTop: '5px', color: 'rgb(90,90,90', display: props.data.name === props.steaminfo.personaname ? 'none' : 'block'}}>{props.steaminfo.personaname}</div>
 						<div className='teamlogo' style={{marginTop: '5px'}}><img style={{marginLeft: '0px'}} height='16px' src={`/clubs/${Teams[props.data.team].toLowerCase()}.png`} alt={props.data.name}></img> <div id='fullteamname' style={{color: 'rgb(90,90,90'}}>{props.data.team}</div></div>
 						<div style={{marginTop: '10px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{props.data.matches} partidos</div>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.wins} victoria${props.data.wins > 1 ? 's' : ''}`}</div>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.draws} empate${props.data.draws > 1 ? 's' : ''}`}</div>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.losses} derrota${props.data.wins > 1 ? 's' : ''}`}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.wins} victoria${props.data.wins === 1 ? '' : 's'}`}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.draws} empate${props.data.draws === 1 ? '' : 's'}`}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.losses} derrota${props.data.wins === 1 ? '' : 's'}`}</div>
 					</div>
 				</div>
 				<RadarG data={props.data2}></RadarG>
