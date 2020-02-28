@@ -8,6 +8,7 @@ import { matchIndivStatsColumns } from '../Columns';
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
 export default function MatchIndividualStats(props) {
+	console.log(props.data.playerStatistics)
     return (
         <div>
             <h3>ESTADÍSTICAS INDIVIDUALES - {props.data.teamname.toString().toUpperCase()}</h3>
@@ -25,6 +26,14 @@ export default function MatchIndividualStats(props) {
 					rowsText={'filas'}
 					showPagination={false}
 					minRows={0}
+					getTrProps={(state, rowInfo, column, instance) => ({
+						onClick: e => {
+							window.location.assign('/jugador/' + rowInfo.original.info.steam_id);
+						},
+						style: {
+							cursor: 'pointer'
+						}
+					})}
 				/>
 			</div>
         </div>
