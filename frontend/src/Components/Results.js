@@ -148,7 +148,7 @@ export default class Results extends Component {
                         defaultPageSize={20}
                         getTrProps={(state, rowInfo, column, instance) => ({
                             onClick: e => {
-                                this.props.history.push('/partido/' + rowInfo.original._id)
+                                window.location.assign('/partido/' + rowInfo.original._id);
                             },
                             style: {
                                 cursor: 'pointer'

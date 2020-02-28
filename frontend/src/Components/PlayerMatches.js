@@ -24,13 +24,13 @@ export default function PlayerMatches(props) {
                 defaultPageSize={5}
                 getTrProps={(state, rowInfo, column, instance) => ({
                     onClick: e => {
-                        this.props.history.push('/partido/' + rowInfo.original._id)
+                        window.location.assign('/partido/' + rowInfo.original._id);
                     },
                     style: {
                         cursor: 'pointer'
                     }
                 })}
-                />
+            />
         </div>
     )
 }
