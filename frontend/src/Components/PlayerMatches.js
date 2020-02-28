@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
+import { useHistory } from 'react-router-dom';
 import 'react-table/react-table.css';
 import withFixedColumns from 'react-table-hoc-fixed-columns';
 import 'react-table-hoc-fixed-columns/lib/styles.css';
@@ -9,6 +10,7 @@ const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
 export default function PlayerMatches(props) {
     const TheadComponent = props => null;
+    const history = useHistory();
 
     return(
         <div style={{width: '100%'}}>
@@ -24,7 +26,7 @@ export default function PlayerMatches(props) {
                 defaultPageSize={5}
                 getTrProps={(state, rowInfo, column, instance) => ({
                     onClick: e => {
-                        window.location.assign('/partido/' + rowInfo.original._id);
+                        history.push('/partido/' + rowInfo.original._id);
                     },
                     style: {
                         cursor: 'pointer'
