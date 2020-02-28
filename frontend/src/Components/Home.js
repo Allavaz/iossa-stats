@@ -6,7 +6,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class Home extends Component {
 	state = {
-		loadingItems: 3
+		loadingItems: 4
 	};
 
 	componentDidMount(){
