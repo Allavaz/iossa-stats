@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "chardet": "^0.8.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "formidable": "^1.2.1",

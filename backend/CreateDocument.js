@@ -1,9 +1,21 @@
 const rt = require('./RemoveTag');
 const fs = require('fs');
+const chardet = require('chardet');
 const { calcPercentages, calcIndivPossession } = require('./Utils');
 
 exports.createDocument = function(file, torneo, vod, res) {
-    let data = fs.readFileSync(file.path);
+    let char = chardet.detectFileSync(file.path);
+    let data;
+    if (char === 'UTF-8') {
+        data = fs.readFileSync(file.path);
+    } else if (char === 'ISO-8859-1') {
+        data = fs.readFileSync(file.path, 'latin1');
+    } else {
+        res.json({
+            status: 'error',
+            error: 'Weird encoding'
+        })
+    }
     try {
         let json = JSON.parse(data);
         if (json.matchData == undefined) {
