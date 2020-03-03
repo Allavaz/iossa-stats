@@ -47,7 +47,7 @@ export default function PlayerCard(props) {
 					</div>
 					{ props.data.saves > props.data.shotsontarget ?
 					<div className='stat'>
-						<div className='value'>{Math.round((props.data.goalsconceded/props.data.saves)*100)}%</div>
+						<div className='value'>{Math.round((props.data.saves/(props.data.saves+props.data.goalsconceded))*100)}%</div>
 						<div className='label'>Atajadas</div>
 					</div> :
 					<div className='stat'>
