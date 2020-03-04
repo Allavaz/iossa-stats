@@ -74,6 +74,8 @@ exports.createDocument = function(file, torneo, vod, res) {
                     let savescaught = 0;
                     let goalkicks = 0;
                     let goalsconceded = 0;
+                    let secondsplayed = 0;
+                    let positions = [];
     
                     for (j = 0; j < json.matchData.players[i].matchPeriodData.length; j++) {
                         goals = goals + json.matchData.players[i].matchPeriodData[j].statistics[12];
@@ -101,7 +103,19 @@ exports.createDocument = function(file, torneo, vod, res) {
                         savescaught = savescaught + json.matchData.players[i].matchPeriodData[j].statistics[24];
                         goalkicks = goalkicks + json.matchData.players[i].matchPeriodData[j].statistics[21];
                         goalsconceded = goalsconceded + json.matchData.players[i].matchPeriodData[j].statistics[6];
+                        secondsplayed = secondsplayed + (json.matchData.players[i].matchPeriodData[j].info.endSecond - json.matchData.players[i].matchPeriodData[j].info.startSecond);
+                        if (!positions.some((e) => e.position === json.matchData.players[i].matchPeriodData[j].info.position)) {
+                            positions.push({
+                               position: json.matchData.players[i].matchPeriodData[j].info.position,
+                               seconds: (json.matchData.players[i].matchPeriodData[j].info.endSecond - json.matchData.players[i].matchPeriodData[j].info.startSecond)
+                            });
+                        } else {
+                            let index = positions.findIndex((e) => e.position === json.matchData.players[i].matchPeriodData[j].info.position);
+                            positions[index].seconds = positions[index].seconds + (json.matchData.players[i].matchPeriodData[j].info.endSecond - json.matchData.players[i].matchPeriodData[j].info.startSecond)
+                        }
                     }
+
+                    positions.sort((a, b) => b.seconds - a.seconds);
     
                     players.push({
                         'info': {
@@ -134,7 +148,9 @@ exports.createDocument = function(file, torneo, vod, res) {
                             'foulssuffered': foulssuffered,
                             'savescaught': savescaught,
                             'goalkicks': goalkicks,
-                            'goalsconceded': goalsconceded
+                            'goalsconceded': goalsconceded,
+                            'secondsplayed': secondsplayed,
+                            'positions': positions
                         }
                     });
                 }
