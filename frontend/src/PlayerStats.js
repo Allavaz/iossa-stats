@@ -30,6 +30,7 @@ export default function PlayerStats(data, id) {
     let savescaught = 0;
     let goalkicks = 0;
     let goalsconceded = 0;
+    let secondsplayed = 0;
 
     for (let i=0; i<data.length; i++) {
         for (let j=0; j<data[i].players.length; j++) {
@@ -69,6 +70,7 @@ export default function PlayerStats(data, id) {
                 savescaught = savescaught + data[i].players[j].statistics.savescaught;
                 goalkicks = goalkicks + data[i].players[j].statistics.goalkicks;
                 goalsconceded = goalsconceded + data[i].players[j].statistics.goalsconceded;
+                secondsplayed = secondsplayed + data[i].players[j].statistics.secondsplayed;
             }
         }
 
@@ -125,6 +127,7 @@ export default function PlayerStats(data, id) {
         foulssufered: foulssufered,
         savescaught: savescaught,
         goalkicks: goalkicks,
-        goalsconceded: goalsconceded
+        goalsconceded: goalsconceded,
+        secondsplayed: secondsplayed
     };
 }
