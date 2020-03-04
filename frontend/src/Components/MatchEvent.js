@@ -3,7 +3,6 @@ import EventIcon from './EventIcon';
 import { Link } from 'react-router-dom';
 
 export default function MatchEvent(props) {
-    console.log(props)
     if (props.side === 'home') {
         if ((props.item.team === 'home' && props.item.event !== 'OWN GOAL') || (props.item.team === 'away' && props.item.event === 'OWN GOAL')) {
             return (
