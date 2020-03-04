@@ -7,7 +7,6 @@ const authMechanism = 'DEFAULT';
 const url = `mongodb://${encuser}:${encpw}@${host}:27017/?authMechanism=${authMechanism}`;
 const positionsagg = require('./Aggregations/Positions');
 const playersagg = require('./Aggregations/Players');
-const playerlast15agg = require('./Aggregations/PlayerLast15');
 const top10goalsagg = require('./Aggregations/Top10Goals');
 const top10assistsagg = require('./Aggregations/Top10Assists');
 const top10rusticosagg = require('./Aggregations/Top10Rusticos');
