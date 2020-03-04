@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const { host, user, pw, dbname } = require('./db.json');
+const { host, user, pw, dbname, collection } = require('./db.json');
 const encuser = encodeURIComponent(user);
 const encpw = encodeURIComponent(pw);
 const authMechanism = 'DEFAULT';
@@ -23,7 +23,7 @@ exports.pushToDB = function(files, torneo, vod, res) {
 
     MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
         const db = client.db(dbname);
-        db.collection('matchesaux').insertMany(documents, (err, r) => {
+        db.collection(collection).insertMany(documents, (err, r) => {
             if (err === null) {
                 res.json({
                     status: 'success'
