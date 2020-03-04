@@ -1,13 +1,13 @@
 function poderOfensivo(data) {
-    return Math.round((data.goals*15+data.shotsontarget+data.assists*10)/data.matches);
+    return Math.round((data.goals*15+data.shotsontarget+data.assists*10)/(data.secondsplayed/60/90));
 }
 
 function aporteDefensivo(data) {
-    return Math.round((data.interceptions/data.matches)*2.5+(data.tacklescompleted/data.matches));
+    return Math.round((data.interceptions/data.matches)*2.5+(data.tacklescompleted/(data.secondsplayed/60/90)));
 }
 
 function capacidadCreativa(data) {
-    return Math.round((data.passescompleted+data.assists*10+data.possession*10)/data.matches);
+    return Math.round((data.passescompleted+data.assists*10+data.possession*10)/(data.secondsplayed/60/90));
 }
 
 function findcoeff(data) {
