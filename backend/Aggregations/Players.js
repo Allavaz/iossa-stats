@@ -98,6 +98,9 @@ module.exports = (arg) => {
 				},
 				goalsconceded: {
 					$sum: '$players.statistics.goalsconceded'
+				},
+				secondsplayed: {
+					$sum: '$players.statistics.secondsplayed'
 				}
 			}}, {$sort: {
 				team: 1,
