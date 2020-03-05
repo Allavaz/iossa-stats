@@ -25,7 +25,7 @@ function getPosColor(pos) {
 		case 'RW':
 			return '#FF6384';
 		default:
-			return '#fff';
+			return '#ff9800';
 	}
 }
 
