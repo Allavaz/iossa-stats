@@ -110,44 +110,6 @@ export default function PlayerStats(data, id) {
         }
     }
 
-    console.log({
-        name: name,
-        steamid: id,
-        team: team,
-        matches: matches,
-        wins: wins,
-        losses: losses,
-        draws: draws,
-        goals: goals,
-        assists: assists,
-        shots: shots,
-        shotsontarget: shotsontarget,
-        passes: passes,
-        passescompleted: passescompleted,
-        interceptions: interceptions,
-        saves: saves,
-        fouls: fouls,
-        yellowcards: yellowcards,
-        redcards: redcards,
-        owngoals: owngoals,
-        offsides: offsides,
-        distancecovered: distancecovered,
-        possession: possession,
-        corners: corners,
-        throwins: throwins,
-        penalties: penalties,
-        freekicks: freekicks,
-        tackles: tackles,
-        tacklescompleted: tacklescompleted,
-        foulssuffered: foulssuffered,
-        savescaught: savescaught,
-        goalkicks: goalkicks,
-        goalsconceded: goalsconceded,
-        secondsplayed: secondsplayed,
-        lastpos: lastpos,
-        positions: positions
-    })
-
     return {
         name: name,
         steamid: id,

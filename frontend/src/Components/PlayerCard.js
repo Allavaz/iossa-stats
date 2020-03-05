@@ -1,6 +1,6 @@
 import React from 'react';
 import RadarG from './RadarG';
-import Teams from '../Teams.json'
+import Teams from '../Teams.json';
 
 function getPosColor(pos) {
 	switch (pos) {
@@ -30,6 +30,14 @@ function getPosColor(pos) {
 }
 
 export default function PlayerCard(props) {
+	let positions = [];
+
+	for (let i=0; i<props.data.positions.length; i++) {
+		if (props.data.positions[i].position !== props.data.lastpos) {
+			positions.push(props.data.positions[i].position);
+		}
+	}
+
     return (
 		<div className='whitespace' style={{paddingBottom: '0px', marginBottom: 0, flexGrow: 1}}>
 			<div style={{display: 'flex', padding: '10px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center'}}>
@@ -37,13 +45,12 @@ export default function PlayerCard(props) {
 					<div className='profilepicture'>
 						<img src={props.steaminfo.avatarfull} alt={props.data.name}></img>
 						<div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+							<div className='position' style={{backgroundColor: getPosColor(props.data.lastpos)}}>{props.data.lastpos}</div>
 							{
-								props.data.positions.map((item, index) => {
-									if (index < 3){
-										return <div className='position' style={{backgroundColor: getPosColor(item.position)}}>{item.position}</div>
-									} else {
-										return null;
-									}
+								positions.map((item, index) => {
+									if (index < 2) {
+										return <div className='position' key={item} style={{backgroundColor: getPosColor(item)}}>{item}</div>										
+									} else return null
 								})
 							}
 						</div>
