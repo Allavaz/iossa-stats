@@ -44,7 +44,7 @@ export default function PlayerCard(props) {
 				<div style={{display: 'flex', flexGrow: 1, maxWidth: '330px', marginBottom: '10px'}}>
 					<div className='profilepicture'>
 						<img src={props.steaminfo.avatarfull} alt={props.data.name}></img>
-						<div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+						<div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
 							<div className='position' style={{backgroundColor: getPosColor(props.data.lastpos)}}>{props.data.lastpos}</div>
 							{
 								positions.map((item, index) => {
