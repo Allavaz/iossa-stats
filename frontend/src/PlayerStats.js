@@ -26,18 +26,21 @@ export default function PlayerStats(data, id) {
     let freekicks = 0;
     let tackles = 0;
     let tacklescompleted = 0;
-    let foulssufered = 0;
+    let foulssuffered = 0;
     let savescaught = 0;
     let goalkicks = 0;
     let goalsconceded = 0;
     let secondsplayed = 0;
+    let positions = [];
+    let lastpos;
 
     for (let i=0; i<data.length; i++) {
         for (let j=0; j<data[i].players.length; j++) {
             if (data[i].players[j].info.steam_id === id) {
-                if (name === undefined && team === undefined) {
+                if (name === undefined && team === undefined && lastpos === undefined) {
                     name = data[i].players[j].info.name;
                     team = data[i].players[j].info.team;
+                    lastpos = data[i].players[j].statistics.positions[0].position;
                 }
             }
         }
@@ -66,11 +69,23 @@ export default function PlayerStats(data, id) {
                 freekicks = freekicks + data[i].players[j].statistics.freekicks;
                 tackles = tackles + data[i].players[j].statistics.tackles;
                 tacklescompleted = tacklescompleted + data[i].players[j].statistics.tacklescompleted;
-                foulssufered = foulssufered + data[i].players[j].statistics.foulssufered;
+                foulssuffered = foulssuffered + data[i].players[j].statistics.foulssuffered;
                 savescaught = savescaught + data[i].players[j].statistics.savescaught;
                 goalkicks = goalkicks + data[i].players[j].statistics.goalkicks;
                 goalsconceded = goalsconceded + data[i].players[j].statistics.goalsconceded;
                 secondsplayed = secondsplayed + data[i].players[j].statistics.secondsplayed;
+                for (let k=0; k<data[i].players[j].statistics.positions.length; k++) {
+                    if (!positions.some((e) => e.position === data[i].players[j].statistics.positions[k].position)) {
+                        positions.push({
+                           position: data[i].players[j].statistics.positions[k].position,
+                           seconds: data[i].players[j].statistics.positions[k].seconds
+                        });
+                    } else {
+                        let index = positions.findIndex((e) => e.position === data[i].players[j].statistics.positions[k].position);
+                        positions[index].seconds = positions[index].seconds + data[i].players[j].statistics.positions[k].seconds
+                    }
+                }
+                positions.sort((a, b) => b.seconds - a.seconds);
             }
         }
 
@@ -94,6 +109,44 @@ export default function PlayerStats(data, id) {
             }
         }
     }
+
+    console.log({
+        name: name,
+        steamid: id,
+        team: team,
+        matches: matches,
+        wins: wins,
+        losses: losses,
+        draws: draws,
+        goals: goals,
+        assists: assists,
+        shots: shots,
+        shotsontarget: shotsontarget,
+        passes: passes,
+        passescompleted: passescompleted,
+        interceptions: interceptions,
+        saves: saves,
+        fouls: fouls,
+        yellowcards: yellowcards,
+        redcards: redcards,
+        owngoals: owngoals,
+        offsides: offsides,
+        distancecovered: distancecovered,
+        possession: possession,
+        corners: corners,
+        throwins: throwins,
+        penalties: penalties,
+        freekicks: freekicks,
+        tackles: tackles,
+        tacklescompleted: tacklescompleted,
+        foulssuffered: foulssuffered,
+        savescaught: savescaught,
+        goalkicks: goalkicks,
+        goalsconceded: goalsconceded,
+        secondsplayed: secondsplayed,
+        lastpos: lastpos,
+        positions: positions
+    })
 
     return {
         name: name,
@@ -124,10 +177,12 @@ export default function PlayerStats(data, id) {
         freekicks: freekicks,
         tackles: tackles,
         tacklescompleted: tacklescompleted,
-        foulssufered: foulssufered,
+        foulssuffered: foulssuffered,
         savescaught: savescaught,
         goalkicks: goalkicks,
         goalsconceded: goalsconceded,
-        secondsplayed: secondsplayed
+        secondsplayed: secondsplayed,
+        lastpos: lastpos,
+        positions: positions
     };
 }

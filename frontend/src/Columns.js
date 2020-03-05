@@ -163,6 +163,11 @@ export const matchIndivStatsColumns = [
 		accessor: 'info.name',
 		fixed: 'left',
         width: 100
+    },
+    {
+		Header: 'Pos.',
+		accessor: 'statistics.positions[0].position',
+        width: 50
 	},
 	{
 		Header: 'Goles',

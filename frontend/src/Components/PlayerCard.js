@@ -2,6 +2,33 @@ import React from 'react';
 import RadarG from './RadarG';
 import Teams from '../Teams.json'
 
+function getPosColor(pos) {
+	switch (pos) {
+		case 'GK':
+			return '#f2c350';
+		case 'LB':
+			return '#36A2EB';
+		case 'RB':
+			return '#36A2EB';
+		case 'CB':
+			return '#36A2EB';
+		case 'LM':
+			return '#3da33b';
+		case 'RM':
+			return '#3da33b';
+		case 'CM':
+			return '#3da33b';
+		case 'CF':
+			return '#FF6384';
+		case 'LW':
+			return '#FF6384';
+		case 'RW':
+			return '#FF6384';
+		default:
+			return '#fff';
+	}
+}
+
 export default function PlayerCard(props) {
     return (
 		<div className='whitespace' style={{paddingBottom: '0px', marginBottom: 0, flexGrow: 1}}>
@@ -9,15 +36,26 @@ export default function PlayerCard(props) {
 				<div style={{display: 'flex', flexGrow: 1, maxWidth: '330px', marginBottom: '10px'}}>
 					<div className='profilepicture'>
 						<img src={props.steaminfo.avatarfull} alt={props.data.name}></img>
+						<div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+							{
+								props.data.positions.map((item, index) => {
+									if (index < 3){
+										return <div className='position' style={{backgroundColor: getPosColor(item.position)}}>{item.position}</div>
+									} else {
+										return null;
+									}
+								})
+							}
+						</div>
 					</div>
 					<div>
-						<h2 style={{marginTop: 0, marginBottom: 0}}>{props.data.name}</h2>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', marginBottom: '10px', display: props.data.name === props.steaminfo.personaname ? 'none' : 'block'}}>{props.steaminfo.personaname}</div>
-						<div className='teamlogo' style={{marginTop: '5px'}}><img style={{marginLeft: '0px'}} height='16px' src={`/clubs/${Teams[props.data.team].toLowerCase()}.png`} alt={props.data.name}></img> <div id='fullteamname' style={{color: 'rgb(90,90,90'}}>{props.data.team}</div></div>
-						<div style={{marginTop: '10px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.matches} partido${props.data.wins === 1 ? '' : 's'}`}</div>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.wins} victoria${props.data.wins === 1 ? '' : 's'}`}</div>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.draws} empate${props.data.draws === 1 ? '' : 's'}`}</div>
-						<div style={{marginTop: '5px', color: 'rgb(90,90,90', fontSize: '0.75em'}}>{`${props.data.losses} derrota${props.data.losses === 1 ? '' : 's'}`}</div>
+						<div style={{display: 'inline-flex', marginTop: 0, marginBottom: 0, fontSize: '1.5em', fontWeight: 'bold', width: 'min-content'}}>{props.data.name}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90)', marginBottom: '10px', display: props.data.name === props.steaminfo.personaname ? 'none' : 'block'}}>{props.steaminfo.personaname}</div>
+						<div className='teamlogo' style={{marginTop: '5px'}}><img style={{marginLeft: '0px'}} height='16px' src={`/clubs/${Teams[props.data.team].toLowerCase()}.png`} alt={props.data.name}></img> <div id='fullteamname' style={{color: 'rgb(90,90,90)'}}>{props.data.team}</div></div>
+						<div style={{marginTop: '10px', color: 'rgb(90,90,90)', fontSize: '0.75em'}}>{`${props.data.matches} partido${props.data.wins === 1 ? '' : 's'}`}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90)', fontSize: '0.75em'}}>{`${props.data.wins} victoria${props.data.wins === 1 ? '' : 's'}`}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90)', fontSize: '0.75em'}}>{`${props.data.draws} empate${props.data.draws === 1 ? '' : 's'}`}</div>
+						<div style={{marginTop: '5px', color: 'rgb(90,90,90)', fontSize: '0.75em'}}>{`${props.data.losses} derrota${props.data.losses === 1 ? '' : 's'}`}</div>
 					</div>
 				</div>
 				<RadarG data={props.data2}></RadarG>
