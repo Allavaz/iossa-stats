@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 const torneos = [
+	'Division de Honor T5',
 	'Liga Master T5',
 	'Recopa Master T5',
 	'Copa Maradei T5 - Grupo A',
