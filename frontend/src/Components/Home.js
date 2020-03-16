@@ -4,9 +4,17 @@ import Matches from './Matches';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
+const minitables = [
+	{torneo: 'ddht5', header: 'Division de Honor T5'},
+	{torneo: 'lmt5', header: 'Liga Master T5'},
+	{torneo: 'maradeit5a', header: 'Copa Maradei T5 - Grupo A'},
+	{torneo: 'maradeit5b', header: 'Copa Maradei T5 - Grupo B'},
+	{torneo: 'maradeit5c', header: 'Copa Maradei T5 - Grupo C'}
+]
+
 export default class Home extends Component {
 	state = {
-		loadingItems: 4
+		loadingItems: minitables.length + 1
 	};
 
 	componentDidMount(){
@@ -27,11 +35,9 @@ export default class Home extends Component {
 					<div className='colCon' style={{margin: '-10px'}}>
 						<Matches callback={this.reduceLoadingItems}></Matches>
 						<div style={{margin: '10px', flexGrow: 1}}>
-							<MiniPositions torneo='ddht5' header='Division de Honor T5' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='lmt5' header='Liga Master T5' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit5a' header='Copa Maradei T5 - Grupo A' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit5b' header='Copa Maradei T5 - Grupo B' callback={this.reduceLoadingItems}></MiniPositions>
-							<MiniPositions torneo='maradeit5c' header='Copa Maradei T5 - Grupo C' callback={this.reduceLoadingItems}></MiniPositions>
+							{minitables.map((i) => (
+								<MiniPositions torneo={i.torneo} header={i.header} callback={this.reduceLoadingItems}></MiniPositions>	
+							))}
 						</div>
 					</div>
 				</div>
