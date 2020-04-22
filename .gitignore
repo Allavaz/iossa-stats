@@ -5,6 +5,7 @@ backend/node_modules
 backend/aggregations_txt
 backend/.env
 backend/steamapi.js
+backend/scripts
 
 # frontend
 
