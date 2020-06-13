@@ -66,6 +66,7 @@ module.exports = {
             {'torneo': 'Copa Master T5'},
             {'torneo': 'Recopa Master T5'},
             {'torneo': 'Recopa Maradei T5'},
+            {'torneo': 'Recopa Maradei T5 (Repechaje)'},
             {'torneo': 'Supercopa Master T5'}
         ]
     },
@@ -127,7 +128,8 @@ module.exports = {
     },
     'recopamaradei': {
         $or: [
-            {'torneo': 'Recopa Maradei T5'}
+            {'torneo': 'Recopa Maradei T5'},
+            {'torneo': 'Recopa Maradei T5 (Repechaje)'}
         ]
     },
     'copaamerica': {
@@ -265,7 +267,10 @@ module.exports = {
         ]
     },
     'recopamaradeit5': {
-        'torneo': 'Recopa Maradei T5'
+        $or: [
+            {'torneo': 'Recopa Maradei T5'},
+            {'torneo': 'Recopa Maradei T5 (Repechaje)'}
+        ]
     },
     'lmt0': {
         $or: [
