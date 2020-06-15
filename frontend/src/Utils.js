@@ -7,6 +7,8 @@ exports.getTournamentIcon = function(tournament) {
 		return "/tournaments/copamaster.png"
 	} else if (tournament.includes("Recopa Master")) {
 		return "/tournaments/recopamaster.png"
+	} else if (tournament.includes("Recopa Maradei")) {
+		return "/tournaments/recopamaradei.png"
 	} else if (tournament.includes("Copa Maradei")) {
 		return "/tournaments/copamaradei.png"
 	} else if (tournament.includes("Copa America")) {
