@@ -71,7 +71,7 @@ app.get('/api/getplayermatches/:id', (req, res) => {
 	rdb.getPlayerMatchesFromID(req.params.id, res);
 });
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
 app.get('/*', function(req, res){
 	res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
