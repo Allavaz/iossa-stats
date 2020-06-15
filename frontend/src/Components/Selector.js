@@ -38,7 +38,6 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('maradeit5')}>Copa Maradei</button>
                     <button className='boton' onClick={() => props.prop1('recopamastert5')}>Recopa Master</button>
                     <button className='boton' onClick={() => props.prop1('recopamaradeit5')}>Recopa Maradei</button>
-                    <button className='boton' onClick={() => props.prop1('supercopamastert5')}>Supercopa Master</button>
                 </div>
             </div>
             <div className='t4' style={{display: props.prop3 === 't4' ? 'block' : 'none'}}>
