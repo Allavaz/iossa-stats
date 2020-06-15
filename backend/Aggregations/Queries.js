@@ -66,8 +66,7 @@ module.exports = {
             {'torneo': 'Copa Master T5'},
             {'torneo': 'Recopa Master T5'},
             {'torneo': 'Recopa Maradei T5'},
-            {'torneo': 'Recopa Maradei T5 (Repechaje)'},
-            {'torneo': 'Supercopa Master T5'}
+            {'torneo': 'Recopa Maradei T5 (Repechaje)'}
         ]
     },
     'd1': {
@@ -234,11 +233,6 @@ module.exports = {
         $or: [
             {'torneo': 'Supercopa Master T3'},
             {'torneo': 'Supercopa Master T3 (Repechaje)'}
-        ]
-    },
-    'supercopamastert5': {
-        $or: [
-            {'torneo': 'Supercopa Master T5'}
         ]
     },
     'maradeit1': {
