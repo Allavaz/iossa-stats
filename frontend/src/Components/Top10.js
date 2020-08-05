@@ -17,7 +17,7 @@ export default class Top10 extends Component {
 
     constructor(){
 		super();
-		this.state = {isLoading: true, top10Loading: false, category: 'TOTALES', temporada: 't5'};
+		this.state = {isLoading: true, top10Loading: false, category: 'TOTALES', temporada: 't6'};
 	}
     
     componentDidMount() {
@@ -79,6 +79,9 @@ export default class Top10 extends Component {
         switch (selector.options[selector.selectedIndex].value) {
             case 'total':
                 this.selectTorneo('all');
+                break;
+            case 't6':
+                this.selectTorneo('t6');
                 break;
             case 't5':
                 this.selectTorneo('t5');
