@@ -1,4 +1,30 @@
 export const tablas = {
+    t6: [
+        {
+            'table': 'd1t6',
+            'name': 'Liga D1 T6'
+        },
+        {
+            'table': 'ddht6',
+            'name': 'Division de Honor T6'
+        },
+        {
+            'table': 'lmt6',
+            'name': 'Liga Master T6'
+        },
+        {
+            'table': 'maradeit6a',
+            'name': 'Copa Maradei T6 - Grupo A'
+        },
+        {
+            'table': 'maradeit6b',
+            'name': 'Copa Maradei T6 - Grupo B'
+        },
+        {
+            'table': 'maradeit6c',
+            'name': 'Copa Maradei T6 - Grupo C'
+        }
+    ],
     t5: [
         {
             'table': 'ddht5',
