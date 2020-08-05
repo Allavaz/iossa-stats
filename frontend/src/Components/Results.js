@@ -22,7 +22,7 @@ export default class Results extends Component {
         this.state = {
             isLoading: true, 
             category: '', 
-            temporada: 't5', 
+            temporada: 't6', 
             search: ''
         };
     }
@@ -74,6 +74,9 @@ export default class Results extends Component {
         switch (selector.options[selector.selectedIndex].value) {
             case 'total':
                 this.selectTorneo('all');
+                break;
+            case 't6':
+                this.selectTorneo('t6');
                 break;
             case 't5':
                 this.selectTorneo('t5');
