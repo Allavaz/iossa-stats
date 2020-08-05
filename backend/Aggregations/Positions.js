@@ -21,6 +21,12 @@ const fullnames = {
 	'maradeit5c': 'Copa Maradei T5 - Grupo C',
 	'lmt5': 'Liga Master T5',
 	'ddht5': 'Division de Honor T5',
+	'd1t6': 'Liga D1 T6',
+	'lmt6': 'Liga Master T6',
+	'ddht6': 'Division de Honor T6',
+	'maradeit6a': 'Copa Maradei T6 - Grupo A',
+	'maradeit6b': 'Copa Maradei T6 - Grupo B',
+	'maradeit6c': 'Copa Maradei T6 - Grupo C',
 };
 
 module.exports = (arg) => {
