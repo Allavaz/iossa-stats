@@ -3,8 +3,9 @@ import React from 'react';
 export default function Selector(props) {
     return (
         <div className='torSelect'>
-            <select id='selector' defaultValue='t5' onChange={props.prop2}>
+            <select id='selector' defaultValue='t6' onChange={props.prop2}>
                 <option value='total'>Totales</option>
+                <option value='t6'>Temporada 6</option>
                 <option value='t5'>Temporada 5</option>
                 <option value='t4'>Temporada 4</option>
                 <option value='t3'>Temporada 3</option>
@@ -27,6 +28,18 @@ export default function Selector(props) {
                     <button className='boton' onClick={() => props.prop1('cg')}>Copa Gubero</button>
                     <button className='boton' onClick={() => props.prop1('lm')}>Liga Master</button>
                     <button className='boton' onClick={() => props.prop1('ddh')}>Division de Honor</button>
+                </div>
+            </div>
+            <div className='t6' style={{display: props.prop3 === 't6' ? 'block' : 'none'}}>
+                <div className='botonera'>
+                    <button className='boton' onClick={() => props.prop1('t6')}>Totales</button>
+                    <button className='boton' onClick={() => props.prop1('d1t6')}>Liga D1</button>
+                    <button className='boton' onClick={() => props.prop1('mastert6')}>Copa Master</button>
+                    <button className='boton' onClick={() => props.prop1('lmt6')}>Liga Master</button>
+                    <button className='boton' onClick={() => props.prop1('ddht6')}>Division de Honor</button>
+                    <button className='boton' onClick={() => props.prop1('maradeit6')}>Copa Maradei</button>
+                    <button className='boton' onClick={() => props.prop1('recopamastert6')}>Recopa Master</button>
+                    <button className='boton' onClick={() => props.prop1('recopamaradeit6')}>Recopa Maradei</button>
                 </div>
             </div>
             <div className='t5' style={{display: props.prop3 === 't5' ? 'block' : 'none'}}>
