@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const minitables = [
-	{torneo: 'ddht5', header: 'Division de Honor T5'},
-	{torneo: 'lmt5', header: 'Liga Master T5'},
-	{torneo: 'maradeit5a', header: 'Copa Maradei T5 - Grupo A'},
-	{torneo: 'maradeit5b', header: 'Copa Maradei T5 - Grupo B'},
-	{torneo: 'maradeit5c', header: 'Copa Maradei T5 - Grupo C'}
+//	{torneo: 'ddht6', header: 'Division de Honor T6'},
+//	{torneo: 'lmt6', header: 'Liga Master T6'},
+//	{torneo: 'maradeit6a', header: 'Copa Maradei T6 - Grupo A'},
+//	{torneo: 'maradeit6b', header: 'Copa Maradei T6 - Grupo B'},
+//	{torneo: 'maradeit6c', header: 'Copa Maradei T6 - Grupo C'},
+	{torneo: 'd1t6', header: 'Liga D1 T6'}
 ]
 
 export default class Home extends Component {
