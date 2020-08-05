@@ -6,9 +6,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 const torneos = [
-	'Division de Honor T5',
-	'Liga Master T5',
-	'Copa Master T5',
+	'Liga D1 T6',
+	'Copa Master T6',
+//	'Division de Honor T6',
+//	'Liga Master T6',
+//	'Copa Maradei T6 - Grupo A',
+//	'Copa Maradei T6 - Grupo B',
+//	'Copa Maradei T6 - Grupo C',
+//	'Copa Maradei T6 - Eliminatorias',
+//	'Recopa Master T6',
+//	'Recopa Maradei T6',
+//	'Supercopa Master T6',
+//	'Division de Honor T5',
+//	'Liga Master T5',
+//	'Copa Master T5',
 //	'Copa Maradei T5 - Grupo A',
 //	'Copa Maradei T5 - Grupo B',
 //	'Copa Maradei T5 - Grupo C',
