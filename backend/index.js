@@ -98,6 +98,6 @@ app.get('/*', function(req, res){
 	res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
-app.listen(3001, "0.0.0.0", () => {
-	console.log(`Server started on port 3001`);
+app.listen(3000, "0.0.0.0", () => {
+	console.log(`Server started on port 3000`);
 });
