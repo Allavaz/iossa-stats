@@ -8,6 +8,8 @@ const path = require('path');
 const { key } = require('./db.json');
 const steam = require('./steam');
 
+app.use(express.json())
+
 app.use(cors());
 
 app.post('/api/postupload', (req, res) => {
@@ -22,9 +24,21 @@ app.post('/api/postupload', (req, res) => {
 				res.end(e.toString());
 			}
 		} else {
-			res.end('Wrong password');
+			res.end('HOLA ALLAVAZ');
 		}
 	});
+});
+
+app.post('/api/postuploadtorneo', (req, res) => {
+	console.log('Informacion Recibida!');
+	let torneo = 'Liga D1 T6';
+	let vod = "";
+	console.dir(req.ip);
+	console.dir(req.body);
+	console.dir(req.body.matchData.teams[0].matchTotal.statistics[0]);
+	db.pushToDB(req.body, torneo, vod, res);
+	//db.pushToDB(files.upload, torneo, vod, res);
+	res.end('-> JSON subido con exito');
 });
 
 app.get('/api/everything', (req, res) => {
@@ -77,6 +91,6 @@ app.get('/*', function(req, res){
 	res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
-app.listen(3000, "0.0.0.0", () => {
-	console.log(`Server started on port 3000`);
+app.listen(3001, "0.0.0.0", () => {
+	console.log(`Server started on port 3001`);
 });
