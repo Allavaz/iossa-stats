@@ -35,7 +35,7 @@ app.post('/api/postuploadios', (req, res) => {
 	let torneo = `${req.body.access_token}`;
 	let vod = "";
 	console.dir(`Received JSON from ${req.ip} with Token ID: ${torneo}`);
-	if (req.ip === serverip) {
+	if (req.ip == serverip.serverip) {
 		try {
 			idb.pushToDBios(req.body, torneo, vod, res);
 			res.end(' -> JSON subido con exito');
