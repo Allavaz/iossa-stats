@@ -1,21 +1,9 @@
 const rt = require('./RemoveTag');
 const fs = require('fs');
 const chardet = require('chardet');
-const { calcPercentages, calcIndivPossession } = require('./Utils');
+const { calcPercentages, calcIndivPossession, getMonth } = require('./Utils');
 
-exports.createDocument = function(file, torneo, vod, res) {
-    /*let char = chardet.detectFileSync(file.path);
-    let data;
-    if (char === 'UTF-8') {
-        data = fs.readFileSync(file.path);
-    } else if (char === 'ISO-8859-1') {
-        data = fs.readFileSync(file.path, 'latin1');
-    } else {
-        res.json({
-            status: 'error',
-            error: 'Weird encoding'
-        })
-    }*/
+exports.createJSON = function(file, torneo, vod, res) {
     try {
         let json = file;
         if (json.matchData == undefined) {
@@ -25,12 +13,16 @@ exports.createDocument = function(file, torneo, vod, res) {
             });
         } else {
             let players = [];
-            let year = '2020';
-            let month = '08';
-            let day = '20';
-            let hour = '10';
-            let minute = '60';
-            let second = '60';
+            var utcSeconds = json.matchData.matchInfo.endTime;
+            var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+            d.setUTCSeconds(utcSeconds);
+            console.log(d.toString());
+            let year = d.toString().slice(11, 15);
+            let month = getMonth(d.toString().slice(4, 8));
+            let day = d.toString().slice(8, 10);
+            let hour = d.toString().slice(16, 18);
+            let minute = d.toString().slice(19, 21);
+            let second = d.toString().slice(22, 24);
             let date = new Date(year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second);
             for (let i = 0; i < json.matchData.players.length; i++) {
                 if (json.matchData.players[i].matchPeriodData.length !== 0) {
@@ -196,9 +188,13 @@ exports.createDocument = function(file, torneo, vod, res) {
                     }
                 }
             }
+
+            let filename = `${year}.${month}.${day}_${hour}.${minute}.${second}_${json.matchData.teams[0].matchTotal.name}-vs-${json.matchData.teams[1].matchTotal.name}_${homeresult}-${awayresult}.json`;
+            console.log(filename.toLowerCase());
+
             return(
                 {
-                    'filename': 'ABC',
+                    'filename': filename.toLowerCase(),
                     'fecha': date,
                     'torneo': torneo,
                     'vod': vod,
