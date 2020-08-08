@@ -37,6 +37,7 @@ app.post('/api/postuploadios', (req, res) => {
 	if (req.ip === '186.22.103.188') {
 		try {
 			idb.pushToDBios(req.body, torneo, vod, res);
+			res.end(' -> JSON subido con exito');
 		} catch(e) {
 			console.error(e);
 			res.end(e.toString());
@@ -44,7 +45,6 @@ app.post('/api/postuploadios', (req, res) => {
 	} else {
 		res.end(' -> Wrong IP');
 	}
-	res.end(' -> JSON subido con exito');
 });
 
 app.get('/api/everything', (req, res) => {

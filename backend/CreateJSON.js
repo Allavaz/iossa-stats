@@ -1,6 +1,5 @@
 const rt = require('./RemoveTag');
 const fs = require('fs');
-const chardet = require('chardet');
 const { calcPercentages, calcIndivPossession, getMonth } = require('./Utils');
 
 exports.createJSON = function(file, torneo, vod, res) {

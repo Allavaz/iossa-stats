@@ -22,8 +22,8 @@ exports.pushToDBios = function(files, torneo, vod, res) {
     }
 
     MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
-        const idb = client.db(dbname);
-        idb.collection(collection).insertMany(documents, (err, r) => {
+        const db = client.db(dbname);
+        db.collection(collection).insertMany(documents, (err, r) => {
             if (err === null) {
                 res.json({
                     status: 'success'
