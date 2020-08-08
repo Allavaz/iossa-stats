@@ -4,7 +4,8 @@ const encuser = encodeURIComponent(user);
 const encpw = encodeURIComponent(pw);
 const authMechanism = 'DEFAULT';
 const url = `mongodb://${encuser}:${encpw}@${host}:27017/?authMechanism=${authMechanism}`;
-const cd = require('./CreateDocument');
+// Old Push to DB -> const cd = require('./CreateDocument');
+const cd = require('./CreateJSON');
 
 exports.pushToDB = function(files, torneo, vod, res) {
     if (vod == "") {
@@ -21,7 +22,10 @@ exports.pushToDB = function(files, torneo, vod, res) {
         documents.push(cd.createDocument(files, torneo, vod, res));
     }
 
-    MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
+
+    console.log('ACA TERMINO EL PUSH');
+    console.log(documents);
+    /*MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
         const db = client.db(dbname);
         db.collection(collection).insertMany(documents, (err, r) => {
             if (err === null) {
@@ -39,4 +43,5 @@ exports.pushToDB = function(files, torneo, vod, res) {
             }
         });
     });
+    */
 }
