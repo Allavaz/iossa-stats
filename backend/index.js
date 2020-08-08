@@ -25,7 +25,7 @@ app.post('/api/postupload', (req, res) => {
 				res.end(e.toString());
 			}
 		} else {
-			res.end('HOLA ALLAVAZ');
+			res.end('Wrong Key');
 		}
 	});
 });
