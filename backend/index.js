@@ -2,13 +2,14 @@ const express = require('express');
 const app = express();
 const formidable = require('formidable');
 const db = require('./PushToDB');
+const idb = require('./PushToDBios');
 const rdb = require('./GetFromDB');
 const cors = require('cors');
 const path = require('path');
 const { key } = require('./db.json');
 const steam = require('./steam');
 
-app.use(express.json())
+app.use(express.json());
 
 app.use(cors());
 
@@ -29,16 +30,18 @@ app.post('/api/postupload', (req, res) => {
 	});
 });
 
-app.post('/api/postuploadtorneo', (req, res) => {
+app.post('/api/postuploadios', (req, res) => {
 	console.log('Informacion Recibida!');
-	let torneo = 'Liga D1 T6';
+	let torneo = `${req.body.access_token}`;
 	let vod = "";
-	console.dir(req.ip);
-	console.dir(req.body);
-	console.dir(req.body.matchData.teams[0].matchTotal.statistics[0]);
-	db.pushToDB(req.body, torneo, vod, res);
+	console.dir(`Received JSON from ${req.ip} with Token ID: ${torneo}`);
+	if (req.ip === '186.22.103.188') {
+		idb.pushToDBios(req.body, torneo, vod, res);
+	} else {
+		res.end(' -> Wrong IP');
+	}
 	//db.pushToDB(files.upload, torneo, vod, res);
-	res.end('-> JSON subido con exito');
+	res.end(' -> JSON subido con exito');
 });
 
 app.get('/api/everything', (req, res) => {
