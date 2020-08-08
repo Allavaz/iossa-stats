@@ -2,11 +2,15 @@ const express = require('express');
 const app = express();
 const formidable = require('formidable');
 const db = require('./PushToDB');
+const idb = require('./PushToDBios');
 const rdb = require('./GetFromDB');
 const cors = require('cors');
 const path = require('path');
 const { key } = require('./db.json');
 const steam = require('./steam');
+const serverip = require('./serverip');
+
+app.use(express.json());
 
 app.use(cors());
 
@@ -22,9 +26,26 @@ app.post('/api/postupload', (req, res) => {
 				res.end(e.toString());
 			}
 		} else {
-			res.end('Wrong password');
+			res.end('Wrong Key');
 		}
 	});
+});
+
+app.post('/api/postuploadios', (req, res) => {
+	let torneo = `${req.body.access_token}`;
+	let vod = "";
+	console.dir(`Received JSON from ${req.ip} with Token ID: ${torneo}`);
+	if (req.ip === serverip) {
+		try {
+			idb.pushToDBios(req.body, torneo, vod, res);
+			res.end(' -> JSON subido con exito');
+		} catch(e) {
+			console.error(e);
+			res.end(e.toString());
+		}
+	} else {
+		res.end(' -> Wrong IP');
+	}
 });
 
 app.get('/api/everything', (req, res) => {

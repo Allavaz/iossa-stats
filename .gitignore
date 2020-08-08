@@ -36,3 +36,9 @@ frontend/.env.production.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+dependencias back.bat
+dependencias front.bat
+Visual Studio.bat
+frontend/package.json
+frontend/package.json
+backend/serverip.js
