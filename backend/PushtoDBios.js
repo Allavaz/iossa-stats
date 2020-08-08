@@ -21,10 +21,6 @@ exports.pushToDBios = function(files, torneo, vod, res) {
         documents.push(cj.createJSON(files, torneo, vod, res));
     }
 
-
-    console.log('ACA TERMINO EL PUSH');
-    console.log(documents);
-
     MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
         const idb = client.db(dbname);
         idb.collection(collection).insertMany(documents, (err, r) => {

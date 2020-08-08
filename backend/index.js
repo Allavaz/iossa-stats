@@ -31,7 +31,6 @@ app.post('/api/postupload', (req, res) => {
 });
 
 app.post('/api/postuploadios', (req, res) => {
-	console.log('Informacion Recibida!');
 	let torneo = `${req.body.access_token}`;
 	let vod = "";
 	console.dir(`Received JSON from ${req.ip} with Token ID: ${torneo}`);
@@ -40,7 +39,6 @@ app.post('/api/postuploadios', (req, res) => {
 	} else {
 		res.end(' -> Wrong IP');
 	}
-	//db.pushToDB(files.upload, torneo, vod, res);
 	res.end(' -> JSON subido con exito');
 });
 

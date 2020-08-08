@@ -16,7 +16,6 @@ exports.createJSON = function(file, torneo, vod, res) {
             var utcSeconds = json.matchData.matchInfo.endTime;
             var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
             d.setUTCSeconds(utcSeconds);
-            console.log(d.toString());
             let year = d.toString().slice(11, 15);
             let month = getMonth(d.toString().slice(4, 8));
             let day = d.toString().slice(8, 10);
@@ -190,7 +189,6 @@ exports.createJSON = function(file, torneo, vod, res) {
             }
 
             let filename = `${year}.${month}.${day}_${hour}.${minute}.${second}_${json.matchData.teams[0].matchTotal.name}-vs-${json.matchData.teams[1].matchTotal.name}_${homeresult}-${awayresult}.json`;
-            console.log(filename.toLowerCase());
 
             return(
                 {
