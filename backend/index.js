@@ -8,6 +8,7 @@ const cors = require('cors');
 const path = require('path');
 const { key } = require('./db.json');
 const steam = require('./steam');
+const serverip = require('./serverip');
 
 app.use(express.json());
 
@@ -34,7 +35,7 @@ app.post('/api/postuploadios', (req, res) => {
 	let torneo = `${req.body.access_token}`;
 	let vod = "";
 	console.dir(`Received JSON from ${req.ip} with Token ID: ${torneo}`);
-	if (req.ip === '186.22.103.188') {
+	if (req.ip === serverip) {
 		try {
 			idb.pushToDBios(req.body, torneo, vod, res);
 			res.end(' -> JSON subido con exito');
