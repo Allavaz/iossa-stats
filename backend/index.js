@@ -35,7 +35,12 @@ app.post('/api/postuploadios', (req, res) => {
 	let vod = "";
 	console.dir(`Received JSON from ${req.ip} with Token ID: ${torneo}`);
 	if (req.ip === '186.22.103.188') {
-		idb.pushToDBios(req.body, torneo, vod, res);
+		try {
+			idb.pushToDBios(req.body, torneo, vod, res);
+		} catch(e) {
+			console.error(e);
+			res.end(e.toString());
+		}
 	} else {
 		res.end(' -> Wrong IP');
 	}
