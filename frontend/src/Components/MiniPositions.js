@@ -112,10 +112,16 @@ export default class MiniPositions extends Component {
           </table>
         </div>
         <div>
-          <p style={{ backgroundColor: "#fa9d41", textAlign: "center" }}>
+          <p
+            className="divDataTable"
+            style={{ backgroundColor: "#fa9d41", textAlign: "center" }}
+          >
             1° al 5° puestos clasifican a la D1
           </p>
-          <p style={{ backgroundColor: "#1cc2ff", textAlign: "center" }}>
+          <p
+            className="divDataTable"
+            style={{ backgroundColor: "#1cc2ff", textAlign: "center" }}
+          >
             6° al 10° puestos clasifican a la D2
           </p>
         </div>
