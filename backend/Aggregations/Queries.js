@@ -85,6 +85,9 @@ module.exports = {
       { torneo: "Supercopa Master T6" },
     ],
   },
+  sd1: {
+    $or: [{ torneo: "Superliga D1 T6" }],
+  },
   d1: {
     $or: [
       { torneo: "Liga D1 T1" },
@@ -96,7 +99,6 @@ module.exports = {
       { torneo: "Liga D1 T4" },
       { torneo: "Liga D1 T4 - (Desempate)" },
       { torneo: "Liga D1 T4 - Promoción" },
-      { torneo: "Superliga D1 T6" },
       { torneo: "Liga D1 T6" },
     ],
   },
@@ -197,8 +199,11 @@ module.exports = {
       { torneo: "Liga D1 T4 - Promoción" },
     ],
   },
+  sd1t6: {
+    $or: [{ torneo: "Superliga D1 T6" }],
+  },
   d1t6: {
-    $or: [{ torneo: "Superliga D1 T6" }, { torneo: "Liga D1 T6" }],
+    $or: [{ torneo: "Liga D1 T6" }],
   },
   d2t6: {
     $or: [{ torneo: "Liga D2 T6" }],

@@ -39,6 +39,8 @@ export default class Results extends Component {
     axios.get(api + "matches/" + arg).then((res) => {
       if (arg.startsWith("all") || arg.startsWith("t")) {
         this.setState({ category: "TOTALES" });
+      } else if (arg.startsWith("sd1")) {
+        this.setState({ category: "SUPERLIGA D1" });
       } else if (arg.startsWith("d1")) {
         this.setState({ category: "LIGA D1" });
       } else if (arg.startsWith("d2")) {
