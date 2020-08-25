@@ -350,12 +350,19 @@ th, tr {
   width: 100%;
 }
 
+
 .dataTable tr:nth-child(odd){
-  background-color: #f2f2f2;
+  background-color: #fa9d41;
+  /* Original Color: background-color: #f2f2f2; */
 }
 
 .dataTable tr:nth-child(even){
-  background-color: white;
+  background-color: #ffba75;
+  /* Original Color: background-color: #fff; */
+}
+
+.D2 {
+  background-color: #1cc2ff;
 }
 
 #footer-wrapper {

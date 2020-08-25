@@ -39,8 +39,6 @@ frontend/yarn-error.log*
 dependencias back.bat
 dependencias front.bat
 Visual Studio.bat
-frontend/package.json
-frontend/package.json
 backend/serverip.js
 MongoDBCompass.lnk
 Compass Connectiong String.txt
