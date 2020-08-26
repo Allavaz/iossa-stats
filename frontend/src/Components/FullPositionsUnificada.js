@@ -54,7 +54,7 @@ export default class FullPositionsUnificada extends Component {
 								<td>{index + 1}</td>
 								<td>
 									<div className="teamlogo" style={{marginLeft: '5px'}}>
-										<div style={{position: 'absolute', height: '27px', width: '4px', marginLeft: '-10px', backgroundColor: index < 5 ? this.d1color : this.d2color}}></div>
+										<div style={{position: 'absolute', height: '26px', width: '4px', marginLeft: '-10px', backgroundColor: index < 5 ? this.d1color : this.d2color}}></div>
 										<img style={{marginLeft: "0px"}} height="16px" src={`/clubs/${Teams[item._id].toLowerCase()}.png`} alt={item._id}></img> 
 									<div id="fullteamname">{item._id}</div>
 								</div></td>
@@ -71,7 +71,7 @@ export default class FullPositionsUnificada extends Component {
 							<tr>
 								<td colSpan="10">
 									<div className="teamlogo" style={{marginLeft: '5px'}}>
-										<div style={{position: 'absolute', height: '27px', width: '4px', marginLeft: '-10px', backgroundColor: this.d1color}}></div>
+										<div style={{position: 'absolute', height: '26px', width: '4px', marginLeft: '-10px', backgroundColor: this.d1color}}></div>
 										Clasifica a Liga D1
 									</div>
 								</td>
@@ -79,7 +79,7 @@ export default class FullPositionsUnificada extends Component {
 							<tr>
 								<td colSpan="10">
 									<div className="teamlogo" style={{marginLeft: '5px'}}>
-										<div style={{position: 'absolute', height: '27px', width: '4px', marginLeft: '-10px', backgroundColor: this.d2color}}></div>
+										<div style={{position: 'absolute', height: '26px', width: '4px', marginLeft: '-10px', backgroundColor: this.d2color}}></div>
 										Clasifica a Liga D2
 									</div>
 								</td>
