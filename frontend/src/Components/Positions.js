@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import FullPositions from './FullPositions';
+import FullPositionsUnificada from './FullPositionsUnificada';
 import { tablas } from '../Tablas'
 
 export default class Positions extends Component {
@@ -46,7 +47,9 @@ export default class Positions extends Component {
                 </div>
                 <div style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
                     <div style={{display: 'flex', flexWrap: 'wrap', margin: '-10px'}}>
-                        {this.state.temporada.map(item => <FullPositions table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{margin: '10px', flexGrow: 1, flexBasis: '200px'}}></FullPositions>)}
+                        {this.state.temporada.map(item => item.name === "Superliga D1 T6" ? 
+                        <FullPositionsUnificada table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{margin: '10px', flexGrow: 1, flexBasis: '200px'}}></FullPositionsUnificada> : 
+                        <FullPositions table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{margin: '10px', flexGrow: 1, flexBasis: '200px'}}></FullPositions>)}
                     </div>
                 </div>
             </div>

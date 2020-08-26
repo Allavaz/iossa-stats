@@ -9,6 +9,7 @@ import MatchIndividualStats from "./MatchIndividualStats";
 import Vod from "./Vod";
 import Challonge from "./Challonge";
 import { api } from "../api";
+import FullPositionsUnificada from "./FullPositionsUnificada";
 
 export default class Match extends Component {
   state = {
@@ -295,13 +296,23 @@ export default class Match extends Component {
                     flexGrow: 1,
                   }}
                 >
-                  <FullPositions
-                    table={this.state.table}
-                    torneo={this.state.data.torneo}
-                    callback={() => {
-                      this.setState({ isTableLoading: false });
-                    }}
-                  ></FullPositions>
+                  {
+                    this.state.table === "sd1t6" ? 
+                    <FullPositionsUnificada
+                      table={this.state.table}
+                      torneo={this.state.data.torneo}
+                      callback={() => {
+                        this.setState({ isTableLoading: false });
+                      }}
+                    ></FullPositionsUnificada> :
+                    <FullPositions
+                      table={this.state.table}
+                      torneo={this.state.data.torneo}
+                      callback={() => {
+                        this.setState({ isTableLoading: false });
+                      }}
+                    ></FullPositions>
+                  }
                 </div>
               </div>
             )}
