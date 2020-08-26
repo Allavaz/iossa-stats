@@ -49,7 +49,7 @@ export default class MiniPositionsUnificada extends Component {
 							<tr>
 								<td colSpan="4">
 									<div className="teamlogo" style={{marginLeft: '5px'}}>
-										<div style={{position: 'absolute', height: '26px', width: '4px', marginLeft: '-10px', backgroundColor: this.d1color}}></div>
+										<div style={{position: 'absolute', height: '25px', width: '4px', marginLeft: '-10px', backgroundColor: this.d1color}}></div>
 										Clasifica a Liga D1
 									</div>
 								</td>
@@ -57,7 +57,7 @@ export default class MiniPositionsUnificada extends Component {
 							<tr>
 								<td colSpan="4">
 									<div className="teamlogo" style={{marginLeft: '5px'}}>
-										<div style={{position: 'absolute', height: '26px', width: '4px', marginLeft: '-10px', backgroundColor: this.d2color}}></div>
+										<div style={{position: 'absolute', height: '25px', width: '4px', marginLeft: '-10px', backgroundColor: this.d2color}}></div>
 										Clasifica a Liga D2
 									</div>
 								</td>
