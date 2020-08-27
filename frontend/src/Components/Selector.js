@@ -63,6 +63,9 @@ export default function Selector(props) {
           <button className="boton" onClick={() => props.prop1("ddh")}>
             Division de Honor
           </button>
+          <button className="boton" onClick={() => props.prop1("sd1")}>
+            Superliga D1
+          </button>
         </div>
       </div>
       <div
