@@ -65,6 +65,8 @@ export default class Players extends Component {
                 this.setState({category: 'LIGA MASTER'});
             } else if (arg.startsWith('ddh')) {
                 this.setState({category: 'DIVISION DE HONOR'});
+            } else if (arg.startsWith('sd1')) {
+                this.setState({category: 'SUPERLIGA D1'});
             }
             this.setState({data: res.data, playersLoading: false});
         });
