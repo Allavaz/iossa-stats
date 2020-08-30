@@ -65,6 +65,8 @@ export default class Top10 extends Component {
                         this.setState({category: 'LIGA MASTER'});
                     } else if (arg.startsWith('ddh')) {
                         this.setState({category: 'DIVISION DE HONOR'});
+                    } else if (arg.startsWith('sd1')) {
+                        this.setState({category: 'SUPERLIGA D1'});
                     }
                     this.setState({data3: res.data, top10Loading: false});
                 })
