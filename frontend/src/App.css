@@ -381,12 +381,12 @@ th, tr {
 
 #footer-text hr {
   display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px dashed #ccc;
-    margin: 1em 0;
-    margin-top: 30px;
-    padding: 0;
+  height: 1px;
+  border: 0;
+  border-top: 1px dashed #ccc;
+  margin: 1em 0;
+  margin-top: 30px;
+  padding: 0;
 }
 
 .content {
