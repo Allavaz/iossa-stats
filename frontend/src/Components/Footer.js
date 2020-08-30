@@ -1,4 +1,9 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitch } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 export default function Footer() {
   return (
@@ -9,10 +14,10 @@ export default function Footer() {
         <table className='footerTable'>
           <tbody>
             <tr>
-              <td><a href='https://discord.me/iossudamerica' target='_blank' rel='noopener noreferrer'><img height='32px' alt='IOSoccer Sudamérica Discord' src='/Discord-Logo-Gray.png'></img></a></td>
-              <td><a href='https://instagram.com/iosoccersa' target='_blank' rel='noopener noreferrer'><img height='32px' alt='IOSoccer Sudamérica Instagram' src='/glyph-logo-gray.png'></img></a></td>
-              <td><a href='https://www.youtube.com/channel/UCvr34La6BdN5wg4XHOR5nzg' target='_blank' rel='noopener noreferrer'><img height='32px' alt='IOSoccer Sudamérica Youtube' src='/yt_icon_mono_light.png'></img></a></td>
-              <td><a href='https://www.twitch.tv/ios_sa' target='_blank' rel='noopener noreferrer'><img height='32px' alt='IOSoccer Sudamérica Twitch' src='/Glitch_Black_RGB.png'></img></a></td>
+              <td><a href='https://discord.me/iossudamerica' target='_blank' rel='noopener noreferrer'><FontAwesomeIcon icon={faDiscord}></FontAwesomeIcon></a></td>
+              <td><a href='https://instagram.com/iosoccersa' target='_blank' rel='noopener noreferrer'><FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon></a></td>
+              <td><a href='https://www.youtube.com/channel/UCvr34La6BdN5wg4XHOR5nzg' target='_blank' rel='noopener noreferrer'><FontAwesomeIcon icon={faYoutube}></FontAwesomeIcon></a></td>
+              <td><a href='https://www.twitch.tv/ios_sa' target='_blank' rel='noopener noreferrer'><FontAwesomeIcon icon={faTwitch}></FontAwesomeIcon></a></td>
             </tr>
           </tbody>
         </table>

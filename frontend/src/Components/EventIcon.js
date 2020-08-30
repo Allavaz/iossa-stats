@@ -3,9 +3,9 @@ import React from 'react';
 export default function EventIcon(props) {
     switch (props.event) {
         case 'GOAL':
-            return <img src='/eventicons/pelota.png' alt='Gol' height='15px' style={{marginRight: '5px'}}></img>
+            return <img src='/eventicons/pelota.png' id='pelota' style={{marginRight: '5px'}} alt='Gol' height='15px'></img>
         case 'OWN GOAL':
-            return <img src='/eventicons/gc.png' alt='Gol en Contra' height='15px' style={{marginRight: '5px'}}></img>
+            return <img src='/eventicons/gc.png' id='pelota' alt='Gol en Contra' height='15px' style={{marginRight: '5px'}}></img>
         case 'YELLOW CARD':
             return <img src='/eventicons/yellowcard.png' alt='Tarjeta Amarilla' height='15px' style={{marginRight: '5px'}}></img>
         case 'RED CARD':

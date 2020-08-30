@@ -121,6 +121,7 @@ export default function Upload() {
                   multiple
                   onChange={(e) => setFile(e.target.files)}
                   accept=".json"
+                  style={{color: 'var(--normal-text-color)'}}
                 ></input>
               </div>
               <div>

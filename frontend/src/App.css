@@ -1,15 +1,63 @@
+:root {
+  --bg-color: #fbfbfb;
+  --header-bg-color: #ff9800;
+  --header-border-color: #ffc163;
+  --normal-text-color: black;
+  --table-header-bg-color: white;
+  --table-odd-row-color: #f2f2f2;
+  --table-even-row-color: white;
+  --header-color: rgb(90, 90, 90);
+  --table-border-color: #ddd;
+  --shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  --button-bg: #fdfdfd;
+  --button-hover-bg: #f7f7f7;
+  --button-border: lightgray;
+  --footer-dashed: #ccc;
+  --footer-color: rgb(196, 196, 196);
+  --card-background: white;
+  --logo-button-bg: #e28800;
+  --react-table-button: rgba(0, 0, 0, 0.1);
+  --react-table-button-hover: rgba(0, 0, 0, 0.2);
+  --footer-hover: rgb(179, 179, 179);
+  --pelota-filter: invert(0);
+}
+
+[data-theme="dark"] {
+  --bg-color: #1b1b1b;
+  --header-bg-color: #a56200;
+  --header-border-color: #ff9800;
+  --normal-text-color: rgb(230, 230, 230);
+  --table-header-bg-color: rgb(110, 110, 110);
+  --table-odd-row-color: #222222;
+  --table-even-row-color: rgb(41, 41, 41);
+  --header-color: rgb(180, 180, 180);
+  --table-border-color: rgb(60, 60, 60);
+  --shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  --button-bg: rgb(40, 40, 40);
+  --button-hover-bg: rgb(45, 45, 45);
+  --button-border: rgb(65, 65, 65);
+  --footer-dashed: rgb(56, 56, 56);
+  --footer-color: rgb(68, 68, 68);
+  --card-background: rgb(40, 40, 40);
+  --logo-button-bg: #a56200;
+  --react-table-button: rgba(255, 255, 255, 0.1);
+  --react-table-button-hover: rgba(255, 255, 255, 0.2);
+  --footer-hover: rgb(85, 85, 85);
+  --pelota-filter: invert(1);
+}
+
 .dataTable th, td {
   padding: 5px;
   margin: 0px;
   vertical-align: middle;
   text-align: center;
   column-gap: 0px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--table-border-color);
+  color: var(--normal-text-color);
   white-space: nowrap;
 }
 
 #eventslist td {
-  color: rgb(90, 90, 90);
   vertical-align: top;
 }
 
@@ -18,7 +66,7 @@
 }
 
 h3 {
-  color: rgb(90, 90, 90);
+  color: var(--header-color);
 }
 
 h5 {
@@ -26,7 +74,7 @@ h5 {
 }
 
 .separator {
-  border-right: 1px solid lightgray;
+  border-right: var(--button-border);
 }
 
 .total, .t3 {
@@ -43,13 +91,14 @@ h5 {
 }
 
 #selector {
-  background: #fdfdfd;
+  background: var(--button-bg);
   border-radius: 7px;
-  border: solid 1px lightgrey;
+  border: 1px solid var(--button-border);
   padding: 7.5px;
-  box-shadow: 0px 2px 10px #ddd;
+  box-shadow: var(--shadow);
   font-size: 12pt;
   margin-top: 15px;
+  color: var(--normal-text-color);
 }
 
 .form {
@@ -76,34 +125,40 @@ h5 {
   padding: 7.5px;
   width: 100%;
   box-sizing: border-box;
+  background-color: var(--bg-color);
+  color: var(--normal-text-color);
+  border: solid 1px var(--button-border);
+  box-shadow: var(--shadow);
 }
 
 #selector option {
-  background: white;
+  background: var(--button-bg);
+  color: var(--normal-text-color);
 }
 
 @keyframes fade {
-  from {background-color: #fdfdfd;}
-  to {background-color: #f7f7f7;}
+  from {background-color: var(--button-bg);}
+  to {background-color: var(--button-hover-bg);}
 }
 
 .whitespace {
   max-width: 1080px;
-  background-color: white;
-  box-shadow: 0px 2px 10px #ddd;
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px 10px 35px;
+  border: 1px solid var(--table-border-color);
 }
 
 #header {
   margin-top: 40px;
-  background: #ff9800;
+  background: var(--header-bg-color);
   padding: 10px;
   padding-top: 25px;
-  border-bottom: 2.5px solid #ffc163
+  border-bottom: 2.5px solid var(--header-border-color);
 }
 
 #shortname {
@@ -133,16 +188,17 @@ h5 {
 }
 
 .boton {
-  background: #fdfdfd;
+  background: var(--button-bg);
   border-radius: 7px;
-  border: solid 1px lightgrey;
+  border: solid 1px var(--button-border);
   margin-right: 10px;
   padding: 7.5px;
-  box-shadow: 0px 2px 10px #ddd;
+  box-shadow: var(--shadow);
   word-wrap: normal;
   cursor: pointer;
   font-size: 12pt;
   margin-bottom: 10px;
+  color: var(--normal-text-color);
 }
 
 .t6, .t5, .t4, .t3, .t2, .t1, .t0 {
@@ -180,9 +236,9 @@ h5 {
 }
 
 .botonpresionado {
-  background: #f7f7f7;
+  background: var(--button-hover-bg);
   border-radius: 7px;
-  border: solid 1px lightgrey;
+  border: solid 1px var(--button-border);
   margin-right: 10px;
   padding: 7.5px;
   font-size: 12pt;
@@ -201,7 +257,8 @@ h5 {
 
 #matchesTable tr {
   padding-top: 10px;
-  background: white;
+  background: var(--card-background);
+  color: var(--normal-text-color);
 }
 
 #matchesTable a {
@@ -254,13 +311,13 @@ h5 {
 }
 
 .divDataTable {
-  box-shadow: 0px 2px 10px #ddd;
+  box-shadow: var(--shadow);
   overflow-x: auto;
 }
 
 a {
   text-decoration: none;
-  color: black;
+  color: var(--normal-text-color);
 }
 
 th, tr {
@@ -351,11 +408,11 @@ th, tr {
 }
 
 .dataTable tr:nth-child(odd){
-  background-color: #f2f2f2;
+  background-color: var(--table-odd-row-color);
 }
 
 .dataTable tr:nth-child(even){
-  background-color: white;
+  background-color: var(--table-even-row-color);
 }
 
 #footer-wrapper {
@@ -367,14 +424,14 @@ th, tr {
 }
 
 #tournamentdate {
-  color: rgb(90, 90, 90);
+  color: var(--header-color);
 }
 
 #footer-text {
   max-width: 900px;
   margin: auto;
   vertical-align: middle;
-  color: rgb(196, 196, 196);
+  color: var(--footer-color);
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -383,7 +440,7 @@ th, tr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px dashed #ccc;
+  border-top: 1px dashed var(--footer-dashed);
   margin: 1em 0;
   margin-top: 30px;
   padding: 0;
@@ -397,19 +454,28 @@ th, tr {
 }
 
 th {
-  background-color: white;
+  background-color: var(--table-even-row-color);
   vertical-align: middle;
 }
 
 .footerTable td {
   border: none;
   padding: 5px;
+  font-size: 32px;
+}
+
+.footerTable td svg {
+  color: var(--footer-color);
+}
+
+.footerTable td svg:hover {
+  color: var(--footer-hover);
 }
 
 #nav-div {
-  background: #fdfdfd;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-  border-bottom: 1px solid lightgrey;
+  background: var(--button-bg);
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid var(--button-border);
   position: fixed;
   width: 100%;
   top: 0;
@@ -435,20 +501,22 @@ th {
 
 #nav-item {
   border: 0px;
-  background-color: #fdfdfd;
+  background-color: var(--button-bg);
   font-size: 12pt;
   padding-left: 10px;
   padding-right: 10px;
-  border-right: 1px solid lightgrey;
+  border-right: 1px solid var(--button-border);
   height: 51px;
   line-height: 54px;
   vertical-align: middle;
+  color: var(--normal-text-color);
+  cursor: pointer;
 }
 
 .linebreak {
   display: none;
   flex: 0 0 100%;
-  border-top: 1px solid lightgrey;
+  border-top: 1px solid var(--button-border);
 }
 
 .hamburguer {
@@ -457,7 +525,7 @@ th {
 }
 
 #nav-logo {
-  background-color: #e28800;
+  background-color: var(--logo-button-bg);
   overflow: hidden;
   height: 51px;
 }
@@ -466,8 +534,8 @@ th {
   padding: 5px;
 }
 
-body{
-  background-color: #fbfbfb;
+body {
+  background-color: var(--bg-color);
   height: 100%;
 }
 
@@ -636,9 +704,9 @@ table tr td {
 }
 
 .profilepicture img {
-  box-shadow: 0px 2px 10px #ddd;
+  box-shadow: var(--shadow);
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--button-border);
   width: 150px;
   height: 150px;
 }
@@ -650,12 +718,26 @@ table tr td {
 }
 
 .label {
-  color: rgb(90,90,90);
+  color: var(--header-color);
   font-size: .75em;
 }
 
 .value {
   font-size: 1.5em;
+  color: var(--normal-text-color);
+}
+
+.playername {
+  display: 'inline-flex';
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--normal-text-color);
+}
+
+.playersummary {
+  color: var(--header-color);
 }
 
 svg {
@@ -665,13 +747,12 @@ svg {
 .position {
   display: flex;
   align-items: center;
-  box-shadow: 0px 2px 10px #ddd;
+  box-shadow: var(--shadow);
   padding-right: 10px;
   padding-left: 10px;
   font-size: .75em;
-  border: 1px solid #ddd;
+  border: 1px solid var(--table-border-color);
   color: white;
-  background-color: #FF6384;
   border-radius: 5px;
   height: 20px;
   font-weight: bold;
@@ -684,4 +765,73 @@ svg {
   flex-direction: column;
   align-items: center;
   margin-right: 15px;
+}
+
+.ReactTable {
+  border: 1px solid var(--table-border-color) !important; 
+}
+
+.ReactTable * {
+  color: var(--normal-text-color);
+}
+
+.ReactTable .rt-thead .rt-th {
+  background-color: var(--table-even-row-color);
+}
+
+.rthfc .-filters .rt-th.rthfc-th-fixed-left-last, .rthfc .rt-th.rthfc-th-fixed-left-last, .rthfc .rt-td.rthfc-td-fixed-left-last {
+  border-right: solid 1px var(--table-border-color) !important;
+}
+
+.rthfc.-striped .rt-tr.-odd .rt-td {
+  background-color: var(--table-odd-row-color) !important;
+}
+
+.rthfc.-striped .rt-tr.-even .rt-td {
+  background-color: var(--table-even-row-color) !important;
+}
+
+.ReactTable .rt-thead.-filters input, .ReactTable .rt-thead.-filters select {
+  background-color: var(--bg-color) !important;
+  color: var(--normal-text-color) !important;
+}
+
+.ReactTable .rt-noData {
+  background-color: var(--card-background) !important;
+  color: var(--header-color) !important;
+}
+
+.ReactTable .-pagination .-btn {
+  background-color: var(--react-table-button) !important;
+  color: var(--header-color) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.ReactTable .-pagination .-btn:hover {
+  background-color: var(--react-table-button-hover) !important;
+  color: var(--header-color) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.ReactTable .-pagination .-btn[disabled]:hover {
+  background-color: var(--react-table-button) !important;
+  color: var(--header-color) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.ReactTable .-pagination .-pageJump input {
+  background-color: var(--button-bg) !important;
+  color: var(--normal-text-color) !important;
+}
+
+::-webkit-scrollbar {
+  background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--footer-dashed);
+}
+
+#pelota {
+  filter: var(--pelota-filter);
 }

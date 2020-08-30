@@ -159,10 +159,13 @@ export default class Results extends Component {
               onChange={(e) => this.setState({ search: e.target.value })}
               placeholder="Buscar equipo/torneo…"
               style={{
-                border: "1px solid rgba(0,0,0,.1)",
+                border: "1px solid var(--button-border)",
                 fontSize: "11pt",
                 padding: "5px",
                 height: "20px",
+                backgroundColor: "var(--card-background)",
+                color: "var(--normal-text-color)",
+                boxShadow: "var(--shadow)"
               }}
             />
           </div>

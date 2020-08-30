@@ -16,14 +16,14 @@ export default class Player extends Component {
         steaminfo: [],
         all: {},
         last15: {},
-        last10: {}
+        last10: {},
+        date: new Date()
 	};
 
 	constructor(){
 		super();
 		this.state = {isLoading: true};
     }
-
     
     componentDidMount() {
         axios.get(api + 'getplayermatches/' + this.props.match.params.id).then(res => {
@@ -38,6 +38,11 @@ export default class Player extends Component {
                 this.setState({steaminfo: res.data, isLoading: false})
             })
         });
+        let observer = new MutationObserver(mutations => {
+            this.setState({date: new Date()});
+        });
+        
+        observer.observe(document.documentElement, {attributes: true});
     }
     
     render() {

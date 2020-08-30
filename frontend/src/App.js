@@ -18,6 +18,11 @@ import Player from './Components/Player';
 class App extends Component {
 
   render() {
+	const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+	if (currentTheme) {
+		document.documentElement.setAttribute('data-theme', currentTheme);
+	}
 	return (
 		<Router>
 			<div>

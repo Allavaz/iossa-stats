@@ -43,9 +43,35 @@ export default function GoalsShots(props) {
         ]
     }
 
-    return(
+    let options = {
+        legend: {
+            labels: {
+                fontColor: getComputedStyle(document.documentElement).getPropertyValue('--header-color')
+            }
+        },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--footer-dashed')
+                },
+                ticks: {
+                    fontColor: getComputedStyle(document.documentElement).getPropertyValue('--header-color')
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--footer-dashed')
+                },
+                ticks: {
+                    fontColor: getComputedStyle(document.documentElement).getPropertyValue('--header-color')
+                }
+            }]
+        }
+    }
+
+    return (
         <div className='whitespace' style={{maxWidth: '460px', flexGrow: 1, marginLeft: 0, marginRight: 0, height: '215px'}}>
-            <Line data={data} />
+            <Line data={data} options={options} />
         </div>
     )
 }
