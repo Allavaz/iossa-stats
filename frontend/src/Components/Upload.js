@@ -199,10 +199,10 @@ export default function Upload() {
             <div className="cartel">
               <FontAwesomeIcon
                 icon={faCheckCircle}
-                color="grey"
+                color="--var(header-color)"
                 size="5x"
               ></FontAwesomeIcon>
-              <div style={{ color: "grey" }}>
+              <div style={{ color: "--var(header-color)" }}>
                 Partido(s) cargado(s) correctamente.
               </div>
               <div>
