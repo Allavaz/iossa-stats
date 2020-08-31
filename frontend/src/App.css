@@ -331,7 +331,8 @@ th, tr {
   margin: auto;
   justify-content: space-between;
   overflow: visible;
-  align-content: flex-start
+  align-content: flex-start;
+  margin: -10px;
 }
 
 .resp-container {
@@ -571,9 +572,29 @@ table tr td {
   justify-content: flex-end;
 }
 
-@media only screen and (max-width: 400px) {
+.flexTableDiv {
+  margin: 10px;
+}
+
+.matchesContainer {
+  margin: 10px;
+}
+
+@media only screen and (max-width: 420px) {
   #header {
     display: none;
+  }
+
+  .matchesContainer {
+    margin: 0;
+  }
+
+  .rankingChildDev {
+    width: 100%;
+  }
+
+  #divstatstable{
+    width: calc(100vw - 10px);
   }
 
   #fullteamname {
@@ -588,6 +609,10 @@ table tr td {
   
   .bigClubLogo {
     height: 96px;
+  }
+
+  .colCon {
+    margin: 0;
   }
 
   .content {
@@ -639,6 +664,10 @@ table tr td {
     margin-left: 0;
     margin-right: 0;
   }
+
+  .flexTableDiv {
+    margin: 0;
+  }
 }
 
 @media only screen and (min-width: 391px) and (max-width: 550px) {
@@ -667,7 +696,7 @@ table tr td {
   }
 
   .matchContainer {
-    margin-top: 70px;
+    margin-top: 50px;
     padding-left: 0px;
     padding-right: 0px;
   }
@@ -734,6 +763,10 @@ table tr td {
   font-size: 1.5em;
   font-weight: bold;
   color: var(--normal-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
 }
 
 .playersummary {

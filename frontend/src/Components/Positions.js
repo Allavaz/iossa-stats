@@ -46,10 +46,10 @@ export default class Positions extends Component {
                     <center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
                 </div>
                 <div style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
-                    <div style={{display: 'flex', flexWrap: 'wrap', margin: '-10px'}}>
+                    <div className="colCon">
                         {this.state.temporada.map(item => item.name === "Superliga D1 T6" ? 
-                        <FullPositionsUnificada table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{margin: '10px', flexGrow: 1, flexBasis: '200px'}}></FullPositionsUnificada> : 
-                        <FullPositions table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{margin: '10px', flexGrow: 1, flexBasis: '200px'}}></FullPositions>)}
+                        <FullPositionsUnificada className='divDataTable' table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{flexGrow: 1, flexBasis: '200px'}}></FullPositionsUnificada> : 
+                        <FullPositions className='divDataTable' table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{flexGrow: 1, flexBasis: '200px'}}></FullPositions>)}
                     </div>
                 </div>
             </div>

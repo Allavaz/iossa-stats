@@ -258,11 +258,10 @@ export default class Match extends Component {
       <div className="matchContainer">
         <MatchCard data={this.state.data}></MatchCard>
         <div>
-          <div className="colCon" style={{ margin: "-10px" }}>
-            <div
+          <div className="colCon">
+            <div className="flexTableDiv"
               style={{
                 flexBasis: this.state.isCopa ? "900px" : "410px",
-                margin: "10px",
                 flexGrow: 9999,
               }}
             >
@@ -289,10 +288,9 @@ export default class Match extends Component {
                     ></FontAwesomeIcon>
                   </center>
                 </div>
-                <div
+                <div className="flexTableDiv"
                   style={{
                     display: this.state.isTableLoading ? "none" : "block",
-                    margin: "10px",
                     flexGrow: 1,
                   }}
                 >

@@ -48,9 +48,9 @@ export default class Home extends Component {
           className="content"
           style={{ display: this.state.loadingItems === 0 ? "block" : "none" }}
         >
-          <div className="colCon" style={{ margin: "-10px" }}>
+          <div className="colCon">
             <Matches callback={this.reduceLoadingItems}></Matches>
-            <div style={{ margin: "10px", flexGrow: 1 }}>
+            <div className="flexTableDiv" style={{flexGrow: 1 }}>
               {minitables.map((i) => (
                 i.torneo === "sd1t6" ?
                 <MiniPositionsUnificada

@@ -8,7 +8,7 @@ export default function MatchEvent(props) {
             return (
                 <li key={props.index}>
                     <div className='matchevent'>
-                        <EventIcon event={props.item.event}></EventIcon><Link to={`/jugador/${props.item.player1SteamId}`}>{props.item.name + ' (' + Math.round((props.item.second)/60) + "')"}</Link>
+                        <EventIcon event={props.item.event}></EventIcon><Link to={`/jugador/${props.item.player1SteamId}`}><div className="fullteamname" style={{maxWidth: '25vw'}}>{props.item.name + ' (' + Math.round((props.item.second)/60) + "')"}</div></Link>
                     </div>
                 </li>
             );

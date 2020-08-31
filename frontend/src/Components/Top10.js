@@ -115,9 +115,9 @@ export default class Top10 extends Component {
                 <Selector prop1={this.selectTorneo} prop2={this.selectTemporada} prop3={this.state.temporada}></Selector>
                 <div className='top10Container' style={{opacity: this.state.top10Loading ? 0.5 : 1}}>
                     <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
-                        <div>
+                        <div className='rankingChildDiv'>
                             <center><h3>TOP 10 GOLEADORES {this.state.category}</h3>
-                            <div className='divDataTable'>
+                            <div className='divDataTable' id='divstatstable'>
                                 <table className='dataTable' id='statstable'>
                                     <thead>
                                         <tr>
@@ -140,9 +140,9 @@ export default class Top10 extends Component {
                                 </table>
                             </div></center>
                         </div>
-                        <div>
+                        <div className='rankingChildDiv'>
                             <center><h3>TOP 10 ASISTIDORES {this.state.category}</h3>
-                            <div className='divDataTable'>
+                            <div className='divDataTable' id='divstatstable'>
                                 <table className='dataTable' id='statstable'>
                                     <thead>
                                         <tr>
@@ -165,9 +165,9 @@ export default class Top10 extends Component {
                                 </table>
                             </div></center>
                         </div>
-                        <div>
+                        <div className='rankingChildDiv'>
                             <center><h3>TOP 10 RÚSTICOS {this.state.category}</h3>
-                            <div className='divDataTable'>
+                            <div className='divDataTable' id='divstatstable'>
                                 <table className='dataTable' id='statstable'>
                                     <thead>
                                         <tr>
