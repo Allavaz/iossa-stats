@@ -47,7 +47,7 @@ export default class Player extends Component {
     
     render() {
         return this.state.isLoading ? <div className='content' id='loader'><center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center></div> :
-        <div className='matchContainer' style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+        <div className='matchContainer' id='playerContainer' style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
             <PlayerCard data={this.state.all} data2={this.state.last15} steaminfo={this.state.steaminfo} />
             <div style={{display: 'flex', flexWrap: 'wrap', flexGrow: 1, alignContent: 'stretch', justifyContent: 'space-between'}}>
                 <Playstyle data={this.state.all} />
