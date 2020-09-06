@@ -18,6 +18,7 @@ export class Navigation extends Component {
 			this.setState({isMobile: true});
 		}
 		window.addEventListener('resize', this.setMobile);
+		window.addEventListener('click', this.hamburgerCloseWhenClickingAway)
 	}
 
 	componentWillUnmount() {
@@ -30,6 +31,12 @@ export class Navigation extends Component {
 			this.setState({isMobile: true});
 		} else {
 			this.setState({isMobile: false});
+		}
+	}
+
+	hamburgerCloseWhenClickingAway = (e) => {
+		if (e.clientY > 110) {
+			this.hideHamburguer()
 		}
 	}
 
