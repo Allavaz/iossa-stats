@@ -671,6 +671,7 @@ table tr td {
 
   .flexTableDiv {
     margin: 0;
+    width: 100%;
   }
 }
 

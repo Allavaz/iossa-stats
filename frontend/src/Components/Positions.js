@@ -48,8 +48,8 @@ export default class Positions extends Component {
                 <div style={{display: this.state.loadingItems === 0 ? 'block' : 'none'}}>
                     <div className="colCon">
                         {this.state.temporada.map(item => item.name === "Superliga D1 T6" ? 
-                        <FullPositionsUnificada className='divDataTable' table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{flexGrow: 1, flexBasis: '200px'}}></FullPositionsUnificada> : 
-                        <FullPositions className='divDataTable' table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{flexGrow: 1, flexBasis: '200px'}}></FullPositions>)}
+                        <div className='flexTableDiv'><FullPositionsUnificada className='divDataTable' table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{flexGrow: 1, flexBasis: '200px'}}></FullPositionsUnificada></div> : 
+                        <div className='flexTableDiv'><FullPositions className='divDataTable' table={item.table} torneo={item.name} callback={this.reduceLoadingItems} style={{flexGrow: 1, flexBasis: '200px'}}></FullPositions></div>)}
                     </div>
                 </div>
             </div>
