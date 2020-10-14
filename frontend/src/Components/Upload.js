@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const torneos = [
   "Superliga D1 T6",
-  "Copa Master T6",
+  "Copa valencARc T6",
   //	'Liga D1 T6',
   //	'Liga D2 T6',
   //	'Copa Maradei T6 - Grupo A',
