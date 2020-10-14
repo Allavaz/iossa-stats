@@ -65,6 +65,8 @@ export default class Results extends Component {
         this.setState({ category: "LIGA MASTER" });
       } else if (arg.startsWith("ddh")) {
         this.setState({ category: "DIVISION DE HONOR" });
+      } else if (arg.startsWith('cv')) {
+        this.setState({category: 'COPA VALENCARC'});
       }
       this.setState({ data: res.data, matchesLoading: false });
     });
