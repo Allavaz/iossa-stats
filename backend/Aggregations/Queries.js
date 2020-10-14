@@ -80,6 +80,7 @@ module.exports = {
       { torneo: "Copa Maradei T6 - Grupo B" },
       { torneo: "Copa Maradei T6 - Grupo C" },
       { torneo: "Copa Master T6" },
+      { torneo: "Copa valencARc T6" },
       { torneo: "Recopa Master T6" },
       { torneo: "Recopa Maradei T6" },
       { torneo: "Supercopa Master T6" },
@@ -118,6 +119,11 @@ module.exports = {
       { torneo: "Copa Master T3" },
       { torneo: "Copa Master T5" },
       { torneo: "Copa Master T6" },
+    ],
+  },
+  cv: {
+    $or: [
+      { torneo: "Copa valencARc T6" },
     ],
   },
   lm: {
@@ -228,6 +234,9 @@ module.exports = {
   },
   mastert6: {
     torneo: "Copa Master T6",
+  },
+  cvt6: {
+    torneo: "Copa valencARc T6",
   },
   recopamastert0: {
     torneo: "Recopa Master T0",
