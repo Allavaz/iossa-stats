@@ -27,6 +27,8 @@ exports.getTournamentIcon = function (tournament) {
     return "/tournaments/ligamaster.png";
   } else if (tournament.includes("Division de Honor")) {
     return "/tournaments/ddh.png";
+  } else if (tournament.includes("Copa valencARc")) {
+    return "/tournaments/copavalencarc.png";
   } else {
     return "/tournaments/none.png";
   }
