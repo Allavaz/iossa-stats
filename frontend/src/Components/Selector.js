@@ -30,6 +30,9 @@ export default function Selector(props) {
           <button className="boton" onClick={() => props.prop1("master")}>
             Copa Master
           </button>
+          <button className="boton" onClick={() => props.prop1("cv")}>
+            Copa valencARc
+          </button>
           <button className="boton" onClick={() => props.prop1("maradei")}>
             Copa Maradei
           </button>
@@ -79,8 +82,8 @@ export default function Selector(props) {
           <button className="boton" onClick={() => props.prop1("sd1t6")}>
             Superliga D1
           </button>
-          <button className="boton" onClick={() => props.prop1("mastert6")}>
-            Copa Master
+          <button className="boton" onClick={() => props.prop1("cvt6")}>
+            Copa valencARc
           </button>
           <button className="boton" onClick={() => props.prop1("d1t6")}>
             Liga D1
