@@ -1,10 +1,6 @@
 export const tablas = {
   t6: [
     {
-      table: "sd1t6",
-      name: "Superliga D1 T6",
-    },
-    /* {
       table: "d1t6",
       name: "Liga D1 T6",
     },
@@ -23,7 +19,11 @@ export const tablas = {
     {
       table: "maradeit6c",
       name: "Copa Maradei T6 - Grupo C",
-    }, */
+    },
+    {
+      table: "sd1t6",
+      name: "Superliga D1 T6",
+    },
   ],
   t5: [
     {
