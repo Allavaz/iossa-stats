@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 const torneos = [
-  "Superliga D1 T6",
-  "Copa valencARc T6",
-  //	'Liga D1 T6',
-  //	'Liga D2 T6',
-  //	'Copa Maradei T6 - Grupo A',
-  //	'Copa Maradei T6 - Grupo B',
-  //	'Copa Maradei T6 - Grupo C',
-  //	'Copa Maradei T6 - Eliminatorias',
+  //"Superliga D1 T6",
+  //"Copa valencARc T6",
+  'Liga D1 T6',
+  'Liga D2 T6',
+  'Copa Maradei T6 - Grupo A',
+  'Copa Maradei T6 - Grupo B',
+  'Copa Maradei T6 - Grupo C',
+  'Copa Maradei T6 - Eliminatorias',
   //	'Recopa Master T6',
   //	'Recopa Maradei T6',
   //	'Supercopa Master T6',
