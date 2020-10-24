@@ -8,9 +8,9 @@ import MiniPositionsUnificada from "./MiniPositionsUnificada";
 const minitables = [
   //	{torneo: "d2t6", header: "Liga D2 T6"},
   //	{torneo: "d1t6", header: "Liga D1 T6"},
-  //	{torneo: "maradeit6a", header: "Copa Maradei T6 - Grupo A"},
-  //	{torneo: "maradeit6b", header: "Copa Maradei T6 - Grupo B"},
-  //	{torneo: "maradeit6c", header: "Copa Maradei T6 - Grupo C"},
+  {torneo: "maradeit6a", header: "Copa Maradei T6 - Grupo A"},
+  {torneo: "maradeit6b", header: "Copa Maradei T6 - Grupo B"},
+  {torneo: "maradeit6c", header: "Copa Maradei T6 - Grupo C"},
   { torneo: "sd1t6", header: "Superliga D1 T6" },
 ];
 
