@@ -77,6 +77,7 @@ module.exports = {
       { torneo: "Liga D1 T6" },
       { torneo: "Copa Maradei T6 - Eliminatorias" },
       { torneo: "Copa Maradei T6 - Grupo A" },
+      { torneo: "Copa Maradei T6 - Grupo A (Desempate)" },
       { torneo: "Copa Maradei T6 - Grupo B" },
       { torneo: "Copa Maradei T6 - Grupo C" },
       { torneo: "Copa Master T6" },
@@ -182,6 +183,7 @@ module.exports = {
       { torneo: "Copa Maradei T5 - Grupo C" },
       { torneo: "Copa Maradei T6 - Eliminatorias" },
       { torneo: "Copa Maradei T6 - Grupo A" },
+      { torneo: "Copa Maradei T6 - Grupo A (Desempate)" },
       { torneo: "Copa Maradei T6 - Grupo B" },
       { torneo: "Copa Maradei T6 - Grupo C" },
     ],
@@ -305,6 +307,7 @@ module.exports = {
     $or: [
       { torneo: "Copa Maradei T6 - Eliminatorias" },
       { torneo: "Copa Maradei T6 - Grupo A" },
+      { torneo: "Copa Maradei T6 - Grupo A (Desempate)" },
       { torneo: "Copa Maradei T6 - Grupo B" },
       { torneo: "Copa Maradei T6 - Grupo C" },
     ],
