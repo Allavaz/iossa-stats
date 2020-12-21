@@ -216,8 +216,10 @@ module.exports = {
     $or: [{ torneo: "Liga D1 T6" }],
   },
   d2t6: {
-    $or: [{ torneo: "Liga D2 T6" }],
-    $or: [{ torneo: "Liga D2 T6 (Desempate 1er Puesto)" }]
+    $or: [
+      { torneo: "Liga D2 T6" },
+      { torneo: "Liga D2 T6 (Desempate 1er Puesto)" }
+    ],
   },
   d2t4: {
     $or: [{ torneo: "Liga D2 T4" }],
