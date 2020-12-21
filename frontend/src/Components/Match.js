@@ -209,7 +209,7 @@ export default class Match extends Component {
         case "Liga D2 T6":
           this.setState({ isCopa: false, isLoading: false, table: "d2t6" });
           break;
-        case "Liga D2 T6 (Desempate Campeón)":
+        case "Liga D2 T6 (Desempate 1er Puesto)":
           this.setState({ isCopa: false, isLoading: false, table: "d2t6" });
           break;
         case "Copa Maradei T6 - Grupo A":
