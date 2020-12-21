@@ -74,7 +74,7 @@ module.exports = {
     $or: [
       { torneo: "Superliga D1 T6" },
       { torneo: "Liga D2 T6" },
-      { torneo: "Liga D2 T6 (Desempate Campeón)" },
+      { torneo: "Liga D2 T6 (Desempate 1er Puesto)" },
       { torneo: "Liga D1 T6" },
       { torneo: "Copa Maradei T6 - Eliminatorias" },
       { torneo: "Copa Maradei T6 - Grupo A" },
@@ -113,7 +113,7 @@ module.exports = {
       { torneo: "Liga D2 T3 - Desempate 3er Puesto (Vuelta)" },
       { torneo: "Liga D2 T4" },
       { torneo: "Liga D2 T6" },
-      { torneo: "Liga D2 T6 (Desempate Campeón)" }
+      { torneo: "Liga D2 T6 (Desempate 1er Puesto)" }
     ],
   },
   master: {
@@ -217,7 +217,7 @@ module.exports = {
   },
   d2t6: {
     $or: [{ torneo: "Liga D2 T6" }],
-    $or: [{ torneo: "Liga D2 T6 (Desempate Campeón)" }]
+    $or: [{ torneo: "Liga D2 T6 (Desempate 1er Puesto)" }]
   },
   d2t4: {
     $or: [{ torneo: "Liga D2 T4" }],
