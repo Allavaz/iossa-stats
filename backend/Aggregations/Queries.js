@@ -83,9 +83,6 @@ module.exports = {
       { torneo: "Copa Maradei T6 - Grupo C" },
       { torneo: "Copa Master T6" },
       { torneo: "Copa valencARc T6" },
-      { torneo: "Recopa Master T6" },
-      { torneo: "Recopa Maradei T6" },
-      { torneo: "Supercopa Master T6" },
     ],
   },
   sd1: {
@@ -143,7 +140,6 @@ module.exports = {
       { torneo: "Supercopa Master T3" },
       { torneo: "Supercopa Master T3 (Repechaje)" },
       { torneo: "Supercopa Master T5" },
-      { torneo: "Supercopa Master T6" },
     ],
   },
   recopamaster: {
@@ -152,14 +148,12 @@ module.exports = {
       { torneo: "Recopa Master T3" },
       { torneo: "Recopa Master T0" },
       { torneo: "Recopa Master T5" },
-      { torneo: "Recopa Master T6" },
     ],
   },
   recopamaradei: {
     $or: [
       { torneo: "Recopa Maradei T5" },
       { torneo: "Recopa Maradei T5 (Repechaje)" },
-      { torneo: "Recopa Maradei T6" },
     ],
   },
   copaamerica: {
@@ -257,9 +251,6 @@ module.exports = {
   recopamastert5: {
     torneo: "Recopa Master T5",
   },
-  recopamastert6: {
-    torneo: "Recopa Master T6",
-  },
   d1t3: {
     $or: [
       { torneo: "Liga D1 T3" },
@@ -279,9 +270,6 @@ module.exports = {
       { torneo: "Supercopa Master T3" },
       { torneo: "Supercopa Master T3 (Repechaje)" },
     ],
-  },
-  supercopamastert6: {
-    $or: [{ torneo: "Supercopa Master T6" }],
   },
   maradeit1: {
     $or: [
@@ -322,9 +310,6 @@ module.exports = {
       { torneo: "Recopa Maradei T5" },
       { torneo: "Recopa Maradei T5 (Repechaje)" },
     ],
-  },
-  recopamaradeit6: {
-    $or: [{ torneo: "Recopa Maradei T6" }],
   },
   lmt0: {
     $or: [{ torneo: "Liga Master T0" }],
