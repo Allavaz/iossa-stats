@@ -94,18 +94,6 @@ export default function Selector(props) {
           <button className="boton" onClick={() => props.prop1("maradeit6")}>
             Copa Maradei
           </button>
-          <button
-            className="boton"
-            onClick={() => props.prop1("recopamastert6")}
-          >
-            Recopa Master
-          </button>
-          <button
-            className="boton"
-            onClick={() => props.prop1("recopamaradeit6")}
-          >
-            Recopa Maradei
-          </button>
         </div>
       </div>
       <div
