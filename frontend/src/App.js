@@ -22,6 +22,12 @@ class App extends Component {
 
 	if (currentTheme) {
 		document.documentElement.setAttribute('data-theme', currentTheme);
+	} else {
+		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			document.documentElement.setAttribute('data-theme', 'dark');
+		} else {
+			document.documentElement.setAttribute('data-theme', 'light');
+		}
 	}
 	return (
 		<Router>
