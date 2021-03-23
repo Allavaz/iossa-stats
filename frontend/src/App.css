@@ -520,7 +520,7 @@ th {
   border-top: 1px solid var(--button-border);
 }
 
-.hamburguer {
+.hamburger {
   display: none;
   cursor: pointer;
 }
@@ -648,7 +648,7 @@ table tr td {
     display: block;
   }
 
-  .hamburguer {
+  .hamburger {
     display: block;
   }
 
@@ -728,7 +728,7 @@ table tr td {
     display: block;
   }
 
-  .hamburguer {
+  .hamburger {
     display: block;
   }
 

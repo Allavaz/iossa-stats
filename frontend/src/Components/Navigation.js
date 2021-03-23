@@ -10,7 +10,7 @@ let mobileWidth = 550
 export class Navigation extends Component {
 	constructor() {
 		super();
-		this.state = {isLogoShown: false, hamburguer: false, night: false};
+		this.state = {isLogoShown: false, hamburger: false, night: false};
 	}
 
 	componentDidMount() {
@@ -38,7 +38,7 @@ export class Navigation extends Component {
 
 	hamburgerCloseWhenClickingAway = (e) => {
 		if (e.clientY > 110) {
-			this.hideHamburguer()
+			this.hidehamburger()
 		}
 	}
 
@@ -50,12 +50,12 @@ export class Navigation extends Component {
 		}
 	}
 
-	hamburguerOn = () => {
-		this.setState({hamburguer: !this.state.hamburguer});
+	hamburgerOn = () => {
+		this.setState({hamburger: !this.state.hamburger});
 	}
 
-	hideHamburguer = () => {
-		this.setState({hamburguer: false})
+	hidehamburger = () => {
+		this.setState({hamburger: false})
 	}
 
 	toggleNight = () => {
@@ -75,16 +75,16 @@ export class Navigation extends Component {
 			<div id='nav-div' onScroll={this.hideLogo}>
 				<div className='headerContent'>
 					<div className='nav-contents'>
-						<Link to='/' id='nav-logo' onClick={this.hideHamburguer} style={{width: this.state.isLogoShown || this.state.isMobile ? '50px' : '0', transition: this.state.isMobile ? 'all 0s' : 'all .2s ease-in'}}><img alt='IOSoccer Sudamérica' height='40px' src='/logo-solo.png'></img></Link>
-						<Link to='/individuales' onClick={this.hideHamburguer} id='nav-item' style={{borderLeft: '1px solid var(--button-border)'}}><center>Estadísticas</center></Link>
-						<Link to='/resultados' onClick={this.hideHamburguer} id='nav-item'><center>Resultados</center></Link>
-						<div className='hamburguer' id='nav-item' onClick={this.hamburguerOn}><center><FontAwesomeIcon icon={faBars}></FontAwesomeIcon></center></div>
-						<div className='linebreak' style={{display: this.state.hamburguer ? 'block' : 'none'}}></div>
-						<Link to='/posiciones' onClick={this.hideHamburguer} id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Posiciones</center></Link>
-						<Link to='/top10' onClick={this.hideHamburguer} id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Rankings</center></Link>
-						<a href='https://forum.iosoccer-sa.bid/' id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Foro</center></a>
-						<a href='https://docs.google.com/spreadsheets/d/1B421HesAcp-3qhGNT5qOy9tMXQovQ5SNNWOhw-MQFOA/edit?usp=sharing' id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Fixture</center></a>
-						<div id='nav-item' onClick={this.toggleNight} style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center><FontAwesomeIcon icon={this.state.night ? faSun : faMoon}></FontAwesomeIcon></center></div>
+						<Link to='/' id='nav-logo' onClick={this.hidehamburger} style={{width: this.state.isLogoShown || this.state.isMobile ? '50px' : '0', transition: this.state.isMobile ? 'all 0s' : 'all .2s ease-in'}}><img alt='IOSoccer Sudamérica' height='40px' src='/logo-solo.png'></img></Link>
+						<Link to='/individuales' onClick={this.hidehamburger} id='nav-item' style={{borderLeft: '1px solid var(--button-border)'}}><center>Estadísticas</center></Link>
+						<Link to='/resultados' onClick={this.hidehamburger} id='nav-item'><center>Resultados</center></Link>
+						<div className='hamburger' id='nav-item' onClick={this.hamburgerOn}><center><FontAwesomeIcon icon={faBars}></FontAwesomeIcon></center></div>
+						<div className='linebreak' style={{display: this.state.hamburger ? 'block' : 'none'}}></div>
+						<Link to='/posiciones' onClick={this.hidehamburger} id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Posiciones</center></Link>
+						<Link to='/top10' onClick={this.hidehamburger} id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Rankings</center></Link>
+						<a href='https://forum.iosoccer-sa.bid/' id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Foro</center></a>
+						<a href='https://docs.google.com/spreadsheets/d/1B421HesAcp-3qhGNT5qOy9tMXQovQ5SNNWOhw-MQFOA/edit?usp=sharing' id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Fixture</center></a>
+						<div id='nav-item' onClick={this.toggleNight} style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center><FontAwesomeIcon icon={this.state.night ? faSun : faMoon}></FontAwesomeIcon></center></div>
 					</div>
 				</div>
 			</div>
