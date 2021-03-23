@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { faSun } from '@fortawesome/free-solid-svg-icons';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 let mobileWidth = 550
 
 export class Navigation extends Component {
 	constructor() {
 		super();
-		this.state = {isLogoShown: false, hamburguer: false};
+		this.state = {isLogoShown: false, hamburguer: false, night: false};
 	}
 
 	componentDidMount() {
@@ -17,6 +18,7 @@ export class Navigation extends Component {
 		if (window.innerWidth < mobileWidth) {
 			this.setState({isMobile: true});
 		}
+		this.setState({night: localStorage.getItem('theme') === 'dark'});
 		window.addEventListener('resize', this.setMobile);
 		window.addEventListener('click', this.hamburgerCloseWhenClickingAway)
 	}
@@ -60,9 +62,11 @@ export class Navigation extends Component {
 		if (document.documentElement.getAttribute('data-theme') !== 'dark') {
 			document.documentElement.setAttribute('data-theme', 'dark');
 			localStorage.setItem('theme', 'dark');
+			this.setState({night: true});
 		} else {
 			document.documentElement.setAttribute('data-theme', 'light');
 			localStorage.setItem('theme', 'light');
+			this.setState({night: false});
 		}
 	}
 
@@ -80,7 +84,7 @@ export class Navigation extends Component {
 						<Link to='/top10' onClick={this.hideHamburguer} id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Rankings</center></Link>
 						<a href='https://forum.iosoccer-sa.bid/' id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Foro</center></a>
 						<a href='https://docs.google.com/spreadsheets/d/1B421HesAcp-3qhGNT5qOy9tMXQovQ5SNNWOhw-MQFOA/edit?usp=sharing' id='nav-item' style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Fixture</center></a>
-						<div id='nav-item' onClick={this.toggleNight} style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center><FontAwesomeIcon icon={faLightbulb}></FontAwesomeIcon></center></div>
+						<div id='nav-item' onClick={this.toggleNight} style={{display: this.state.hamburguer || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center><FontAwesomeIcon icon={this.state.night ? faSun : faMoon}></FontAwesomeIcon></center></div>
 					</div>
 				</div>
 			</div>
