@@ -1,32 +1,47 @@
 const fullnames = {
+  
+  d1t1: "Liga D1 T1",
   d1t2: "Liga D1 - Temporada 2",
-  d2t1: "Liga D2 - Temporada 1",
   d1t3: "Liga D1 T3",
-  d2t3: "Liga D2 T3",
   d1t4: "Liga D1 T4",
+  d1t6: "Liga D1 T6",
+  d1t6: "Liga D1 T7",
+
+  d2t1: "Liga D2 - Temporada 1",
+  d2t3: "Liga D2 T3",
   d2t4: "Liga D2 T4",
+  d2t6: "Liga D2 T6",
+  d2t6: "Liga D2 T7",
+
+  maradeit1a: "Copa Maradei T1 - Grupo A",
+  maradeit1b: "Copa Maradei T1 - Grupo B",
+  maradeit1c: "Copa Maradei T1 - Grupo C",
   maradeit3a: "Copa Maradei T3 - Grupo A",
   maradeit3b: "Copa Maradei T3 - Grupo B",
   maradeit3c: "Copa Maradei T3 - Grupo C",
   maradeit3d: "Copa Maradei T3 - Grupo D",
-  americat3: "Copa America T3",
-  d1t1: "Liga D1 T1",
-  maradeit1a: "Copa Maradei T1 - Grupo A",
-  maradeit1b: "Copa Maradei T1 - Grupo B",
-  maradeit1c: "Copa Maradei T1 - Grupo C",
-  lmt0: "Liga Master T0",
-  ddht0: "Division de Honor T0",
   maradeit5a: "Copa Maradei T5 - Grupo A",
   maradeit5b: "Copa Maradei T5 - Grupo B",
   maradeit5c: "Copa Maradei T5 - Grupo C",
-  lmt5: "Liga Master T5",
-  ddht5: "Division de Honor T5",
-  sd1t6: "Superliga D1 T6",
-  d1t6: "Liga D1 T6",
-  d2t6: "Liga D2 T6",
   maradeit6a: "Copa Maradei T6 - Grupo A",
   maradeit6b: "Copa Maradei T6 - Grupo B",
   maradeit6c: "Copa Maradei T6 - Grupo C",
+  maradeit6a: "Copa Maradei T7 - Grupo A",
+  maradeit6b: "Copa Maradei T7 - Grupo B",
+  maradeit6c: "Copa Maradei T7 - Grupo C",
+
+  americat3: "Copa America T3",
+
+  lmt0: "Liga Master T0",
+  lmt5: "Liga Master T5",
+
+  ddht0: "Division de Honor T0",
+  ddht5: "Division de Honor T5",
+
+  sd1t6: "Superliga D1 T6",
+  sd1t7: "Superliga D1 T7",
+  
+
 };
 
 module.exports = (arg) => {
