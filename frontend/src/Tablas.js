@@ -1,4 +1,30 @@
 export const tablas = {
+  t7: [
+    {
+      table: "d1t7",
+      name: "Liga D1 T7",
+    },
+    {
+      table: "d2t6",
+      name: "Liga D2 T7",
+    },
+    {
+      table: "maradeit6a",
+      name: "Copa Maradei T7 - Grupo A",
+    },
+    {
+      table: "maradeit6b",
+      name: "Copa Maradei T7 - Grupo B",
+    },
+    {
+      table: "maradeit6c",
+      name: "Copa Maradei T7 - Grupo C",
+    },
+    {
+      table: "sd1t6",
+      name: "Superliga D1 T7",
+    },
+  ],
   t6: [
     {
       table: "d1t6",
