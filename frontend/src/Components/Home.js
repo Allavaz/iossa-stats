@@ -6,12 +6,12 @@ import MiniPositions from "./MiniPositions";
 import MiniPositionsUnificada from "./MiniPositionsUnificada";
 
 const minitables = [
-  {torneo: "d1t6", header: "Liga D1 T6"},
-  {torneo: "d2t6", header: "Liga D2 T6"},
-  {torneo: "maradeit6a", header: "Copa Maradei T6 - Grupo A"},
-  {torneo: "maradeit6b", header: "Copa Maradei T6 - Grupo B"},
-  {torneo: "maradeit6c", header: "Copa Maradei T6 - Grupo C"},
-  { torneo: "sd1t6", header: "Superliga D1 T6" },
+  //{torneo: "d1t7", header: "Liga D1 T7"},
+  //{torneo: "d2t7", header: "Liga D2 T7"},
+  //{torneo: "maradeit7a", header: "Copa Maradei T7 - Grupo A"},
+  //{torneo: "maradeit7b", header: "Copa Maradei T7 - Grupo B"},
+  //{torneo: "maradeit7c", header: "Copa Maradei T7 - Grupo C"},
+  {torneo: "sd1t7", header: "Superliga D1 T7" },
 ];
 
 export default class Home extends Component {
@@ -52,7 +52,7 @@ export default class Home extends Component {
             <Matches callback={this.reduceLoadingItems}></Matches>
             <div className="flexTableDiv" style={{flexGrow: 1 }}>
               {minitables.map((i) => (
-                i.torneo === "sd1t6" ?
+                i.torneo === "sd1t7" ?
                 <MiniPositionsUnificada
                   torneo={i.torneo}
                   header={i.header}
