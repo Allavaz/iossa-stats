@@ -228,14 +228,23 @@ module.exports = {
   sd1t6: {
     $or: [{ torneo: "Superliga D1 T6" }],
   },
+  sd1t7: {
+    $or: [{ torneo: "Superliga D1 T7" }],
+  },
   d1t6: {
     $or: [{ torneo: "Liga D1 T6" }],
+  },
+  d1t7: {
+    $or: [{ torneo: "Liga D1 T7" }],
   },
   d2t6: {
     $or: [
       { torneo: "Liga D2 T6" },
       { torneo: "Liga D2 T6 (Desempate 1er Puesto)" }
     ],
+  },
+  d2t7: {
+    $or: [{ torneo: "Liga D2 T7" }],
   },
   d2t4: {
     $or: [{ torneo: "Liga D2 T4" }],
@@ -260,6 +269,9 @@ module.exports = {
   },
   cvt6: {
     torneo: "Copa valencARc T6",
+  },
+  cvt7: {
+    torneo: "Copa valencARc T7",
   },
   recopamastert0: {
     torneo: "Recopa Master T0",
@@ -325,6 +337,14 @@ module.exports = {
       { torneo: "Copa Maradei T6 - Grupo A (Desempate)" },
       { torneo: "Copa Maradei T6 - Grupo B" },
       { torneo: "Copa Maradei T6 - Grupo C" },
+    ],
+  },
+  maradeit7: {
+    $or: [
+      { torneo: "Copa Maradei T7 - Eliminatorias" },
+      { torneo: "Copa Maradei T7 - Grupo A" },
+      { torneo: "Copa Maradei T7 - Grupo B" },
+      { torneo: "Copa Maradei T7 - Grupo C" },
     ],
   },
   recopamaradeit5: {
