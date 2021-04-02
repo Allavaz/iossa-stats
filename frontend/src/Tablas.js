@@ -5,19 +5,19 @@ export const tablas = {
       name: "Liga D1 T7",
     },
     {
-      table: "d2t6",
+      table: "d2t7",
       name: "Liga D2 T7",
     },
     {
-      table: "maradeit6a",
+      table: "maradeit7a",
       name: "Copa Maradei T7 - Grupo A",
     },
     {
-      table: "maradeit6b",
+      table: "maradeit7b",
       name: "Copa Maradei T7 - Grupo B",
     },
     {
-      table: "maradeit6c",
+      table: "maradeit7c",
       name: "Copa Maradei T7 - Grupo C",
     },*/
     {
