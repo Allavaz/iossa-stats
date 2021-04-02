@@ -5,6 +5,7 @@ export default function Selector(props) {
     <div className="torSelect">
       <select id="selector" defaultValue="t6" onChange={props.prop2}>
         <option value="total">Totales</option>
+        <option value="t6">Temporada 7</option>
         <option value="t6">Temporada 6</option>
         <option value="t5">Temporada 5</option>
         <option value="t4">Temporada 4</option>
@@ -68,6 +69,31 @@ export default function Selector(props) {
           </button>
           <button className="boton" onClick={() => props.prop1("sd1")}>
             Superliga D1
+          </button>
+        </div>
+      </div>
+      <div
+        className="t7"
+        style={{ display: props.prop3 === "t7" ? "block" : "none" }}
+      >
+        <div className="botonera">
+          <button className="boton" onClick={() => props.prop1("t7")}>
+            Totales
+          </button>
+          <button className="boton" onClick={() => props.prop1("sd1t7")}>
+            Superliga D1
+          </button>
+          <button className="boton" onClick={() => props.prop1("maradeit7")}>
+            Copa Maradei
+          </button>
+          <button className="boton" onClick={() => props.prop1("cvt7")}>
+            Copa valencARc
+          </button>
+          <button className="boton" onClick={() => props.prop1("d1t7")}>
+            Liga D1
+          </button>
+          <button className="boton" onClick={() => props.prop1("d2t7")}>
+            Liga D2
           </button>
         </div>
       </div>
