@@ -25,7 +25,7 @@ export default class Players extends Component {
             isLoading: true, 
             playersLoading: false, 
             category: 'TOTALES', 
-            temporada: 't6'
+            temporada: 't7'
         };
 	}
     
@@ -80,6 +80,9 @@ export default class Players extends Component {
         switch (selector.options[selector.selectedIndex].value) {
             case 'total':
                 this.selectTorneo('all');
+                break;
+            case 't7':
+                this.selectTorneo('t7');
                 break;
             case 't6':
                 this.selectTorneo('t6');
