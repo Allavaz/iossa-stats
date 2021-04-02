@@ -83,7 +83,6 @@ export class Navigation extends Component {
 						<Link to='/posiciones' onClick={this.hidehamburger} id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Posiciones</center></Link>
 						<Link to='/top10' onClick={this.hidehamburger} id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center>Rankings</center></Link>
 						<a href='https://forum.iosoccer-sa.bid/' id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Foro</center></a>
-						<a href='https://docs.google.com/spreadsheets/d/1B421HesAcp-3qhGNT5qOy9tMXQovQ5SNNWOhw-MQFOA/edit?usp=sharing' id='nav-item' style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}} target='_blank' rel='noopener noreferrer'><center>Fixture</center></a>
 						<div id='nav-item' onClick={this.toggleNight} style={{display: this.state.hamburger || window.innerWidth >= mobileWidth ? 'block' : 'none'}}><center><FontAwesomeIcon icon={this.state.night ? faSun : faMoon}></FontAwesomeIcon></center></div>
 					</div>
 				</div>
