@@ -240,6 +240,36 @@ export default class Match extends Component {
             table: "maradeit6c",
           });
           break;
+        case "Superliga D1 T7":
+          this.setState({ isCopa: false, isLoading: false, table: "sd1t7" });
+          break;
+        case "Liga D1 T7":
+          this.setState({ isCopa: false, isLoading: false, table: "d1t7" });
+          break;
+        case "Liga D2 T7":
+          this.setState({ isCopa: false, isLoading: false, table: "d2t7" });
+          break;
+        case "Copa Maradei T7 - Grupo A":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "maradeit7a",
+          });
+          break;
+        case "Copa Maradei T7 - Grupo B":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "maradeit7b",
+          });
+          break;
+        case "Copa Maradei T7 - Grupo C":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "maradeit7c",
+          });
+          break;
         default:
           this.setState({ isCopa: false, isLoading: false });
           break;
@@ -305,7 +335,7 @@ export default class Match extends Component {
                   }}
                 >
                   {
-                    this.state.table === "sd1t6" ? 
+                    this.state.table === "sd1t7" ? 
                     <FullPositionsUnificada
                       table={this.state.table}
                       torneo={this.state.data.torneo}
