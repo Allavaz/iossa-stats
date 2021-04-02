@@ -85,8 +85,23 @@ module.exports = {
       { torneo: "Copa valencARc T6" },
     ],
   },
+  t7: {
+    $or: [
+      { torneo: "Superliga D1 T7" },
+      { torneo: "Liga D2 T7" },
+      { torneo: "Liga D1 T7" },
+      { torneo: "Copa Maradei T7 - Eliminatorias" },
+      { torneo: "Copa Maradei T7 - Grupo A" },
+      { torneo: "Copa Maradei T7 - Grupo B" },
+      { torneo: "Copa Maradei T7 - Grupo C" },
+      { torneo: "Copa valencARc T7" },
+    ],
+  },
   sd1: {
-    $or: [{ torneo: "Superliga D1 T6" }],
+    $or: [
+      { torneo: "Superliga D1 T6" },
+      { torneo: "Superliga D1 T7" }
+    ],
   },
   d1: {
     $or: [
@@ -100,6 +115,7 @@ module.exports = {
       { torneo: "Liga D1 T4 - (Desempate)" },
       { torneo: "Liga D1 T4 - Promoción" },
       { torneo: "Liga D1 T6" },
+      { torneo: "Liga D1 T7" },
     ],
   },
   d2: {
@@ -110,7 +126,8 @@ module.exports = {
       { torneo: "Liga D2 T3 - Desempate 3er Puesto (Vuelta)" },
       { torneo: "Liga D2 T4" },
       { torneo: "Liga D2 T6" },
-      { torneo: "Liga D2 T6 (Desempate 1er Puesto)" }
+      { torneo: "Liga D2 T6 (Desempate 1er Puesto)" },
+      { torneo: "Liga D2 T7" },
     ],
   },
   master: {
@@ -124,6 +141,7 @@ module.exports = {
   cv: {
     $or: [
       { torneo: "Copa valencARc T6" },
+      { torneo: "Copa valencARc T7" },
     ],
   },
   lm: {
@@ -182,6 +200,10 @@ module.exports = {
       { torneo: "Copa Maradei T6 - Grupo A (Desempate)" },
       { torneo: "Copa Maradei T6 - Grupo B" },
       { torneo: "Copa Maradei T6 - Grupo C" },
+      { torneo: "Copa Maradei T7 - Eliminatorias" },
+      { torneo: "Copa Maradei T7 - Grupo A" },
+      { torneo: "Copa Maradei T7 - Grupo B" },
+      { torneo: "Copa Maradei T7 - Grupo C" },
     ],
   },
   cg: {
