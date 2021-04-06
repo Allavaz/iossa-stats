@@ -20,6 +20,7 @@
   --react-table-button-hover: rgba(0, 0, 0, 0.2);
   --footer-hover: rgb(179, 179, 179);
   --pelota-filter: invert(0);
+  color-scheme: light;
 }
 
 [data-theme="dark"] {
@@ -44,6 +45,7 @@
   --react-table-button-hover: rgba(255, 255, 255, 0.2);
   --footer-hover: rgb(85, 85, 85);
   --pelota-filter: invert(1);
+  color-scheme: dark;
 }
 
 .dataTable th, td {
@@ -864,14 +866,6 @@ svg {
 .ReactTable .-pagination .-pageJump input {
   background-color: var(--button-bg) !important;
   color: var(--normal-text-color) !important;
-}
-
-::-webkit-scrollbar {
-  background-color: var(--bg-color);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--footer-dashed);
 }
 
 #pelota {
