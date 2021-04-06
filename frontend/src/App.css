@@ -282,6 +282,10 @@ h5 {
   margin-left: 5px;
 }
 
+.bigClubLogo {
+  height: 128px;
+}
+
 #nav-item:hover {
   animation-name: fade;
   animation-duration: 200ms;
