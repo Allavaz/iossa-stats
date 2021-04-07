@@ -5,13 +5,13 @@ const fullnames = {
   d1t3: "Liga D1 T3",
   d1t4: "Liga D1 T4",
   d1t6: "Liga D1 T6",
-  d1t6: "Liga D1 T7",
+  d1t7: "Liga D1 T7",
 
   d2t1: "Liga D2 - Temporada 1",
   d2t3: "Liga D2 T3",
   d2t4: "Liga D2 T4",
   d2t6: "Liga D2 T6",
-  d2t6: "Liga D2 T7",
+  d2t7: "Liga D2 T7",
 
   maradeit1a: "Copa Maradei T1 - Grupo A",
   maradeit1b: "Copa Maradei T1 - Grupo B",
@@ -26,9 +26,9 @@ const fullnames = {
   maradeit6a: "Copa Maradei T6 - Grupo A",
   maradeit6b: "Copa Maradei T6 - Grupo B",
   maradeit6c: "Copa Maradei T6 - Grupo C",
-  maradeit6a: "Copa Maradei T7 - Grupo A",
-  maradeit6b: "Copa Maradei T7 - Grupo B",
-  maradeit6c: "Copa Maradei T7 - Grupo C",
+  maradeit7a: "Copa Maradei T7 - Grupo A",
+  maradeit7b: "Copa Maradei T7 - Grupo B",
+  maradeit7c: "Copa Maradei T7 - Grupo C",
 
   americat3: "Copa America T3",
 
