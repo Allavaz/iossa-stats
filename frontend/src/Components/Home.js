@@ -11,6 +11,7 @@ const minitables = [
   //{torneo: "maradeit7a", header: "Copa Maradei T7 - Grupo A"},
   //{torneo: "maradeit7b", header: "Copa Maradei T7 - Grupo B"},
   //{torneo: "maradeit7c", header: "Copa Maradei T7 - Grupo C"},
+  //{torneo: "maradeit7d", header: "Copa Maradei T7 - Grupo D"},
   {torneo: "sd1t7", header: "Superliga D1 T7" },
 ];
 
