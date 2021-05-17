@@ -270,6 +270,13 @@ export default class Match extends Component {
             table: "maradeit7c",
           });
           break;
+        case "Copa Maradei T7 - Grupo D":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "maradeit7d",
+          });
+          break;
         default:
           this.setState({ isCopa: false, isLoading: false });
           break;
