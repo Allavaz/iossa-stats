@@ -19,6 +19,10 @@ export const tablas = {
     {
       table: "maradeit7c",
       name: "Copa Maradei T7 - Grupo C",
+    },
+    {
+      table: "maradeit7d",
+      name: "Copa Maradei T7 - Grupo D",
     },*/
     {
       table: "sd1t7",
