@@ -94,6 +94,7 @@ module.exports = {
       { torneo: "Copa Maradei T7 - Grupo A" },
       { torneo: "Copa Maradei T7 - Grupo B" },
       { torneo: "Copa Maradei T7 - Grupo C" },
+      { torneo: "Copa Maradei T7 - Grupo D" },
       { torneo: "Copa valencARc T7" },
     ],
   },
@@ -204,6 +205,7 @@ module.exports = {
       { torneo: "Copa Maradei T7 - Grupo A" },
       { torneo: "Copa Maradei T7 - Grupo B" },
       { torneo: "Copa Maradei T7 - Grupo C" },
+      { torneo: "Copa Maradei T7 - Grupo D" },
     ],
   },
   cg: {
@@ -345,6 +347,7 @@ module.exports = {
       { torneo: "Copa Maradei T7 - Grupo A" },
       { torneo: "Copa Maradei T7 - Grupo B" },
       { torneo: "Copa Maradei T7 - Grupo C" },
+      { torneo: "Copa Maradei T7 - Grupo D" },
     ],
   },
   recopamaradeit5: {
