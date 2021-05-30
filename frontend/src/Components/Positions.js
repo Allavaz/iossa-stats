@@ -34,6 +34,7 @@ export default class Positions extends Component {
         return ( 
             <div className='content'>
                 <select id='selector' defaultValue='t7' onChange={this.selectTemporada}>
+                    <option value='selecciones'>Selecciones</option>
                     <option value='t7'>Temporada 7</option>
                     <option value='t6'>Temporada 6</option>
                     <option value='t5'>Temporada 5</option>
