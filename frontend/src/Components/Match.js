@@ -277,6 +277,13 @@ export default class Match extends Component {
             table: "maradeit7d",
           });
           break;
+        case "Copa America '21 - Regular":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "america21r",
+          });
+          break;
         default:
           this.setState({ isCopa: false, isLoading: false });
           break;
