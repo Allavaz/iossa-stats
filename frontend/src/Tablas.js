@@ -1,7 +1,7 @@
 export const tablas = {
   selecciones: [
     {
-      table: "america21",
+      table: "america21r",
       name: "Copa America '21 - Regular",
     },
     {
