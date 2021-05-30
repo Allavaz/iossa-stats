@@ -5,6 +5,7 @@ export default function Selector(props) {
     <div className="torSelect">
       <select id="selector" defaultValue="t7" onChange={props.prop2}>
         <option value="total">Totales</option>
+        <option value="selecciones">Selecciones</option>
         <option value="t7">Temporada 7</option>
         <option value="t6">Temporada 6</option>
         <option value="t5">Temporada 5</option>
@@ -69,6 +70,31 @@ export default function Selector(props) {
           </button>
           <button className="boton" onClick={() => props.prop1("sd1")}>
             Superliga D1
+          </button>
+        </div>
+      </div>
+      <div
+        className="selecciones"
+        style={{ display: props.prop3 === "selecciones" ? "block" : "none" }}
+      >
+        <div className="botonera">
+          <button className="boton" onClick={() => props.prop1("selecciones")}>
+            Totales
+          </button>
+          <button
+            className="boton"
+            onClick={() => props.prop1("copaamerica21")}
+          >
+            Copa America 21
+          </button>
+          <button
+            className="boton"
+            onClick={() => props.prop1("copaamericat3")}
+          >
+            Copa America T3
+          </button>
+          <button className="boton" onClick={() => props.prop1("copadelsurt3")}>
+            Copa del Sur
           </button>
         </div>
       </div>
@@ -206,15 +232,6 @@ export default function Selector(props) {
             onClick={() => props.prop1("supercopamastert3")}
           >
             Supercopa Master
-          </button>
-          <button
-            className="boton"
-            onClick={() => props.prop1("copaamericat3")}
-          >
-            Copa America
-          </button>
-          <button className="boton" onClick={() => props.prop1("copadelsurt3")}>
-            Copa del Sur
           </button>
         </div>
       </div>
