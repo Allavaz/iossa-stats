@@ -32,6 +32,7 @@ const fullnames = {
   maradeit7d: "Copa Maradei T7 - Grupo D",
 
   americat3: "Copa America T3",
+  america21: "Copa America '21 - Regular",
 
   lmt0: "Liga Master T0",
   lmt5: "Liga Master T5",
