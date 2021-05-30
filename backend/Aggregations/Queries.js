@@ -181,7 +181,7 @@ module.exports = {
       { torneo: "Recopa Maradei T5 (Repechaje)" },
     ],
   },
-  copaamerica: {
+  america: {
     $or: [
       { torneo: "Copa America T3" },
       { torneo: "Copa America '21 - Regular" },
@@ -378,10 +378,16 @@ module.exports = {
   ddht5: {
     $or: [{ torneo: "Division de Honor T5" }],
   },
-  copaamericat3: {
+  americat3: {
     $or: [{ torneo: "Copa America T3" }],
   },
-  copaamerica21: {
+  america21r: {
+    $or: [{ torneo: "Copa America '21 - Regular" }],
+  },
+  america21p: {
+    $or: [{ torneo: "Copa America '21 - Playoff" }],
+  },
+  america21: {
     $or: [
       { torneo: "Copa America '21 - Regular" },
       { torneo: "Copa America '21 - Playoff" },
