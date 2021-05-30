@@ -12,6 +12,8 @@ const torneos = [
   'Copa Maradei T7 - Grupo D',
   'Copa Maradei T7 - Eliminatorias',
   'Superliga D1 T7',
+  "Copa America '21 - Regular",
+  "Copa America '21 - Playoff",
   //"Superliga D1 T6",
   //"Copa valencARc T6",
   //'Liga D1 T6',
