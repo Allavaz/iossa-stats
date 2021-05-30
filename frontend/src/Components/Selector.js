@@ -53,7 +53,7 @@ export default function Selector(props) {
           >
             Supercopa Master
           </button>
-          <button className="boton" onClick={() => props.prop1("copaamerica")}>
+          <button className="boton" onClick={() => props.prop1("america")}>
             Copa America
           </button>
           <button className="boton" onClick={() => props.prop1("copadelsur")}>
@@ -83,13 +83,19 @@ export default function Selector(props) {
           </button>
           <button
             className="boton"
-            onClick={() => props.prop1("copaamerica21")}
+            onClick={() => props.prop1("america21r")}
           >
-            Copa America 21
+            Copa America 21 - Regular
           </button>
           <button
             className="boton"
-            onClick={() => props.prop1("copaamericat3")}
+            onClick={() => props.prop1("america21p")}
+          >
+            Copa America 21 - Playoff
+          </button>
+          <button
+            className="boton"
+            onClick={() => props.prop1("americat3")}
           >
             Copa America T3
           </button>
