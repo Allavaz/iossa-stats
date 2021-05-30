@@ -1,4 +1,14 @@
 export const tablas = {
+  selecciones: [
+    {
+      table: "america21",
+      name: "Copa America '21 - Regular",
+    },
+    {
+      table: "americat3",
+      name: "Copa America T3",
+    },
+  ],
   t7: [
     /*{
       table: "d1t7",
@@ -111,10 +121,6 @@ export const tablas = {
     {
       table: "maradeit3d",
       name: "Copa Maradei T3 - Grupo D",
-    },
-    {
-      table: "americat3",
-      name: "Copa America T3",
     },
   ],
   t2: [
