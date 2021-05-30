@@ -42,8 +42,6 @@ module.exports = {
       { torneo: "Liga D1 T3 - Promoción (Ida)" },
       { torneo: "Liga D1 T3 - Promoción (Vuelta)" },
       { torneo: "Recopa Master T3" },
-      { torneo: "Copa America T3" },
-      { torneo: "Copa del Sur T3" },
     ],
   },
   t4: {
@@ -96,6 +94,14 @@ module.exports = {
       { torneo: "Copa Maradei T7 - Grupo C" },
       { torneo: "Copa Maradei T7 - Grupo D" },
       { torneo: "Copa valencARc T7" },
+    ],
+  },
+  selecciones: {
+    $or: [
+      { torneo: "Copa America T3" },
+      { torneo: "Copa del Sur T3" },
+      { torneo: "Copa America '21 - Regular" },
+      { torneo: "Copa America '21 - Playoff" },
     ],
   },
   sd1: {
@@ -176,7 +182,11 @@ module.exports = {
     ],
   },
   copaamerica: {
-    $or: [{ torneo: "Copa America T3" }],
+    $or: [
+      { torneo: "Copa America T3" },
+      { torneo: "Copa America '21 - Regular" },
+      { torneo: "Copa America '21 - Playoff" },
+    ],
   },
   copadelsur: {
     $or: [{ torneo: "Copa del Sur T3" }],
@@ -370,6 +380,12 @@ module.exports = {
   },
   copaamericat3: {
     $or: [{ torneo: "Copa America T3" }],
+  },
+  copaamerica21: {
+    $or: [
+      { torneo: "Copa America '21 - Regular" },
+      { torneo: "Copa America '21 - Playoff" },
+    ],
   },
   copadelsurt3: {
     $or: [{ torneo: "Copa del Sur T3" }],
