@@ -55,7 +55,7 @@ export default class Results extends Component {
         this.setState({ category: "RECOPA MASTER" });
       } else if (arg.startsWith("recopamaradei")) {
         this.setState({ category: "RECOPA MARADEI" });
-      } else if (arg.startsWith("copaamerica")) {
+      } else if (arg.startsWith("america")) {
         this.setState({ category: "COPA AMERICA" });
       } else if (arg.startsWith("copadelsur")) {
         this.setState({ category: "COPA DEL SUR" });
@@ -80,6 +80,9 @@ export default class Results extends Component {
     switch (selector.options[selector.selectedIndex].value) {
       case "total":
         this.selectTorneo("all");
+        break;
+      case "selecciones":
+        this.selectTorneo("selecciones");
         break;
       case "t7":
         this.selectTorneo("t7");
