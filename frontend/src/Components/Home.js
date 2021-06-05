@@ -6,6 +6,7 @@ import MiniPositions from "./MiniPositions";
 import MiniPositionsUnificada from "./MiniPositionsUnificada";
 
 const minitables = [
+  {torneo: "america21r", header: "Copa America '21 - Regular"},
   //{torneo: "d1t7", header: "Liga D1 T7"},
   //{torneo: "d2t7", header: "Liga D2 T7"},
   {torneo: "maradeit7a", header: "Copa Maradei T7 - Grupo A"},
