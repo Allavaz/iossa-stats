@@ -256,6 +256,13 @@ export default class Match extends Component {
             table: "maradeit7a",
           });
           break;
+        case "Copa Maradei T7 - Grupo A (Desempate 2do Puesto)":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "maradeit7a",
+          });
+          break;
         case "Copa Maradei T7 - Grupo B":
           this.setState({
             isCopa: false,
@@ -271,6 +278,13 @@ export default class Match extends Component {
           });
           break;
         case "Copa Maradei T7 - Grupo D":
+          this.setState({
+            isCopa: false,
+            isLoading: false,
+            table: "maradeit7d",
+          });
+          break;
+        case "Copa Maradei T7 - Grupo D (Desempate 1er Puesto)":
           this.setState({
             isCopa: false,
             isLoading: false,
