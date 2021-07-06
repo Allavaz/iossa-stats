@@ -1,3 +1,5 @@
+var Teams = require('./Teams.json')
+
 exports.getTournamentIcon = function (tournament) {
   if (tournament.includes("Liga D1")) {
     return "/tournaments/ligad1.png";
@@ -30,7 +32,7 @@ exports.getTournamentIcon = function (tournament) {
   } else if (tournament.includes("Copa valencARc")) {
     return "/tournaments/copavalencarc.png";
   } else {
-    return "/tournaments/none.png";
+    return "/logo-solo.png";
   }
 };
 
@@ -64,3 +66,21 @@ exports.filterMethod = (filter, row) => {
     ? String(row[id].toLowerCase()).includes(filter.value.toLowerCase())
     : true;
 };
+
+exports.getTeamLogo = function(teamname) {
+  try {
+    let shortname = Teams[teamname].toLowerCase();
+    return `/clubs/${shortname}.png`
+  } catch {
+    return '/logo-iosoccer-128.png'
+  }
+}
+
+exports.getTeamShortname = function(teamname) {
+  try {
+    return Teams[teamname]
+  } catch {
+    let len = teamname.length > 3 ? 3 : teamname.length;
+    return teamname.substring(0, len).toUpperCase()
+  }
+}

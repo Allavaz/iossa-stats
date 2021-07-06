@@ -1,7 +1,6 @@
 import React from 'react';
 import MatchEvent from './MatchEvent';
-import { fecha } from '../Utils';
-import Teams from '../Teams';
+import { fecha, getTeamLogo, getTeamShortname } from '../Utils';
 
 export default function MatchCard(props) {
     return (
@@ -10,14 +9,14 @@ export default function MatchCard(props) {
 			<table className='resulttable'>
 				<tbody>
 					<tr>
-						<td><h2><div id='teamname'>{props.data.teams[0].teamname}</div><div id='shortname'>{Teams[props.data.teams[0].teamname]}</div></h2></td>
+						<td><h2><div id='teamname'>{props.data.teams[0].teamname}</div><div id='shortname'>{getTeamShortname(props.data.teams[0].teamname)}</div></h2></td>
 						<td style={{color: 'var(--header-color)'}}>{fecha(props.data.fecha)}</td>
-						<td><h2><div id='teamname'>{props.data.teams[1].teamname}</div><div id='shortname'>{Teams[props.data.teams[1].teamname]}</div></h2></td>
+						<td><h2><div id='teamname'>{props.data.teams[1].teamname}</div><div id='shortname'>{getTeamShortname(props.data.teams[1].teamname)}</div></h2></td>
 					</tr>
 					<tr>
-						<td><img className='bigClubLogo' alt={props.data.teams[0].teamname} src={`/clubs/${Teams[props.data.teams[0].teamname].toLowerCase()}.png`}></img></td>
+						<td><img className='bigClubLogo' alt={props.data.teams[0].teamname} src={getTeamLogo(props.data.teams[0].teamname)}></img></td>
 						<td><h2 id='result'>{props.data.teams[0].score} - {props.data.teams[1].score}</h2></td>
-						<td><img className='bigClubLogo' alt={props.data.teams[1].teamname} src={`/clubs/${Teams[props.data.teams[1].teamname].toLowerCase()}.png`}></img></td>
+						<td><img className='bigClubLogo' alt={props.data.teams[1].teamname} src={getTeamLogo(props.data.teams[1].teamname)}></img></td>
 					</tr>
 					<tr id='eventslist'>
 						<td>
@@ -28,7 +27,6 @@ export default function MatchCard(props) {
 							</ul>
 						</td>
 						<td>
-
 						</td>
 							<td>
 								<ul style={{listStyleType: 'none', paddingInlineStart: '0px'}}>

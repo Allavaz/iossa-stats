@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { plus } from "../Utils";
+import { plus, getTeamLogo, getTeamShortname } from "../Utils";
 import { api } from "../api";
-import Teams from "../Teams";
 
 export default class FullPositionsUnificada extends Component {
 	state = {
@@ -55,8 +54,8 @@ export default class FullPositionsUnificada extends Component {
 								<td>
 									<div className="teamlogo" style={{marginLeft: '5px'}}>
 										<div style={{position: 'absolute', height: '26px', width: '4px', marginLeft: '-10px', backgroundColor: index < 6 ? this.d1color : this.d2color}}></div>
-										<img style={{marginLeft: "0px"}} height="16px" src={`/clubs/${Teams[item._id].toLowerCase()}.png`} alt={item._id}></img> 
-									<div id='teamname'>{item._id}</div><div id='shortname'>{Teams[item._id]}</div>
+										<img style={{marginLeft: "0px"}} height="16px" src={getTeamLogo(item._id)} alt={item._id}></img> 
+									<div id='teamname'>{item._id}</div><div id='shortname'>{getTeamShortname(item._id)}</div>
 								</div></td>
 								<td>{item.PJ}</td>
 								<td>{item.Pts}</td>

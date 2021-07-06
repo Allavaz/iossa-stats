@@ -1,6 +1,5 @@
 import React from 'react';
-import { fecha, getTournamentIcon } from './Utils';
-import Teams from './Teams';
+import { fecha, getTournamentIcon, getTeamLogo, getTeamShortname } from './Utils';
 
 export const playersColumns = [
     {
@@ -8,7 +7,7 @@ export const playersColumns = [
         accessor: 'team',
         width: 200,
         Cell: row => {
-            return <div className='teamlogo' style={{justifyContent: 'center', paddingRight: '5px'}}><img height='16px' src={`clubs/${Teams[row.row._original.team].toLowerCase()}.png`} alt={row.row._id}></img> {row.row.team}</div>
+            return <div className='teamlogo' style={{justifyContent: 'center', paddingRight: '5px'}}><img height='16px' src={getTeamLogo(row.row._original.team)} alt={row.row._original.team}></img> {row.row.team}</div>
         },
         filterable: true
     },
@@ -315,7 +314,7 @@ export const resultColumns = [
         Header: 'Local',
         accessor: 'teams[0].teamname',
         Cell: row => {
-            return <div className='teamlogo' id='home'><div id='teamname'>{row.row._original.teams[0].teamname}</div><div id='shortname'>{Teams[row.row._original.teams[0].teamname]}</div> <img height='16px' src={`/clubs/${Teams[row.row._original.teams[0].teamname].toLowerCase()}.png`} alt={row.row._original.teams[0].teamname}></img></div>
+            return <div className='teamlogo' id='home'><div id='teamname'>{row.row._original.teams[0].teamname}</div><div id='shortname'>{getTeamShortname(row.row._original.teams[0].teamname)}</div> <img height='16px' src={getTeamLogo(row.row._original.teams[0].teamname)} alt={row.row._original.teams[0].teamname}></img></div>
         }
     },
     {
@@ -330,7 +329,7 @@ export const resultColumns = [
         Header: 'Visitante',
         accessor: 'teams[1].teamname',
         Cell: row => {
-            return <div className='teamlogo' id='away'><img height='16px' src={`/clubs/${Teams[row.row._original.teams[1].teamname].toLowerCase()}.png`} alt={row.row._original.teams[1].teamname}></img> <div id='teamname'>{row.row._original.teams[1].teamname}</div><div id='shortname'>{Teams[row.row._original.teams[1].teamname]}</div></div>
+            return <div className='teamlogo' id='away'><img height='16px' src={getTeamLogo(row.row._original.teams[1].teamname)} alt={row.row._original.teams[1].teamname}></img> <div id='teamname'>{row.row._original.teams[1].teamname}</div><div id='shortname'>{getTeamShortname(row.row._original.teams[1].teamname)}</div></div>
         }
     },
     {

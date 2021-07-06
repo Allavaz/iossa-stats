@@ -1,6 +1,6 @@
 import React from 'react';
+import { getTeamLogo } from '../Utils';
 import RadarG from './RadarG';
-import Teams from '../Teams.json';
 
 function getPosColor(pos) {
 	switch (pos) {
@@ -58,7 +58,7 @@ export default function PlayerCard(props) {
 					<div>
 						<div className='playername'>{props.data.name}</div>
 						<div style={{marginTop: '5px', color: 'var(--header-color)', marginBottom: '10px', display: props.data.name === props.steaminfo.personaname ? 'none' : 'block'}}>{props.steaminfo.personaname}</div>
-						<div className='teamlogo' style={{marginTop: '5px'}}><img style={{marginLeft: '0px'}} height='16px' src={`/clubs/${Teams[props.data.team].toLowerCase()}.png`} alt={props.data.name}></img> <div id='fullteamname' style={{color: 'var(--header-color)'}}>{props.data.team}</div></div>
+						<div className='teamlogo' style={{marginTop: '5px'}}><img style={{marginLeft: '0px'}} height='16px' src={getTeamLogo(props.data.team)} alt={props.data.team}></img> <div id='fullteamname' style={{color: 'var(--header-color)'}}>{props.data.team}</div></div>
 						<div className='playersummary' style={{marginTop: '10px', fontSize: '0.75em'}}>{`${props.data.matches} partido${props.data.matches === 1 ? '' : 's'}`}</div>
 						<div className='playersummary' style={{marginTop: '5px', fontSize: '0.75em'}}>{`${props.data.wins} victoria${props.data.wins === 1 ? '' : 's'}`}</div>
 						<div className='playersummary' style={{marginTop: '5px', fontSize: '0.75em'}}>{`${props.data.draws} empate${props.data.draws === 1 ? '' : 's'}`}</div>

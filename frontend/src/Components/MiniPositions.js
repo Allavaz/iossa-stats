@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { api } from "../api";
-import Teams from "../Teams";
+import { getTeamLogo } from "../Utils";
 
 export default class MiniPositions extends Component {
 	state = {
@@ -34,7 +34,7 @@ export default class MiniPositions extends Component {
 							<tr key={item._id}>
 								<td width="15px">{index + 1}</td>
 								<td><div className="teamlogo">
-									<img style={{marginLeft: "0px"}} height="16px" src={`/clubs/${Teams[item._id].toLowerCase()}.png`} alt={item._id}></img> 
+									<img style={{marginLeft: "0px"}} height="16px" src={getTeamLogo(item._id)} alt={item._id}></img> 
 									<div id="fullteamname">{item._id}</div>
 								</div></td>
 								<td width="15px">{item.PJ}</td>
