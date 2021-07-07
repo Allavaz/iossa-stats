@@ -28,13 +28,13 @@ export default function MatchCard(props) {
 						</td>
 						<td>
 						</td>
-							<td>
-								<ul style={{listStyleType: 'none', paddingInlineStart: '0px'}}>
-									{props.data.matchevents.map((item, index) => (
-										<MatchEvent item={item} side='away' index={index}></MatchEvent>
-									))}
-								</ul>
-							</td>
+						<td>
+							<ul style={{listStyleType: 'none', paddingInlineStart: '0px'}}>
+								{props.data.matchevents.map((item, index) => (
+									<MatchEvent item={item} side='away' index={index}></MatchEvent>
+								))}
+							</ul>
+						</td>
 					</tr>
 				</tbody>	
 			</table>
