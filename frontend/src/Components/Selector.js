@@ -85,13 +85,13 @@ export default function Selector(props) {
             className="boton"
             onClick={() => props.prop1("america21r")}
           >
-            Copa America 21 - Regular
+            Copa America '21 - Regular
           </button>
           <button
             className="boton"
             onClick={() => props.prop1("america21p")}
           >
-            Copa America 21 - Playoff
+            Copa America '21 - Playoff
           </button>
           <button
             className="boton"
