@@ -9,8 +9,12 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Selector from "./Selector";
 import { resultColumns } from "../Columns";
 import { api } from "../api";
+import Torneos from "../Torneos.json";
+import temporadaActual from "../TemporadaActual";
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
+
+const tempActual = temporadaActual();
 
 export default class Results extends Component {
   state = {
@@ -22,97 +26,103 @@ export default class Results extends Component {
     this.state = {
       isLoading: true,
       category: "",
-      temporada: "t7",
+      temporada: tempActual,
       search: "",
     };
   }
 
   componentDidMount() {
-    axios.get(api + "matches/" + this.state.temporada).then((res) => {
-      this.setState({ data: res.data, isLoading: false });
+    let arg;
+    if (this.props.match.params.id) {
+      arg = this.props.match.params.id;
+    } else {
+      arg = tempActual;
+    }
+    axios.get(api + "matches/" + arg).then((res) => {
+      this.changeCategory(arg);
+      this.getTemporada(arg);
+      this.setState({ data: res.data, isLoading: false, matchesLoading: false });
     });
     document.title = "Resultados | IOSoccer Sudamérica";
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      let loc = this.props.history.location.pathname;
+      if (loc.startsWith('/resultados')) {
+        let arg;
+        if (loc === '/resultados') {
+          arg = tempActual;
+        } else {
+          arg = loc.replace('/resultados/', '');
+        }
+        this.setState({ matchesLoading: true });
+        axios.get(api + "matches/" + arg).then((res) => {
+          this.changeCategory(arg);
+          this.getTemporada(arg);
+          this.setState({ data: res.data, matchesLoading: false });
+        });
+      }
+    }
+  }
+
+  changeCategory = (arg) => {
+    if (arg === 'all') {
+      this.setState({ category: "TOTALES" });
+    } else if (arg.startsWith("t")) {
+      this.setState({ category: "TEMPORADA " + arg.replace('t', '') });
+    } else if (arg === 'selecciones') {
+      this.setState({ category: "SELECCIONES" });
+    } else {
+      for (let i in Torneos) {
+        for (let j in Torneos[i].torneos) {
+          if (arg === Torneos[i].torneos[j].query) {
+            this.setState({ category: Torneos[i].torneos[j].torneo.toUpperCase() });
+          }
+        }
+      }
+    }
   }
 
   selectTorneo = (arg) => {
     this.setState({ matchesLoading: true });
     axios.get(api + "matches/" + arg).then((res) => {
-      if (arg.startsWith("all") || arg.startsWith("t")) {
-        this.setState({ category: "TOTALES" });
-      } else if (arg.startsWith("sd1")) {
-        this.setState({ category: "SUPERLIGA D1" });
-      } else if (arg.startsWith("d1")) {
-        this.setState({ category: "LIGA D1" });
-      } else if (arg.startsWith("d2")) {
-        this.setState({ category: "LIGA D2" });
-      } else if (arg.startsWith("master")) {
-        this.setState({ category: "COPA MASTER" });
-      } else if (arg.startsWith("maradei")) {
-        this.setState({ category: "COPA MARADEI" });
-      } else if (arg.startsWith("supercopamaster")) {
-        this.setState({ category: "SUPERCOPA MASTER" });
-      } else if (arg.startsWith("recopamaster")) {
-        this.setState({ category: "RECOPA MASTER" });
-      } else if (arg.startsWith("recopamaradei")) {
-        this.setState({ category: "RECOPA MARADEI" });
-      } else if (arg.startsWith("america")) {
-        this.setState({ category: "COPA AMERICA" });
-      } else if (arg.startsWith("copadelsur")) {
-        this.setState({ category: "COPA DEL SUR" });
-      } else if (arg.startsWith("cg")) {
-        this.setState({ category: "COPA GUBERO" });
-      } else if (arg.startsWith("lm")) {
-        this.setState({ category: "LIGA MASTER" });
-      } else if (arg.startsWith("ddh")) {
-        this.setState({ category: "DIVISION DE HONOR" });
-      } else if (arg.startsWith('cv')) {
-        this.setState({category: 'COPA VALENCARC'});
-      }
+      this.changeCategory(arg);
       this.setState({ data: res.data, matchesLoading: false });
     });
+    this.props.history.push(`/resultados/${arg}`)
   };
 
   selectTemporada = () => {
-    var selector = document.getElementById("selector");
+    let selector = document.getElementById("selector");
+    let selected = selector.options[selector.selectedIndex].value
     this.setState({
-      temporada: selector.options[selector.selectedIndex].value,
+      temporada: selected
     });
-    switch (selector.options[selector.selectedIndex].value) {
-      case "total":
-        this.selectTorneo("all");
-        break;
-      case "selecciones":
-        this.selectTorneo("selecciones");
-        break;
-      case "t7":
-        this.selectTorneo("t7");
-        break;
-      case "t6":
-        this.selectTorneo("t6");
-        break;
-      case "t5":
-        this.selectTorneo("t5");
-        break;
-      case "t4":
-        this.selectTorneo("t4");
-        break;
-      case "t3":
-        this.selectTorneo("t3");
-        break;
-      case "t2":
-        this.selectTorneo("t2");
-        break;
-      case "t1":
-        this.selectTorneo("t1");
-        break;
-      case "t0":
-        this.selectTorneo("t0");
-        break;
-      default:
-        this.selectTorneo("all");
-        break;
-    }
+    this.selectTorneo(selected);
   };
+
+  getTemporada = (arg) => {
+    if (arg.startsWith('t') || arg === 'all' || arg === 'selecciones') {
+      this.setState({ temporada: arg });
+    } else {
+      for (let i in Torneos) {
+        for (let j in Torneos[i].torneos) {
+          if (arg === Torneos[i].torneos[j].query) {
+            this.setState({ temporada: Torneos[i].temporada });
+          }
+        }
+      }
+    }
+    if (document.getElementById("selector")) {
+      let selector = document.getElementById("selector");
+      for (let i in selector.options) {
+        if (selector.options[i].value === arg) {
+          selector.selectedIndex = i;
+        }
+      }
+    }
+  }
 
   render() {
     const TheadComponent = (props) => null;

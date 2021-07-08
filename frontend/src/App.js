@@ -3,7 +3,7 @@ import './App.css';
 import Players from './Components/Players';
 import Header from './Components/Header';
 import Navigation from './Components/Navigation';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFound from './Pages/NotFound'
 import Positions from './Components/Positions';
 import Home from './Components/Home';
@@ -39,10 +39,14 @@ class App extends Component {
 				<Switch>
 					<Route exact path='/' component={Home} />
 					<Route exact path='/individuales' component={Players} />
+					<Route exact path='/individuales/:id' component={Players} />
 					<Route exact path='/top10' component={Top10} />
+					<Route exact path='/top10/:id' component={Top10} />
 					<Route exact path='/posiciones' component={Positions} />
+					<Route exact path='/posiciones/:id' component={Positions} />
 					<Route exact path='/partido/:id' component={Match} />
 					<Route exact path='/resultados' component={Results} />
+					<Route exact path='/resultados/:id' component={Results} />
 					<Route exact path='/jugador/:id' component={Player} />
 					<Route exact path={Endpoint} component={Upload} />
 					<Route component={NotFound} />

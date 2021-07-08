@@ -10,6 +10,7 @@ import Vod from "./Vod";
 import Challonge from "./Challonge";
 import { api } from "../api";
 import FullPositionsUnificada from "./FullPositionsUnificada";
+import Torneos from "../Torneos.json"
 
 export default class Match extends Component {
   state = {
@@ -24,284 +25,27 @@ export default class Match extends Component {
   componentDidMount() {
     axios.get(api + "match/" + this.props.match.params.id).then((res) => {
       this.setState({ data: res.data });
-      switch (this.state.data.torneo) {
-        case "Liga Master T0":
-          this.setState({ isCopa: false, isLoading: false, table: "lmt0" });
-          break;
-        case "Division de Honor T0":
-          this.setState({ isCopa: false, isLoading: false, table: "ddht0" });
-          break;
-        case "Copa Maradei T1 - Grupo A":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit1a",
-          });
-          break;
-        case "Copa Maradei T1 - Grupo B":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit1b",
-          });
-          break;
-        case "Copa Maradei T1 - Grupo C":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit1c",
-          });
-          break;
-        case "Copa Maradei T1 - Eliminatorias":
-          this.setState({
-            isCopa: true,
-            challonge: "Copamaradei2018",
-            isLoading: false,
-          });
-          break;
-        case "Liga D1 T1":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t1" });
-          break;
-        case "Liga D1 - Temporada 2":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t2" });
-          break;
-        case "Liga D1 - Temporada 2 (Desempate)":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t2" });
-          break;
-        case "Liga D2 - Temporada 1":
-          this.setState({ isCopa: false, isLoading: false, table: "d2t1" });
-          break;
-        case "Liga D1 T3":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t3" });
-          break;
-        case "Liga D2 T3":
-          this.setState({ isCopa: false, isLoading: false, table: "d2t3" });
-          break;
-        case "Copa Master 2019":
-          this.setState({
-            isCopa: true,
-            challonge: "Copamasterr",
-            isLoading: false,
-          });
-          break;
-        case "Recopa Master 2019":
-          this.setState({ isCopa: true, isLoading: false });
-          break;
-        case "Copa Master T3":
-          this.setState({
-            isCopa: true,
-            challonge: "CopaMasster2",
-            isLoading: false,
-          });
-          break;
-        case "Copa Maradei T3 - Grupo A":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit3a",
-          });
-          break;
-        case "Copa Maradei T3 - Grupo B":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit3b",
-          });
-          break;
-        case "Copa Maradei T3 - Grupo C":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit3c",
-          });
-          break;
-        case "Copa Maradei T3 - Grupo D":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit3d",
-          });
-          break;
-        case "Copa Maradei T3 - Eliminatorias":
-          this.setState({
-            isCopa: true,
-            challonge: "Maradei3",
-            isLoading: false,
-          });
-          break;
-        case "Copa America T3":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "americat3",
-          });
-          break;
-        case "Copa del Sur T3":
-          this.setState({
-            isCopa: true,
-            challonge: "copadelsur",
-            isLoading: false,
-          });
-          break;
-        case "Liga D1 T4":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t4" });
-          break;
-        case "Liga D1 T4 - (Desempate)":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t4" });
-          break;
-        case "Liga D2 T4":
-          this.setState({ isCopa: false, isLoading: false, table: "d2t4" });
-          break;
-        case "Copa Gubero T4":
-          this.setState({
-            isCopa: true,
-            challonge: "copagubero",
-            isLoading: false,
-          });
-          break;
-        case "Liga Master T5":
-          this.setState({ isCopa: false, isLoading: false, table: "lmt5" });
-          break;
-        case "Division de Honor T5":
-          this.setState({ isCopa: false, isLoading: false, table: "ddht5" });
-          break;
-        case "Copa Maradei T5 - Grupo A":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit5a",
-          });
-          break;
-        case "Copa Maradei T5 - Grupo B":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit5b",
-          });
-          break;
-        case "Copa Maradei T5 - Grupo C":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit5c",
-          });
-          break;
-        case "Copa Maradei T5 - Eliminatorias":
-          this.setState({
-            isCopa: true,
-            challonge: "Maradeit5",
-            isLoading: false,
-          });
-          break;
-        case "Copa Master T5":
-          this.setState({
-            isCopa: true,
-            challonge: "copamastert5",
-            isLoading: false,
-          });
-          break;
-        case "Superliga D1 T6":
-          this.setState({ isCopa: false, isLoading: false, table: "sd1t6" });
-          break;
-        case "Liga D1 T6":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t6" });
-          break;
-        case "Liga D2 T6":
-          this.setState({ isCopa: false, isLoading: false, table: "d2t6" });
-          break;
-        case "Liga D2 T6 (Desempate 1er Puesto)":
-          this.setState({ isCopa: false, isLoading: false, table: "d2t6" });
-          break;
-        case "Copa Maradei T6 - Grupo A":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit6a",
-          });
-          break;
-        case "Copa Maradei T6 - Grupo A (Desempate)":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit6a",
-          });
-          break;
-        case "Copa Maradei T6 - Grupo B":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit6b",
-          });
-          break;
-        case "Copa Maradei T6 - Grupo C":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit6c",
-          });
-          break;
-        case "Superliga D1 T7":
-          this.setState({ isCopa: false, isLoading: false, table: "sd1t7" });
-          break;
-        case "Liga D1 T7":
-          this.setState({ isCopa: false, isLoading: false, table: "d1t7" });
-          break;
-        case "Liga D2 T7":
-          this.setState({ isCopa: false, isLoading: false, table: "d2t7" });
-          break;
-        case "Copa Maradei T7 - Grupo A":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit7a",
-          });
-          break;
-        case "Copa Maradei T7 - Grupo A (Desempate 2do Puesto)":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit7a",
-          });
-          break;
-        case "Copa Maradei T7 - Grupo B":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit7b",
-          });
-          break;
-        case "Copa Maradei T7 - Grupo C":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit7c",
-          });
-          break;
-        case "Copa Maradei T7 - Grupo D":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit7d",
-          });
-          break;
-        case "Copa Maradei T7 - Grupo D (Desempate 1er Puesto)":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "maradeit7d",
-          });
-          break;
-        case "Copa America '21 - Regular":
-          this.setState({
-            isCopa: false,
-            isLoading: false,
-            table: "america21r",
-          });
-          break;
-        default:
-          this.setState({ isCopa: false, isLoading: false });
-          break;
+      for (let i in Torneos) {
+        for (let j in Torneos[i].torneos) {
+          let t = Torneos[i].torneos[j]
+          if (t.torneo === this.state.data.torneo) {
+            if (t.challonge) {
+              this.setState({
+                isCopa: true,
+                challonge: t.challonge
+              })
+            } else if (t.tabla) {
+              this.setState({
+                isCopa: false,
+                table: t.tabla
+              })
+            }
+          }
+        }
       }
+      this.setState({
+        isLoading: false
+      })
       document.title =
         this.state.data.teams[0].teamname +
         " vs " +

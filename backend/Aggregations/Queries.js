@@ -154,7 +154,10 @@ module.exports = {
     ],
   },
   lm: {
-    $or: [{ torneo: "Liga Master T0" }, { torneo: "Liga Master T5" }],
+    $or: [
+      { torneo: "Liga Master T0" }, 
+      { torneo: "Liga Master T5" }
+    ],
   },
   ddh: {
     $or: [
