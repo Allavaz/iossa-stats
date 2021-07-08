@@ -277,12 +277,12 @@
         "titulo": "Temporada 2",
         "torneos": [
             {
-                "torneo": "Liga D1 T2",
+                "torneo": "Liga D1 - Temporada 2",
                 "query": "d1t2",
                 "tabla": "d1t2"
             },
             {
-                "torneo": "Liga D2 T2",
+                "torneo": "Liga D2 - Temporada 2",
                 "query": "d2t2",
                 "tabla": "d2t2"
             },
