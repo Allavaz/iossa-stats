@@ -146,12 +146,12 @@ export default class Players extends Component {
             showPageSizeOptions={false}
             defaultPageSize={13}
             getTrProps={(state, rowInfo, column, instance) => ({
-                onClick: e => {
-                    this.props.history.push('/jugador/' + rowInfo.original._id);
-                },
-                style: {
-                    cursor: 'pointer'
-                }
+              onClick: e => {
+                this.props.history.push('/jugador/' + rowInfo.original._id);
+              },
+              style: {
+                cursor: 'pointer'
+              }
             })}
           />
         </div>
