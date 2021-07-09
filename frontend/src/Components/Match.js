@@ -107,7 +107,7 @@ export default class Match extends Component {
                   }}
                 >
                   {
-                    this.state.table === "sd1t7" ? 
+                    this.state.table.startsWith("sd") ? 
                     <FullPositionsUnificada
                       table={this.state.table}
                       torneo={this.state.data.torneo}
