@@ -4,7 +4,7 @@ import Teams from '../Teams.json';
 import { getTeamLogo } from '../Utils';
 import theme from './AutocompleteTeams.module.css';
 
-export default function AutosuggestTeams(props) {
+export default function AutocompleteTeams(props) {
   let teams = []
   for (let i in Teams) {
     teams.push({

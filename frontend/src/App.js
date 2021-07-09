@@ -14,6 +14,7 @@ import Results from './Components/Results';
 import Upload from './Components/Upload';
 import Endpoint from './endpoint';
 import Player from './Components/Player';
+import MatchEdit from './Components/MatchEdit';
 
 class App extends Component {
 
@@ -45,6 +46,7 @@ class App extends Component {
 					<Route exact path='/posiciones' component={Positions} />
 					<Route exact path='/posiciones/:id' component={Positions} />
 					<Route exact path='/partido/:id' component={Match} />
+					<Route exact path='/partido/:id/edit' component={MatchEdit} />
 					<Route exact path='/resultados' component={Results} />
 					<Route exact path='/resultados/:id' component={Results} />
 					<Route exact path='/jugador/:id' component={Player} />

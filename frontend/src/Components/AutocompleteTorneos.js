@@ -4,7 +4,7 @@ import Torneos from '../Torneos.json';
 import { getTournamentIcon } from '../Utils';
 import theme from './AutocompleteTorneos.module.css';
 
-export default function AutosuggestTorneos(props) {
+export default function AutocompleteTorneos(props) {
   let torneos = []
   for (let i in Torneos) {
     for (let j in Torneos[i].torneos) {

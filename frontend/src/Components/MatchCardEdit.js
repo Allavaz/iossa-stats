@@ -1,8 +1,8 @@
 import React from 'react';
-import MatchEvent from './MatchEvent';
 import { getTeamLogo, getTeamShortname } from '../Utils';
-import AutosuggestTorneos from './AutocompleteTorneos';
-import AutosuggestTeams from './AutocompleteTeams';
+import AutocompleteTorneos from './AutocompleteTorneos';
+import AutocompleteTeams from './AutocompleteTeams';
+import AutocompletePlayers from './AutocompletePlayers';
 
 export default function MatchCardEdit(props) {
   return (
@@ -12,14 +12,14 @@ export default function MatchCardEdit(props) {
           fontSize: '10pt', 
           marginTop: '10px'
         }}>
-        <center><AutosuggestTorneos defaultValue={props.data.torneo}></AutosuggestTorneos></center>
+        <center><AutocompleteTorneos defaultValue={props.data.torneo}></AutocompleteTorneos></center>
       </div>
       <table className='resulttable'>
         <tbody>
           <tr>
             <td>
               <h2>
-                <div id='teamname'><AutosuggestTeams defaultValue={props.data.teams[0].teamname}></AutosuggestTeams></div>
+                <div id='teamname'><AutocompleteTeams defaultValue={props.data.teams[0].teamname}></AutocompleteTeams></div>
                 <div id='shortname'>{getTeamShortname(props.data.teams[0].teamname)}</div>
               </h2>
             </td>
@@ -33,7 +33,7 @@ export default function MatchCardEdit(props) {
             </td>
             <td>
               <h2>
-              <div id='teamname'><AutosuggestTeams defaultValue={props.data.teams[1].teamname}></AutosuggestTeams></div>
+              <div id='teamname'><AutocompleteTeams defaultValue={props.data.teams[1].teamname}></AutocompleteTeams></div>
                 <div id='shortname'>{getTeamShortname(props.data.teams[1].teamname)}</div>
               </h2>
             </td>
@@ -74,20 +74,70 @@ export default function MatchCardEdit(props) {
           </tr>
           <tr id='eventslist'>
             <td>
-              <ul style={{listStyleType: 'none', paddingInlineStart: '0px'}}>
+              <center><table>
                 {props.data.matchevents.map((item, index) => (
-                  <MatchEvent item={item} side='home' index={index}></MatchEvent>
+                  item.team === 'away' ? null : 
+                  <tr>
+                    <td>
+                      <select style={{width: '8ch', padding: '2px'}} defaultValue={item.event}>
+                        <option value='GOAL'>GOL</option>
+                        <option value='OWN GOAL'>GC</option>
+                        <option value='YELLOW CARD'>TA</option>
+                        <option value='RED CARD'>TR</option>
+                      </select>
+                    </td>
+                    <td>
+                      <AutocompletePlayers defaultValue={item.name} defaultId={item.player1SteamId} players={props.players}></AutocompletePlayers>
+                    </td>
+                    <td>
+                      (
+                      <input type='number' 
+                        defaultValue={Math.round(item.second/60)}
+                        style={{
+                          width: '4ch',
+                          height: '16px'
+                        }}
+                        min='0'>
+                      </input>
+                      ')
+                    </td>
+                  </tr>
                 ))}
-              </ul>
+              </table></center>
             </td>
             <td>
             </td>
             <td>
-              <ul style={{listStyleType: 'none', paddingInlineStart: '0px'}}>
+            <center><table>
                 {props.data.matchevents.map((item, index) => (
-                  <MatchEvent item={item} side='away' index={index}></MatchEvent>
+                  item.team === 'home' ? null : 
+                  <tr>
+                    <td>
+                      <select style={{width: '8ch', padding: '2px'}} defaultValue={item.event}>
+                        <option value='GOAL'>GOL</option>
+                        <option value='OWN GOAL'>GC</option>
+                        <option value='YELLOW CARD'>TA</option>
+                        <option value='RED CARD'>TR</option>
+                      </select>
+                    </td>
+                    <td>
+                      <AutocompletePlayers defaultValue={item.name} defaultId={item.player1SteamId} players={props.players}></AutocompletePlayers>
+                    </td>
+                    <td>
+                      (
+                      <input type='number' 
+                        defaultValue={Math.round(item.second/60)}
+                        style={{
+                          width: '4ch',
+                          height: '16px'
+                        }}
+                        min='0'>
+                      </input>
+                      ')
+                    </td>
+                  </tr>
                 ))}
-              </ul>
+              </table></center>
             </td>
           </tr>
         </tbody>	

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import MatchCard from "./MatchCard";
+import MatchCardEdit from "./MatchCardEdit";
 import MatchTeamStats from "./MatchTeamStats";
 import FullPositions from "./FullPositions";
 import MatchIndividualStats from "./MatchIndividualStats";
@@ -12,9 +12,10 @@ import { api } from "../api";
 import FullPositionsUnificada from "./FullPositionsUnificada";
 import Torneos from "../Torneos.json"
 
-export default class Match extends Component {
+export default class MatchEdit extends Component {
   state = {
     data: [],
+    players: []
   };
 
   constructor() {
@@ -25,24 +26,27 @@ export default class Match extends Component {
   componentDidMount() {
     axios.get(api + "match/" + this.props.match.params.id).then((res) => {
       this.setState({ data: res.data });
-      for (let i in Torneos) {
-        for (let j in Torneos[i].torneos) {
-          let t = Torneos[i].torneos[j]
-          if (t.torneo === this.state.data.torneo) {
-            if (t.challonge) {
-              this.setState({
-                isCopa: true,
-                challonge: t.challonge
-              })
-            } else if (t.tabla) {
-              this.setState({
-                isCopa: false,
-                table: t.tabla
-              })
+      axios.get(api + "players/all").then((res) => {
+        this.setState({ players: res.data })
+        for (let i in Torneos) {
+          for (let j in Torneos[i].torneos) {
+            let t = Torneos[i].torneos[j]
+            if (t.torneo === this.state.data.torneo) {
+              if (t.challonge) {
+                this.setState({
+                  isCopa: true,
+                  challonge: t.challonge
+                })
+              } else if (t.tabla) {
+                this.setState({
+                  isCopa: false,
+                  table: t.tabla
+                })
+              }
             }
           }
         }
-      }
+      })
       this.setState({
         isLoading: false
       })
@@ -68,7 +72,7 @@ export default class Match extends Component {
       </div>
     ) : (
       <div className="matchContainer">
-        <MatchCard data={this.state.data}></MatchCard>
+        <MatchCardEdit data={this.state.data} players={this.state.players}></MatchCardEdit>
         <div>
           <div className="colCon">
             <div className="flexTableDiv"
