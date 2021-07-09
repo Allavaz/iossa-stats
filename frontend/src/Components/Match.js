@@ -3,6 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import MatchCard from "./MatchCard";
+import MatchCardEdit from "./MatchCardEdit";
 import MatchTeamStats from "./MatchTeamStats";
 import FullPositions from "./FullPositions";
 import MatchIndividualStats from "./MatchIndividualStats";
@@ -19,7 +20,7 @@ export default class Match extends Component {
 
   constructor() {
     super();
-    this.state = { isLoading: true, isTableLoading: true, challonge: null };
+    this.state = { isLoading: true, isTableLoading: true, challonge: null, tabla: null, edit: true };
   }
 
   componentDidMount() {
@@ -68,7 +69,10 @@ export default class Match extends Component {
       </div>
     ) : (
       <div className="matchContainer">
-        <MatchCard data={this.state.data}></MatchCard>
+        {
+          this.state.edit ? <MatchCardEdit data={this.state.data}></MatchCardEdit> :
+          <MatchCard data={this.state.data}></MatchCard>
+        }
         <div>
           <div className="colCon">
             <div className="flexTableDiv"
