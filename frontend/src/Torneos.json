@@ -73,17 +73,18 @@
             {
                 "torneo": "Copa del Sur T3",
                 "query": "copadelsurt3",
-                "isCopa": true,
                 "challonge": "copadelsur"
             },
             {
+                "torneo": "Copa America '21",
+                "query": "america21"
+            },
+            {
                 "torneo": "Copa America '21 - Regular",
-                "query": "america21r",
                 "tabla": "america21r"
             },
             {
-                "torneo": "Copa America '21 - Playoff",
-                "query": "america21p"
+                "torneo": "Copa America '21 - Playoff"
             }
         ]
     },
