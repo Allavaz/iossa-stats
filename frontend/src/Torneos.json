@@ -102,6 +102,33 @@
                 "query": "maradeit7"
             },
             {
+                "torneo": "Copa Maradei T7 - Grupo A",
+                "tabla": "maradeit7a"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo B",
+                "tabla": "maradeit7b"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo C",
+                "tabla": "maradeit7c"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo D",
+                "tabla": "maradeit7d"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo A (Desempate 2do Puesto)",
+                "tabla": "maradeit7a"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo D (Desempate 1er Puesto)",
+                "tabla": "maradeit7d"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Eliminatorias"
+            },
+            {
                 "torneo": "Copa valencARc",
                 "query": "cvt7"
             },
