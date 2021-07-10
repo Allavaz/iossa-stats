@@ -145,16 +145,6 @@ export default class Players extends Component {
             defaultFilterMethod={filterMethod}
             showPageSizeOptions={false}
             defaultPageSize={13}
-            getTdProps={(state, rowInfo, column, instance) => ({
-              onClick: e => {
-                if (column.Header === 'Jugador') {
-                  this.props.history.push('/jugador/' + rowInfo.original._id);
-                }
-              },
-              style: {
-                cursor: column.Header === 'Jugador' ? 'pointer' : 'initial'
-              }
-            })}
           />
         </div>
       </div>

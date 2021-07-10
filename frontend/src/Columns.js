@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { fecha, getTournamentIcon, getTeamLogo, getTeamShortname } from './Utils';
 
 export const playersColumns = [
@@ -7,7 +8,18 @@ export const playersColumns = [
         accessor: 'team',
         width: 200,
         Cell: row => {
-            return <div className='teamlogo' style={{justifyContent: 'center', paddingRight: '5px'}}><img height='16px' src={getTeamLogo(row.row._original.team)} alt={row.row._original.team}></img> {row.row.team}</div>
+            return (
+                <div className='teamlogo' 
+                    style={{
+                        justifyContent: 'center', 
+                        paddingRight: '5px'
+                    }}>
+                    <img height='16px' 
+                        src={getTeamLogo(row.row.team)} 
+                        alt={row.row.team}>
+                    </img> {row.row.team}
+                </div>
+            )
         },
         filterable: true
     },
@@ -16,7 +28,12 @@ export const playersColumns = [
         accessor: 'name',
         fixed: 'left',
         width: 150,
-        filterable: true
+        filterable: true,
+        Cell: row => {
+            return (
+                <Link to={'/jugador/' + row.row._original._id}>{row.row.name}</Link>
+            )
+        }
     },
     {
         Header: 'Partidos',
@@ -161,7 +178,12 @@ export const matchIndivStatsColumns = [
 		Header: 'Jugador',
 		accessor: 'info.name',
 		fixed: 'left',
-        width: 100
+        width: 100,
+        Cell: row => {
+            return (
+                <Link to={'/jugador/' + row.row._original.info.steam_id}>{row.row._original.info.name}</Link>
+            )
+        }
     },
     {
 		Header: 'Pos.',
