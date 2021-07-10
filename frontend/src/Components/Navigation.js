@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
-let mobileWidth = 550
+const mobileWidth = 550;
 
 export class Navigation extends Component {
 	constructor() {
