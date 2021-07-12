@@ -19,8 +19,7 @@ export default function AutocompletePlayers(props) {
     const inputLength = inputValue.length;
   
     return inputLength === 0 ? [] : players.filter(e =>
-      e.name.toLowerCase().slice(0, inputLength) === inputValue ||
-      e.steamid.toLowerCase().slice(0, inputLength) === inputValue
+      e.name.toLowerCase().slice(0, inputLength) === inputValue
     );
   };
 
@@ -45,7 +44,6 @@ export default function AutocompletePlayers(props) {
 
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
-  const [id, setId] = useState(props.defaultId);
 
   const onChange = (event, {newValue}) => {
     setValue(newValue);
@@ -53,7 +51,9 @@ export default function AutocompletePlayers(props) {
 
   const onSuggestionSelected = (event, {suggestion}) => {
     setValue(suggestion.name);
-    setId(suggestion.steamid);
+    props.onChangePlayer.setPlayerName(suggestion.name);
+    props.onChangePlayer.setPlayerSteamId(suggestion.steamid);
+    props.changeSteamIdField(suggestion.steamid);
   }
 
   const onSuggestionsFetchRequested = ({value, reason}) => {
@@ -68,7 +68,8 @@ export default function AutocompletePlayers(props) {
 
   const inputProps = {
     value,
-    onChange: onChange
+    onChange: onChange,
+    placeholder: 'Nombre'
   }
 
   return (

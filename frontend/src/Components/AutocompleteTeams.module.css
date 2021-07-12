@@ -3,7 +3,7 @@
 }
 
 .input {
-  width: 230px;
+  width: 280px;
   height: 30px;
   padding: 0px 0px;
   font-family: Helvetica, sans-serif;
@@ -34,7 +34,7 @@
   left: 0;
   right: 0;
   margin: auto;
-  width: 230px;
+  width: 280px;
   border: 1px solid var(--button-border);
   background-color: var(--button-bg);
   font-family: Helvetica, sans-serif;

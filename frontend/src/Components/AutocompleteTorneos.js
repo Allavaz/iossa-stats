@@ -22,7 +22,7 @@ export default function AutocompleteTorneos(props) {
     const inputLength = inputValue.length;
   
     return inputLength === 0 ? [] : torneos.filter(e =>
-      e.torneo.toLowerCase().slice(0, inputLength) === inputValue
+      e.torneo.toLowerCase().includes(inputValue)
     );
   };
 
@@ -45,8 +45,15 @@ export default function AutocompleteTorneos(props) {
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
-  const onChange = (event, {newValue}) => {
+  const onChange = (event, {newValue, method}) => {
     setValue(newValue);
+    if (method === 'click' || method === 'enter') {
+      props.onChangeTorneo(newValue);
+    }
+  }
+
+  const onBlur = () => {
+    props.onChangeTorneo(value);
   }
 
   const onSuggestionsFetchRequested = ({value, reason}) => {
@@ -61,7 +68,8 @@ export default function AutocompleteTorneos(props) {
 
   const inputProps = {
     value,
-    onChange: onChange
+    onChange: onChange,
+    onBlur: onBlur
   }
 
   return (

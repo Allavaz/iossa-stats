@@ -18,7 +18,7 @@ export default function AutocompleteTeams(props) {
     const inputLength = inputValue.length;
   
     return inputLength === 0 ? [] : teams.filter(e =>
-      e.team.toLowerCase().slice(0, inputLength) === inputValue
+      e.team.toLowerCase().includes(inputValue)
     );
   };
 
@@ -41,8 +41,15 @@ export default function AutocompleteTeams(props) {
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
-  const onChange = (event, {newValue}) => {
+  const onChange = (event, {newValue, method}) => {
     setValue(newValue);
+    if (method === 'click' || method === 'enter') {
+      props.onChangeTeam(newValue, props.side);
+    }
+  }
+
+  const onBlur = () => {
+    props.onChangeTeam(value, props.side);
   }
 
   const onSuggestionsFetchRequested = ({value, reason}) => {
@@ -57,7 +64,8 @@ export default function AutocompleteTeams(props) {
 
   const inputProps = {
     value,
-    onChange: onChange
+    onChange: onChange,
+    onBlur: onBlur
   }
 
   return (
