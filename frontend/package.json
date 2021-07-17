@@ -9,6 +9,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.21.1",
     "chart.js": "^2.9.3",
+    "luxon": "^2.0.1",
     "react": "^16.13.0",
     "react-autosuggest": "^10.1.0",
     "react-chartjs-2": "^2.9.0",

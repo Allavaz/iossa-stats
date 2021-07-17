@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
-import { getTeamLogo } from '../Utils';
-import AutocompleteTorneos from './AutocompleteTorneos';
-import AutocompleteTeams from './AutocompleteTeams';
+import { fecha, getTeamLogo, getTeamShortname } from '../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import MatchEventEditor from './MatchEventEditor';
 import MatchEventEdit from './MatchEventEdit';
 import ScoreEditor from './ScoreEditor';
+import DateTimeEditor from './DateTimeEditor';
+import TeamNameEditor from './TeamNameEditor';
+import TorneoEditor from './TorneoEditor';
 
 export default function MatchCardEdit(props) {
   const [eventEditing, setEventEditing] = useState(-1);
   const [eventCreating, setEventCreating] = useState(null);
   const [scoreEditing, setScoreEditing] = useState(false);
   const [scoreHovering, setScoreHovering] = useState(false);
+  const [dateHovering, setDateHovering] = useState(false);
+  const [dateEditing, setDateEditing] = useState(false);
+  const [homeTeamNameEditing, setHomeTeamNameEditing] = useState(false);
+  const [awayTeamNameEditing, setAwayTeamNameEditing] = useState(false);
+  const [homeTeamNameHovering, setHomeTeamNameHovering] = useState(false);
+  const [awayTeamNameHovering, setAwayTeamNameHovering] = useState(false);
+  const [torneoEditing, setTorneoEditing] = useState(false);
+  const [torneoHovering, setTorneoHovering] = useState(false);
 
   function onChangeTeam(value, side) {
     props.changeTeam(value, side);
+    setHomeTeamNameEditing(false);
+    setAwayTeamNameEditing(false);
+    setHomeTeamNameHovering(false);
+    setAwayTeamNameHovering(false);
   }
 
   function onChangeTorneo(value) {
     props.changeTorneo(value);
+    setTorneoEditing(false);
+    setTorneoHovering(false);
   }
 
   function onAddEvent(side) {
@@ -35,6 +50,12 @@ export default function MatchCardEdit(props) {
 
   function onChangeScore(home, away) {
     props.changeScore(home, away);
+    setScoreHovering(false);
+  }
+
+  function onChangeDate(date) {
+    props.changeDate(date);
+    setDateHovering(false);
   }
 
   function onChangeEvent(event, playerName, playerSteamId, minute, index) {
@@ -73,9 +94,29 @@ export default function MatchCardEdit(props) {
         }
       }
     }
+
     matchEvents.sort((a, b) => {
       return a.second - b.second
     });
+    
+    let yellows = 0;
+    for (let i in matchEvents) {
+      if (matchEvents[i].player1SteamId === playerSteamId) {
+        if (matchEvents[i].event === 'YELLOW CARD' || matchEvents[i].event === 'SECOND YELLOW') {
+          yellows++;
+          if (yellows % 2 === 0) {
+            matchEvents[i].event = 'SECOND YELLOW';
+          }
+        }
+      }
+    }
+
+    for (let i in matchEvents) {
+      if (matchEvents[i].player1SteamId === playerSteamId) {
+        matchEvents[i].name = playerName;
+      }
+    }
+
     props.changeEvents(matchEvents);
   }
 
@@ -86,7 +127,7 @@ export default function MatchCardEdit(props) {
       period: 'FIRST HALF',
       player1SteamId: '',
       player2SteamId: '',
-      second: props.data.matchevents[props.data.matchevents.length - 1].second,
+      second: props.data.matchevents.length === 0 ? 0 : props.data.matchevents[props.data.matchevents.length - 1].second,
       team: side
     })
   }
@@ -98,28 +139,111 @@ export default function MatchCardEdit(props) {
           fontSize: '10pt', 
           marginTop: '10px'
         }}>
-        <center><AutocompleteTorneos defaultValue={props.data.torneo} onChangeTorneo={onChangeTorneo}></AutocompleteTorneos></center>
+        <center>{torneoEditing ? <TorneoEditor torneo={props.data.torneo} onChangeTorneo={onChangeTorneo} setTorneoEditing={setTorneoEditing}></TorneoEditor> : 
+        <div style={{display:'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '14px', height: '22px'}} onMouseOver={e => setTorneoHovering(true)} onMouseOut={e => setTorneoHovering(false)}>
+          {props.data.torneo} 
+          <FontAwesomeIcon icon={faEdit} style={{
+              cursor: 'pointer',
+              marginLeft: '5px',
+              color: 'var(--normal-text-color)',
+              opacity: torneoHovering ? '100%' : '0%'
+            }}
+            onClick={e => setTorneoEditing(true)}
+          />
+        </div>}</center>
       </div>
       <table className='resulttable'>
         <tbody>
           <tr>
             <td>
-              <h2>
-                <div id='teamname'><AutocompleteTeams defaultValue={props.data.teams[0].teamname} onChangeTeam={onChangeTeam} side='home'></AutocompleteTeams></div>
-              </h2>
+              {homeTeamNameEditing ? 
+              <TeamNameEditor teams={props.data.teams} 
+                side='home' 
+                onChangeTeam={onChangeTeam} 
+                setHomeTeamNameEditing={setHomeTeamNameEditing} 
+                setAwayTeamNameEditing={setAwayTeamNameEditing}
+              /> : 
+              <h2><div id='teamname' style={{display:'flex', justifyContent:'center', alignItems:'center', marginLeft: '21px'}} onMouseOver={e => setHomeTeamNameHovering(true)} onMouseOut={e => setHomeTeamNameHovering(false)}>
+                {props.data.teams[0].teamname} 
+                <FontAwesomeIcon 
+                  icon={faEdit} 
+                  style={{
+                    fontSize: '0.75em', 
+                    marginLeft: '5px', 
+                    marginBottom: '2px', 
+                    opacity: homeTeamNameHovering ? '100%' : '0%',
+                    cursor: 'pointer'}}
+                  onClick={e => {
+                    setHomeTeamNameEditing(true); 
+                    setAwayTeamNameEditing(false);
+                    setDateEditing(false);
+                    setEventEditing(-1);
+                    setScoreEditing(false);
+                    setTorneoEditing(false);
+                    setHomeTeamNameHovering(false);
+                    setDateHovering(false);
+                    setScoreHovering(false);
+                    setTorneoHovering(false);
+                  }}
+                />
+              </div>
+              <div id='shortname'>{getTeamShortname(props.data.teams[1].teamname)}</div></h2>}
             </td>
-            <td style={{color: 'var(--header-color)'}}>
-              <input type='datetime-local' 
-                defaultValue={props.data.fecha.replace('.000Z', '')}
-                style={{
-                  textAlign: 'center'
+            <td>{dateEditing ? <center><DateTimeEditor date={props.data.fecha} onChangeDate={onChangeDate} setDateEditing={setDateEditing}></DateTimeEditor></center> : 
+            <div style={{color: 'var(--header-color)', marginLeft: '11px'}}
+              onMouseOver={e => setDateHovering(true)}
+              onMouseOut={e => setDateHovering(false)}
+              >
+              {fecha(props.data.fecha)}
+              <FontAwesomeIcon icon={faEdit} 
+                style={{color: 'var(--normal-text-color)', cursor: 'pointer', opacity: dateHovering ? '100%' : '0%', marginLeft: '5px'}}
+                onClick={e => {
+                  setDateEditing(true);
+                  setEventEditing(-1);
+                  setScoreEditing(false);
+                  setTorneoEditing(false);
+                  setHomeTeamNameEditing(false);
+                  setAwayTeamNameEditing(false);
+                  setScoreHovering(false);
+                  setTorneoHovering(false);
+                  setHomeTeamNameHovering(false);
+                  setAwayTeamNameHovering(false);
                 }}
               />
-            </td>
+              </div>}</td>
             <td>
-              <h2>
-              <div id='teamname'><AutocompleteTeams defaultValue={props.data.teams[1].teamname} onChangeTeam={onChangeTeam} side='away'></AutocompleteTeams></div>
-              </h2>
+              {awayTeamNameEditing ? 
+              <TeamNameEditor teams={props.data.teams} 
+                side='away' 
+                onChangeTeam={onChangeTeam} 
+                setHomeTeamNameEditing={setHomeTeamNameEditing} 
+                setAwayTeamNameEditing={setAwayTeamNameEditing}
+              /> : 
+              <h2><div id='teamname' style={{display:'flex', justifyContent:'center', alignItems:'center', marginLeft: '21px'}} onMouseOver={e => setAwayTeamNameHovering(true)} onMouseOut={e => setAwayTeamNameHovering(false)}>
+                {props.data.teams[1].teamname} 
+                <FontAwesomeIcon 
+                  icon={faEdit} 
+                  style={{
+                    fontSize: '0.75em', 
+                    marginLeft: '5px', 
+                    marginBottom: '2px', 
+                    opacity: awayTeamNameHovering ? '100%' : '0%',
+                    cursor: 'pointer'}}
+                  onClick={e => {
+                    setAwayTeamNameEditing(true); 
+                    setHomeTeamNameEditing(false);
+                    setDateEditing(false);
+                    setEventEditing(-1);
+                    setScoreEditing(false);
+                    setTorneoEditing(false);
+                    setHomeTeamNameHovering(false);
+                    setDateHovering(false);
+                    setScoreHovering(false);
+                    setTorneoHovering(false);
+                  }}
+                />
+              </div>
+              <div id='shortname'>{getTeamShortname(props.data.teams[1].teamname)}</div></h2>}
             </td>
           </tr>
           <tr>
@@ -127,10 +251,33 @@ export default function MatchCardEdit(props) {
               alt={props.data.teams[0].teamname} 
               src={getTeamLogo(props.data.teams[0].teamname)}>
             </img></td>
-            <td>{scoreEditing ? <ScoreEditor home={props.data.teams[0].score} away={props.data.teams[1].score} onChangeScore={onChangeScore} setScoreEditing={setScoreEditing}></ScoreEditor> : 
+            <td>{scoreEditing ? <ScoreEditor home={props.data.teams[0].score} 
+                away={props.data.teams[1].score} 
+                onChangeScore={onChangeScore} 
+                setScoreEditing={setScoreEditing}>
+              </ScoreEditor> : 
               <h2 id='result' style={{marginLeft: '25px'}} onMouseOver={e => setScoreHovering(true)} onMouseOut={e => setScoreHovering(false)}>
-              {props.data.teams[0].score} - {props.data.teams[1].score}
-              <FontAwesomeIcon style={{marginLeft: '0px', cursor: 'pointer', opacity: scoreHovering ? '100%' : '0%', height: '15px', marginBottom: '4px' }} icon={faEdit} onClick={e => setScoreEditing(true)}></FontAwesomeIcon>
+                {props.data.teams[0].score} - {props.data.teams[1].score}
+                <FontAwesomeIcon style={{
+                    marginLeft: '0px', 
+                    cursor: 'pointer', 
+                    opacity: scoreHovering ? '100%' : '0%', 
+                    height: '16px', 
+                    marginBottom: '4px' 
+                  }} 
+                  icon={faEdit} 
+                  onClick={e => {
+                    setScoreEditing(true);
+                    setDateEditing(false);
+                    setEventEditing(-1);
+                    setTorneoEditing(false);
+                    setHomeTeamNameEditing(false);
+                    setAwayTeamNameEditing(false);
+                    setDateHovering(false);
+                    setTorneoHovering(false);
+                    setHomeTeamNameHovering(false);
+                    setAwayTeamNameHovering(false);
+                  }}/>
               </h2>
               }
             </td>
@@ -157,24 +304,68 @@ export default function MatchCardEdit(props) {
             <td style={{float: 'left'}}>
               <center><ul style={{listStyleType: 'none', paddingInlineStart: '0px', width: '280px'}}>
                 {props.data.matchevents.map((item, index) => (
-                  <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '40px'}}>
-                    <MatchEventEdit item={item} side='home' index={index} setEventEditing={setEventEditing} onRemoveEvent={onRemoveEvent} />
-                  </div>
+                  <MatchEventEdit 
+                    item={item} 
+                    side='home' 
+                    index={index} 
+                    setEventEditing={setEventEditing} 
+                    onRemoveEvent={onRemoveEvent} 
+                    setScoreEditing={setScoreEditing}
+                    setScoreHovering={setScoreHovering}
+                  />
                 ))}
                 <tr>
-                <td colSpan='4'><FontAwesomeIcon icon={faPlus} style={{cursor: 'pointer'}} onClick={e => onAddEvent('home')}></FontAwesomeIcon></td>
+                <td colSpan='4'>
+                  <FontAwesomeIcon icon={faPlus} 
+                  style={{cursor: 'pointer'}} 
+                  onClick={e => {
+                    onAddEvent('home'); 
+                    setScoreEditing(false); 
+                    setHomeTeamNameEditing(false);
+                    setAwayTeamNameEditing(false);
+                    setDateEditing(false);
+                    setTorneoEditing(false);
+                    setScoreHovering(false); 
+                    setHomeTeamNameHovering(false);
+                    setAwayTeamNameHovering(false);
+                    setDateHovering(false);
+                    setTorneoHovering(false);
+                  }}/>
+                </td>
                 </tr>
               </ul></center>
             </td>
             <td style={{float: 'right'}}>
             <center><ul style={{listStyleType: 'none', paddingInlineStart: '0px', width: '280px'}}>
               {props.data.matchevents.map((item, index) => (
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: '40px'}}>
-                  <MatchEventEdit item={item} side='away' index={index} setEventEditing={setEventEditing} onRemoveEvent={onRemoveEvent} />
-                </div>
+                <MatchEventEdit 
+                  item={item} 
+                  side='away' 
+                  index={index} 
+                  setEventEditing={setEventEditing} 
+                  onRemoveEvent={onRemoveEvent} 
+                  setScoreEditing={setScoreEditing}
+                  setScoreHovering={setScoreHovering}
+                />
               ))}
                 <tr>
-                  <td colSpan='4'><FontAwesomeIcon icon={faPlus} style={{cursor: 'pointer'}} onClick={e => onAddEvent('away')}></FontAwesomeIcon></td>
+                  <td colSpan='4'>
+                    <FontAwesomeIcon icon={faPlus} 
+                    style={{cursor: 'pointer'}} 
+                    onClick={e => {
+                      onAddEvent('away'); 
+                      setScoreEditing(false); 
+                      setHomeTeamNameEditing(false);
+                      setAwayTeamNameEditing(false);
+                      setDateEditing(false);
+                      setTorneoEditing(false);
+                      setScoreHovering(false); 
+                      setHomeTeamNameHovering(false);
+                      setAwayTeamNameHovering(false);
+                      setDateHovering(false);
+                      setTorneoHovering(false);
+                    }}/>
+                  </td>
                 </tr>
               </ul></center>
             </td>

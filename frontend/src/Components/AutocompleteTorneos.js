@@ -47,13 +47,7 @@ export default function AutocompleteTorneos(props) {
 
   const onChange = (event, {newValue, method}) => {
     setValue(newValue);
-    if (method === 'click' || method === 'enter') {
-      props.onChangeTorneo(newValue);
-    }
-  }
-
-  const onBlur = () => {
-    props.onChangeTorneo(value);
+    props.setValue(newValue.trim());
   }
 
   const onSuggestionsFetchRequested = ({value, reason}) => {
@@ -69,7 +63,6 @@ export default function AutocompleteTorneos(props) {
   const inputProps = {
     value,
     onChange: onChange,
-    onBlur: onBlur
   }
 
   return (

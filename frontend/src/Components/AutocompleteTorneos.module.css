@@ -4,7 +4,7 @@
 
 .input {
   width: 230px;
-  height: 25px;
+  height: 20px;
   padding: 0px 0px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
@@ -30,7 +30,7 @@
 .suggestionsContainerOpen {
   display: block;
   position: absolute;
-  top: 27px;
+  top: 22px;
   left: 0;
   right: 0;
   margin: auto;

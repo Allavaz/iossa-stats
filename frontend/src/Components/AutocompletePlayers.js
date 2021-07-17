@@ -19,7 +19,7 @@ export default function AutocompletePlayers(props) {
     const inputLength = inputValue.length;
   
     return inputLength === 0 ? [] : players.filter(e =>
-      e.name.toLowerCase().slice(0, inputLength) === inputValue
+      e.name.toLowerCase().includes(inputValue)
     );
   };
 
@@ -28,15 +28,15 @@ export default function AutocompletePlayers(props) {
   const renderSuggestion = suggestion => (
     <div>
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '5px'}}>
-        <span>
+        <div>
           <img src={suggestion.teamlogo} 
             height='16pt' 
             style={{marginRight: '.5ch'}}
             alt={suggestion.team}
           >
         </img>
-        </span>
-        <span>{suggestion.name}</span>
+        </div>
+        <div style={{textAlign: 'center'}}>{suggestion.name}</div>
       </div>
       <div style={{color: 'var(--header-color)', fontSize: '9pt', padding: '5px', paddingTop: '2px'}}><i>{suggestion.steamid}</i></div>
     </div>
@@ -47,6 +47,7 @@ export default function AutocompletePlayers(props) {
 
   const onChange = (event, {newValue}) => {
     setValue(newValue);
+    props.onChangePlayer.setPlayerName(newValue.trim());
   }
 
   const onSuggestionSelected = (event, {suggestion}) => {

@@ -43,13 +43,7 @@ export default function AutocompleteTeams(props) {
 
   const onChange = (event, {newValue, method}) => {
     setValue(newValue);
-    if (method === 'click' || method === 'enter') {
-      props.onChangeTeam(newValue, props.side);
-    }
-  }
-
-  const onBlur = () => {
-    props.onChangeTeam(value, props.side);
+    props.setValue(newValue.trim());
   }
 
   const onSuggestionsFetchRequested = ({value, reason}) => {
@@ -65,7 +59,6 @@ export default function AutocompleteTeams(props) {
   const inputProps = {
     value,
     onChange: onChange,
-    onBlur: onBlur
   }
 
   return (

@@ -18,7 +18,7 @@ export default function ScoreEditor(props) {
   }
 
   return(
-    <div style={{marginLeft: '30px'}}>
+    <div style={{marginLeft: '40px'}}>
       <input type='number'
         id='homeScore' 
         style={style} 
@@ -34,8 +34,8 @@ export default function ScoreEditor(props) {
         min='0'
         max='99'>
       </input>
-      <FontAwesomeIcon icon={faCheckCircle} style={{marginLeft: '10px', cursor: 'pointer'}} onClick={e => sendScore()}></FontAwesomeIcon>
-      <FontAwesomeIcon icon={faTimesCircle} style={{marginLeft: '10px', cursor: 'pointer'}} onClick={e => props.setScoreEditing(false)}></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faCheckCircle} style={{marginLeft: '10px', cursor: 'pointer'}} size='lg' onClick={e => sendScore()}></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faTimesCircle} style={{marginLeft: '10px', cursor: 'pointer'}} size='lg' onClick={e => props.setScoreEditing(false)}></FontAwesomeIcon>
     </div>
   )
 }
