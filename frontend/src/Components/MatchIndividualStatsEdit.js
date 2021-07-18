@@ -92,6 +92,8 @@ export default function MatchIndividualStatsEdit(props) {
                 alignItems: 'center',
                 marginLeft: '40px',
               }}
+              onMouseOver={e => setPlayerHovering(row.index)}
+              onMouseOut={e => setPlayerHovering(-1)}
             >
               <Link to={'/jugador/' + row.row._original.info.steam_id}>{row.row._original.info.name}</Link>
               <FontAwesomeIcon icon={faEdit} 
@@ -292,12 +294,6 @@ export default function MatchIndividualStatsEdit(props) {
           rowsText={'filas'}
           showPagination={false}
           minRows={0}
-          getTdProps={(state, rowInfo, column, instance) => {
-            return {
-              onMouseEnter: (e) => setPlayerHovering(rowInfo.index),
-              onMouseLeave: (e) => setPlayerHovering(-1)
-            }
-          }}
         />
       </div>
     </div>

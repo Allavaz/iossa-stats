@@ -338,6 +338,7 @@ export default function MatchCardEdit(props) {
                 <input type='password' placeholder='Contraseña' style={{textAlign: 'center', width: '20ch', height: '22px'}}></input>
                 <button className='boton' style={{marginRight: 0, marginTop: '10px'}}>Modificar partido</button>
                 <button className='boton' style={{marginRight: 0}}>Eliminar partido</button>
+                <button className='boton' style={{marginRight: 0}} onClick={e => props.exportMatch()}>Exportar JSON</button>
               </div>
             </td>
             <td>

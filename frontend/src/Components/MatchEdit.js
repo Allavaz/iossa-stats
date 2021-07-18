@@ -42,6 +42,7 @@ export default class MatchEdit extends Component {
     this.changeDate = this.changeDate.bind(this);
     this.changeIndivStats = this.changeIndivStats.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
+    this.exportMatch = this.exportMatch.bind(this);
   }
 
   componentDidMount() {
@@ -153,6 +154,8 @@ export default class MatchEdit extends Component {
     let awayShots = 0;
     let homeShotsOnTarget = 0;
     let awayShotsOnTarget = 0;
+    let homePossession = 0;
+    let awayPossession = 0;
     for (let i in events) {
       if (events[i].team === 'home') {
         switch (events[i].event) {
@@ -205,6 +208,7 @@ export default class MatchEdit extends Component {
       homePassesCompleted = homePassesCompleted + parseInt(data.teams[0].playerStatistics[i].statistics.passescompleted);
       homeOffsides = homeOffsides + parseInt(data.teams[0].playerStatistics[i].statistics.offsides);
       homeCorners = homeCorners + parseInt(data.teams[0].playerStatistics[i].statistics.corners);
+      homePossession = homePossession + parseInt(data.teams[0].playerStatistics[i].statistics.possession);
     }
     for (let i in data.teams[1].playerStatistics) {
       awayShots = awayShots + parseInt(data.teams[1].playerStatistics[i].statistics.shots);
@@ -214,6 +218,7 @@ export default class MatchEdit extends Component {
       awayPassesCompleted = awayPassesCompleted + parseInt(data.teams[1].playerStatistics[i].statistics.passescompleted);
       awayOffsides = awayOffsides + parseInt(data.teams[1].playerStatistics[i].statistics.offsides);
       awayCorners = awayCorners + parseInt(data.teams[1].playerStatistics[i].statistics.corners);
+      awayPossession = awayPossession + parseInt(data.teams[1].playerStatistics[i].statistics.possession);
     }
     data.teams[0].score = homeScore;
     data.teams[0].scorereceived = awayScore;
@@ -247,6 +252,8 @@ export default class MatchEdit extends Component {
     data.teams[1].statistics.yellowcards = awayYellowCards + awaySecondYellows;
     data.teams[0].statistics.redcards = homeRedCards + homeSecondYellows;
     data.teams[1].statistics.redcards = awayRedCards + homeSecondYellows;
+    data.teams[0].statistics.possession = homePossession;
+    data.teams[1].statistics.possession = awayPossession;
     if (data.teams[0].statistics.fouls < (homeYellowCards + homeRedCards + homeSecondYellows)) {
       data.teams[0].statistics.fouls = homeYellowCards + homeRedCards + homeSecondYellows;
     } 
@@ -505,6 +512,24 @@ export default class MatchEdit extends Component {
   changeIndivStats(player, side, index) {
     let data = this.state.data;
     let s = side === 'home' ? 0 : 1;
+    if (player.statistics.possession !== data.teams[s].playerStatistics[index].statistics.possession) {
+      let diff = player.statistics.possession - data.teams[s].playerStatistics[index].statistics.possession;
+      for (let i in data.teams[0].playerStatistics) {
+        if (player.info.steam_id !== data.teams[0].playerStatistics[i].info.steam_id) {
+          data.teams[0].playerStatistics[i].statistics.possession = Math.round(data.teams[0].playerStatistics[i].statistics.possession - (diff/data.players.length-1));
+        }
+      }
+      for (let i in data.teams[1].playerStatistics) {
+        if (player.info.steam_id !== data.teams[1].playerStatistics[i].info.steam_id) {
+          data.teams[1].playerStatistics[i].statistics.possession = Math.round(data.teams[1].playerStatistics[i].statistics.possession - (diff/(data.players.length-1)));
+        }
+      }
+      for (let i in data.players) {
+        if (player.info.steam_id !== data.players[i].info.steam_id) {
+          data.players[i].statistics.possession = Math.round(data.players[i].statistics.possession - (diff/(data.players.length-1)));
+        }
+      }
+    }
     data.teams[s].playerStatistics[index] = player;
     let playerExists = false;
     for (let i in data.players) {
@@ -539,6 +564,15 @@ export default class MatchEdit extends Component {
     this.setState({data: data});
   }
 
+  exportMatch() {
+    const element = document.createElement('a');
+    const file = new Blob([JSON.stringify(this.state.data)], {type: 'application/json'});
+    element.href = URL.createObjectURL(file);
+    element.download = this.state.data.filename;
+    document.body.appendChild(element);
+    element.click();
+  }
+
   render() {
     return this.state.isLoading ? (
       <div className="content" id="loader">
@@ -560,6 +594,7 @@ export default class MatchEdit extends Component {
           changeEvents={this.changeEvents}
           changeScore={this.changeScore}
           changeDate={this.changeDate}
+          exportMatch={this.exportMatch}
         />
         <div>
           <div className="colCon">

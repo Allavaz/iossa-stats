@@ -45,7 +45,7 @@ export default function MatchEventEditor(props) {
         }}>
         <h3 style={{marginTop: 0}}>{props.eventCreating ? 'CREAR' : 'EDITAR'} EVENTO</h3>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--normal-text-color)'}}>
-          <select id={'selectEvent' + props.index} style={{width: '13ch', padding: '2px'}} defaultValue={props.item.event}>
+          <select id={'selectEvent' + props.index} style={{width: '15ch', padding: '2px'}} defaultValue={props.item.event}>
             <option value='GOAL'>Gol</option>
             <option value='OWN GOAL'>Gol en contra</option>
             <option value='YELLOW CARD'>Amarilla</option>
