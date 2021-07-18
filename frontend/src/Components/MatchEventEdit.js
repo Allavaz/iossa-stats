@@ -10,7 +10,7 @@ export default function MatchEventEdit(props) {
     if ((props.item.team === 'home' && props.item.event !== 'OWN GOAL') || (props.item.team === 'away' && props.item.event === 'OWN GOAL')) {
       return (
         <li key={props.index}>
-          <div className='matchevent' style={{marginLeft: '40px'}} onMouseOver={e => setEventHovering(true)} onMouseOut={e => setEventHovering(false)}>
+          <div className='matchevent' style={{marginLeft: '35px'}} onMouseOver={e => setEventHovering(true)} onMouseOut={e => setEventHovering(false)}>
             <MatchIcon event={props.item.event}></MatchIcon>
             <Link to={`/jugador/${props.item.player1SteamId}`}>
               <div className="fullteamname" style={{maxWidth: '25vw'}}>

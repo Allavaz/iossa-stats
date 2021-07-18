@@ -301,7 +301,7 @@ export default function MatchCardEdit(props) {
       <table className='resulttable'>
         <tbody>
         <tr id='eventslist'>
-            <td style={{float: 'left'}}>
+            <td>
               <center><ul style={{listStyleType: 'none', paddingInlineStart: '0px', width: '280px'}}>
                 {props.data.matchevents.map((item, index) => (
                   <MatchEventEdit 
@@ -314,8 +314,7 @@ export default function MatchCardEdit(props) {
                     setScoreHovering={setScoreHovering}
                   />
                 ))}
-                <tr>
-                <td colSpan='4'>
+                <li>
                   <FontAwesomeIcon icon={faPlus} 
                   style={{cursor: 'pointer'}} 
                   onClick={e => {
@@ -331,11 +330,17 @@ export default function MatchCardEdit(props) {
                     setDateHovering(false);
                     setTorneoHovering(false);
                   }}/>
-                </td>
-                </tr>
+                </li>
               </ul></center>
             </td>
-            <td style={{float: 'right'}}>
+            <td>
+              <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                <input type='password' placeholder='Contraseña' style={{textAlign: 'center', width: '20ch', height: '22px'}}></input>
+                <button className='boton' style={{marginRight: 0, marginTop: '10px'}}>Modificar partido</button>
+                <button className='boton' style={{marginRight: 0}}>Eliminar partido</button>
+              </div>
+            </td>
+            <td>
             <center><ul style={{listStyleType: 'none', paddingInlineStart: '0px', width: '280px'}}>
               {props.data.matchevents.map((item, index) => (
                 <MatchEventEdit 
@@ -348,25 +353,23 @@ export default function MatchCardEdit(props) {
                   setScoreHovering={setScoreHovering}
                 />
               ))}
-                <tr>
-                  <td colSpan='4'>
-                    <FontAwesomeIcon icon={faPlus} 
-                    style={{cursor: 'pointer'}} 
-                    onClick={e => {
-                      onAddEvent('away'); 
-                      setScoreEditing(false); 
-                      setHomeTeamNameEditing(false);
-                      setAwayTeamNameEditing(false);
-                      setDateEditing(false);
-                      setTorneoEditing(false);
-                      setScoreHovering(false); 
-                      setHomeTeamNameHovering(false);
-                      setAwayTeamNameHovering(false);
-                      setDateHovering(false);
-                      setTorneoHovering(false);
-                    }}/>
-                  </td>
-                </tr>
+                <li>
+                  <FontAwesomeIcon icon={faPlus} 
+                  style={{cursor: 'pointer'}} 
+                  onClick={e => {
+                    onAddEvent('away'); 
+                    setScoreEditing(false); 
+                    setHomeTeamNameEditing(false);
+                    setAwayTeamNameEditing(false);
+                    setDateEditing(false);
+                    setTorneoEditing(false);
+                    setScoreHovering(false); 
+                    setHomeTeamNameHovering(false);
+                    setAwayTeamNameHovering(false);
+                    setDateHovering(false);
+                    setTorneoHovering(false);
+                  }}/>
+                </li>
               </ul></center>
             </td>
           </tr>
