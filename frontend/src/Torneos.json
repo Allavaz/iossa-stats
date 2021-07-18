@@ -128,6 +128,16 @@
                 "tabla": "maradeit7d"
             },
             {
+                "torneo": "Copa Maradei T7 - Grupo A (Desempate 2do Puesto)",
+                "tabla": "maradeit7a",
+                "tablaLabel": "Copa Maradei T7 - Grupo A"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo D (Desempate 1er Puesto)",
+                "tabla": "maradeit7d",
+                "tablaLabel": "Copa Maradei T7 - Grupo D"
+            },
+            {
                 "torneo": "Copa Maradei T7 - Eliminatorias"
             },
             {

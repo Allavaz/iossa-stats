@@ -39,6 +39,9 @@ export default class Match extends Component {
                 isCopa: false,
                 table: t.tabla
               })
+              if (t.tablaLabel) {
+                this.setState({tablaLabel: t.tablaLabel})
+              }
             }
           }
         }
@@ -110,14 +113,14 @@ export default class Match extends Component {
                     this.state.table.startsWith("sd") ? 
                     <FullPositionsUnificada
                       table={this.state.table}
-                      torneo={this.state.data.torneo}
+                      torneo={this.state.tablaLabel || this.state.data.torneo}
                       callback={() => {
                         this.setState({ isTableLoading: false });
                       }}
                     ></FullPositionsUnificada> :
                     <FullPositions
                       table={this.state.table}
-                      torneo={this.state.data.torneo}
+                      torneo={this.state.tablaLabel || this.state.data.torneo}
                       callback={() => {
                         this.setState({ isTableLoading: false });
                       }}

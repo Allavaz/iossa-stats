@@ -13,7 +13,8 @@ function getTablas(temp) {
   for (let i in Torneos) {
     if (Torneos[i].temporada === temp) {
       for (let j in Torneos[i].torneos) {
-        if (Torneos[i].torneos[j].tabla) {
+        if (Torneos[i].torneos[j].tabla && 
+          (tablas.findIndex(e => e.table === Torneos[i].torneos[j].tabla)) === -1) {
           tablas.push({
             table: Torneos[i].torneos[j].tabla,
             name: Torneos[i].torneos[j].torneo
