@@ -66,6 +66,10 @@
         "titulo": "Selecciones",
         "torneos": [
             {
+                "torneo": "Copa America '21 - Regular",
+                "tabla": "america21r"
+            },
+            {
                 "torneo": "Copa America T3",
                 "query": "americat3",
                 "tabla": "americat3"
@@ -80,10 +84,6 @@
                 "query": "america21"
             },
             {
-                "torneo": "Copa America '21 - Regular",
-                "tabla": "america21r"
-            },
-            {
                 "torneo": "Copa America '21 - Playoff"
             }
         ]
@@ -92,6 +92,16 @@
         "temporada": "t7",
         "titulo": "Temporada 7",
         "torneos": [
+            {
+                "torneo": "Liga D1 T7",
+                "query": "d1t7",
+                "tabla": "d1t7"
+            },
+            {
+                "torneo": "Liga D2 T7",
+                "query": "d2t7",
+                "tabla": "d2t7"
+            }
             {
                 "torneo": "Superliga D1 T7",
                 "query": "sd1t7",
@@ -118,36 +128,28 @@
                 "tabla": "maradeit7d"
             },
             {
-                "torneo": "Copa Maradei T7 - Grupo A (Desempate 2do Puesto)",
-                "tabla": "maradeit7a"
-            },
-            {
-                "torneo": "Copa Maradei T7 - Grupo D (Desempate 1er Puesto)",
-                "tabla": "maradeit7d"
-            },
-            {
                 "torneo": "Copa Maradei T7 - Eliminatorias"
             },
             {
                 "torneo": "Copa valencARc",
                 "query": "cvt7"
             },
-            {
-                "torneo": "Liga D1 T7",
-                "query": "d1t7",
-                "tabla": "d1t7"
-            },
-            {
-                "torneo": "Liga D2 T7",
-                "query": "d2t7",
-                "tabla": "d2t7"
-            }
         ]
     },
     {
         "temporada": "t6",
         "titulo": "Temporada 6",
         "torneos": [
+            {
+                "torneo": "Liga D1 T6",
+                "query": "d1t6",
+                "tabla": "d1t6"
+            },
+            {
+                "torneo": "Liga D2 T6",
+                "query": "d2t6",
+                "tabla": "d2t6"
+            },
             {
                 "torneo": "Superliga D1 T6",
                 "query": "sd1t6",
@@ -162,14 +164,16 @@
                 "query": "cvt6"
             },
             {
-                "torneo": "Liga D1 T6",
-                "query": "d1t6",
-                "tabla": "d1t6"
+                "torneo": "Copa Maradei T6 - Grupo A",
+                "tabla": "maradeit6a"
             },
             {
-                "torneo": "Liga D2 T6",
-                "query": "d2t6",
-                "tabla": "d2t6"
+                "torneo": "Copa Maradei T6 - Grupo B",
+                "tabla": "maradeit6b"
+            },
+            {
+                "torneo": "Copa Maradei T6 - Grupo C",
+                "tabla": "maradeit6c"
             }
         ]
     },
@@ -207,10 +211,6 @@
             {
                 "torneo": "Copa Maradei T5 - Grupo C",
                 "tabla": "maradeit5c"
-            },
-            {
-                "torneo": "Copa Maradei T5 - Grupo D",
-                "tabla": "maradeit5d"
             },
             {
                 "torneo": "Copa Maradei T5 - Eliminatorias",
@@ -311,8 +311,8 @@
             },
             {
                 "torneo": "Liga D2 - Temporada 2",
-                "query": "d2t2",
-                "tabla": "d2t2"
+                "query": "d2t1",
+                "tabla": "d2t1"
             },
             {
                 "torneo": "Copa Master 2019",
@@ -349,10 +349,6 @@
             {
                 "torneo": "Copa Maradei T1 - Grupo C",
                 "tabla": "maradeit1c"
-            },
-            {
-                "torneo": "Copa Maradei T1 - Grupo D",
-                "tabla": "maradeit1d"
             },
             {
                 "torneo": "Copa Maradei T1 - Eliminatorias",
