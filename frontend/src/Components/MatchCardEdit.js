@@ -376,9 +376,13 @@ export default function MatchCardEdit(props) {
             </td>
             <td>
               <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <input type='password' placeholder='Contraseña' style={{textAlign: 'center', width: '20ch', height: '22px'}}></input>
-                <button className='boton' style={{marginRight: 0, marginTop: '10px'}}>Modificar partido</button>
-                <button className='boton' style={{marginRight: 0}}>Eliminar partido</button>
+                <input id='password' type='password' placeholder='Contraseña' style={{textAlign: 'center', width: '20ch', height: '22px'}}></input>
+                <button className='boton' style={{marginRight: 0, marginTop: '10px'}} onClick={e => {
+                  props.updateMatch(document.getElementById('password').value);
+                }}>Modificar partido</button>
+                <button className='boton' style={{marginRight: 0}} onClick={e => {
+                  props.deleteMatch(document.getElementById('password').value);
+                }}>Eliminar partido</button>
                 <button className='boton' style={{marginRight: 0}} onClick={e => props.exportMatch()}>Exportar JSON</button>
                 <button className='boton' style={{marginRight: 0}} onClick={e => {
                   props.restartEditing();

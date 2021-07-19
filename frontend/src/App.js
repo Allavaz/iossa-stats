@@ -46,7 +46,7 @@ class App extends Component {
 					<Route exact path='/posiciones' component={Positions} />
 					<Route exact path='/posiciones/:id' component={Positions} />
 					<Route exact path='/partido/:id' component={Match} />
-					<Route exact path='/partido/:id/edit' component={MatchEdit} />
+					<Route exact path={`/partido/:id${Endpoint}`} component={MatchEdit} />
 					<Route exact path='/resultados' component={Results} />
 					<Route exact path='/resultados/:id' component={Results} />
 					<Route exact path='/jugador/:id' component={Player} />

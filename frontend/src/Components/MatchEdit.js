@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import MatchCardEdit from "./MatchCardEdit";
 import FullPositions from "./FullPositions";
 import MatchIndividualStatsEdit from "./MatchIndividualStatsEdit";
@@ -29,7 +30,8 @@ export default class MatchEdit extends Component {
       challonge: null, 
       table: null, 
       vodEditing: false,
-      teamStatsEditing: false
+      teamStatsEditing: false,
+      status: 'editing'
     };
     this.changeTeam = this.changeTeam.bind(this);
     this.changeTorneo = this.changeTorneo.bind(this);
@@ -44,6 +46,8 @@ export default class MatchEdit extends Component {
     this.removePlayer = this.removePlayer.bind(this);
     this.exportMatch = this.exportMatch.bind(this);
     this.restartEditing = this.restartEditing.bind(this);
+    this.updateMatch = this.updateMatch.bind(this);
+    this.deleteMatch = this.deleteMatch.bind(this);
   }
 
   componentDidMount() {
@@ -580,112 +584,216 @@ export default class MatchEdit extends Component {
     this.setState({teamStatsEditing: false, vodEditing: false});
   }
 
+  updateMatch(pw) {
+    if (pw === '') {
+      alert('Ingrese la contraseña.');
+    } else {
+      this.setState({isLoading: true});
+      axios.post(api + 'postupdate', {password: pw, data: this.state.data}).then((res) => {
+        if (res.data === 'wrong pw') {
+          alert('Contraseña incorrecta!');
+        } else if (res.data === 'Success!') {
+          this.setState({status: 'successUpdate'});
+        } else {
+          alert('Ocurrió un error. Revisá la consola.');
+        }
+        this.setState({isLoading: false});
+      }).catch(e => console.log(e));
+    }
+  }
+
+  deleteMatch(pw) {
+    if (pw === '') {
+      alert('Ingrese la contraseña.');
+    } else {
+      this.setState({isLoading: true});
+      axios.post(api + 'postupdate', {password: pw, data: this.state.data}).then((res) => {
+        if (res.data === 'wrong pw') {
+          alert('Contraseña incorrecta!');
+        } else if (res.data === 'Success!') {
+          this.setState({status: 'successDelete'});
+        } else {
+          alert('Ocurrió un error. Revisá la consola.');
+        }
+        this.setState({isLoading: false});
+      }).catch(e => console.log(e));
+    }
+  }
+
   render() {
-    return this.state.isLoading ? (
-      <div className="content" id="loader">
-        <center>
-          <FontAwesomeIcon
-            icon={faSpinner}
-            spin
-            size="5x"
-            style={{ color: "#ff9800" }}
-          ></FontAwesomeIcon>
-        </center>
-      </div>
-    ) : (
-      <div className="matchContainer">
-        <MatchCardEdit data={this.state.data} 
-          players={this.state.players} 
-          changeTeam={this.changeTeam} 
-          changeTorneo={this.changeTorneo}
-          changeEvents={this.changeEvents}
-          changeScore={this.changeScore}
-          changeDate={this.changeDate}
-          exportMatch={this.exportMatch}
-          teamStatsEditing={this.state.teamStatsEditing}
-          vodEditing={this.state.vodEditing}
-          setTeamStatsEditing={this.setTeamStatsEditing}
-          setVodEditing={this.setVodEditing}
-          restartEditing={this.restartEditing}
-        />
-        <div>
-          <div className="colCon">
-            <div className="flexTableDiv"
-              style={{
-                flexBasis: this.state.isCopa ? "900px" : "410px",
-                flexGrow: 9999,
-              }}
-            >
-              {this.state.teamStatsEditing ? <MatchTeamStatsEditor data={this.state.data} setEditing={this.setTeamStatsEditing} changeTeamStats={this.changeTeamStats}></MatchTeamStatsEditor> : <MatchTeamStatsEdit data={this.state.data} setEditing={this.setTeamStatsEditing}></MatchTeamStatsEdit>}
-              {this.state.isCopa && this.state.challonge != null ? (
-                <Challonge id={this.state.challonge}></Challonge>
-              ) : null}
-            </div>
-            {this.state.isCopa || this.state.table === null ? null : (
-              <div style={{ flexGrow: 1 }}>
-                <div
-                  className="content"
-                  id="loader"
-                  style={{
-                    display: this.state.isTableLoading ? "block" : "none",
-                  }}
-                >
-                  <center>
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      size="5x"
-                      style={{ color: "#ff9800", width: "100%" }}
-                    ></FontAwesomeIcon>
-                  </center>
-                </div>
-                <div className="flexTableDiv"
-                  style={{
-                    display: this.state.isTableLoading ? "none" : "block",
-                    flexGrow: 1,
-                  }}
-                >
-                  {
-                    this.state.table.startsWith("sd") ? 
-                    <FullPositionsUnificada
-                      table={this.state.table}
-                      torneo={this.state.data.torneo}
-                      callback={() => {
-                        this.setState({ isTableLoading: false });
-                      }}
-                    ></FullPositionsUnificada> :
-                    <FullPositions
-                      table={this.state.table}
-                      torneo={this.state.data.torneo}
-                      callback={() => {
-                        this.setState({ isTableLoading: false });
-                      }}
-                    ></FullPositions>
-                  }
-                  <p style={{fontSize: '0.8em', textAlign: 'center', color: 'var(--header-color)'}}><i>La tabla se actualizará luego de subir el partido.</i></p>
-                </div>
-              </div>
-            )}
-          </div>
-          <MatchIndividualStatsEdit
-            data={this.state.data.teams[0]}
-            players={this.state.players}
-            side='home'
-            changeIndivStats={this.changeIndivStats}
-            removePlayer={this.removePlayer}
-          />
-          <MatchIndividualStatsEdit
-            data={this.state.data.teams[1]}
-            players={this.state.players}
-            side='away'
-            changeIndivStats={this.changeIndivStats}
-            removePlayer={this.removePlayer}
-          />
+    if (this.state.status === 'editing') {
+      return this.state.isLoading ? (
+        <div className="content" id="loader">
+          <center>
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spin
+              size="5x"
+              style={{ color: "#ff9800" }}
+            ></FontAwesomeIcon>
+          </center>
         </div>
-        {this.state.data.vod === null || this.state.vodEditing ? <VodEditor changeVod={this.changeVod} setVodEditing={this.setVodEditing} vod={this.state.data.vod}></VodEditor> : (
-          <VodEdit vod={this.state.data.vod} setVodEditing={this.setVodEditing}></VodEdit>
-        )}
-      </div>
-    );
+      ) : (
+        <div className="matchContainer">
+          <MatchCardEdit data={this.state.data} 
+            players={this.state.players} 
+            changeTeam={this.changeTeam} 
+            changeTorneo={this.changeTorneo}
+            changeEvents={this.changeEvents}
+            changeScore={this.changeScore}
+            changeDate={this.changeDate}
+            exportMatch={this.exportMatch}
+            teamStatsEditing={this.state.teamStatsEditing}
+            vodEditing={this.state.vodEditing}
+            setTeamStatsEditing={this.setTeamStatsEditing}
+            setVodEditing={this.setVodEditing}
+            restartEditing={this.restartEditing}
+            updateMatch={this.updateMatch}
+            deleteMatch={this.deleteMatch}
+          />
+          <div>
+            <div className="colCon">
+              <div className="flexTableDiv"
+                style={{
+                  flexBasis: this.state.isCopa ? "900px" : "410px",
+                  flexGrow: 9999,
+                }}
+              >
+                {this.state.teamStatsEditing ? <MatchTeamStatsEditor data={this.state.data} setEditing={this.setTeamStatsEditing} changeTeamStats={this.changeTeamStats}></MatchTeamStatsEditor> : <MatchTeamStatsEdit data={this.state.data} setEditing={this.setTeamStatsEditing}></MatchTeamStatsEdit>}
+                {this.state.isCopa && this.state.challonge != null ? (
+                  <Challonge id={this.state.challonge}></Challonge>
+                ) : null}
+              </div>
+              {this.state.isCopa || this.state.table === null ? null : (
+                <div style={{ flexGrow: 1 }}>
+                  <div
+                    className="content"
+                    id="loader"
+                    style={{
+                      display: this.state.isTableLoading ? "block" : "none",
+                    }}
+                  >
+                    <center>
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        size="5x"
+                        style={{ color: "#ff9800", width: "100%" }}
+                      ></FontAwesomeIcon>
+                    </center>
+                  </div>
+                  <div className="flexTableDiv"
+                    style={{
+                      display: this.state.isTableLoading ? "none" : "block",
+                      flexGrow: 1,
+                    }}
+                  >
+                    {
+                      this.state.table.startsWith("sd") ? 
+                      <FullPositionsUnificada
+                        table={this.state.table}
+                        torneo={this.state.data.torneo}
+                        callback={() => {
+                          this.setState({ isTableLoading: false });
+                        }}
+                      ></FullPositionsUnificada> :
+                      <FullPositions
+                        table={this.state.table}
+                        torneo={this.state.data.torneo}
+                        callback={() => {
+                          this.setState({ isTableLoading: false });
+                        }}
+                      ></FullPositions>
+                    }
+                    <p style={{fontSize: '0.8em', textAlign: 'center', color: 'var(--header-color)'}}><i>La tabla se actualizará luego de subir el partido.</i></p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <MatchIndividualStatsEdit
+              data={this.state.data.teams[0]}
+              players={this.state.players}
+              side='home'
+              changeIndivStats={this.changeIndivStats}
+              removePlayer={this.removePlayer}
+            />
+            <MatchIndividualStatsEdit
+              data={this.state.data.teams[1]}
+              players={this.state.players}
+              side='away'
+              changeIndivStats={this.changeIndivStats}
+              removePlayer={this.removePlayer}
+            />
+          </div>
+          {this.state.data.vod === null || this.state.vodEditing ? <VodEditor changeVod={this.changeVod} setVodEditing={this.setVodEditing} vod={this.state.data.vod}></VodEditor> : (
+            <VodEdit vod={this.state.data.vod} setVodEditing={this.setVodEditing}></VodEdit>
+          )}
+        </div>
+      );
+    } else if (this.state.status === 'successUpdate') {
+      return(
+        <div className="content">
+          <div
+            className="whitespace"
+            style={{
+              padding: "0",
+              width: "310px",
+              textAlign: "center",
+              minHeight: "355px",
+            }}
+          >
+            <div className="cartel">
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                color="--var(header-color)"
+                size="5x"
+              ></FontAwesomeIcon>
+              <div style={{ color: "--var(header-color)" }}>
+                Partido modificado correctamente.
+              </div>
+              <div>
+                <Link to={"/partido/" + this.state.data._id}>
+                  <button style={{ margin: 0 }} className="boton">
+                    Ir al partido
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    } else if (this.state.status === 'successDelete') {
+      return(
+        <div className="content">
+          <div
+            className="whitespace"
+            style={{
+              padding: "0",
+              width: "310px",
+              textAlign: "center",
+              minHeight: "355px",
+            }}
+          >
+            <div className="cartel">
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                color="--var(header-color)"
+                size="5x"
+              ></FontAwesomeIcon>
+              <div style={{ color: "--var(header-color)" }}>
+                Partido eliminado correctamente.
+              </div>
+              <div>
+                <Link to="/">
+                  <button style={{ margin: 0 }} className="boton">
+                    Volver al inicio
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
   }
 }
