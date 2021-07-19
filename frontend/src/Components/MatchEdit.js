@@ -489,8 +489,8 @@ export default class MatchEdit extends Component {
     }
   }
   
-  setVodEditing() {
-    this.setState({vodEditing: true});
+  setVodEditing(b) {
+    this.setState({vodEditing: b});
   }
 
   changeVod(vod) {
@@ -595,6 +595,10 @@ export default class MatchEdit extends Component {
           changeScore={this.changeScore}
           changeDate={this.changeDate}
           exportMatch={this.exportMatch}
+          teamStatsEditing={this.state.teamStatsEditing}
+          vodEditing={this.state.vodEditing}
+          setTeamStatsEditing={this.setTeamStatsEditing}
+          setVodEditing={this.setVodEditing}
         />
         <div>
           <div className="colCon">
@@ -670,7 +674,7 @@ export default class MatchEdit extends Component {
             removePlayer={this.removePlayer}
           />
         </div>
-        {this.state.data.vod === null || this.state.vodEditing ? <VodEditor changeVod={this.changeVod} vod={this.state.data.vod}></VodEditor> : (
+        {this.state.data.vod === null || this.state.vodEditing ? <VodEditor changeVod={this.changeVod} setVodEditing={this.setVodEditing} vod={this.state.data.vod}></VodEditor> : (
           <VodEdit vod={this.state.data.vod} setVodEditing={this.setVodEditing}></VodEdit>
         )}
       </div>

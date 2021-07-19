@@ -7,7 +7,7 @@ export default function VodEdit(props) {
 
   return (
     <div onMouseOver={e => setVodHovering(true)} onMouseOut={e => setVodHovering(false)}>
-      <h3>VIDEO DEL PARTIDO <FontAwesomeIcon icon={faEdit} style={{cursor: 'pointer', opacity: vodHovering ? '100%' : '0%', height: '15px', marginBottom: '2px'}} onClick={props.setVodEditing}></FontAwesomeIcon></h3>
+      <h3>VIDEO DEL PARTIDO <FontAwesomeIcon icon={faEdit} style={{cursor: 'pointer', opacity: vodHovering ? '100%' : '0%', height: '15px', marginBottom: '2px'}} onClick={e => props.setVodEditing(true)}></FontAwesomeIcon></h3>
       <div className='resp-container'>
         <center><iframe title='vod' className='resp-iframe' src={"https://www.youtube.com/embed/" + props.vod} frameBorder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></center>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fecha, getTeamLogo, getTeamShortname } from '../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +22,23 @@ export default function MatchCardEdit(props) {
   const [awayTeamNameHovering, setAwayTeamNameHovering] = useState(false);
   const [torneoEditing, setTorneoEditing] = useState(false);
   const [torneoHovering, setTorneoHovering] = useState(false);
+
+  useEffect(() => {
+    if (props.teamStatsEditing || props.vodEditing) {
+      setEventEditing(-1);
+      setEventCreating(null);
+      setScoreEditing(false);
+      setScoreHovering(false);
+      setDateHovering(false);
+      setDateEditing(false);
+      setHomeTeamNameEditing(false);
+      setAwayTeamNameEditing(false);
+      setHomeTeamNameHovering(false);
+      setAwayTeamNameHovering(false);
+      setTorneoEditing(false);
+      setTorneoHovering(false);
+    }
+  }, [props]);
 
   function onChangeTeam(value, side) {
     props.changeTeam(value, side);
@@ -148,7 +165,21 @@ export default function MatchCardEdit(props) {
               color: 'var(--normal-text-color)',
               opacity: torneoHovering ? '100%' : '0%'
             }}
-            onClick={e => setTorneoEditing(true)}
+            onClick={e => {
+              setTorneoEditing(true);
+              setHomeTeamNameEditing(false); 
+              setAwayTeamNameEditing(false);
+              setDateEditing(false);
+              setEventEditing(-1);
+              setScoreEditing(false);
+              setHomeTeamNameHovering(false);
+              setAwayTeamNameHovering(false);
+              setDateHovering(false);
+              setScoreHovering(false);
+              setTorneoHovering(false);
+              props.setTeamStatsEditing(false);
+              props.setVodEditing(false);
+            }}
           />
         </div>}</center>
       </div>
@@ -184,6 +215,8 @@ export default function MatchCardEdit(props) {
                     setDateHovering(false);
                     setScoreHovering(false);
                     setTorneoHovering(false);
+                    props.setTeamStatsEditing(false);
+                    props.setVodEditing(false);
                   }}
                 />
               </div>
@@ -208,6 +241,8 @@ export default function MatchCardEdit(props) {
                   setTorneoHovering(false);
                   setHomeTeamNameHovering(false);
                   setAwayTeamNameHovering(false);
+                  props.setTeamStatsEditing(false);
+                  props.setVodEditing(false);
                 }}
               />
               </div>}</td>
@@ -240,6 +275,8 @@ export default function MatchCardEdit(props) {
                     setDateHovering(false);
                     setScoreHovering(false);
                     setTorneoHovering(false);
+                    props.setTeamStatsEditing(false);
+                    props.setVodEditing(false);
                   }}
                 />
               </div>
@@ -277,6 +314,8 @@ export default function MatchCardEdit(props) {
                     setTorneoHovering(false);
                     setHomeTeamNameHovering(false);
                     setAwayTeamNameHovering(false);
+                    props.setTeamStatsEditing(false);
+                    props.setVodEditing(false);
                   }}/>
               </h2>
               }
@@ -329,6 +368,8 @@ export default function MatchCardEdit(props) {
                     setAwayTeamNameHovering(false);
                     setDateHovering(false);
                     setTorneoHovering(false);
+                    props.setTeamStatsEditing(false);
+                    props.setVodEditing(false);
                   }}/>
                 </li>
               </ul></center>
@@ -369,6 +410,8 @@ export default function MatchCardEdit(props) {
                     setAwayTeamNameHovering(false);
                     setDateHovering(false);
                     setTorneoHovering(false);
+                    props.setTeamStatsEditing(false);
+                    props.setVodEditing(false);
                   }}/>
                 </li>
               </ul></center>

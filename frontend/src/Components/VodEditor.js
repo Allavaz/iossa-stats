@@ -15,7 +15,10 @@ export default function VodEditor(props) {
         </input>
         <button className='boton' 
           style={{margin: 0, marginLeft: '15px'}} 
-          onClick={e => props.changeVod(document.getElementById('inputVod').value.trim())}>
+          onClick={e => {
+            props.changeVod(document.getElementById('inputVod').value.trim());
+            props.setVodEditing(false);
+          }}>
             Guardar
         </button>
         {props.vod ? 
@@ -23,7 +26,9 @@ export default function VodEditor(props) {
           style={{margin: 0, marginLeft: '15px'}} 
           onClick={e => {
             document.getElementById('inputVod').value = '';
-            props.changeVod(null);}}>
+            props.changeVod(null);
+            props.setVodEditing(false);
+          }}>
             Eliminar
         </button> 
         : null}
