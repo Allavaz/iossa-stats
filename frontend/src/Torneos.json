@@ -163,7 +163,7 @@
             {
                 "torneo": "Liga D2 T6 (Desempate 1er Puesto)",
                 "query": "d2t6",
-                "tabla": "d2t6"
+                "tabla": "d2t6",
                 "tablaLabel": "Liga D2 T6"
             },
             {
@@ -185,8 +185,8 @@
             },
             {
                 "torneo": "Copa Maradei T6 - Grupo A (Desempate)",
-                "tabla": "maradeit6a"
-                "tablaLabel": "Copa Maradei T6 - Grupo A",
+                "tabla": "maradeit6a",
+                "tablaLabel": "Copa Maradei T6 - Grupo A"
             },
             {
                 "torneo": "Copa Maradei T6 - Grupo B",
@@ -259,8 +259,8 @@
             {
                 "torneo": "Liga D1 T4 - (Desempate)",
                 "query": "d1t4",
-                "tabla": "d1t4"
-                "tablaLabel": "Liga D1 T4",
+                "tabla": "d1t4",
+                "tablaLabel": "Liga D1 T4"
             },
             {
                 "torneo": "Liga D2 T4",
@@ -291,14 +291,14 @@
             {
                 "torneo": "Liga D2 T3 - Desempate 3er Puesto (Ida)",
                 "query": "d2t3",
-                "tabla": "d2t3"
-                "tablaLabel": "Liga D2 T3",
+                "tabla": "d2t3",
+                "tablaLabel": "Liga D2 T3"
             },
             {
                 "torneo": "Liga D2 T3 - Desempate 3er Puesto (Vuelta)",
                 "query": "d2t3",
-                "tabla": "d2t3"
-                "tablaLabel": "Liga D2 T3",
+                "tabla": "d2t3",
+                "tablaLabel": "Liga D2 T3"
             },
             {
                 "torneo": "Copa Master T3",
@@ -351,8 +351,8 @@
             {
                 "torneo": "Liga D1 - Temporada 2 (Desempate)",
                 "query": "d1t2",
-                "tabla": "d1t2"
-                "tablaLabel": "Liga D1 - Temporada 2",
+                "tabla": "d1t2",
+                "tablaLabel": "Liga D1 - Temporada 2"
             },
             {
                 "torneo": "Liga D2 - Temporada 2",
