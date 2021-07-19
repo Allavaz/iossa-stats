@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AutocompletePlayers from './AutocompletePlayers';
+import { percentage, invPercentage } from '../Utils';
 
 const itemStyle = {display: 'flex', alignItems: 'center', marginRight: '20px', marginBottom: '20px'};
 const inputStyle = {marginLeft: '5px'};
@@ -36,15 +37,11 @@ export default function MatchIndivStatsEditor(props) {
     a.push(parseValue('interceptions', props.player.statistics.interceptions));
     a.push(parseValue('offsides', props.player.statistics.offsides));
     a.push(parseValue('passes', props.player.statistics.passes));
-    a.push(parseValue('passescompleted', props.player.statistics.passescompleted));
     a.push(parseValue('penalties', props.player.statistics.penalties));
     a.push(parseValue('possession', props.player.statistics.possession));
     a.push(parseValue('saves', props.player.statistics.saves));
-    a.push(parseValue('savescaught', props.player.statistics.savescaught));
     a.push(parseValue('shots', props.player.statistics.shots));
-    a.push(parseValue('shotsontarget', props.player.statistics.shotsontarget));
     a.push(parseValue('tackles', props.player.statistics.tackles));
-    a.push(parseValue('tacklescompleted', props.player.statistics.tacklescompleted));
     a.push(parseValue('throwins', props.player.statistics.throwins));
     for (let i in a) {
       if (isNaN(a[i])) {
@@ -58,15 +55,7 @@ export default function MatchIndivStatsEditor(props) {
     if (!inputSane()) {
       alert('Valor inválido. Ingrese un número, prefijado por "+" o "-" si se desea sumar o restar, respectivamente.');
     } else {
-      if (parseValue('shots', props.player.statistics.shots) < parseValue('shotsontarget', props.player.statistics.shotsontarget)) {
-        alert('Hay menos tiros que tiros al arco.');
-      } else if (parseValue('passes', props.player.statistics.passes) < parseValue('passescompleted', props.player.statistics.passescompleted)) {
-        alert('Hay menos pases que pases completados.');
-      } else if (parseValue('tackles', props.player.statistics.tackles) < parseValue('tacklescompleted', props.player.statistics.tacklescompleted)) {
-        alert('Hay menos tackles que tackles completados.');
-      } else if (parseValue('saves', props.player.statistics.saves) < parseValue('savescaught', props.player.statistics.savescaught)) {
-        alert('Hay menos atajadas que atajadas sin rebote.');
-      } else if ((props.playerCreating && playerName === '') || (!props.playerCreating && document.getElementById('name').value === '')) {
+      if ((props.playerCreating && playerName === '') || (!props.playerCreating && document.getElementById('name').value === '')) {
         alert('El campo Nombre está vacío.');
       } else if (props.playerCreating && playerSteamId === '') {
         alert('El campo SteamID está vacío.');
@@ -91,15 +80,15 @@ export default function MatchIndivStatsEditor(props) {
             interceptions: parseValue('interceptions', props.player.statistics.interceptions),
             offsides: parseValue('offsides', props.player.statistics.offsides),
             passes: parseValue('passes', props.player.statistics.passes),
-            passescompleted: parseValue('passescompleted', props.player.statistics.passescompleted),
+            passescompleted: Math.round(invPercentage(parseInt(document.getElementById('passescompleted').value), parseInt(document.getElementById('passes').value))),
             penalties: parseValue('penalties', props.player.statistics.penalties),
             possession: parseValue('possession', props.player.statistics.possession),
             saves: parseValue('saves', props.player.statistics.saves),
-            savescaught: parseValue('savescaught', props.player.statistics.savescaught),
+            savescaught: Math.round(invPercentage(parseInt(document.getElementById('savescaught').value), parseInt(document.getElementById('saves').value))),
             shots: parseValue('shots', props.player.statistics.shots),
-            shotsontarget: parseValue('shotsontarget', props.player.statistics.shotsontarget),
+            shotsontarget: Math.round(invPercentage(parseInt(document.getElementById('shotsontarget').value), parseInt(document.getElementById('shots').value))),
             tackles: parseValue('tackles', props.player.statistics.tackles),
-            tacklescompleted: parseValue('tacklescompleted', props.player.statistics.tacklescompleted),
+            tacklescompleted: Math.round(invPercentage(parseInt(document.getElementById('tacklescompleted').value), parseInt(document.getElementById('tackles').value))),
             throwins: parseValue('throwins', props.player.statistics.throwins),
             positions: props.player.statistics.positions.length === 0 ? [{position: document.getElementById('pos').value, seconds: 0}] : props.player.statistics.positions,
             redcards: props.player.statistics.redcards,
@@ -124,7 +113,7 @@ export default function MatchIndivStatsEditor(props) {
           left: 0, 
           right: 0, 
           width: '780px',
-          height: '470px',
+          height: '510px',
           padding: '20px', 
           top: 0, 
           bottom: 0,
@@ -183,7 +172,7 @@ export default function MatchIndivStatsEditor(props) {
           </div>
           <div style={itemStyle}>
             <div>Tiros (al arco):</div>
-            <div style={inputStyle}><input id='shotsontarget' type='text' defaultValue={props.player.statistics.shotsontarget} min={props.player.statistics.goals} style={{width: '5ch'}}/></div>
+            <div style={inputStyle}><input id='shotsontarget' type='number' defaultValue={percentage(props.player.statistics.shotsontarget, props.player.statistics.shots)} min={0} max={100} style={{width: '5ch'}}/> %</div>
           </div>
           <div style={itemStyle}>
             <div>Pases:</div>
@@ -191,7 +180,7 @@ export default function MatchIndivStatsEditor(props) {
           </div>
           <div style={itemStyle}>
             <div>Pases completados:</div>
-            <div style={inputStyle}><input id='passescompleted' type='text' defaultValue={props.player.statistics.passescompleted} min={0} style={{width: '5ch'}}/></div>
+            <div style={inputStyle}><input id='passescompleted' type='number' defaultValue={percentage(props.player.statistics.passescompleted, props.player.statistics.passes)} min={0} max={100} style={{width: '5ch'}}/> %</div>
           </div>
           <div style={itemStyle}>
             <div>Intercepciones:</div>
@@ -203,7 +192,7 @@ export default function MatchIndivStatsEditor(props) {
           </div>
           <div style={itemStyle}>
             <div>Atajadas (sin rebote):</div>
-            <div style={inputStyle}><input id='savescaught' type='text' defaultValue={props.player.statistics.savescaught} min={0} style={{width: '5ch'}}/></div>
+            <div style={inputStyle}><input id='savescaught' type='number' defaultValue={percentage(props.player.statistics.savescaught, props.player.statistics.saves)} min={0} max={100} style={{width: '5ch'}}/> %</div>
           </div>
           <div style={itemStyle}>
             <div>Faltas:</div>
@@ -243,7 +232,7 @@ export default function MatchIndivStatsEditor(props) {
           </div>
           <div style={itemStyle}>
             <div>Tackles completados:</div>
-            <div style={inputStyle}><input id='tacklescompleted' type='text' defaultValue={props.player.statistics.tacklescompleted} min={0} style={{width: '5ch'}}/></div>
+            <div style={inputStyle}><input id='tacklescompleted' type='number' defaultValue={percentage(props.player.statistics.tacklescompleted, props.player.statistics.tackles)} min={0} max={100} style={{width: '5ch'}}/> %</div>
           </div>
           <div style={itemStyle}>
             <div>Faltas sufridas:</div>

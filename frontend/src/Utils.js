@@ -52,13 +52,17 @@ exports.fecha = function (str) {
   return day + "/" + month + "/" + year;
 };
 
-exports.percentage = function (x, y) {
+exports.percentage = function(x, y) {
   if (y === 0) {
     return 0;
   } else {
     return Math.round((x / y) * 100);
   }
 };
+
+exports.invPercentage = function(x, y) {
+  return ((x/100) * y);
+}
 
 exports.filterMethod = (filter, row) => {
   const id = filter.pivotId || filter.id;
