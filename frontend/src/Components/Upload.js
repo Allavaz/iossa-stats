@@ -82,7 +82,7 @@ export default function Upload() {
         .then((res) => {
           if (res.data.status === "success") {
             setStatus(1);
-          } else if (res.data === "Wrong password") {
+          } else if (res.data === "Wrong Key") {
             alert("Contraseña incorrecta!");
             bRef.current.disabled = false;
             sRef.current.style.display = "none";
