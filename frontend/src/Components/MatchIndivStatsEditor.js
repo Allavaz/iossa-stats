@@ -15,7 +15,6 @@ function parseValue(id, target) {
   }
 }
 
-
 export default function MatchIndivStatsEditor(props) {
   const [playerName, setPlayerName] = useState(props.player.info.name);
   const [playerSteamId, setPlayerSteamId] = useState(props.player.info.steam_id);

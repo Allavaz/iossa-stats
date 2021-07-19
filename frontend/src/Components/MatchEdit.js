@@ -517,23 +517,11 @@ export default class MatchEdit extends Component {
   changeIndivStats(player, side, index) {
     let data = this.state.data;
     let s = side === 'home' ? 0 : 1;
-    if (player.statistics.possession !== data.teams[s].playerStatistics[index].statistics.possession) {
-      let diff = player.statistics.possession - data.teams[s].playerStatistics[index].statistics.possession;
-      for (let i in data.teams[0].playerStatistics) {
-        if (player.info.steam_id !== data.teams[0].playerStatistics[i].info.steam_id) {
-          data.teams[0].playerStatistics[i].statistics.possession = Math.round(data.teams[0].playerStatistics[i].statistics.possession - (diff/data.players.length-1));
-        }
-      }
-      for (let i in data.teams[1].playerStatistics) {
-        if (player.info.steam_id !== data.teams[1].playerStatistics[i].info.steam_id) {
-          data.teams[1].playerStatistics[i].statistics.possession = Math.round(data.teams[1].playerStatistics[i].statistics.possession - (diff/(data.players.length-1)));
-        }
-      }
-      for (let i in data.players) {
-        if (player.info.steam_id !== data.players[i].info.steam_id) {
-          data.players[i].statistics.possession = Math.round(data.players[i].statistics.possession - (diff/(data.players.length-1)));
-        }
-      }
+    let diff;
+    if (data.teams[s].playerStatistics[index]) {
+      diff = player.statistics.possession - data.teams[s].playerStatistics[index].statistics.possession;
+    } else {
+      diff = player.statistics.possession;
     }
     data.teams[s].playerStatistics[index] = player;
     let playerExists = false;
@@ -545,6 +533,21 @@ export default class MatchEdit extends Component {
     }
     if (!playerExists) {
       data.players.push(player);
+    }
+    for (let i in data.teams[0].playerStatistics) {
+      if (player.info.steam_id !== data.teams[0].playerStatistics[i].info.steam_id) {
+        data.teams[0].playerStatistics[i].statistics.possession = Math.round(data.teams[0].playerStatistics[i].statistics.possession - (diff/data.players.length-1));
+      }
+    }
+    for (let i in data.teams[1].playerStatistics) {
+      if (player.info.steam_id !== data.teams[1].playerStatistics[i].info.steam_id) {
+        data.teams[1].playerStatistics[i].statistics.possession = Math.round(data.teams[1].playerStatistics[i].statistics.possession - (diff/(data.players.length-1)));
+      }
+    }
+    for (let i in data.players) {
+      if (player.info.steam_id !== data.players[i].info.steam_id) {
+        data.players[i].statistics.possession = Math.round(data.players[i].statistics.possession - (diff/(data.players.length-1)));
+      }
     }
     for (let i in data.matchevents) {
       if (data.matchevents[i].player1SteamId === player.info.steam_id) {
