@@ -380,6 +380,21 @@ export default function MatchCardEdit(props) {
                 <button className='boton' style={{marginRight: 0, marginTop: '10px'}}>Modificar partido</button>
                 <button className='boton' style={{marginRight: 0}}>Eliminar partido</button>
                 <button className='boton' style={{marginRight: 0}} onClick={e => props.exportMatch()}>Exportar JSON</button>
+                <button className='boton' style={{marginRight: 0}} onClick={e => {
+                  props.restartEditing();
+                  setEventEditing(-1);
+                  setEventCreating(null);
+                  setScoreEditing(false);
+                  setScoreHovering(false);
+                  setDateHovering(false);
+                  setDateEditing(false);
+                  setHomeTeamNameEditing(false);
+                  setAwayTeamNameEditing(false);
+                  setHomeTeamNameHovering(false);
+                  setAwayTeamNameHovering(false);
+                  setTorneoEditing(false);
+                  setTorneoHovering(false);
+                }}>Reiniciar edición</button>
               </div>
             </td>
             <td>

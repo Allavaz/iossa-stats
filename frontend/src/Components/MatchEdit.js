@@ -43,6 +43,7 @@ export default class MatchEdit extends Component {
     this.changeIndivStats = this.changeIndivStats.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
     this.exportMatch = this.exportMatch.bind(this);
+    this.restartEditing = this.restartEditing.bind(this);
   }
 
   componentDidMount() {
@@ -573,6 +574,12 @@ export default class MatchEdit extends Component {
     element.click();
   }
 
+  restartEditing() {
+    this.setState({data: JSON.parse(JSON.stringify(this.state.origData))});
+    this.setState({teamStatsEditing: true, vodEditing: true});
+    this.setState({teamStatsEditing: false, vodEditing: false});
+  }
+
   render() {
     return this.state.isLoading ? (
       <div className="content" id="loader">
@@ -599,6 +606,7 @@ export default class MatchEdit extends Component {
           vodEditing={this.state.vodEditing}
           setTeamStatsEditing={this.setTeamStatsEditing}
           setVodEditing={this.setVodEditing}
+          restartEditing={this.restartEditing}
         />
         <div>
           <div className="colCon">
