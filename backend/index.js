@@ -5,6 +5,7 @@ const db = require("./PushToDB");
 const idb = require("./PushToDBios");
 const rdb = require("./GetFromDB");
 const um = require("./UpdateMatch");
+const dm = require("./DeleteMatch");
 const cors = require("cors");
 const path = require("path");
 const { key } = require("./db.json");
