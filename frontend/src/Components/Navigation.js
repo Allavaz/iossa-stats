@@ -18,7 +18,11 @@ export class Navigation extends Component {
 		if (window.innerWidth < mobileWidth) {
 			this.setState({isMobile: true});
 		}
-		this.setState({night: localStorage.getItem('theme') === 'dark'});
+		if (localStorage.getItem('theme')) {
+			this.setState({night: localStorage.getItem('theme') === 'dark'});
+		} else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			this.setState({night: true});
+		}
 		window.addEventListener('resize', this.setMobile);
 		window.addEventListener('click', this.hamburgerCloseWhenClickingAway)
 	}
