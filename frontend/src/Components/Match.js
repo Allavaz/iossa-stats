@@ -19,7 +19,7 @@ export default class Match extends Component {
 
   constructor() {
     super();
-    this.state = { isLoading: true, isTableLoading: true, challonge: null };
+    this.state = { isLoading: true, isTableLoading: true, challonge: null, tabla: null };
   }
 
   componentDidMount() {

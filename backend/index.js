@@ -4,6 +4,8 @@ const formidable = require("formidable");
 const db = require("./PushToDB");
 const idb = require("./PushToDBios");
 const rdb = require("./GetFromDB");
+const um = require("./UpdateMatch");
+const dm = require("./DeleteMatch");
 const cors = require("cors");
 const path = require("path");
 const { key } = require("./db.json");
@@ -45,6 +47,32 @@ app.post("/api/postuploadios", (req, res) => {
     }
   } else {
     res.end(" -> Wrong IP");
+  }
+});
+
+app.post("/api/postupdate", (req, res) => {
+  if (req.body.password === key) {
+    try {
+      um.updateMatch(req.body.data, res);
+    } catch (e) {
+      console.error(e);
+      res.end(e.toString());
+    }
+  } else {
+    res.end("wrong pw")
+  }
+});
+
+app.post("/api/postdelete", (req, res) => {
+  if (req.body.password === key) {
+    try {
+      dm.deleteMatch(req.body.data, res);
+    } catch (e) {
+      console.error(e);
+      res.end(e.toString());
+    }
+  } else {
+    res.end("wrong pw")
   }
 });
 
