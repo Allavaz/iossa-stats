@@ -111,9 +111,9 @@ export default function MatchTeamStatsEditor(props) {
             <td><input id='shotstarget1' type='text' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[1].statistics.shotsontarget} min={0}></input></td>
           </tr>
           <tr>
-            <td><input id='pos0' type='text' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[0].statistics.possession} min={0} max={100} onChange={e => evenUpPos(e.target.value, 'home')}></input> %</td>
+            <td><input id='pos0' type='number' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[0].statistics.possession} min={0} max={100} onChange={e => evenUpPos(e.target.value, 'home')}></input> %</td>
             <td>Posesión</td>
-            <td><input id='pos1' type='text' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[1].statistics.possession} min={0} max={100} onChange={e => evenUpPos(e.target.value, 'away')}></input> %</td>
+            <td><input id='pos1' type='number' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[1].statistics.possession} min={0} max={100} onChange={e => evenUpPos(e.target.value, 'away')}></input> %</td>
           </tr>
           <tr>
             <td><input id='passes0' type='text' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[0].statistics.passes} min={0}></input></td>

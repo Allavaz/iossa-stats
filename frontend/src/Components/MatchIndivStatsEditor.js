@@ -220,7 +220,7 @@ export default function MatchIndivStatsEditor(props) {
           </div>
           <div style={itemStyle}>
             <div>Posesión:</div>
-            <div style={inputStyle}><input id='possession' type='text' defaultValue={props.player.statistics.possession} min={0} max={100} style={{width: '5ch'}}/> %</div>
+            <div style={inputStyle}><input id='possession' type='number' defaultValue={props.player.statistics.possession} min={0} max={100} style={{width: '5ch'}}/> %</div>
           </div>
           <div style={itemStyle}>
             <div>Córners:</div>
