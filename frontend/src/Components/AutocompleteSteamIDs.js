@@ -3,7 +3,7 @@ import Autosuggest from 'react-autosuggest';
 import { getTeamLogo } from '../Utils';
 import theme from './AutocompletePlayers.module.css';
 
-export default function AutocompletePlayers(props) {
+export default function AutocompleteSteamIDs(props) {
   let players = []
   for (let i in props.players) {
     players.push({
@@ -16,18 +16,18 @@ export default function AutocompletePlayers(props) {
 
   useEffect(() => {
     setValue(props.value)
-  }, [props]);
+  }, [props.value]);
 
   const getSuggestions = value => {
     const inputValue = value.toLowerCase();
     const inputLength = inputValue.length;
   
     return inputLength === 0 ? [] : players.filter(e =>
-      e.name.toLowerCase().includes(inputValue)
+      e.steamid.toLowerCase().includes(inputValue)
     );
   };
 
-  const getSuggestionValue = suggestion => suggestion.name;
+  const getSuggestionValue = suggestion => suggestion.steamid;
 
   const renderSuggestion = suggestion => (
     <div>
@@ -51,14 +51,14 @@ export default function AutocompletePlayers(props) {
 
   const onChange = (event, {newValue}) => {
     setValue(newValue);
-    props.onChangePlayer.setPlayerName(newValue.trim());
+    props.onChangePlayer.setPlayerSteamId(newValue.trim());
   }
 
   const onSuggestionSelected = (event, {suggestion}) => {
-    setValue(suggestion.name);
+    setValue(suggestion.steamid);
     props.onChangePlayer.setPlayerName(suggestion.name);
     props.onChangePlayer.setPlayerSteamId(suggestion.steamid);
-    props.changeSteamIdField(suggestion.steamid);
+    props.changePlayerField(suggestion.name);
   }
 
   const onSuggestionsFetchRequested = ({value, reason}) => {
@@ -74,7 +74,7 @@ export default function AutocompletePlayers(props) {
   const inputProps = {
     value,
     onChange: onChange,
-    placeholder: 'Nombre'
+    placeholder: 'SteamID'
   }
 
   return (

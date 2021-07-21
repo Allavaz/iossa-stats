@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AutocompletePlayers from './AutocompletePlayers';
+import AutocompleteSteamIDs from './AutocompleteSteamIDs';
 
 export default function MatchEventEditor(props) {
   const [playerName, setPlayerName] = useState(props.item.name);
@@ -23,8 +24,11 @@ export default function MatchEventEditor(props) {
   }
 
   const changeSteamIdField = (steamid) => {
-    let selectSteamId = document.getElementById('selectSteamId' + props.index);
-    selectSteamId.value = steamid;
+    setPlayerSteamId(steamid);
+  }
+
+  const changePlayerField = (name) => {
+    setPlayerName(name);
   }
 
   return(
@@ -56,15 +60,17 @@ export default function MatchEventEditor(props) {
             players={props.players}
             index={props.index}
             onChangePlayer={{setPlayerName, setPlayerSteamId}}
-            changeSteamIdField={changeSteamIdField}>
+            changeSteamIdField={changeSteamIdField}
+            value={playerName}>
           </AutocompletePlayers>
-          <input type='text'
-            id={'selectSteamId' + props.index}
-            defaultValue={props.item.player1SteamId}
-            onChange={e => setPlayerSteamId(e.target.value)}
-            placeholder='SteamID'
-            style={{textAlign: 'center'}}>
-          </input>
+          <AutocompleteSteamIDs defaultValue={props.item.name} 
+            defaultId={props.item.player1SteamId} 
+            players={props.players}
+            index={props.index}
+            onChangePlayer={{setPlayerName, setPlayerSteamId}}
+            changePlayerField={changePlayerField}
+            value={playerSteamId}>
+          </AutocompleteSteamIDs>
           <div>
             (
             <input id={'selectMinute' + props.index} type='number' 
