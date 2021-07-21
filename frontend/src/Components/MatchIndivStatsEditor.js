@@ -19,7 +19,7 @@ function parseValue(id, target) {
       } else {
         passes = parseInt(document.getElementById('passes').value);
       }
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(passes)))/2));
+      return (Math.round((target + invPercentage(parseInt(actualValue), passes))/2));
     } else if (id === 'possession') {
       return (Math.round((target + actualValue)/2));
     } else if (id === 'savescaught') {
@@ -31,7 +31,7 @@ function parseValue(id, target) {
       } else {
         saves = parseInt(document.getElementById('saves').value);
       }
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(saves)))/2));
+      return (Math.round((target + invPercentage(parseInt(actualValue), saves))/2));
     } else if (id === 'shotsontarget') {
       let shots;
       if (document.getElementById('shots').value.startsWith('+')) {
@@ -41,7 +41,7 @@ function parseValue(id, target) {
       } else {
         shots = parseInt(document.getElementById('shots').value);
       }
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(shots)))/2));
+      return (Math.round((target + invPercentage(parseInt(actualValue), shots))/2));
     } else if (id === 'tacklescompleted') {
       let tackles;
       if (document.getElementById('tackles').value.startsWith('+')) {
@@ -51,7 +51,7 @@ function parseValue(id, target) {
       } else {
         tackles = parseInt(document.getElementById('tackles').value);
       }
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(tackles)))/2));
+      return (Math.round((target + invPercentage(parseInt(actualValue), tackles))/2));
     } else {
       return (target + actualValue);
     }
@@ -69,7 +69,7 @@ function parseValue(id, target) {
       } else {
         passes = parseInt(document.getElementById('passes').value);
       }
-      return (Math.round(invPercentage(parseInt(actualValue), parseInt(passes))));
+      return (Math.round(invPercentage(parseInt(actualValue), passes)));
     } else if (id === 'possession') {
       return (Math.round((target + actualValue)/2));
     } else if (id === 'savescaught') {
@@ -81,7 +81,7 @@ function parseValue(id, target) {
       } else {
         saves = parseInt(document.getElementById('saves').value);
       }
-      return (Math.round(invPercentage(parseInt(actualValue), parseInt(saves))));
+      return (Math.round(invPercentage(parseInt(actualValue), saves)));
     } else if (id === 'shotsontarget') {
       let shots;
       if (document.getElementById('shots').value.startsWith('+')) {
@@ -91,7 +91,7 @@ function parseValue(id, target) {
       } else {
         shots = parseInt(document.getElementById('shots').value);
       }
-      return (Math.round(invPercentage(parseInt(actualValue), parseInt(shots))));
+      return (Math.round(invPercentage(parseInt(actualValue), shots)));
     } else if (id === 'tacklescompleted') {
       let tackles;
       if (document.getElementById('tackles').value.startsWith('+')) {
@@ -101,7 +101,7 @@ function parseValue(id, target) {
       } else {
         tackles = parseInt(document.getElementById('tackles').value);
       }
-      return (Math.round(invPercentage(parseInt(actualValue), parseInt(tackles))));
+      return (Math.round(invPercentage(parseInt(actualValue), tackles)));
     } else {
       return actualValue;
     }
