@@ -24,19 +24,47 @@ function parseValue(id, target) {
   if (v.startsWith('+')) {
     let actualValue = parseInt(v.replace('+', ''));
     if (id === 'shotstarget0') {
-      let shots0 = document.getElementById('shots0').value;
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(shots0)))/2));
+      let shots0;
+      if (document.getElementById('shots0').value.startsWith('+')) {
+        shots0 = target + parseInt(document.getElementById('shots0').value);
+      } else if (document.getElementById('shots0').value.startsWith('-')) {
+        shots0 = target - parseInt(document.getElementById('shots0').value);
+      } else {
+        shots0 = parseInt(document.getElementById('shots0').value);
+      }
+      return (Math.round((target + invPercentage(parseInt(actualValue), shots0))/2));
     } else if (id === 'shotstarget1') {
-      let shots1 = document.getElementById('shots0').value;
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(shots1)))/2));
+      let shots1;
+      if (document.getElementById('shots1').value.startsWith('+')) {
+        shots1 = target + parseInt(document.getElementById('shots1').value);
+      } else if (document.getElementById('shots1').value.startsWith('-')) {
+        shots1 = target - parseInt(document.getElementById('shots1').value);
+      } else {
+        shots1 = parseInt(document.getElementById('shots1').value);
+      }
+      return (Math.round((target + invPercentage(parseInt(actualValue), shots1))/2));
     } else if (id === 'pos0' || id === 'pos1') {
       return (Math.round((target + actualValue)/2));
     } else if (id === 'passescomp0') {
-      let passes0 = document.getElementById('passes0').value;
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(passes0)))/2));
+      let passes0;
+      if (document.getElementById('passes0').value.startsWith('+')) {
+        passes0 = target + parseInt(document.getElementById('passes0').value);
+      } else if (document.getElementById('passes0').value.startsWith('-')) {
+        passes0 = target - parseInt(document.getElementById('passes0').value);
+      } else {
+        passes0 = parseInt(document.getElementById('passes0').value);
+      }
+      return (Math.round((target + invPercentage(parseInt(actualValue), passes0))/2));
     } else if (id === 'passescomp1') {
-      let passes1 = document.getElementById('passes1').value;
-      return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(passes1)))/2));
+      let passes1;
+      if (document.getElementById('passes1').value.startsWith('+')) {
+        passes1 = target + parseInt(document.getElementById('passes1').value);
+      } else if (document.getElementById('passes1').value.startsWith('-')) {
+        passes1 = target - parseInt(document.getElementById('passes1').value);
+      } else {
+        passes1 = parseInt(document.getElementById('passes1').value);
+      }
+      return (Math.round((target + invPercentage(parseInt(actualValue), passes1))/2));
     } else {
       return (target + actualValue);
     }
@@ -44,7 +72,50 @@ function parseValue(id, target) {
     let actualValue = parseInt(v.replace('-', ''));
     return (target - actualValue);
   } else {
-    return parseInt(v);
+    let actualValue = parseInt(v);
+    if (id === 'shotstarget0') {
+      let shots0;
+      if (document.getElementById('shots0').value.startsWith('+')) {
+        shots0 = target + parseInt(document.getElementById('shots0').value);
+      } else if (document.getElementById('shots0').value.startsWith('-')) {
+        shots0 = target - parseInt(document.getElementById('shots0').value);
+      } else {
+        shots0 = parseInt(document.getElementById('shots0').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), shots0)));
+    } else if (id === 'shotstarget1') {
+      let shots1;
+      if (document.getElementById('shots1').value.startsWith('+')) {
+        shots1 = target + parseInt(document.getElementById('shots1').value);
+      } else if (document.getElementById('shots1').value.startsWith('-')) {
+        shots1 = target - parseInt(document.getElementById('shots1').value);
+      } else {
+        shots1 = parseInt(document.getElementById('shots1').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), shots1)));
+    } else if (id === 'passescomp0') {
+      let passes0;
+      if (document.getElementById('passes0').value.startsWith('+')) {
+        passes0 = target + parseInt(document.getElementById('passes0').value);
+      } else if (document.getElementById('passes0').value.startsWith('-')) {
+        passes0 = target - parseInt(document.getElementById('passes0').value);
+      } else {
+        passes0 = parseInt(document.getElementById('passes0').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), passes0)));
+    } else if (id === 'passescomp1') {
+      let passes1;
+      if (document.getElementById('passes1').value.startsWith('+')) {
+        passes1 = target + parseInt(document.getElementById('passes1').value);
+      } else if (document.getElementById('passes1').value.startsWith('-')) {
+        passes1 = target - parseInt(document.getElementById('passes1').value);
+      } else {
+        passes1 = parseInt(document.getElementById('passes1').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), passes1)));
+    } else {
+      return actualValue;
+    }
   }
 }
 

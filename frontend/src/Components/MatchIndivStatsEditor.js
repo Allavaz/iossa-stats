@@ -11,18 +11,46 @@ function parseValue(id, target) {
   if (v.startsWith('+')) {
     let actualValue = parseInt(v.replace('+', ''));
     if (id === 'passescompleted') {
-      let passes = document.getElementById('passes').value;
+      let passes;
+      if (document.getElementById('passes').value.startsWith('+')) {
+        passes = target + parseInt(document.getElementById('passes').value);
+      } else if (document.getElementById('passes').value.startsWith('-')) {
+        passes = target - parseInt(document.getElementById('passes').value);
+      } else {
+        passes = parseInt(document.getElementById('passes').value);
+      }
       return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(passes)))/2));
     } else if (id === 'possession') {
       return (Math.round((target + actualValue)/2));
     } else if (id === 'savescaught') {
-      let saves = document.getElementById('saves').value;
+      let saves;
+      if (document.getElementById('saves').value.startsWith('+')) {
+        saves = target + parseInt(document.getElementById('saves').value);
+      } else if (document.getElementById('saves').value.startsWith('-')) {
+        saves = target - parseInt(document.getElementById('saves').value);
+      } else {
+        saves = parseInt(document.getElementById('saves').value);
+      }
       return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(saves)))/2));
     } else if (id === 'shotsontarget') {
-      let shots = document.getElementById('shots').value;
+      let shots;
+      if (document.getElementById('shots').value.startsWith('+')) {
+        shots = target + parseInt(document.getElementById('shots').value);
+      } else if (document.getElementById('shots').value.startsWith('-')) {
+        shots = target - parseInt(document.getElementById('shots').value);
+      } else {
+        shots = parseInt(document.getElementById('shots').value);
+      }
       return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(shots)))/2));
     } else if (id === 'tacklescompleted') {
-      let tackles = document.getElementById('tackles').value;
+      let tackles;
+      if (document.getElementById('tackles').value.startsWith('+')) {
+        tackles = target + parseInt(document.getElementById('tackles').value);
+      } else if (document.getElementById('tackles').value.startsWith('-')) {
+        tackles = target - parseInt(document.getElementById('tackles').value);
+      } else {
+        tackles = parseInt(document.getElementById('tackles').value);
+      }
       return (Math.round((target + invPercentage(parseInt(actualValue), parseInt(tackles)))/2));
     } else {
       return (target + actualValue);
@@ -31,7 +59,52 @@ function parseValue(id, target) {
     let actualValue = parseInt(v.replace('-', ''));
     return (target - actualValue);
   } else {
-    return parseInt(v);
+    let actualValue = parseInt(v);
+    if (id === 'passescompleted') {
+      let passes;
+      if (document.getElementById('passes').value.startsWith('+')) {
+        passes = target + parseInt(document.getElementById('passes').value);
+      } else if (document.getElementById('passes').value.startsWith('-')) {
+        passes = target - parseInt(document.getElementById('passes').value);
+      } else {
+        passes = parseInt(document.getElementById('passes').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), parseInt(passes))));
+    } else if (id === 'possession') {
+      return (Math.round((target + actualValue)/2));
+    } else if (id === 'savescaught') {
+      let saves;
+      if (document.getElementById('saves').value.startsWith('+')) {
+        saves = target + parseInt(document.getElementById('saves').value);
+      } else if (document.getElementById('saves').value.startsWith('-')) {
+        saves = target - parseInt(document.getElementById('saves').value);
+      } else {
+        saves = parseInt(document.getElementById('saves').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), parseInt(saves))));
+    } else if (id === 'shotsontarget') {
+      let shots;
+      if (document.getElementById('shots').value.startsWith('+')) {
+        shots = target + parseInt(document.getElementById('shots').value);
+      } else if (document.getElementById('shots').value.startsWith('-')) {
+        shots = target - parseInt(document.getElementById('shots').value);
+      } else {
+        shots = parseInt(document.getElementById('shots').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), parseInt(shots))));
+    } else if (id === 'tacklescompleted') {
+      let tackles;
+      if (document.getElementById('tackles').value.startsWith('+')) {
+        tackles = target + parseInt(document.getElementById('tackles').value);
+      } else if (document.getElementById('tackles').value.startsWith('-')) {
+        tackles = target - parseInt(document.getElementById('tackles').value);
+      } else {
+        tackles = parseInt(document.getElementById('tackles').value);
+      }
+      return (Math.round(invPercentage(parseInt(actualValue), parseInt(tackles))));
+    } else {
+      return actualValue;
+    }
   }
 }
 
