@@ -569,6 +569,8 @@ export default class MatchEdit extends Component {
   updateMatch(pw) {
     if (pw === '') {
       alert('Ingrese la contraseña.');
+    } else if (this.state.data.teams[0].statistics.possession + this.state.data.teams[1].statistics.possession !== 100) {
+      alert('Las posesiones están desbalanceadas. Revisá las cuentas.');
     } else {
       this.setState({isLoading: true});
       axios.post(api + 'postupdate', {password: pw, data: this.state.data}).then((res) => {
