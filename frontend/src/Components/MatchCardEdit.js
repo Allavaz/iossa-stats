@@ -379,7 +379,7 @@ export default function MatchCardEdit(props) {
                 <input id='password' type='password' placeholder='Contraseña' style={{textAlign: 'center', width: '20ch', height: '22px'}}></input>
                 <button className='boton' style={{marginRight: 0, marginTop: '10px'}} onClick={e => {
                   props.updateMatch(document.getElementById('password').value);
-                }}>Modificar partido</button>
+                }}>Guardar cambios</button>
                 <button className='boton' style={{marginRight: 0}} onClick={e => {
                   props.deleteMatch(document.getElementById('password').value);
                 }}>Eliminar partido</button>
