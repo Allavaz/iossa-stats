@@ -70,8 +70,6 @@ function parseValue(id, target) {
         passes = parseInt(document.getElementById('passes').value);
       }
       return (Math.round(invPercentage(parseInt(actualValue), passes)));
-    } else if (id === 'possession') {
-      return (Math.round((target + actualValue)/2));
     } else if (id === 'savescaught') {
       let saves;
       if (document.getElementById('saves').value.startsWith('+')) {
