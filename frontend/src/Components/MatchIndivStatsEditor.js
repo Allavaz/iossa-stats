@@ -13,9 +13,9 @@ function parseValue(id, target) {
     if (id === 'passescompleted') {
       let passes;
       if (document.getElementById('passes').value.startsWith('+')) {
-        passes = target + parseInt(document.getElementById('passes').value);
+        passes = target + parseInt(document.getElementById('passes').value.replace('+', ''));
       } else if (document.getElementById('passes').value.startsWith('-')) {
-        passes = target - parseInt(document.getElementById('passes').value);
+        passes = target - parseInt(document.getElementById('passes').value.replace('-', ''));
       } else {
         passes = parseInt(document.getElementById('passes').value);
       }
@@ -25,9 +25,9 @@ function parseValue(id, target) {
     } else if (id === 'savescaught') {
       let saves;
       if (document.getElementById('saves').value.startsWith('+')) {
-        saves = target + parseInt(document.getElementById('saves').value);
+        saves = target + parseInt(document.getElementById('saves').value.replace('+', ''));
       } else if (document.getElementById('saves').value.startsWith('-')) {
-        saves = target - parseInt(document.getElementById('saves').value);
+        saves = target - parseInt(document.getElementById('saves').value.replace('-', ''));
       } else {
         saves = parseInt(document.getElementById('saves').value);
       }
@@ -35,9 +35,9 @@ function parseValue(id, target) {
     } else if (id === 'shotsontarget') {
       let shots;
       if (document.getElementById('shots').value.startsWith('+')) {
-        shots = target + parseInt(document.getElementById('shots').value);
+        shots = target + parseInt(document.getElementById('shots').value.replace('+', ''));
       } else if (document.getElementById('shots').value.startsWith('-')) {
-        shots = target - parseInt(document.getElementById('shots').value);
+        shots = target - parseInt(document.getElementById('shots').value.replace('-', ''));
       } else {
         shots = parseInt(document.getElementById('shots').value);
       }
@@ -45,9 +45,9 @@ function parseValue(id, target) {
     } else if (id === 'tacklescompleted') {
       let tackles;
       if (document.getElementById('tackles').value.startsWith('+')) {
-        tackles = target + parseInt(document.getElementById('tackles').value);
+        tackles = target + parseInt(document.getElementById('tackles').value.replace('+', ''));
       } else if (document.getElementById('tackles').value.startsWith('-')) {
-        tackles = target - parseInt(document.getElementById('tackles').value);
+        tackles = target - parseInt(document.getElementById('tackles').value.replace('-', ''));
       } else {
         tackles = parseInt(document.getElementById('tackles').value);
       }
@@ -63,9 +63,9 @@ function parseValue(id, target) {
     if (id === 'passescompleted') {
       let passes;
       if (document.getElementById('passes').value.startsWith('+')) {
-        passes = target + parseInt(document.getElementById('passes').value);
+        passes = target + parseInt(document.getElementById('passes').value.replace('+', ''));
       } else if (document.getElementById('passes').value.startsWith('-')) {
-        passes = target - parseInt(document.getElementById('passes').value);
+        passes = target - parseInt(document.getElementById('passes').value.replace('-', ''));
       } else {
         passes = parseInt(document.getElementById('passes').value);
       }
@@ -75,9 +75,9 @@ function parseValue(id, target) {
     } else if (id === 'savescaught') {
       let saves;
       if (document.getElementById('saves').value.startsWith('+')) {
-        saves = target + parseInt(document.getElementById('saves').value);
+        saves = target + parseInt(document.getElementById('saves').value.replace('+', ''));
       } else if (document.getElementById('saves').value.startsWith('-')) {
-        saves = target - parseInt(document.getElementById('saves').value);
+        saves = target - parseInt(document.getElementById('saves').value.replace('-', ''));
       } else {
         saves = parseInt(document.getElementById('saves').value);
       }
@@ -85,9 +85,9 @@ function parseValue(id, target) {
     } else if (id === 'shotsontarget') {
       let shots;
       if (document.getElementById('shots').value.startsWith('+')) {
-        shots = target + parseInt(document.getElementById('shots').value);
+        shots = target + parseInt(document.getElementById('shots').value.replace('+', ''));
       } else if (document.getElementById('shots').value.startsWith('-')) {
-        shots = target - parseInt(document.getElementById('shots').value);
+        shots = target - parseInt(document.getElementById('shots').value.replace('-', ''));
       } else {
         shots = parseInt(document.getElementById('shots').value);
       }
@@ -95,9 +95,9 @@ function parseValue(id, target) {
     } else if (id === 'tacklescompleted') {
       let tackles;
       if (document.getElementById('tackles').value.startsWith('+')) {
-        tackles = target + parseInt(document.getElementById('tackles').value);
+        tackles = target + parseInt(document.getElementById('tackles').value.replace('+', ''));
       } else if (document.getElementById('tackles').value.startsWith('-')) {
-        tackles = target - parseInt(document.getElementById('tackles').value);
+        tackles = target - parseInt(document.getElementById('tackles').value.replace('-', ''));
       } else {
         tackles = parseInt(document.getElementById('tackles').value);
       }
