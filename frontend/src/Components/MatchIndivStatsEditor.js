@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AutocompletePlayers from './AutocompletePlayers';
 import { percentage, invPercentage } from '../Utils';
+import AutocompleteSteamIDs from './AutocompleteSteamIDs';
 
 const itemStyle = {display: 'flex', alignItems: 'center', marginRight: '20px', marginBottom: '20px'};
 const inputStyle = {marginLeft: '5px'};
@@ -39,7 +40,11 @@ export default function MatchIndivStatsEditor(props) {
   const [playerSteamId, setPlayerSteamId] = useState(props.player.info.steam_id);
   
   const changeSteamIdField = (value) => {
-    document.getElementById('steamid').value = value;
+    setPlayerSteamId(value);
+  }
+
+  const changePlayerField = (value) => {
+    setPlayerName(value);
   }
 
   const inputSane = () => {
@@ -148,14 +153,15 @@ export default function MatchIndivStatsEditor(props) {
           <div style={itemStyle}>
             <div>Nombre:</div>
             <div style={inputStyle}>
-              {props.playerCreating ? <AutocompletePlayers defaultValue={props.player.info.name} defaultId={props.player.info.steam_id} players={props.players} onChangePlayer={{setPlayerName, setPlayerSteamId}} changeSteamIdField={changeSteamIdField}></AutocompletePlayers> :
-              <input id='name' type='text' defaultValue={props.player.info.name} placeholder='Nombre' style={{width: '160px'}}/>}
+              {props.playerCreating ? <AutocompletePlayers defaultValue={props.player.info.name} defaultId={props.player.info.steam_id} players={props.players} onChangePlayer={{setPlayerName, setPlayerSteamId}} changeSteamIdField={changeSteamIdField} value={playerName}></AutocompletePlayers> :
+              <input id='name' style={{textAlign: 'center', width: '154px'}} type='text' defaultValue={props.player.info.name} placeholder='Nombre' />}
             </div>
           </div>
           <div style={itemStyle}>
             <div>SteamID:</div>
             <div style={inputStyle}>
-              <input id='steamid' type='text' disabled={props.playerCreating ? false : true} defaultValue={props.player.info.steam_id} placeholder='SteamID' style={{width: '20ch'}} onChange={e => setPlayerSteamId(e.target.value.trim())} />
+              {props.playerCreating ? <AutocompleteSteamIDs defaultValue={props.player.info.name} defaultId={props.player.info.steam_id} players={props.players} onChangePlayer={{setPlayerName, setPlayerSteamId}} changePlayerField={changePlayerField} value={playerSteamId}></AutocompleteSteamIDs> :
+              <input id='steamid' style={{textAlign: 'center', width: '154px'}} type='text' disabled={props.playerCreating ? false : true} defaultValue={props.player.info.steam_id} placeholder='SteamID' onChange={e => setPlayerSteamId(e.target.value.trim())} />}
             </div>
           </div>
           <div style={itemStyle}>
