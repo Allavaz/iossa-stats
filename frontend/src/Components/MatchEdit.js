@@ -382,6 +382,15 @@ export default class MatchEdit extends Component {
     let data = this.state.data;
     data.teams[0] = teams[0];
     data.teams[1] = teams[1];
+    if (data.teams[0].statistics.possession + data.teams[1].statistics.possession !== 100) {
+      if (data.teams[0].statistics.possession > data.teams[1].statistics.possession) {
+        data.teams[0].statistics.possession = data.teams[0].statistics.possession - 
+        ((data.teams[0].statistics.possession + data.teams[1].statistics.possession) - 100);
+      } else if (data.teams[1].statistics.possession > data.teams[0].statistics.possession) {
+        data.teams[1].statistics.possession = data.teams[1].statistics.possession - 
+        ((data.teams[0].statistics.possession + data.teams[1].statistics.possession) - 100);
+      }
+    }
     this.setState({data: data});
   }
 
