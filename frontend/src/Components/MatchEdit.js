@@ -389,46 +389,6 @@ export default class MatchEdit extends Component {
     data.teams[0] = teams[0];
     data.teams[1] = teams[1];
     this.setState({data: data});
-    this.predictIndivPos();
-  }
-
-  predictIndivPos() {
-    let data = this.state.data;
-    let origData = this.state.origData;
-    let teams = data.teams;
-    let origTeams = origData.teams;
-    for (let i in teams[0].playerStatistics) {
-      try {
-        let pos = Math.round(teams[0].statistics.possession 
-          * origTeams[0].playerStatistics[i].statistics.possession 
-          / origTeams[0].statistics.possession);
-        teams[0].playerStatistics[i].statistics.possession = pos;
-        for (let j in data.players) {
-          if (data.players[j].info.steam_id === teams[0].playerStatistics[i].info.steam_id) {
-            data.players[j].statistics.possession = pos;
-          }
-        }
-      } catch(e) {
-        console.log(e);
-      }
-    }
-    for (let i in teams[1].playerStatistics) {
-      try {
-        let pos = Math.round(teams[1].statistics.possession 
-          * origTeams[1].playerStatistics[i].statistics.possession 
-          / origTeams[1].statistics.possession);
-        teams[1].playerStatistics[i].statistics.possession = pos;
-        for (let j in data.players) {
-          if (data.players[j].info.steam_id === teams[1].playerStatistics[i].info.steam_id) {
-            data.players[j].statistics.possession = pos;
-          }
-        }
-      } catch(e) {
-        console.log(e);
-      }
-    }
-    data.teams = teams;
-    this.setState({data: data});
   }
 
   predictPlayerStats(player) {
