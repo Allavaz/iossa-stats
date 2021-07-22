@@ -159,8 +159,6 @@ export default class MatchEdit extends Component {
     let awayShots = 0;
     let homeShotsOnTarget = 0;
     let awayShotsOnTarget = 0;
-    let homePossession = 0;
-    let awayPossession = 0;
     for (let i in events) {
       if (events[i].team === 'home') {
         switch (events[i].event) {
@@ -213,7 +211,6 @@ export default class MatchEdit extends Component {
       homePassesCompleted = homePassesCompleted + parseInt(data.teams[0].playerStatistics[i].statistics.passescompleted);
       homeOffsides = homeOffsides + parseInt(data.teams[0].playerStatistics[i].statistics.offsides);
       homeCorners = homeCorners + parseInt(data.teams[0].playerStatistics[i].statistics.corners);
-      homePossession = homePossession + parseInt(data.teams[0].playerStatistics[i].statistics.possession);
     }
     for (let i in data.teams[1].playerStatistics) {
       awayShots = awayShots + parseInt(data.teams[1].playerStatistics[i].statistics.shots);
@@ -223,7 +220,6 @@ export default class MatchEdit extends Component {
       awayPassesCompleted = awayPassesCompleted + parseInt(data.teams[1].playerStatistics[i].statistics.passescompleted);
       awayOffsides = awayOffsides + parseInt(data.teams[1].playerStatistics[i].statistics.offsides);
       awayCorners = awayCorners + parseInt(data.teams[1].playerStatistics[i].statistics.corners);
-      awayPossession = awayPossession + parseInt(data.teams[1].playerStatistics[i].statistics.possession);
     }
     data.teams[0].score = homeScore;
     data.teams[0].scorereceived = awayScore;
@@ -257,8 +253,6 @@ export default class MatchEdit extends Component {
     data.teams[1].statistics.yellowcards = awayYellowCards + awaySecondYellows;
     data.teams[0].statistics.redcards = homeRedCards + homeSecondYellows;
     data.teams[1].statistics.redcards = awayRedCards + homeSecondYellows;
-    data.teams[0].statistics.possession = homePossession;
-    data.teams[1].statistics.possession = awayPossession;
     if (data.teams[0].statistics.fouls < (homeYellowCards + homeRedCards + homeSecondYellows)) {
       data.teams[0].statistics.fouls = homeYellowCards + homeRedCards + homeSecondYellows;
     } 
