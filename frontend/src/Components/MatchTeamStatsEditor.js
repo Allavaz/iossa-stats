@@ -1,18 +1,16 @@
 import React from 'react';
 import { getTeamLogo, invPercentage, percentage } from '../Utils';
 
-function evenUpPos(value, side, teams) {
+function evenUpPos(value, side) {
   if (side === 'home') {
     if (value.startsWith('+')) {
-      let actualValue = parseInt(value.replace('+', ''));
-      document.getElementById('pos1').value = 100 - Math.round((teams[0].statistics.possession + actualValue)/2);
+      document.getElementById('pos1').value = '+' + (100 - parseInt(document.getElementById('pos0').value.replace('+', '')));
     } else {
       document.getElementById('pos1').value = 100 - value;
     }
   } else if (side === 'away') {
     if (value.startsWith('+')) {
-      let actualValue = parseInt(value.replace('+', ''));
-      document.getElementById('pos0').value = 100 - Math.round((teams[1].statistics.possession + actualValue)/2);
+      document.getElementById('pos0').value = '+' + (100 - parseInt(document.getElementById('pos1').value.replace('+', '')));
     } else {
       document.getElementById('pos0').value = 100 - value;
     }
@@ -202,9 +200,9 @@ export default function MatchTeamStatsEditor(props) {
             <td><input id='shotstarget1' type='text' maxLength={4} style={{width: '5ch', textAlign: 'center'}} defaultValue={percentage(props.data.teams[1].statistics.shotsontarget, props.data.teams[1].statistics.shots)}></input> %</td>
           </tr>
           <tr>
-            <td><input id='pos0' type='text' maxLength={4} style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[0].statistics.possession} onChange={e => evenUpPos(e.target.value, 'home', props.data.teams)}></input> %</td>
+            <td><input id='pos0' type='text' maxLength={4} style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[0].statistics.possession} onChange={e => evenUpPos(e.target.value, 'home')}></input> %</td>
             <td>Posesión</td>
-            <td><input id='pos1' type='text' maxLength={4} style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[1].statistics.possession} onChange={e => evenUpPos(e.target.value, 'away', props.data.teams)}></input> %</td>
+            <td><input id='pos1' type='text' maxLength={4} style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[1].statistics.possession} onChange={e => evenUpPos(e.target.value, 'away')}></input> %</td>
           </tr>
           <tr>
             <td><input id='passes0' type='text' style={{width: '5ch', textAlign: 'center'}} defaultValue={props.data.teams[0].statistics.passes}></input></td>
