@@ -1,13 +1,13 @@
 const fullnames = {
   
   d1t1: "Liga D1 T1",
-  d1t2: "Liga D1 - Temporada 2",
+  d1t2: "Liga D1 T2",
   d1t3: "Liga D1 T3",
   d1t4: "Liga D1 T4",
   d1t6: "Liga D1 T6",
   d1t7: "Liga D1 T7",
 
-  d2t1: "Liga D2 - Temporada 1",
+  d2t1: "Liga D2 T2",
   d2t3: "Liga D2 T3",
   d2t4: "Liga D2 T4",
   d2t6: "Liga D2 T6",
