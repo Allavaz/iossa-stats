@@ -18,11 +18,11 @@ module.exports = {
   },
   t2: {
     $or: [
-      { torneo: "Liga D1 - Temporada 2" },
-      { torneo: "Liga D1 - Temporada 2 (Desempate)" },
-      { torneo: "Liga D2 - Temporada 1" },
-      { torneo: "Copa Master 2019" },
-      { torneo: "Recopa Master 2019" },
+      { torneo: "Liga D1 T2" },
+      { torneo: "Liga D1 T2 (Desempate)" },
+      { torneo: "Liga D2 T2" },
+      { torneo: "Copa Master T2" },
+      { torneo: "Recopa Master T2" },
     ],
   },
   t3: {
@@ -115,8 +115,8 @@ module.exports = {
   d1: {
     $or: [
       { torneo: "Liga D1 T1" },
-      { torneo: "Liga D1 - Temporada 2" },
-      { torneo: "Liga D1 - Temporada 2 (Desempate)" },
+      { torneo: "Liga D1 T2" },
+      { torneo: "Liga D1 T2 (Desempate)" },
       { torneo: "Liga D1 T3" },
       { torneo: "Liga D1 T3 - Promoción (Ida)" },
       { torneo: "Liga D1 T3 - Promoción (Vuelta)" },
@@ -129,7 +129,7 @@ module.exports = {
   },
   d2: {
     $or: [
-      { torneo: "Liga D2 - Temporada 1" },
+      { torneo: "Liga D2 T2" },
       { torneo: "Liga D2 T3" },
       { torneo: "Liga D2 T3 - Desempate 3er Puesto (Ida)" },
       { torneo: "Liga D2 T3 - Desempate 3er Puesto (Vuelta)" },
@@ -141,7 +141,7 @@ module.exports = {
   },
   master: {
     $or: [
-      { torneo: "Copa Master 2019" },
+      { torneo: "Copa Master T2" },
       { torneo: "Copa Master T3" },
       { torneo: "Copa Master T5" },
       { torneo: "Copa Master T6" },
@@ -174,7 +174,7 @@ module.exports = {
   },
   recopamaster: {
     $or: [
-      { torneo: "Recopa Master 2019" },
+      { torneo: "Recopa Master T2" },
       { torneo: "Recopa Master T3" },
       { torneo: "Recopa Master T0" },
       { torneo: "Recopa Master T5" },
@@ -230,8 +230,8 @@ module.exports = {
   },
   d1t2: {
     $or: [
-      { torneo: "Liga D1 - Temporada 2" },
-      { torneo: "Liga D1 - Temporada 2 (Desempate)" },
+      { torneo: "Liga D1 T2" },
+      { torneo: "Liga D1 T2 (Desempate)" },
     ],
   },
   d1t1: {
@@ -271,11 +271,11 @@ module.exports = {
   cgt4: {
     $or: [{ torneo: "Copa Gubero T4" }],
   },
-  d2t1: {
-    torneo: "Liga D2 - Temporada 1",
+  d2t2: {
+    torneo: "Liga D2 T2",
   },
-  master2019: {
-    torneo: "Copa Master 2019",
+  mastert2: {
+    torneo: "Copa Master T2",
   },
   mastert3: {
     torneo: "Copa Master T3",
@@ -295,8 +295,8 @@ module.exports = {
   recopamastert0: {
     torneo: "Recopa Master T0",
   },
-  recopamaster2019: {
-    torneo: "Recopa Master 2019",
+  recopamastert2: {
+    torneo: "Recopa Master T2",
   },
   recopamastert3: {
     torneo: "Recopa Master T3",

@@ -340,28 +340,28 @@
         "titulo": "Temporada 2",
         "torneos": [
             {
-                "torneo": "Liga D1 - Temporada 2",
+                "torneo": "Liga D1 T2",
                 "query": "d1t2",
                 "tabla": "d1t2"
             },
             {
-                "torneo": "Liga D1 - Temporada 2 (Desempate)",
+                "torneo": "Liga D1 T2 (Desempate)",
                 "tabla": "d1t2",
-                "tablaLabel": "Liga D1 - Temporada 2"
+                "tablaLabel": "Liga D1 T2"
             },
             {
-                "torneo": "Liga D2 - Temporada 2",
-                "query": "d2t1",
-                "tabla": "d2t1"
+                "torneo": "Liga D2 T2",
+                "query": "d2t2",
+                "tabla": "d2t2"
             },
             {
-                "torneo": "Copa Master 2019",
-                "query": "master2019",
+                "torneo": "Copa Master T2",
+                "query": "mastert2",
                 "challonge": "Copamasterr"
             },
             {
-                "torneo": "Recopa Master 2019",
-                "query": "recopamaster2019"
+                "torneo": "Recopa Master T2",
+                "query": "recopamastert2"
             }
         ]
     },
