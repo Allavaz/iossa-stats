@@ -328,7 +328,7 @@ export const resultColumns = [
         Header: 'Fecha',
         accessor: 'fecha',
         Cell: row => {
-            return fecha(row.row._original.fecha)
+            return <Link to={`/partido/${row.row._original._id}`}>{fecha(row.row._original.fecha)}</Link>
         },
         width: 110
     },
@@ -336,14 +336,14 @@ export const resultColumns = [
         Header: 'Local',
         accessor: 'teams[0].teamname',
         Cell: row => {
-            return <div className='teamlogo' id='home'><div id='teamname'>{row.row._original.teams[0].teamname}</div><div id='shortname'>{getTeamShortname(row.row._original.teams[0].teamname)}</div> <img height='16px' src={getTeamLogo(row.row._original.teams[0].teamname)} alt={row.row._original.teams[0].teamname}></img></div>
+            return <Link to={`/partido/${row.row._original._id}`}><div className='teamlogo' id='home'><div id='teamname'>{row.row._original.teams[0].teamname}</div><div id='shortname'>{getTeamShortname(row.row._original.teams[0].teamname)}</div> <img height='16px' src={getTeamLogo(row.row._original.teams[0].teamname)} alt={row.row._original.teams[0].teamname}></img></div></Link>
         }
     },
     {
         Header: 'Resultado',
         accessor: 'teams[0].score',
         Cell: row => {
-            return row.row._original.teams[0].score + " - " + row.row._original.teams[1].score
+            return <Link to={`/partido/${row.row._original._id}`}>{row.row._original.teams[0].score + " - " + row.row._original.teams[1].score}</Link>
         },
         width: 60
     },
@@ -351,14 +351,14 @@ export const resultColumns = [
         Header: 'Visitante',
         accessor: 'teams[1].teamname',
         Cell: row => {
-            return <div className='teamlogo' id='away'><img height='16px' src={getTeamLogo(row.row._original.teams[1].teamname)} alt={row.row._original.teams[1].teamname}></img> <div id='teamname'>{row.row._original.teams[1].teamname}</div><div id='shortname'>{getTeamShortname(row.row._original.teams[1].teamname)}</div></div>
+            return <Link to={`/partido/${row.row._original._id}`}><div className='teamlogo' id='away'><img height='16px' src={getTeamLogo(row.row._original.teams[1].teamname)} alt={row.row._original.teams[1].teamname}></img> <div id='teamname'>{row.row._original.teams[1].teamname}</div><div id='shortname'>{getTeamShortname(row.row._original.teams[1].teamname)}</div></div></Link>
         }
     },
     {
         Header: 'Torneo',
         accessor: 'torneo',
         Cell: row => {
-            return <div style={{display: 'flex', justifyContent: 'center'}}><img id='torneoimg' height='16px' src={getTournamentIcon(row.row._original.torneo)} alt={row.row._original.torneo}></img> <div className='torneo'>{row.row._original.torneo}</div></div>
+            return <Link to={`/partido/${row.row._original._id}`}><div style={{display: 'flex', justifyContent: 'center'}}><img id='torneoimg' height='16px' src={getTournamentIcon(row.row._original.torneo)} alt={row.row._original.torneo}></img> <div className='torneo'>{row.row._original.torneo}</div></div></Link>
         },
         filterable: true,
     }

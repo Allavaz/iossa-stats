@@ -201,14 +201,14 @@ export default class Results extends Component {
             rowsText={"filas"}
             showPageSizeOptions={false}
             defaultPageSize={20}
-            getTrProps={(state, rowInfo, column, instance) => ({
+            /* getTrProps={(state, rowInfo, column, instance) => ({
               onClick: (e) => {
-                this.props.history.push("/partido/" + rowInfo.original._id);
+                //this.props.history.push("/partido/" + rowInfo.original._id);
               },
               style: {
                 cursor: "pointer",
               },
-            })}
+            })} */
           />
         </div>
       </div>
