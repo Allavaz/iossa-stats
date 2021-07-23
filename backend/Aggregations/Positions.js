@@ -7,7 +7,7 @@ const fullnames = {
   d1t6: "Liga D1 T6",
   d1t7: "Liga D1 T7",
 
-  d2t1: "Liga D2 T2",
+  d2t2: "Liga D2 T2",
   d2t3: "Liga D2 T3",
   d2t4: "Liga D2 T4",
   d2t6: "Liga D2 T6",
