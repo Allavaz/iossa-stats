@@ -27,7 +27,11 @@ export default function MatchIndividualStatsEdit(props) {
   const [hovering, setHovering] = useState(false);
 
   function onChangeIndivStats(player) {
-    props.changeIndivStats(player, props.side, playerEditing)
+    let oldsteamid;
+    if (player.info.steam_id !== props.data.playerStatistics[playerEditing].info.steam_id) {
+      oldsteamid = props.data.playerStatistics[playerEditing].info.steam_id;
+    }
+    props.changeIndivStats(player, props.side, playerEditing, oldsteamid);
     setPlayerCreating(null);
     setPlayerEditing(-1);
     setPlayerHovering(-1);

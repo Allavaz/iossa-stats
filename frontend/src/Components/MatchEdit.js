@@ -477,13 +477,16 @@ export default class MatchEdit extends Component {
     this.setState({data: data});
   }
 
-  changeIndivStats(player, side, index) {
+  changeIndivStats(player, side, index, oldsteamid) {
     let data = this.state.data;
     let s = side === 'home' ? 0 : 1;
     data.teams[s].playerStatistics[index] = player;
     let playerExists = false;
+    let steamidlookup;
+    if (oldsteamid) steamidlookup = oldsteamid;
+    else steamidlookup = player.info.steam_id;
     for (let i in data.players) {
-      if (data.players[i].info.steam_id === player.info.steam_id) {
+      if (data.players[i].info.steam_id === steamidlookup) {
         data.players[i] = player;
         playerExists = true;
       }
@@ -492,8 +495,9 @@ export default class MatchEdit extends Component {
       data.players.push(player);
     }
     for (let i in data.matchevents) {
-      if (data.matchevents[i].player1SteamId === player.info.steam_id) {
+      if (data.matchevents[i].player1SteamId === steamidlookup) {
         data.matchevents[i].name = player.info.name;
+        data.matchevents[i].player1SteamId = player.info.steam_id;
       }
     }
     this.predictTeamStats();
