@@ -108,7 +108,7 @@ export default class Positions extends Component {
             item.temporada === 'all' ? null :
             <option value={item.temporada}>{item.titulo}</option>  
           ))}
-        </select>            
+        </select>
         <div className='content' id='loader' style={{display: this.state.loadingItems > 0 ? 'block' : 'none'}}>
           <center><FontAwesomeIcon icon={faSpinner} spin size='5x' style={{color: '#ff9800'}}></FontAwesomeIcon></center>
         </div>
