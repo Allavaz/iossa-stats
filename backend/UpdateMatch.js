@@ -11,6 +11,7 @@ exports.updateMatch = function(data, res) {
     const db = client.db(dbname);
     const o_id = new ObjectId(data._id);
     delete data._id;
+    data.fecha = new Date(data.fecha);
     db.collection(collection).replaceOne({'_id': o_id}, data, (err, r) => {
       if (err === null) {
         res.end("Success!");
