@@ -1,0 +1,419 @@
+[
+    {
+        "temporada": "all",
+        "titulo": "Totales",
+        "torneos": [
+            {
+                "torneo": "Liga D1",
+                "query": "d1"
+            },
+            {
+                "torneo": "Liga D2",
+                "query": "d2"
+            },
+            {
+                "torneo": "Copa Master",
+                "query": "master"
+            },
+            {
+                "torneo": "Copa valencARc",
+                "query": "cv"
+            },
+            {
+                "torneo": "Copa Maradei",
+                "query": "maradei"
+            },
+            {
+                "torneo": "Recopa Master",
+                "query": "recopamaster"
+            },
+            {
+                "torneo": "Recopa Maradei",
+                "query": "recopamaradei"
+            },
+            {
+                "torneo": "Supercopa Master",
+                "query": "supercopamaster"
+            },
+            {
+                "torneo": "Copa America",
+                "query": "america"
+            },
+            {
+                "torneo": "Copa del Sur",
+                "query": "copadelsur"
+            },
+            {
+                "torneo": "Copa Gubero",
+                "query": "cg"
+            },
+            {
+                "torneo": "Liga Master",
+                "query": "lm"
+            },
+            {
+                "torneo": "Division de Honor",
+                "query": "ddh"
+            },
+            {
+                "torneo": "Superliga D1",
+                "query": "sd1"
+            }
+        ]
+    },
+    {
+        "temporada": "selecciones",
+        "titulo": "Selecciones",
+        "torneos": [
+            {
+                "torneo": "Copa America '21 - Regular",
+                "tabla": "america21r"
+            },
+            {
+                "torneo": "Copa America T3",
+                "query": "americat3",
+                "tabla": "americat3"
+            },
+            {
+                "torneo": "Copa del Sur T3",
+                "query": "copadelsurt3",
+                "challonge": "copadelsur"
+            },
+            {
+                "torneo": "Copa America '21",
+                "query": "america21"
+            },
+            {
+                "torneo": "Copa America '21 - Playoff"
+            }
+        ]
+    },
+    {
+        "temporada": "t7",
+        "titulo": "Temporada 7",
+        "torneos": [
+            {
+                "torneo": "Liga D1 T7",
+                "query": "d1t7",
+                "tabla": "d1t7"
+            },
+            {
+                "torneo": "Liga D2 T7",
+                "query": "d2t7",
+                "tabla": "d2t7"
+            },
+            {
+                "torneo": "Superliga D1 T7",
+                "query": "sd1t7",
+                "tabla": "sd1t7"
+            },
+            {
+                "torneo": "Copa Maradei T7",
+                "query": "maradeit7"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo A",
+                "tabla": "maradeit7a"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo B",
+                "tabla": "maradeit7b"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo C",
+                "tabla": "maradeit7c"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo D",
+                "tabla": "maradeit7d"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo A (Desempate 2do Puesto)",
+                "tabla": "maradeit7a",
+                "tablaLabel": "Copa Maradei T7 - Grupo A"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Grupo D (Desempate 1er Puesto)",
+                "tabla": "maradeit7d",
+                "tablaLabel": "Copa Maradei T7 - Grupo D"
+            },
+            {
+                "torneo": "Copa Maradei T7 - Eliminatorias"
+            },
+            {
+                "torneo": "Copa valencARc",
+                "query": "cvt7"
+            }
+        ]
+    },
+    {
+        "temporada": "t6",
+        "titulo": "Temporada 6",
+        "torneos": [
+            {
+                "torneo": "Liga D1 T6",
+                "query": "d1t6",
+                "tabla": "d1t6"
+            },
+            {
+                "torneo": "Liga D2 T6",
+                "query": "d2t6",
+                "tabla": "d2t6"
+            },
+            {
+                "torneo": "Liga D2 T6 (Desempate 1er Puesto)",
+                "tabla": "d2t6",
+                "tablaLabel": "Liga D2 T6"
+            },
+            {
+                "torneo": "Superliga D1 T6",
+                "query": "sd1t6",
+                "tabla": "sd1t6"
+            },
+            {
+                "torneo": "Copa Maradei T6",
+                "query": "maradeit6"
+            },
+            {
+                "torneo": "Copa valencARc",
+                "query": "cvt6"
+            },
+            {
+                "torneo": "Copa Maradei T6 - Grupo A",
+                "tabla": "maradeit6a"
+            },
+            {
+                "torneo": "Copa Maradei T6 - Grupo A (Desempate)",
+                "tabla": "maradeit6a",
+                "tablaLabel": "Copa Maradei T6 - Grupo A"
+            },
+            {
+                "torneo": "Copa Maradei T6 - Grupo B",
+                "tabla": "maradeit6b"
+            },
+            {
+                "torneo": "Copa Maradei T6 - Grupo C",
+                "tabla": "maradeit6c"
+            }
+        ]
+    },
+    {
+        "temporada": "t5",
+        "titulo": "Temporada 5",
+        "torneos": [
+            {
+                "torneo": "Division de Honor T5",
+                "query": "ddht5",
+                "tabla": "ddht5"
+            },
+            {
+                "torneo": "Liga Master T5",
+                "query": "lmt5",
+                "tabla": "lmt5"
+            },
+            {
+                "torneo": "Copa Master T5",
+                "query": "mastert5",
+                "challonge": "copamastert5"
+            },
+            {
+                "torneo": "Copa Maradei T5",
+                "query": "maradeit5"
+            },
+            {
+                "torneo": "Copa Maradei T5 - Grupo A",
+                "tabla": "maradeit5a"
+            },
+            {
+                "torneo": "Copa Maradei T5 - Grupo B",
+                "tabla": "maradeit5b"
+            },
+            {
+                "torneo": "Copa Maradei T5 - Grupo C",
+                "tabla": "maradeit5c"
+            },
+            {
+                "torneo": "Copa Maradei T5 - Eliminatorias",
+                "challonge": "Maradeit5"
+            },
+            {
+                "torneo": "Recopa Master T5",
+                "query": "recopamastert5"
+            },
+            {
+                "torneo": "Recopa Maradei T5",
+                "query": "recopamaradeit5"
+            }
+        ]
+    },
+    {
+        "temporada": "t4",
+        "titulo": "Temporada 4",
+        "torneos": [
+            {
+                "torneo": "Liga D1 T4",
+                "query": "d1t4",
+                "tabla": "d1t4"
+            },
+            {
+                "torneo": "Liga D1 T4 - (Desempate)",
+                "tabla": "d1t4",
+                "tablaLabel": "Liga D1 T4"
+            },
+            {
+                "torneo": "Liga D2 T4",
+                "query": "d2t4",
+                "tabla": "d2t4"
+            },
+            {
+                "torneo": "Copa Gubero",
+                "query": "cgt4",
+                "challonge": "copagubero"
+            }
+        ]
+    },
+    {
+        "temporada": "t3",
+        "titulo": "Temporada 3",
+        "torneos": [
+            {
+                "torneo": "Liga D1 T3",
+                "query": "d1t3",
+                "tabla": "d1t3"
+            },
+            {
+                "torneo": "Liga D2 T3",
+                "query": "d2t3",
+                "tabla": "d2t3"
+            },
+            {
+                "torneo": "Liga D2 T3 - Desempate 3er Puesto (Ida)",
+                "tabla": "d2t3",
+                "tablaLabel": "Liga D2 T3"
+            },
+            {
+                "torneo": "Liga D2 T3 - Desempate 3er Puesto (Vuelta)",
+                "tabla": "d2t3",
+                "tablaLabel": "Liga D2 T3"
+            },
+            {
+                "torneo": "Copa Master T3",
+                "query": "mastert3",
+                "challonge": "CopaMasster2"
+            },
+            {
+                "torneo": "Copa Maradei T3",
+                "query": "maradeit3"
+            },
+            {
+                "torneo": "Copa Maradei T3 - Grupo A",
+                "tabla": "maradeit3a"
+            },
+            {
+                "torneo": "Copa Maradei T3 - Grupo B",
+                "tabla": "maradeit3b"
+            },
+            {
+                "torneo": "Copa Maradei T3 - Grupo C",
+                "tabla": "maradeit3c"
+            },
+            {
+                "torneo": "Copa Maradei T3 - Grupo D",
+                "tabla": "maradeit3d"
+            },
+            {
+                "torneo": "Copa Maradei T3 - Eliminatorias",
+                "challonge": "Maradei3"
+            },
+            {
+                "torneo": "Recopa Master T3",
+                "query": "recopamastert3"
+            },
+            {
+                "torneo": "Supercopa Master T3",
+                "query": "supercopamastert3"
+            }
+        ]
+    },
+    {
+        "temporada": "t2",
+        "titulo": "Temporada 2",
+        "torneos": [
+            {
+                "torneo": "Liga D1 T2",
+                "query": "d1t2",
+                "tabla": "d1t2"
+            },
+            {
+                "torneo": "Liga D1 T2 (Desempate)",
+                "tabla": "d1t2",
+                "tablaLabel": "Liga D1 T2"
+            },
+            {
+                "torneo": "Liga D2 T2",
+                "query": "d2t2",
+                "tabla": "d2t2"
+            },
+            {
+                "torneo": "Copa Master T2",
+                "query": "mastert2",
+                "challonge": "Copamasterr"
+            },
+            {
+                "torneo": "Recopa Master T2",
+                "query": "recopamastert2"
+            }
+        ]
+    },
+    {
+        "temporada": "t1",
+        "titulo": "Temporada 1",
+        "torneos": [
+            {
+                "torneo": "Liga D1 T1",
+                "query": "d1t1",
+                "tabla": "d1t1"
+            },
+            {
+                "torneo": "Copa Maradei T1",
+                "query": "maradeit1"
+            },
+            {
+                "torneo": "Copa Maradei T1 - Grupo A",
+                "tabla": "maradeit1a"
+            },
+            {
+                "torneo": "Copa Maradei T1 - Grupo B",
+                "tabla": "maradeit1b"
+            },
+            {
+                "torneo": "Copa Maradei T1 - Grupo C",
+                "tabla": "maradeit1c"
+            },
+            {
+                "torneo": "Copa Maradei T1 - Eliminatorias",
+                "challonge": "Copamaradei2018"
+            }
+        ]
+    },
+    {
+        "temporada": "t0",
+        "titulo": "Temporada 0",
+        "torneos": [
+            {
+                "torneo": "Division de Honor T0",
+                "query": "ddht0",
+                "tabla": "ddht0"
+            },
+            {
+                "torneo": "Liga Master T0",
+                "query": "lmt0",
+                "tabla": "lmt0"
+            },
+            {
+                "torneo": "Recopa Master T0",
+                "query": "recopamastert0"
+            }
+        ]
+    }
+]
