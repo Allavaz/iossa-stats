@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import Link from 'next/link'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -238,7 +238,7 @@ export default function MatchIndividualStats({ players, teamName, editable, chan
 	], [playerHovering, editable]);
 
   const data = useMemo(() => players, [players]);
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable({ columns, data }, useSortBy);
 
   const {
     getTableProps,
@@ -276,19 +276,24 @@ export default function MatchIndividualStats({ players, teamName, editable, chan
             {headerGroups.map((headerGroup, index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers.map((column, index) => (
-                  <th {...column.getHeaderProps()} 
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} 
 									style={column.Header === 'Jugador' ? {
 										position: 'sticky',
 										left: 0,
 										border: '0px',
 										borderBottom: '1px solid var(--table-border-color)',
 										borderRight: '1px solid var(--table-border-color)',
+										cursor: 'pointer',
+										userSelect: 'none'
 									} : {
 										border: 0, 
 										borderBottom: '1px solid var(--table-border-color)', 
-										borderLeft: column.Header === 'Pos.' ? 0 : '1px solid var(--table-border-color)'
+										borderLeft: column.Header === 'Pos.' ? 0 : '1px solid var(--table-border-color)',
+										cursor: 'pointer',
+										userSelect: 'none'
 									}}
 									key={index}>
+										{column.isSorted ? column.isSortedDesc ? <span>&#9660; </span> : <span>&#9650; </span> : null}
                     {column.render('Header')}
                   </th>
                 ))}

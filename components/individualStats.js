@@ -1,4 +1,4 @@
-import { useTable, usePagination, useFilters } from 'react-table';
+import { useTable, usePagination, useFilters, useSortBy } from 'react-table';
 import { useMemo, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -179,7 +179,7 @@ export default function IndividualStats({ players, category, pagina }) {
   ], []);
 
   const data = useMemo(() => players, [players]);
-  const tableInstance = useTable({ columns, data, initialState: { pageSize: 15 } }, useFilters, usePagination);
+  const tableInstance = useTable({ columns, data, initialState: { pageSize: 15 } }, useFilters, useSortBy, usePagination);
   
   const {
     getTableProps,
@@ -216,20 +216,25 @@ export default function IndividualStats({ players, category, pagina }) {
             {headerGroups.map((headerGroup, index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers.map((column, index) => (
-                  <th {...column.getHeaderProps()} 
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())} 
                   style={column.Header === 'Jugador' ? {
                     position: 'sticky',
                     left: 0,
                     border: '0px',
                     borderBottom: '1px solid var(--table-border-color)',
                     borderRight: '1px solid var(--table-border-color)',
-                    zIndex: 2
+                    zIndex: 2,
+                    cursor: 'pointer',
+                    userSelect: 'none'
                   } : {
                     border: 0, 
                     borderBottom: '1px solid var(--table-border-color)', 
-                    borderLeft: column.Header === 'Equipo' ? 0 : '1px solid var(--table-border-color)'
+                    borderLeft: column.Header === 'Equipo' ? 0 : '1px solid var(--table-border-color)',
+                    cursor: 'pointer',
+                    userSelect: 'none'
                   }}
                   key={index}>
+                    {column.isSorted ? column.isSortedDesc ? <span>&#9660; </span> : <span>&#9650; </span> : null}
                     {column.render('Header')}
                   </th>
                 ))}
