@@ -219,6 +219,7 @@ h5 {
   font-size: 12pt;
   margin-bottom: 10px;
   color: var(--normal-text-color);
+  user-select: none;
 }
 
 .boton:disabled {
@@ -226,6 +227,7 @@ h5 {
   cursor: unset;
   box-shadow: unset;
   pointer-events: none;
+  user-select: none;
 }
 
 .t7, .t6, .t5, .t4, .t3, .t2, .t1, .t0 {
