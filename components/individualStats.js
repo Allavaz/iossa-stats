@@ -353,7 +353,7 @@ export default function IndividualStats({ players, category, pagina }) {
         >
           Anterior
         </button>
-        <div>Pagina {pageIndex + 1} de {Math.max(pageCount, 1)}</div>
+        <div>Página {pageIndex + 1} de {Math.max(pageCount, 1)}</div>
         <button 
           className='boton' 
           disabled={!canNextPage} 
