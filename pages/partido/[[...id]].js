@@ -311,19 +311,19 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
         for (let j in homePlayerStatistics) {
           if (steamids[i].steamid === homePlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(homePlayerStatistics[j]);
+            predictPlayerStats(homePlayerStatistics[j], prevState);
           }
         }
         for (let j in awayPlayerStatistics) {
           if (steamids[i].steamid === awayPlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(awayPlayerStatistics[j]);
+            predictPlayerStats(awayPlayerStatistics[j], prevState);
           }
         }
         for (let j in playerStatistics) {
           if (steamids[i].steamid === playerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(playerStatistics[j]);
+            predictPlayerStats(playerStatistics[j], prevState);
           }
         }
         if (!found) {
@@ -364,11 +364,11 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
           }
           if (steamids[i].side === 'home') {
             p.info.team = data.teams[0].teamname
-            predictPlayerStats(p);
+            predictPlayerStats(p, prevState);
             homePlayerStatistics.push(p);
           } else if (steamids[i].side === 'away') {
             p.info.team = data.teams[1].teamname
-            predictPlayerStats(p);
+            predictPlayerStats(p, prevState);
             awayPlayerStatistics.push(p);
           }
           playerStatistics.push(p);
@@ -381,8 +381,8 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
     })
   }
 
-  function predictPlayerStats(player) {
-    let events = editableData.matchevents;
+  function predictPlayerStats(player, prevState) {
+    let events = prevState.matchevents;
     let goals = 0;
     let ownGoals = 0;
     let yellowCards = 0;
