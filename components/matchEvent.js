@@ -16,7 +16,7 @@ export default function MatchEvent({ item, side, index, editable, setEventEditin
           >
             {editable ? <div style={{flex: 1}}></div> : null}
             <div className='matchevent' style={{marginLeft: '5px', marginRight: '5px'}}>
-              <MatchIcon event={item.event}></MatchIcon><Link href={`/jugador/${item.player1SteamId}`}><a><div className="fullteamname" style={{maxWidth: '25vw'}}>{item.name + ' (' + Math.round((item.second)/60) + "')"}</div></a></Link>
+              <MatchIcon event={item.event}></MatchIcon><Link href={`/jugador/${item.player1SteamId}`}><a><div className="fullteamname" style={{whiteSpace: 'normal'}}>{item.name + ' (' + Math.round((item.second)/60) + "')"}</div></a></Link>
             </div>
             {editable ? <div style={{flex: 1, textAlign: 'left'}}>
               <FontAwesomeIcon 
@@ -65,7 +65,7 @@ export default function MatchEvent({ item, side, index, editable, setEventEditin
           >
             {editable ? <div style={{flex: 1}}></div> : null}
             <div className='matchevent' style={{marginLeft: '5px', marginRight: '5px'}}>
-              <MatchIcon event={item.event}></MatchIcon><Link href={`/jugador/${item.player1SteamId}`}><a><div className="fullteamname" style={{maxWidth: '25vw'}}>{item.name + ' (' + Math.round((item.second)/60) + "')"}</div></a></Link>
+              <MatchIcon event={item.event}></MatchIcon><Link href={`/jugador/${item.player1SteamId}`}><a><div className="fullteamname" style={{whiteSpace: 'normal'}}>{item.name + ' (' + Math.round((item.second)/60) + "')"}</div></a></Link>
             </div>
             {editable ? <div style={{flex: 1, textAlign: 'left'}}>
               <FontAwesomeIcon 
