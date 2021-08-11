@@ -35,10 +35,10 @@ export default function Home({ matches, tablas }) {
       <Head>
         <title>IOSoccer Sudamérica</title>
         <meta name="title" content="IOSoccer Sudamérica" />
-        <meta name="description" content="Resultados y estadísticas de la comunidad sudamericana de IOSoccer." />
+        <meta name="description" content="Comunidad sudamericana de IOSoccer. Resultados, estadísticas, rankings y más." />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="IOSoccer Sudamérica" />
-        <meta property="og:description" content="Resultados y estadísticas de la comunidad sudamericana de IOSoccer." />
+        <meta property="og:description" content="Comunidad sudamericana de IOSoccer. Resultados, estadísticas, rankings y más." />
         <meta property="og:image" content="/logo-solo.png" />
         <meta property="og:site_name" content='IOSoccer Sudamérica' />
       </Head>
