@@ -69,15 +69,13 @@ body {
 }
 
 .event {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 12pt;
   padding: 2px;
 }
 
 .event img {
   margin-right: 5px;
+  vertical-align: text-top;
 }
 
 .eventtr {

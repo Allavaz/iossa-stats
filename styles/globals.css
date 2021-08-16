@@ -299,19 +299,6 @@ h5 {
   align-items: center;
 }
 
-.matchevent {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.matchIcon {
-  display: flex;
-  align-items: center;
-  margin-right: 5px;
-}
-
 .sticky .header {
   position: sticky;
   z-index: 1;

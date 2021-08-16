@@ -57,7 +57,7 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
 					<div>
 						<div className='playername'>{statsAll.name}</div>
 						<div style={{marginTop: '5px', color: 'var(--header-color)', marginBottom: '10px', display: statsAll.name === steamInfo.personaname ? 'none' : 'block'}}>{steamInfo.personaname}</div>
-						<div className='teamlogo' style={{marginTop: '5px'}}><img height='16px' src={getTeamLogo(statsAll.team)} alt={statsAll.team}></img> <div style={{color: 'var(--header-color)', marginLeft: '5px'}}>{statsAll.team}</div></div>
+						<div style={{color: 'var(--header-color)', marginTop: '5px'}}><img height='16px' src={getTeamLogo(statsAll.team)} alt={statsAll.team} style={{verticalAlign: 'text-top'}}></img> {statsAll.team}</div>
 						<div className='playersummary' style={{marginTop: '10px', fontSize: '0.75em'}}>{`${statsAll.matches} partido${statsAll.matches === 1 ? '' : 's'}`}</div>
 						<div className='playersummary' style={{marginTop: '5px', fontSize: '0.75em'}}>{`${statsAll.wins} victoria${statsAll.wins === 1 ? '' : 's'}`}</div>
 						<div className='playersummary' style={{marginTop: '5px', fontSize: '0.75em'}}>{`${statsAll.draws} empate${statsAll.draws === 1 ? '' : 's'}`}</div>
