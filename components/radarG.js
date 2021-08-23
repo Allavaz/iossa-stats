@@ -1,6 +1,5 @@
 import Attributes from "../utils/Attributes";
 import { Radar } from 'react-chartjs-2';
-import { useState, useEffect } from "react";
 
 export default function RadarG({ statsLast15 }) {
   const att = Attributes(statsLast15);
