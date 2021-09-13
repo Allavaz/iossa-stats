@@ -103,6 +103,11 @@
                 "tabla": "d2t7"
             },
             {
+                "torneo": "Liga D2 T7 (Desempate Campeon)",
+                "tabla": "d2t7",
+                "tablaLabel": "Liga D2 T7"
+            },
+            {
                 "torneo": "Superliga D1 T7",
                 "query": "sd1t7",
                 "tabla": "sd1t7"
