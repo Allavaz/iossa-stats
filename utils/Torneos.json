@@ -58,6 +58,14 @@
             {
                 "torneo": "Superliga D1",
                 "query": "sd1"
+            },
+            {
+                "torneo": "Copa D1",
+                "query": "cd1"
+            },
+            {
+                "torneo": "Copa D2",
+                "query": "cd2"
             }
         ]
     },
@@ -149,6 +157,14 @@
                 "torneo": "Copa valencARc T7",
                 "query": "cvt7",
                 "challonge": "t7valen"
+            },
+            {
+                "torneo": "Copa D1 T7",
+                "query": "cd1t7"
+            },
+            {
+                "torneo": "Copa D2 T7",
+                "query": "cd2t7"
             }
         ]
     },
