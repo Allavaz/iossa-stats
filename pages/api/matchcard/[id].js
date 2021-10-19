@@ -7,10 +7,16 @@ export default async function handler(req, res) {
     let image;
     if (fs.existsSync(dir)) {
       image = fs.readFileSync(dir);
+      res.setHeader('Content-Type', 'image/png');
+      res.send(image);
     } else {
-      image = await createMatchCard(req.query.id);
+      try {
+        image = await createMatchCard(req.query.id);
+        res.setHeader('Content-Type', 'image/png');
+        res.send(image);
+      } catch(e) {
+        res.send('Error 404: Match not found');
+      }
     }
-    res.setHeader('Content-Type', 'image/png');
-    res.send(image);
   }
 }
