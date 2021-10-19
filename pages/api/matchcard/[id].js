@@ -15,7 +15,8 @@ export default async function handler(req, res) {
         res.setHeader('Content-Type', 'image/png');
         res.send(image);
       } catch(e) {
-        res.send('Error 404: Match not found');
+        res.writeHead(404);
+        res.end('Error 404: Match not found');
       }
     }
   }
