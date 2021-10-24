@@ -355,7 +355,7 @@ th, tr {
   justify-content: space-between;
   overflow: visible;
   align-content: flex-start;
-  margin: -10px;
+  column-gap: 20px;
 }
 
 .resp-container {
@@ -411,7 +411,6 @@ th, tr {
 
 #teamstatstable {
   table-layout: fixed;
-  padding-right: 20px;
 }
 
 .resulttable td {
@@ -601,14 +600,6 @@ table tr td {
 
 #home {
   justify-content: flex-end;
-}
-
-.flexTableDiv {
-  margin: 10px;
-}
-
-.matchesContainer {
-  margin: 10px;
 }
 
 .bigClubLogo {
