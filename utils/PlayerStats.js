@@ -37,9 +37,13 @@ export default function PlayerStats(data, id) {
     for (let i=0; i<data.length; i++) {
         for (let j=0; j<data[i].players.length; j++) {
             if (data[i].players[j].info.steam_id === id) {
-                if (name === undefined && team === undefined && lastpos === undefined) {
+                if (name === undefined) {
                     name = data[i].players[j].info.name;
+                }
+                if (team === undefined) {
                     team = data[i].players[j].info.team;
+                }
+                if (lastpos === undefined && data[i].players[j].statistics.positions.length > 0) {
                     lastpos = data[i].players[j].statistics.positions[0].position;
                 }
             }
