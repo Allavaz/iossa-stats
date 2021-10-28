@@ -97,6 +97,22 @@
         ]
     },
     {
+        "temporada": "t8",
+        "titulo": "Temporada 8",
+        "torneos": [
+            {
+                "torneo": "Superliga D1 T8",
+                "query": "sd1t8",
+                "tabla": "sd1t8"
+            },
+            {
+                "torneo": "Copa valencARc T7",
+                "query": "cvt7",
+                "challonge": "t7valen"
+            }
+        ]
+    },
+    {
         "temporada": "t7",
         "titulo": "Temporada 7",
         "torneos": [
