@@ -17,11 +17,13 @@ export async function getStaticProps() {
 }
 
 const torneos = [
-  'Liga D1 T7',
-  'Liga D2 T7',
-  "Copa valencARc T7",
-  "Copa America '21 - Regular",
-  "Copa America '21 - Playoff",
+  'Superliga D1 T8',
+  "Copa valencARc T8",
+  //'Liga D1 T7',
+  //'Liga D2 T7',
+  //"Copa valencARc T7",
+  //"Copa America '21 - Regular",
+  //"Copa America '21 - Playoff",
   //'Copa Maradei T7 - Grupo A',
   //'Copa Maradei T7 - Grupo B',
   //'Copa Maradei T7 - Grupo C',
