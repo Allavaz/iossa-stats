@@ -4,14 +4,7 @@ import Matches from '../components/matches';
 import MiniPositions from '../components/miniPositions';
 
 const minitables = [
-  {torneo: "d1t7", header: "Liga D1 T7"},
-  {torneo: "d2t7", header: "Liga D2 T7"},
-  {torneo: "america21r", header: "Copa America '21 - Regular"},
-  {torneo: "sd1t7", header: "Superliga D1 T7" },
-  {torneo: "maradeit7a", header: "Copa Maradei T7 - Grupo A"},
-  {torneo: "maradeit7b", header: "Copa Maradei T7 - Grupo B"},
-  {torneo: "maradeit7c", header: "Copa Maradei T7 - Grupo C"},
-  {torneo: "maradeit7d", header: "Copa Maradei T7 - Grupo D"},
+  {torneo: "sd1t8", header: "Superliga D1 T8" },
 ];
 
 export async function getServerSideProps(context) {
