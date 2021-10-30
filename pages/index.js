@@ -7,7 +7,7 @@ const minitables = [
   {torneo: "sd1t8", header: "Superliga D1 T8" },
 ];
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   let matches = await getMatches('20');
   let torneos = []
   for (let i in minitables) {
