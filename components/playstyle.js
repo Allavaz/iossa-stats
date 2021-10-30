@@ -38,7 +38,7 @@ export default function Playstyle({ statsAll }) {
   }
 
   return (
-    <div className='whitespace' style={{maxWidth: '400px', padding: 0, paddingTop: '20px', paddingBottom: '40px', height: '230px', flexGrow: 1, marginBottom: 0, marginLeft: 0, marginRight: 0}}>
+    <div className='whitespace' style={{maxWidth: '400px', padding: 0, paddingTop: '20px', paddingBottom: '40px', height: '230px', flexGrow: 1, marginBottom: 0, marginLeft: 0, marginRight: 0, marginTop: '15px'}}>
       <Doughnut data={data} options={options} />
       <p style={{fontSize: '0.65em', textAlign: 'center', color: 'var(--header-color)', marginTop: '10px'}}><i>Gráfico basado en estadísticas históricas.</i></p>
     </div>

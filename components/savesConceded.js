@@ -72,7 +72,7 @@ export default function SavesConceded({ playerMatches, id }) {
   }
 
   return (
-    <div className='whitespace' style={{maxWidth: '460px', flexGrow: 1, marginLeft: 0, marginRight: 0, height: '245px'}} suppressHydrationWarning={true}>
+    <div className='whitespace' style={{maxWidth: '460px', flexGrow: 1, marginLeft: 0, marginRight: 0, marginTop: '15px', height: '245px'}} suppressHydrationWarning={true}>
       <Line data={data} options={options} />
     </div>
   )
