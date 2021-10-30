@@ -20,12 +20,12 @@ export default function Top10Rusticos({ players, category }) {
           <tbody>
             {players.map((item, index) => (
               <tr key={item._id}>
-                  <td width='25px'>{index+1}</td>
+                  <td>{index+1}</td>
                   <td><Link href={`/jugador/${item._id}`}><a><div className='teamlogo' style={{paddingRight: '5px', justifyContent: 'center'}}><img height='16px' src={getTeamLogo(item.team)} alt={item.team}></img> <div style={{marginLeft: '5px'}}>{item.name}</div></div></a></Link></td>
-                  <td width='75px'>{item.matches}</td>
-                  <td width='75px'>{item.fouls}</td>
-                  <td width='75px'>{item.yellowcards}</td>
-                  <td width='75px'>{item.redcards}</td>
+                  <td>{item.matches}</td>
+                  <td>{item.fouls}</td>
+                  <td>{item.yellowcards}</td>
+                  <td>{item.redcards}</td>
               </tr>
             ))}
           </tbody>
