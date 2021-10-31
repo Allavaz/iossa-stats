@@ -3,7 +3,7 @@ export default function VodEditor(props) {
   return(
     <div>
       <h3>{props.vod ? 'EDITAR' : 'AGREGAR'} VOD</h3>
-      <div className='whitespace' style={{height: height, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <div className='whitespace' style={{height: height, display: 'flex', justifyContent: 'center', alignItems: 'center', columnGap: '15px'}}>
         <input type='text'
           id='inputVod'
           placeholder='ID del VOD (Ej: lQMMnMvnMLk)'
@@ -12,7 +12,6 @@ export default function VodEditor(props) {
           autoComplete='off'>
         </input>
         <button className='boton' 
-          style={{margin: 0, marginLeft: '15px'}} 
           onClick={e => {
             props.changeVod(document.getElementById('inputVod').value.trim());
             props.setVodEditing(false);

@@ -84,9 +84,9 @@ export default function MatchEventEditor(props) {
             {"')"}
           </div>
         </div>
-        <div style={{marginTop: '15px', display: 'flex', justifyContent: 'flex-end'}}>
-          <button className='boton' style={{marginBottom: 0, marginLeft: '10px', marginRight: 0}} onClick={finishEditing}>Guardar</button>
-          <button className='boton' style={{marginBottom: 0, marginLeft: '10px', marginRight: 0}} onClick={cancelEditing}>Cancelar</button>
+        <div style={{marginTop: '15px', display: 'flex', justifyContent: 'flex-end', columnGap: '10px'}}>
+          <button className='boton' onClick={finishEditing}>Guardar</button>
+          <button className='boton' onClick={cancelEditing}>Cancelar</button>
         </div>
       </div>
     </div>

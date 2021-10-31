@@ -153,28 +153,30 @@ export default function Upload({}) {
                     style={{color: 'var(--normal-text-color)'}}
                   ></input>
                 </div>
-                <div>
-                  <select
-                    style={{ marginTop: 0, width: "260px" }}
-                    id="selector"
-                    name="torneo"
-                    onChange={(e) => setTor(e.target.value)}
-                  >
-                    {torneos.map((e) => (
-                      <option key={e} name="torneo" value={e}>
-                        {e}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div style={{ display: cTor ? "block" : "none" }}>
-                  <input
-                    className="campo"
-                    type="torneo"
-                    onChange={(e) => setTorneo(e.target.value)}
-                    size="24"
-                    placeholder="Torneo"
-                  ></input>
+                <div style={{display: 'flex', columnGap: '10px', alignItems: 'center'}}>
+                  <div>
+                    <select
+                      style={{width: cTor ? '70px' : '260px', margin: 0}}
+                      id="selector"
+                      name="torneo"
+                      onChange={(e) => setTor(e.target.value)}
+                    >
+                      {torneos.map((e) => (
+                        <option key={e} name="torneo" value={e}>
+                          {e}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div style={{ display: cTor ? "block" : "none" }}>
+                    <input
+                      className="campo"
+                      type="torneo"
+                      onChange={(e) => setTorneo(e.target.value)}
+                      size="24"
+                      placeholder="Torneo"
+                    ></input>
+                  </div>
                 </div>
                 <div>
                   <input
@@ -198,6 +200,7 @@ export default function Upload({}) {
                     className="boton"
                     ref={bRef}
                     onClick={() => submit(torneo, pw, vod, file)}
+                    style={{marginBottom: '10px'}}
                   >
                     Enviar
                   </button>{" "}
@@ -240,13 +243,12 @@ export default function Upload({}) {
                   Partido(s) cargado(s) correctamente.
                 </div>
                 <div>
-                  <button style={{ margin: 0 }} className="boton" onClick={e => router.push('/resultados')}>
+                  <button className="boton" onClick={e => router.push('/resultados')}>
                     Resultados
                   </button>
                 </div>
                 <div>
                   <button
-                    style={{ margin: 0 }}
                     className="boton"
                     onClick={() => reset()}
                   >

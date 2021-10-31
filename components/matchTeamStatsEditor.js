@@ -230,9 +230,9 @@ export default function MatchTeamStatsEditor(props) {
           </tr>
         </tbody>
       </table>
-      <div style={{marginTop: '15px', display: 'flex', justifyContent: 'flex-end'}}>
-        <button className='boton' style={{marginBottom: 0, marginLeft: '10px', marginRight: 0}} onClick={e => finishEditing()}>Guardar</button>
-        <button className='boton' style={{marginBottom: 0, marginLeft: '10px', marginRight: 0}} onClick={e => props.setTeamStatsEditing(false)}>Cancelar</button>
+      <div style={{marginTop: '15px', display: 'flex', justifyContent: 'flex-end', columnGap: '10px'}}>
+        <button className='boton' onClick={e => finishEditing()}>Guardar</button>
+        <button className='boton' onClick={e => props.setTeamStatsEditing(false)}>Cancelar</button>
       </div>
     </div>
   )

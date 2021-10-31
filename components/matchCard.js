@@ -374,16 +374,16 @@ export default function MatchCard(props) {
 							</ul>
 						</td>
 						<td>
-							{props.editable ? <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+							{props.editable ? <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', rowGap: '10px'}}>
                 <input id='password' disabled={props.loading} type='password' placeholder='Contraseña' style={{textAlign: 'center', width: '20ch', height: '22px'}}></input>
-                <button className='boton' disabled={props.loading} style={{marginRight: 0, marginTop: '10px'}} onClick={e => {
+                <button className='boton' disabled={props.loading} onClick={e => {
                   props.updateMatch(document.getElementById('password').value);
                 }}>Guardar cambios</button>
-                <button className='boton' disabled={props.loading} style={{marginRight: 0}} onClick={e => {
+                <button className='boton' disabled={props.loading} onClick={e => {
                   props.deleteMatch(document.getElementById('password').value);
                 }}>Eliminar partido</button>
-                <button className='boton' disabled={props.loading} style={{marginRight: 0}} onClick={e => props.exportMatch()}>Exportar JSON</button>
-                <button className='boton' disabled={props.loading} style={{marginRight: 0}} onClick={e => {
+                <button className='boton' disabled={props.loading} onClick={e => props.exportMatch()}>Exportar JSON</button>
+                <button className='boton' disabled={props.loading} onClick={e => {
                   props.restartEditing();
                   setEventEditing(-1);
                   setEventCreating(null);
