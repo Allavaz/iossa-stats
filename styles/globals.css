@@ -617,7 +617,6 @@ table tr td {
 
   .matchesContainer {
     margin: 0;
-    margin-top: -20px;
   }
 
   .rankingChildDev {
@@ -642,18 +641,15 @@ table tr td {
     height: 96px;
   }
 
-  .colCon {
-    margin: 0;
-  }
-
   .content {
-    margin-top: 70px;
+    margin-top: 50px;
+    padding: 0.05px;
     padding-left: 0px;
     padding-right: 0px;
   }
 
   .matchContainer {
-    margin-top: 70px;
+    margin-top: 50px;
     padding-left: 0px;
     padding-right: 0px;
   }
@@ -730,7 +726,8 @@ table tr td {
   }
 
   .content {
-    margin-top: 70px;
+    margin-top: 50px;
+    padding: 0.05px;
     padding-left: 0px;
     padding-right: 0px;
   }
@@ -769,10 +766,6 @@ table tr td {
 
   #nav-item {
     flex: 1 0 auto;
-  }
-
-  .matchesContainer {
-    margin-top: -10px;
   }
 }
 

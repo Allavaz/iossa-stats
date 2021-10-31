@@ -140,78 +140,76 @@ export default function Upload({}) {
           <Head>
             <title>Subir partido | IOSoccer Sudamérica</title>
           </Head>
-          <div className="content">
-            <div className="whitespace" style={{ padding: "0", width: "310px" }}>
-              <div className="form">
-                <h3 style={{ marginBottom: 0 }}>Cargar Partido</h3>
+          <div className="whitespace" style={{ padding: "0", width: "310px" }}>
+            <div className="form">
+              <h3 style={{ marginBottom: 0 }}>Cargar Partido</h3>
+              <div>
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => setFile(e.target.files)}
+                  accept=".json"
+                  style={{color: 'var(--normal-text-color)'}}
+                ></input>
+              </div>
+              <div style={{display: 'flex', columnGap: '10px', alignItems: 'center'}}>
                 <div>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={(e) => setFile(e.target.files)}
-                    accept=".json"
-                    style={{color: 'var(--normal-text-color)'}}
-                  ></input>
-                </div>
-                <div style={{display: 'flex', columnGap: '10px', alignItems: 'center'}}>
-                  <div>
-                    <select
-                      style={{width: cTor ? '70px' : '260px', margin: 0}}
-                      id="selector"
-                      name="torneo"
-                      onChange={(e) => setTor(e.target.value)}
-                    >
-                      {torneos.map((e) => (
-                        <option key={e} name="torneo" value={e}>
-                          {e}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div style={{ display: cTor ? "block" : "none" }}>
-                    <input
-                      className="campo"
-                      type="torneo"
-                      onChange={(e) => setTorneo(e.target.value)}
-                      size="24"
-                      placeholder="Torneo"
-                    ></input>
-                  </div>
-                </div>
-                <div>
-                  <input
-                    className="campo"
-                    type="text"
-                    onChange={(e) => setVod(e.target.value)}
-                    size="24"
-                    placeholder="ID del VOD (Ej: lQMMnMvnMLk)"
-                  ></input>
-                </div>
-                <div>
-                  <input
-                    className="campo"
-                    type="password"
-                    onChange={(e) => setPw(e.target.value)}
-                    placeholder="Contraseña"
-                  ></input>
-                </div>
-                <div>
-                  <button
-                    className="boton"
-                    ref={bRef}
-                    onClick={() => submit(torneo, pw, vod, file)}
-                    style={{marginBottom: '10px'}}
+                  <select
+                    style={{width: cTor ? '70px' : '260px', margin: 0}}
+                    id="selector"
+                    name="torneo"
+                    onChange={(e) => setTor(e.target.value)}
                   >
-                    Enviar
-                  </button>{" "}
-                  <span ref={sRef} style={{ display: "none" }}>
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      color="#ff9800"
-                    ></FontAwesomeIcon>
-                  </span>
+                    {torneos.map((e) => (
+                      <option key={e} name="torneo" value={e}>
+                        {e}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+                <div style={{ display: cTor ? "block" : "none" }}>
+                  <input
+                    className="campo"
+                    type="torneo"
+                    onChange={(e) => setTorneo(e.target.value)}
+                    size="24"
+                    placeholder="Torneo"
+                  ></input>
+                </div>
+              </div>
+              <div>
+                <input
+                  className="campo"
+                  type="text"
+                  onChange={(e) => setVod(e.target.value)}
+                  size="24"
+                  placeholder="ID del VOD (Ej: lQMMnMvnMLk)"
+                ></input>
+              </div>
+              <div>
+                <input
+                  className="campo"
+                  type="password"
+                  onChange={(e) => setPw(e.target.value)}
+                  placeholder="Contraseña"
+                ></input>
+              </div>
+              <div>
+                <button
+                  className="boton"
+                  ref={bRef}
+                  onClick={() => submit(torneo, pw, vod, file)}
+                  style={{marginBottom: '10px'}}
+                >
+                  Enviar
+                </button>{" "}
+                <span ref={sRef} style={{ display: "none" }}>
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    color="#ff9800"
+                  ></FontAwesomeIcon>
+                </span>
               </div>
             </div>
           </div>
