@@ -99,10 +99,11 @@ exports.getTeamLogo = function (teamname) {
 };
 
 exports.getTeamShortname = function (teamname) {
-  try {
-    return Teams[teamname];
-  } catch {
-    let len = teamname.length > 3 ? 3 : teamname.length;
+  const shortname = Teams[teamname];
+  if (shortname) {
+    return shortname;
+  } else {
+    let len = Math.min(3, teamname.length);
     return teamname.substring(0, len).toUpperCase();
   }
 };
