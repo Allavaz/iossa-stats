@@ -47,6 +47,8 @@ exports.getTournamentIcon = function (tournament) {
     return "/tournaments/ddh.png";
   } else if (tournament.includes("Copa valencARc")) {
     return "/tournaments/copavalencarc.png";
+  } else if (tournament.includes("Liga Zero")) {
+    return "/tournaments/ligazero.png";
   } else {
     return "/logo-solo.png";
   }
