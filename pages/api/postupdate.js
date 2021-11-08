@@ -1,7 +1,7 @@
 import updateMatch from "../../lib/updateMatch";
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     if (req.body.password === process.env.KEY) {
       try {
         await updateMatch(req.body.data, res);

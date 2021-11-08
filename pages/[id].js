@@ -6,9 +6,7 @@ import { faCheckCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export async function getStaticPaths() {
-  let paths = [
-    { params: {id: process.env.ENDPOINT} }
-  ]
+  let paths = [{ params: { id: process.env.ENDPOINT } }];
   return { paths, fallback: false };
 }
 
@@ -17,7 +15,7 @@ export async function getStaticProps() {
 }
 
 const torneos = [
-  'Superliga D1 T8',
+  "Superliga D1 T8",
   "Copa valencARc T8",
   //'Liga D1 T7',
   //'Liga D2 T7',
@@ -64,7 +62,7 @@ const torneos = [
   //	'Copa Maradei T1 - Grupo B',
   //	'Copa Maradei T1 - Grupo C',
   //	'Copa Maradei T1 - Eliminatorias',
-  "Otro",
+  "Otro"
 ];
 
 export default function Upload({}) {
@@ -93,7 +91,7 @@ export default function Upload({}) {
       }
       axios
         .post("/api/postupload", fd)
-        .then((res) => {
+        .then(res => {
           if (res.data.status === "success") {
             setStatus(1);
           } else if (res.data === "Wrong Key") {
@@ -107,7 +105,7 @@ export default function Upload({}) {
             sRef.current.style.display = "none";
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           bRef.current.disabled = false;
           sRef.current.style.display = "none";
@@ -147,20 +145,26 @@ export default function Upload({}) {
                 <input
                   type="file"
                   multiple
-                  onChange={(e) => setFile(e.target.files)}
+                  onChange={e => setFile(e.target.files)}
                   accept=".json"
-                  style={{color: 'var(--normal-text-color)'}}
+                  style={{ color: "var(--normal-text-color)" }}
                 ></input>
               </div>
-              <div style={{display: 'flex', columnGap: '10px', alignItems: 'center'}}>
+              <div
+                style={{
+                  display: "flex",
+                  columnGap: "10px",
+                  alignItems: "center"
+                }}
+              >
                 <div>
                   <select
-                    style={{width: cTor ? '70px' : '260px', margin: 0}}
+                    style={{ width: cTor ? "70px" : "260px", margin: 0 }}
                     id="selector"
                     name="torneo"
-                    onChange={(e) => setTor(e.target.value)}
+                    onChange={e => setTor(e.target.value)}
                   >
-                    {torneos.map((e) => (
+                    {torneos.map(e => (
                       <option key={e} name="torneo" value={e}>
                         {e}
                       </option>
@@ -171,7 +175,7 @@ export default function Upload({}) {
                   <input
                     className="campo"
                     type="torneo"
-                    onChange={(e) => setTorneo(e.target.value)}
+                    onChange={e => setTorneo(e.target.value)}
                     size="24"
                     placeholder="Torneo"
                   ></input>
@@ -181,7 +185,7 @@ export default function Upload({}) {
                 <input
                   className="campo"
                   type="text"
-                  onChange={(e) => setVod(e.target.value)}
+                  onChange={e => setVod(e.target.value)}
                   size="24"
                   placeholder="ID del VOD (Ej: lQMMnMvnMLk)"
                 ></input>
@@ -190,7 +194,7 @@ export default function Upload({}) {
                 <input
                   className="campo"
                   type="password"
-                  onChange={(e) => setPw(e.target.value)}
+                  onChange={e => setPw(e.target.value)}
                   placeholder="Contraseña"
                 ></input>
               </div>
@@ -199,7 +203,7 @@ export default function Upload({}) {
                   className="boton"
                   ref={bRef}
                   onClick={() => submit(torneo, pw, vod, file)}
-                  style={{marginBottom: '10px'}}
+                  style={{ marginBottom: "10px" }}
                 >
                   Enviar
                 </button>{" "}
@@ -228,7 +232,7 @@ export default function Upload({}) {
                 padding: "0",
                 width: "310px",
                 textAlign: "center",
-                minHeight: "355px",
+                minHeight: "355px"
               }}
             >
               <div className="cartel">
@@ -241,15 +245,15 @@ export default function Upload({}) {
                   Partido(s) cargado(s) correctamente.
                 </div>
                 <div>
-                  <button className="boton" onClick={e => router.push('/resultados')}>
+                  <button
+                    className="boton"
+                    onClick={e => router.push("/resultados")}
+                  >
                     Resultados
                   </button>
                 </div>
                 <div>
-                  <button
-                    className="boton"
-                    onClick={() => reset()}
-                  >
+                  <button className="boton" onClick={() => reset()}>
                     Cargar más
                   </button>
                 </div>

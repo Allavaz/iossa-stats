@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import Autosuggest from 'react-autosuggest';
-import Torneos from '../utils/Torneos.json';
-import { getTournamentIcon } from '../utils/Utils';
-import theme from '../styles/autocompleteTorneos.module.css';
+import { useState } from "react";
+import Autosuggest from "react-autosuggest";
+import Torneos from "../utils/Torneos.json";
+import { getTournamentIcon } from "../utils/Utils";
+import theme from "../styles/autocompleteTorneos.module.css";
 
 export default function AutocompleteTorneos(props) {
-  let torneos = []
+  let torneos = [];
   for (let i in Torneos) {
     for (let j in Torneos[i].torneos) {
-      if (Torneos[i].temporada !== 'all') {
+      if (Torneos[i].temporada !== "all") {
         torneos.push({
           torneo: Torneos[i].torneos[j].torneo,
           icono: getTournamentIcon(Torneos[i].torneos[j].torneo)
-        })
+        });
       }
     }
   }
@@ -20,23 +20,29 @@ export default function AutocompleteTorneos(props) {
   const getSuggestions = value => {
     const inputValue = value.toLowerCase();
     const inputLength = inputValue.length;
-  
-    return inputLength === 0 ? [] : torneos.filter(e =>
-      e.torneo.toLowerCase().includes(inputValue)
-    );
+
+    return inputLength === 0
+      ? []
+      : torneos.filter(e => e.torneo.toLowerCase().includes(inputValue));
   };
 
   const getSuggestionValue = suggestion => suggestion.torneo;
 
   const renderSuggestion = suggestion => (
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
       <span>
-        <img src={suggestion.icono} 
-          height='14pt' 
-          style={{marginRight: '.5ch'}}
+        <img
+          src={suggestion.icono}
+          height="14pt"
+          style={{ marginRight: ".5ch" }}
           alt={suggestion.torneo}
-        >
-      </img>
+        ></img>
       </span>
       <span>{suggestion.torneo}</span>
     </div>
@@ -45,25 +51,25 @@ export default function AutocompleteTorneos(props) {
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
-  const onChange = (event, {newValue, method}) => {
+  const onChange = (event, { newValue, method }) => {
     setValue(newValue);
     props.setValue(newValue.trim());
-  }
+  };
 
-  const onSuggestionsFetchRequested = ({value, reason}) => {
-    if (reason === 'input-changed') {
-      setSuggestions(getSuggestions(value).slice(0,15));
+  const onSuggestionsFetchRequested = ({ value, reason }) => {
+    if (reason === "input-changed") {
+      setSuggestions(getSuggestions(value).slice(0, 15));
     }
-  }
+  };
 
   const onSuggestionsClearRequested = () => {
     setSuggestions([]);
-  }
+  };
 
   const inputProps = {
     value,
-    onChange: onChange,
-  }
+    onChange: onChange
+  };
 
   return (
     <Autosuggest

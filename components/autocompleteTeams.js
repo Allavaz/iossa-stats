@@ -1,38 +1,44 @@
-import { useState } from 'react';
-import Autosuggest from 'react-autosuggest';
-import Teams from '../utils/Teams.json';
-import { getTeamLogo } from '../utils/Utils';
-import theme from '../styles/autocompleteTeams.module.css';
+import { useState } from "react";
+import Autosuggest from "react-autosuggest";
+import Teams from "../utils/Teams.json";
+import { getTeamLogo } from "../utils/Utils";
+import theme from "../styles/autocompleteTeams.module.css";
 
 export default function AutocompleteTeams(props) {
-  let teams = []
+  let teams = [];
   for (let i in Teams) {
     teams.push({
       team: i,
       logo: getTeamLogo(i)
-    })
+    });
   }
 
   const getSuggestions = value => {
     const inputValue = value.toLowerCase();
     const inputLength = inputValue.length;
-  
-    return inputLength === 0 ? [] : teams.filter(e =>
-      e.team.toLowerCase().includes(inputValue)
-    );
+
+    return inputLength === 0
+      ? []
+      : teams.filter(e => e.team.toLowerCase().includes(inputValue));
   };
 
   const getSuggestionValue = suggestion => suggestion.team;
 
   const renderSuggestion = suggestion => (
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
       <span>
-        <img src={suggestion.logo} 
-          height='16pt' 
-          style={{marginRight: '.5ch'}}
+        <img
+          src={suggestion.logo}
+          height="16pt"
+          style={{ marginRight: ".5ch" }}
           alt={suggestion.team}
-        >
-      </img>
+        ></img>
       </span>
       <span>{suggestion.team}</span>
     </div>
@@ -41,25 +47,25 @@ export default function AutocompleteTeams(props) {
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
-  const onChange = (event, {newValue, method}) => {
+  const onChange = (event, { newValue, method }) => {
     setValue(newValue);
     props.setValue(newValue.trim());
-  }
+  };
 
-  const onSuggestionsFetchRequested = ({value, reason}) => {
-    if (reason === 'input-changed') {
-      setSuggestions(getSuggestions(value).slice(0,15));
+  const onSuggestionsFetchRequested = ({ value, reason }) => {
+    if (reason === "input-changed") {
+      setSuggestions(getSuggestions(value).slice(0, 15));
     }
-  }
+  };
 
   const onSuggestionsClearRequested = () => {
     setSuggestions([]);
-  }
+  };
 
   const inputProps = {
     value,
-    onChange: onChange,
-  }
+    onChange: onChange
+  };
 
   return (
     <Autosuggest

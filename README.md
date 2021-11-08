@@ -1,6 +1,7 @@
 # [IOSoccer Sudamérica Stats](https://stats.iosoccer-sa.bid)
 
 Web app that tracks matches, standings, individual stats and rankings for the South American IOSoccer Community, made with the **MERN** stack:
+
 - NodeJS
 - Express
 - React
@@ -10,7 +11,7 @@ Web app that tracks matches, standings, individual stats and rankings for the So
 
 I'm using Express as a web server that hosts the frontend static files. There's a secret endpoint protected with password that the staff of the community uses to upload JSON files that IOSoccer creates at the end of a match.
 
-There are also multiple endpoints which IOSoccer Servers use to send JSON data. JSON data is received by Express, which verifies that the data was sent by the Official IOSoccer South America Servers (via Tokens). 
+There are also multiple endpoints which IOSoccer Servers use to send JSON data. JSON data is received by Express, which verifies that the data was sent by the Official IOSoccer South America Servers (via Tokens).
 
 Relevant information from those JSON files is extracted and extra information is also added from the team database, such as team logos etc.
 

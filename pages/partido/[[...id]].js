@@ -1,13 +1,13 @@
 import MatchCard from "../../components/matchCard";
-import { useState } from 'react';
+import { useState } from "react";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
-import Head from 'next/head';
+import Head from "next/head";
 import MatchTeamStats from "../../components/matchTeamStats";
 import FullPositions from "../../components/fullPositions";
-import Torneos from '../../utils/Torneos.json';
+import Torneos from "../../utils/Torneos.json";
 import MatchIndividualStats from "../../components/matchIndividualStats";
 import Vod from "../../components/vod";
-import Challonge from '../../components/challonge';
+import Challonge from "../../components/challonge";
 import axios from "axios";
 import VodEditor from "../../components/vodEditor";
 import MatchTeamStatsEditor from "../../components/matchTeamStatsEditor";
@@ -25,33 +25,44 @@ export async function getServerSideProps(context) {
         let t = Torneos[i].torneos[j];
         if (t.torneo === match.torneo) {
           if (t.challonge) {
-            props.challonge = t.challonge
+            props.challonge = t.challonge;
           } else if (t.tabla) {
             props.table = await getPositions(t.tabla);
-            props.tablaTorneo = t.tablaLabel || t.torneo
+            props.tablaTorneo = t.tablaLabel || t.torneo;
           }
         }
       }
     }
     if (context.params.id.length === 2) {
       if (context.params.id[1] === process.env.ENDPOINT) {
-        props.players = await getPlayers('all');
+        props.players = await getPlayers("all");
         props.editable = true;
       } else {
-        return ({ notFound: true });
+        return { notFound: true };
       }
     } else if (context.params.id.length > 2) {
-      return ({ notFound: true });
+      return { notFound: true };
     }
-    return ({ props });
+    return { props };
   } else {
-    return ({ notFound: true });
+    return { notFound: true };
   }
 }
 
-export default function Match({ data, table, tablaTorneo, challonge, editable, players }) {
-  const [editableData, setEditableData] = useState(JSON.parse(JSON.stringify(data)));
-  const [editableTable, setEditableTable] = useState(table ? JSON.parse(JSON.stringify(table)) : null);
+export default function Match({
+  data,
+  table,
+  tablaTorneo,
+  challonge,
+  editable,
+  players
+}) {
+  const [editableData, setEditableData] = useState(
+    JSON.parse(JSON.stringify(data))
+  );
+  const [editableTable, setEditableTable] = useState(
+    table ? JSON.parse(JSON.stringify(table)) : null
+  );
   const [editableTablaTorneo, setEditableTablaTorneo] = useState(tablaTorneo);
   const [editableChallonge, setEditableChallonge] = useState(challonge);
   const [vodEditing, setVodEditing] = useState(false);
@@ -62,7 +73,7 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
   function changeTorneo(torneo) {
     setEditableTable(null);
     setEditableChallonge(null);
-    setEditableData((prevState) => ({...prevState, torneo: torneo}))
+    setEditableData(prevState => ({ ...prevState, torneo: torneo }));
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];
@@ -70,10 +81,10 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
           if (t.challonge) {
             setEditableChallonge(t.challonge);
           } else if (t.tabla) {
-            axios.get('/api/positions/' + t.tabla).then((res) => {
+            axios.get("/api/positions/" + t.tabla).then(res => {
               setEditableTable(res.data);
-            })
-            setEditableTablaTorneo(t.tablaLabel || t.torneo)
+            });
+            setEditableTablaTorneo(t.tablaLabel || t.torneo);
           }
         }
       }
@@ -81,18 +92,21 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
   }
 
   function changeDate(date) {
-    setEditableData((prevState) => ({...prevState, fecha: date}));
+    setEditableData(prevState => ({ ...prevState, fecha: date }));
   }
 
   function changeTeam(value, side) {
-    let s = side === 'home' ? 0 : 1;
-    setEditableData((prevState) => {
-      let data = {...prevState};
+    let s = side === "home" ? 0 : 1;
+    setEditableData(prevState => {
+      let data = { ...prevState };
       data.teams[s].teamname = value;
       for (let i in data.teams[s].playerStatistics) {
         data.teams[s].playerStatistics[i].info.team = value;
         for (let j in data.players) {
-          if (data.teams[s].playerStatistics[i].info.steam_id === data.players[j].info.steam_id) {
+          if (
+            data.teams[s].playerStatistics[i].info.steam_id ===
+            data.players[j].info.steam_id
+          ) {
             data.players[j].info.team = value;
           }
         }
@@ -102,8 +116,8 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
   }
 
   function changeScore(home, away) {
-    setEditableData((prevState) => {
-      let data = {...prevState};
+    setEditableData(prevState => {
+      let data = { ...prevState };
       data.teams[0].score = home;
       data.teams[1].score = away;
       data.teams[0].scorereceived = away;
@@ -123,17 +137,17 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
   }
 
   function changeEvents(matchEvents) {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
       data.matchevents = matchEvents;
       return data;
-    })
+    });
     predictTeamStats();
     predictIndivStats();
   }
 
   function predictTeamStats() {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
       let events = data.matchevents;
       let homeScore = 0;
@@ -161,42 +175,42 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
       let homeShotsOnTarget = 0;
       let awayShotsOnTarget = 0;
       for (let i in events) {
-        if (events[i].team === 'home') {
+        if (events[i].team === "home") {
           switch (events[i].event) {
-            case 'GOAL':
+            case "GOAL":
               homeScore++;
               homeGoals++;
               break;
-            case 'YELLOW CARD':
+            case "YELLOW CARD":
               homeYellowCards++;
               break;
-            case 'RED CARD':
+            case "RED CARD":
               homeRedCards++;
               break;
-            case 'SECOND YELLOW':
+            case "SECOND YELLOW":
               homeSecondYellows++;
               break;
-            case 'OWN GOAL':
+            case "OWN GOAL":
               awayScore++;
               break;
             default:
           }
-        } else if (events[i].team === 'away') {
+        } else if (events[i].team === "away") {
           switch (events[i].event) {
-            case 'GOAL':
+            case "GOAL":
               awayScore++;
               awayGoals++;
               break;
-            case 'YELLOW CARD':
+            case "YELLOW CARD":
               awayYellowCards++;
               break;
-            case 'RED CARD':
+            case "RED CARD":
               awayRedCards++;
               break;
-            case 'SECOND YELLOW':
+            case "SECOND YELLOW":
               awaySecondYellows++;
               break;
-            case 'OWN GOAL':
+            case "OWN GOAL":
               homeScore++;
               break;
             default:
@@ -204,22 +218,54 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
         }
       }
       for (let i in data.teams[0].playerStatistics) {
-        homeShots = homeShots + parseInt(data.teams[0].playerStatistics[i].statistics.shots);
-        homeShotsOnTarget = homeShotsOnTarget + parseInt(data.teams[0].playerStatistics[i].statistics.shotsontarget);
-        homeFouls = homeFouls + parseInt(data.teams[0].playerStatistics[i].statistics.fouls);
-        homePasses = homePasses + parseInt(data.teams[0].playerStatistics[i].statistics.passes);
-        homePassesCompleted = homePassesCompleted + parseInt(data.teams[0].playerStatistics[i].statistics.passescompleted);
-        homeOffsides = homeOffsides + parseInt(data.teams[0].playerStatistics[i].statistics.offsides);
-        homeCorners = homeCorners + parseInt(data.teams[0].playerStatistics[i].statistics.corners);
+        homeShots =
+          homeShots +
+          parseInt(data.teams[0].playerStatistics[i].statistics.shots);
+        homeShotsOnTarget =
+          homeShotsOnTarget +
+          parseInt(data.teams[0].playerStatistics[i].statistics.shotsontarget);
+        homeFouls =
+          homeFouls +
+          parseInt(data.teams[0].playerStatistics[i].statistics.fouls);
+        homePasses =
+          homePasses +
+          parseInt(data.teams[0].playerStatistics[i].statistics.passes);
+        homePassesCompleted =
+          homePassesCompleted +
+          parseInt(
+            data.teams[0].playerStatistics[i].statistics.passescompleted
+          );
+        homeOffsides =
+          homeOffsides +
+          parseInt(data.teams[0].playerStatistics[i].statistics.offsides);
+        homeCorners =
+          homeCorners +
+          parseInt(data.teams[0].playerStatistics[i].statistics.corners);
       }
       for (let i in data.teams[1].playerStatistics) {
-        awayShots = awayShots + parseInt(data.teams[1].playerStatistics[i].statistics.shots);
-        awayShotsOnTarget = awayShotsOnTarget + parseInt(data.teams[1].playerStatistics[i].statistics.shotsontarget);
-        awayFouls = awayFouls + parseInt(data.teams[1].playerStatistics[i].statistics.fouls);
-        awayPasses = awayPasses + parseInt(data.teams[1].playerStatistics[i].statistics.passes);
-        awayPassesCompleted = awayPassesCompleted + parseInt(data.teams[1].playerStatistics[i].statistics.passescompleted);
-        awayOffsides = awayOffsides + parseInt(data.teams[1].playerStatistics[i].statistics.offsides);
-        awayCorners = awayCorners + parseInt(data.teams[1].playerStatistics[i].statistics.corners);
+        awayShots =
+          awayShots +
+          parseInt(data.teams[1].playerStatistics[i].statistics.shots);
+        awayShotsOnTarget =
+          awayShotsOnTarget +
+          parseInt(data.teams[1].playerStatistics[i].statistics.shotsontarget);
+        awayFouls =
+          awayFouls +
+          parseInt(data.teams[1].playerStatistics[i].statistics.fouls);
+        awayPasses =
+          awayPasses +
+          parseInt(data.teams[1].playerStatistics[i].statistics.passes);
+        awayPassesCompleted =
+          awayPassesCompleted +
+          parseInt(
+            data.teams[1].playerStatistics[i].statistics.passescompleted
+          );
+        awayOffsides =
+          awayOffsides +
+          parseInt(data.teams[1].playerStatistics[i].statistics.offsides);
+        awayCorners =
+          awayCorners +
+          parseInt(data.teams[1].playerStatistics[i].statistics.corners);
       }
       data.teams[0].score = homeScore;
       data.teams[0].scorereceived = awayScore;
@@ -249,15 +295,25 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
       data.teams[1].statistics.offsides = awayOffsides;
       data.teams[0].statistics.corners = homeCorners;
       data.teams[1].statistics.corners = awayCorners;
-      data.teams[0].statistics.yellowcards = homeYellowCards + homeSecondYellows;
-      data.teams[1].statistics.yellowcards = awayYellowCards + awaySecondYellows;
+      data.teams[0].statistics.yellowcards =
+        homeYellowCards + homeSecondYellows;
+      data.teams[1].statistics.yellowcards =
+        awayYellowCards + awaySecondYellows;
       data.teams[0].statistics.redcards = homeRedCards + homeSecondYellows;
       data.teams[1].statistics.redcards = awayRedCards + homeSecondYellows;
-      if (data.teams[0].statistics.fouls < (homeYellowCards + homeRedCards + homeSecondYellows)) {
-        data.teams[0].statistics.fouls = homeYellowCards + homeRedCards + homeSecondYellows;
-      } 
-      if (data.teams[1].statistics.fouls < (awayYellowCards + awayRedCards + awaySecondYellows)) {
-        data.teams[1].statistics.fouls = awayYellowCards + awayRedCards + awaySecondYellows;
+      if (
+        data.teams[0].statistics.fouls <
+        homeYellowCards + homeRedCards + homeSecondYellows
+      ) {
+        data.teams[0].statistics.fouls =
+          homeYellowCards + homeRedCards + homeSecondYellows;
+      }
+      if (
+        data.teams[1].statistics.fouls <
+        awayYellowCards + awayRedCards + awaySecondYellows
+      ) {
+        data.teams[1].statistics.fouls =
+          awayYellowCards + awayRedCards + awaySecondYellows;
       }
       if (data.teams[0].statistics.shots < homeGoals) {
         data.teams[0].statistics.shots = homeGoals;
@@ -272,11 +328,11 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
         data.teams[1].statistics.shotsontarget = awayGoals;
       }
       return data;
-    })
+    });
   }
 
   function predictIndivStats() {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
       let events = data.matchevents;
       let steamids = [];
@@ -303,7 +359,11 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
       }
       for (let i in events) {
         if (!steamids.includes(events[i].player1SteamId)) {
-          steamids.push({steamid: events[i].player1SteamId, side: events[i].team, name: events[i].name});
+          steamids.push({
+            steamid: events[i].player1SteamId,
+            side: events[i].team,
+            name: events[i].name
+          });
         }
       }
       for (let i in steamids) {
@@ -361,13 +421,13 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
               throwins: 0,
               yellowcards: 0
             }
-          }
-          if (steamids[i].side === 'home') {
-            p.info.team = data.teams[0].teamname
+          };
+          if (steamids[i].side === "home") {
+            p.info.team = data.teams[0].teamname;
             predictPlayerStats(p, prevState);
             homePlayerStatistics.push(p);
-          } else if (steamids[i].side === 'away') {
-            p.info.team = data.teams[1].teamname
+          } else if (steamids[i].side === "away") {
+            p.info.team = data.teams[1].teamname;
             predictPlayerStats(p, prevState);
             awayPlayerStatistics.push(p);
           }
@@ -378,7 +438,7 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
       data.teams[1].playerStatistics = awayPlayerStatistics;
       data.players = playerStatistics;
       return data;
-    })
+    });
   }
 
   function predictPlayerStats(player, prevState) {
@@ -392,19 +452,19 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
       if (events[i].player1SteamId === player.info.steam_id) {
         player.info.name = events[i].name;
         switch (events[i].event) {
-          case 'GOAL':
+          case "GOAL":
             goals++;
             break;
-          case 'OWN GOAL':
+          case "OWN GOAL":
             ownGoals++;
             break;
-          case 'YELLOW CARD':
+          case "YELLOW CARD":
             yellowCards++;
             break;
-          case 'SECOND YELLOW':
+          case "SECOND YELLOW":
             secondYellowCards++;
             break;
-          case 'RED CARD':
+          case "RED CARD":
             redCards++;
             break;
           default:
@@ -415,7 +475,7 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
     player.statistics.owngoals = ownGoals;
     player.statistics.yellowcards = yellowCards + secondYellowCards;
     player.statistics.redcards = redCards + secondYellowCards;
-    if (player.statistics.fouls < (yellowCards + secondYellowCards + redCards)) {
+    if (player.statistics.fouls < yellowCards + secondYellowCards + redCards) {
       player.statistics.fouls = yellowCards + secondYellowCards + redCards;
     }
     if (goals > player.statistics.shots) {
@@ -427,35 +487,51 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
   }
 
   function changeVod(vod) {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
       data.vod = vod;
       return data;
-    })
+    });
   }
 
   function changeTeamStats(teams) {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
       data.teams[0] = teams[0];
       data.teams[1] = teams[1];
-      if (data.teams[0].statistics.possession + data.teams[1].statistics.possession !== 100) {
-        if (data.teams[0].statistics.possession > data.teams[1].statistics.possession) {
-          data.teams[0].statistics.possession = data.teams[0].statistics.possession - 
-          ((data.teams[0].statistics.possession + data.teams[1].statistics.possession) - 100);
-        } else if (data.teams[1].statistics.possession > data.teams[0].statistics.possession) {
-          data.teams[1].statistics.possession = data.teams[1].statistics.possession - 
-          ((data.teams[0].statistics.possession + data.teams[1].statistics.possession) - 100);
+      if (
+        data.teams[0].statistics.possession +
+          data.teams[1].statistics.possession !==
+        100
+      ) {
+        if (
+          data.teams[0].statistics.possession >
+          data.teams[1].statistics.possession
+        ) {
+          data.teams[0].statistics.possession =
+            data.teams[0].statistics.possession -
+            (data.teams[0].statistics.possession +
+              data.teams[1].statistics.possession -
+              100);
+        } else if (
+          data.teams[1].statistics.possession >
+          data.teams[0].statistics.possession
+        ) {
+          data.teams[1].statistics.possession =
+            data.teams[1].statistics.possession -
+            (data.teams[0].statistics.possession +
+              data.teams[1].statistics.possession -
+              100);
         }
       }
       return data;
-    })
+    });
   }
 
   function changeIndivStats(player, side, index, oldsteamid) {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
-      let s = side === 'home' ? 0 : 1;
+      let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics[index] = player;
       let playerExists = false;
       let steamidlookup;
@@ -477,29 +553,33 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
         }
       }
       return data;
-    })
+    });
     predictTeamStats();
   }
 
   function removePlayer(player, side, index) {
-    setEditableData((prevState) => {
+    setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState));
-      let s = side === 'home' ? 0 : 1;
+      let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics.splice(index, 1);
       for (let i in data.players) {
         if (data.players[i].info.steam_id === player.info.steam_id) {
           data.players.splice(i, 1);
         }
       }
-      data.matchevents = data.matchevents.filter(event => event.player1SteamId !== player.info.steam_id);
+      data.matchevents = data.matchevents.filter(
+        event => event.player1SteamId !== player.info.steam_id
+      );
       return data;
-    })
+    });
     predictTeamStats();
   }
 
   function exportMatch() {
-    const element = document.createElement('a');
-    const file = new Blob([JSON.stringify(editableData)], {type: 'application/json'});
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify(editableData)], {
+      type: "application/json"
+    });
     element.href = URL.createObjectURL(file);
     element.download = editableData.filename;
     document.body.appendChild(element);
@@ -515,45 +595,55 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
   }
 
   function updateMatch(pw) {
-    if (pw === '') {
-      alert('Ingrese la contraseña.');
-    } else if (editableData.teams[0].statistics.possession + editableData.teams[1].statistics.possession !== 100) {
-      alert('Las posesiones están desbalanceadas. Revisá las cuentas.');
+    if (pw === "") {
+      alert("Ingrese la contraseña.");
+    } else if (
+      editableData.teams[0].statistics.possession +
+        editableData.teams[1].statistics.possession !==
+      100
+    ) {
+      alert("Las posesiones están desbalanceadas. Revisá las cuentas.");
     } else {
       setLoading(true);
-      axios.post('/api/postupdate', {password: pw, data: editableData}).then((res) => {
-        console.log(res.data);
-        if (res.data === 'wrong pw') {
-          alert('Contraseña incorrecta!');
-        } else if (res.data === 'Success!') {
-          setSuccess('updating');
-        } else {
-          alert('Ocurrió un error. Revisá la consola.');
-        }
-        setLoading(false);
-      }).catch(e => console.log(e));
+      axios
+        .post("/api/postupdate", { password: pw, data: editableData })
+        .then(res => {
+          console.log(res.data);
+          if (res.data === "wrong pw") {
+            alert("Contraseña incorrecta!");
+          } else if (res.data === "Success!") {
+            setSuccess("updating");
+          } else {
+            alert("Ocurrió un error. Revisá la consola.");
+          }
+          setLoading(false);
+        })
+        .catch(e => console.log(e));
     }
   }
 
   function deleteMatch(pw) {
-    if (pw === '') {
-      alert('Ingrese la contraseña.');
+    if (pw === "") {
+      alert("Ingrese la contraseña.");
     } else {
       setLoading(true);
-      axios.post('/api/postdelete', {password: pw, data: editableData}).then((res) => {
-        if (res.data === 'wrong pw') {
-          alert('Contraseña incorrecta!');
-        } else if (res.data === 'Success!') {
-          setSuccess('deleting');
-        } else {
-          alert('Ocurrió un error. Revisá la consola.');
-        }
-        setLoading(false);
-      }).catch(e => console.log(e));
+      axios
+        .post("/api/postdelete", { password: pw, data: editableData })
+        .then(res => {
+          if (res.data === "wrong pw") {
+            alert("Contraseña incorrecta!");
+          } else if (res.data === "Success!") {
+            setSuccess("deleting");
+          } else {
+            alert("Ocurrió un error. Revisá la consola.");
+          }
+          setLoading(false);
+        })
+        .catch(e => console.log(e));
     }
   }
 
-  if (success === 'updating') {
+  if (success === "updating") {
     return (
       <div className="content">
         <div
@@ -562,7 +652,7 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
             padding: "0",
             width: "310px",
             textAlign: "center",
-            minHeight: "355px",
+            minHeight: "355px"
           }}
         >
           <div className="cartel">
@@ -575,21 +665,22 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
               Partido modificado correctamente.
             </div>
             <div>
-              <button 
-                style={{ margin: 0 }} 
-                className="boton" 
+              <button
+                style={{ margin: 0 }}
+                className="boton"
                 onClick={e => {
-                  router.push('/partido/' + editableData._id);
+                  router.push("/partido/" + editableData._id);
                   setSuccess(null);
-                }}>
+                }}
+              >
                 Ir al partido
               </button>
             </div>
           </div>
         </div>
       </div>
-    )
-  } else if (success === 'deleting') {
+    );
+  } else if (success === "deleting") {
     return (
       <div className="content">
         <div
@@ -598,7 +689,7 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
             padding: "0",
             width: "310px",
             textAlign: "center",
-            minHeight: "355px",
+            minHeight: "355px"
           }}
         >
           <div className="cartel">
@@ -611,35 +702,52 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
               Partido eliminado correctamente.
             </div>
             <div>
-              <button style={{ margin: 0 }} className="boton" onClick={e => router.push('/')}>
+              <button
+                style={{ margin: 0 }}
+                className="boton"
+                onClick={e => router.push("/")}
+              >
                 Volver al inicio
               </button>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   } else {
     return (
       <>
         <Head>
-          <title>{data.teams[0].teamname} vs. {data.teams[1].teamname} | IOSoccer Sudamérica</title>
+          <title>
+            {data.teams[0].teamname} vs. {data.teams[1].teamname} | IOSoccer
+            Sudamérica
+          </title>
           <meta property="og:type" content="website" />
-          <meta property="og:title" content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname}`} />
+          <meta
+            property="og:title"
+            content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname}`}
+          />
           <meta property="og:image" content={"/api/matchcard/" + data._id} />
-          <meta property="og:site_name" content='IOSoccer Sudamérica' />
+          <meta property="og:site_name" content="IOSoccer Sudamérica" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname} | IOSoccer Sudamérica`} />
-          <meta name="twitter:image:src" content={"https://stats.iosoccer-sa.bid/api/matchcard/" + data._id} />
+          <meta
+            name="twitter:title"
+            content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname} | IOSoccer Sudamérica`}
+          />
+          <meta
+            name="twitter:image:src"
+            content={"https://stats.iosoccer-sa.bid/api/matchcard/" + data._id}
+          />
           <meta name="twitter:site" content="@IOSoccerSA" />
         </Head>
-        <MatchCard data={editable ? editableData : data} 
-          editable={editable} 
-          players={players} 
-          changeTorneo={changeTorneo} 
-          changeDate={changeDate} 
-          changeTeam={changeTeam} 
-          changeScore={changeScore} 
+        <MatchCard
+          data={editable ? editableData : data}
+          editable={editable}
+          players={players}
+          changeTorneo={changeTorneo}
+          changeDate={changeDate}
+          changeTeam={changeTeam}
+          changeScore={changeScore}
           changeEvents={changeEvents}
           loading={loading}
           exportMatch={exportMatch}
@@ -651,51 +759,105 @@ export default function Match({ data, table, tablaTorneo, challonge, editable, p
           teamStatsEditing={teamStatsEditing}
           vodEditing={vodEditing}
         />
-        <div className='colCon'>
-          <div className="flexTableDiv"
+        <div className="colCon">
+          <div
+            className="flexTableDiv"
             style={{
               flexBasis: challonge || !table ? "900px" : "410px",
-              flexGrow: 9999,
+              flexGrow: 9999
             }}
           >
-            {!teamStatsEditing ? <MatchTeamStats data={editable ? editableData : data} editable={editable} setTeamStatsEditing={setTeamStatsEditing} /> : null}
-            {teamStatsEditing ? <MatchTeamStatsEditor data={editableData} changeTeamStats={changeTeamStats} setTeamStatsEditing={setTeamStatsEditing} /> : null}
-            {editableChallonge || (challonge && !editable) ? <Challonge id={challonge} /> : null}
+            {!teamStatsEditing ? (
+              <MatchTeamStats
+                data={editable ? editableData : data}
+                editable={editable}
+                setTeamStatsEditing={setTeamStatsEditing}
+              />
+            ) : null}
+            {teamStatsEditing ? (
+              <MatchTeamStatsEditor
+                data={editableData}
+                changeTeamStats={changeTeamStats}
+                setTeamStatsEditing={setTeamStatsEditing}
+              />
+            ) : null}
+            {editableChallonge || (challonge && !editable) ? (
+              <Challonge id={challonge} />
+            ) : null}
           </div>
-          {editableTable || (table && !editable) ? 
-            <div style={{flexGrow: 1}}>
-              <div className='flexTableDiv'>
-                <FullPositions 
-                  teams={editable ? editableTable : table} 
-                  torneo={editable ? editableTablaTorneo : tablaTorneo} 
-                  unificada={editableTablaTorneo.startsWith('Superliga') || (!editable && tablaTorneo.startsWith('Superliga'))} 
+          {editableTable || (table && !editable) ? (
+            <div style={{ flexGrow: 1 }}>
+              <div className="flexTableDiv">
+                <FullPositions
+                  teams={editable ? editableTable : table}
+                  torneo={editable ? editableTablaTorneo : tablaTorneo}
+                  unificada={
+                    editableTablaTorneo.startsWith("Superliga") ||
+                    (!editable && tablaTorneo.startsWith("Superliga"))
+                  }
                 />
-                {editable ? <p style={{fontSize: '0.8em', textAlign: 'center', color: 'var(--header-color)'}}><i>La tabla se actualizará luego de subir el partido.</i></p> : null}
+                {editable ? (
+                  <p
+                    style={{
+                      fontSize: "0.8em",
+                      textAlign: "center",
+                      color: "var(--header-color)"
+                    }}
+                  >
+                    <i>La tabla se actualizará luego de subir el partido.</i>
+                  </p>
+                ) : null}
               </div>
             </div>
-          : null}
+          ) : null}
         </div>
-        <MatchIndividualStats 
-          players={editable ? editableData.teams[0].playerStatistics : data.teams[0].playerStatistics} 
-          teamName={editable ? editableData.teams[0].teamname : data.teams[0].teamname} 
+        <MatchIndividualStats
+          players={
+            editable
+              ? editableData.teams[0].playerStatistics
+              : data.teams[0].playerStatistics
+          }
+          teamName={
+            editable ? editableData.teams[0].teamname : data.teams[0].teamname
+          }
           editable={editable}
           playersAutocomplete={players}
           changeIndivStats={changeIndivStats}
           removePlayer={removePlayer}
-          side='home'
+          side="home"
         />
-        <MatchIndividualStats 
-          players={editable ? editableData.teams[1].playerStatistics : data.teams[1].playerStatistics} 
-          teamName={editable ? editableData.teams[1].teamname : data.teams[1].teamname} 
+        <MatchIndividualStats
+          players={
+            editable
+              ? editableData.teams[1].playerStatistics
+              : data.teams[1].playerStatistics
+          }
+          teamName={
+            editable ? editableData.teams[1].teamname : data.teams[1].teamname
+          }
           editable={editable}
           playersAutocomplete={players}
           changeIndivStats={changeIndivStats}
           removePlayer={removePlayer}
-          side='away'
+          side="away"
         />
-        {(!editable && data.vod) || (editable && editableData.vod && !vodEditing) ? <Vod vod={editable ? editableData.vod : data.vod} editable={editable} setVodEditing={setVodEditing} changeVod={changeVod} /> : null}
-        {(editableData.vod === null && editable) || vodEditing ? <VodEditor vod={editableData.vod} changeVod={changeVod} setVodEditing={setVodEditing} /> : null}
+        {(!editable && data.vod) ||
+        (editable && editableData.vod && !vodEditing) ? (
+          <Vod
+            vod={editable ? editableData.vod : data.vod}
+            editable={editable}
+            setVodEditing={setVodEditing}
+            changeVod={changeVod}
+          />
+        ) : null}
+        {(editableData.vod === null && editable) || vodEditing ? (
+          <VodEditor
+            vod={editableData.vod}
+            changeVod={changeVod}
+            setVodEditing={setVodEditing}
+          />
+        ) : null}
       </>
-    )
+    );
   }
 }

@@ -1,10 +1,10 @@
-var Teams = require('./Teams.json')
-var Torneos = require('./Torneos.json');
+var Teams = require("./Teams.json");
+var Torneos = require("./Torneos.json");
 
-exports.temporadaActual = 't8';
+exports.temporadaActual = "t8";
 
-exports.getAllQueries = function() {
-  let queries = []
+exports.getAllQueries = function () {
+  let queries = [];
   for (let i in Torneos) {
     queries.push(Torneos[i].temporada);
     for (let j in Torneos[i].torneos) {
@@ -14,7 +14,7 @@ exports.getAllQueries = function() {
     }
   }
   return queries;
-}
+};
 
 exports.getTournamentIcon = function (tournament) {
   if (tournament.includes("Liga D1")) {
@@ -68,7 +68,7 @@ exports.fecha = function (str) {
   return day + "/" + month + "/" + year;
 };
 
-exports.percentage = function(x, y) {
+exports.percentage = function (x, y) {
   if (y === 0) {
     return 0;
   } else {
@@ -76,9 +76,9 @@ exports.percentage = function(x, y) {
   }
 };
 
-exports.invPercentage = function(x, y) {
-  return ((x/100) * y);
-}
+exports.invPercentage = function (x, y) {
+  return (x / 100) * y;
+};
 
 exports.filterMethod = (filter, row) => {
   const id = filter.pivotId || filter.id;
@@ -87,20 +87,20 @@ exports.filterMethod = (filter, row) => {
     : true;
 };
 
-exports.getTeamLogo = function(teamname) {
+exports.getTeamLogo = function (teamname) {
   try {
     let shortname = Teams[teamname].toLowerCase();
-    return `/clubs/${shortname}.png`
+    return `/clubs/${shortname}.png`;
   } catch {
-    return '/logo-iosoccer-128.png'
+    return "/logo-iosoccer-128.png";
   }
-}
+};
 
-exports.getTeamShortname = function(teamname) {
+exports.getTeamShortname = function (teamname) {
   try {
-    return Teams[teamname]
+    return Teams[teamname];
   } catch {
     let len = teamname.length > 3 ? 3 : teamname.length;
-    return teamname.substring(0, len).toUpperCase()
+    return teamname.substring(0, len).toUpperCase();
   }
-}
+};

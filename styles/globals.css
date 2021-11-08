@@ -65,7 +65,8 @@ code {
     monospace;
 }
 
-.dataTable th, td {
+.dataTable th,
+td {
   padding: 5px;
   margin: 0px;
   vertical-align: middle;
@@ -96,7 +97,8 @@ h5 {
   border-right: var(--button-border);
 }
 
-.total, .t3 {
+.total,
+.t3 {
   margin-right: 25px;
 }
 
@@ -155,8 +157,12 @@ h5 {
 }
 
 @keyframes fade {
-  from {background-color: var(--button-bg);}
-  to {background-color: var(--button-hover-bg);}
+  from {
+    background-color: var(--button-bg);
+  }
+  to {
+    background-color: var(--button-hover-bg);
+  }
 }
 
 .whitespace {
@@ -230,12 +236,19 @@ h5 {
   user-select: none;
 }
 
-.t7, .t6, .t5, .t4, .t3, .t2, .t1, .t0 {
+.t7,
+.t6,
+.t5,
+.t4,
+.t3,
+.t2,
+.t1,
+.t0 {
   display: none;
 }
 
 #resultsTable .rt-tr-group {
-  cursor: 'pointer'
+  cursor: "pointer";
 }
 
 #minitablas {
@@ -273,7 +286,8 @@ h5 {
   font-size: 12pt;
 }
 
-.boton:hover, #selector:hover {
+.boton:hover,
+#selector:hover {
   animation-name: fade;
   animation-duration: 200ms;
   animation-fill-mode: both;
@@ -294,7 +308,8 @@ h5 {
   display: block;
 }
 
-.teamlogo, .torneologo {
+.teamlogo,
+.torneologo {
   display: flex;
   align-items: center;
 }
@@ -343,7 +358,8 @@ a {
   color: var(--normal-text-color);
 }
 
-th, tr {
+th,
+tr {
   font-size: 10pt;
 }
 
@@ -388,9 +404,9 @@ th, tr {
 }
 
 .thirdCol {
-	order: 3;
+  order: 3;
   flex: auto;
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 .matchContainer {
@@ -417,24 +433,24 @@ th, tr {
   border: none;
 }
 
-#divStatsTable{
+#divStatsTable {
   overflow: visible;
 }
 
-#statsTable{
+#statsTable {
   padding-right: 5px;
   padding-left: 5px;
 }
 
-.dataTable{
+.dataTable {
   width: 100%;
 }
 
-.dataTable tr:nth-child(odd){
+.dataTable tr:nth-child(odd) {
   background-color: var(--table-odd-row-color);
 }
 
-.dataTable tr:nth-child(even){
+.dataTable tr:nth-child(even) {
   background-color: var(--table-even-row-color);
 }
 
@@ -623,7 +639,7 @@ table tr td {
     width: 100%;
   }
 
-  #divstatstable{
+  #divstatstable {
     width: calc(100vw - 10px);
   }
 
@@ -636,7 +652,7 @@ table tr td {
   #nav-logo {
     display: table-cell;
   }
-  
+
   .bigClubLogo {
     height: 96px;
   }
@@ -683,11 +699,12 @@ table tr td {
     display: none;
   }
 
-  #shortname{
+  #shortname {
     display: initial;
   }
 
-  .content, .matchContainer {
+  .content,
+  .matchContainer {
     margin-left: 0;
     margin-right: 0;
   }
@@ -720,7 +737,7 @@ table tr td {
   #nav-logo {
     display: table-cell;
   }
-  
+
   .bigClubLogo {
     height: 96px;
   }
@@ -747,7 +764,8 @@ table tr td {
     padding: 0;
   }
 
-  .content, .matchContainer {
+  .content,
+  .matchContainer {
     margin-left: 5px;
     margin-right: 5px;
   }
@@ -792,7 +810,7 @@ table tr td {
 
 .label {
   color: var(--header-color);
-  font-size: .75em;
+  font-size: 0.75em;
 }
 
 .value {
@@ -801,7 +819,7 @@ table tr td {
 }
 
 .playername {
-  display: 'inline-flex';
+  display: "inline-flex";
   margin-top: 0;
   margin-bottom: 0;
   font-size: 1.5em;
@@ -818,7 +836,7 @@ table tr td {
 }
 
 svg {
-  width: 240px
+  width: 240px;
 }
 
 .position {
@@ -827,7 +845,7 @@ svg {
   box-shadow: var(--shadow);
   padding-right: 10px;
   padding-left: 10px;
-  font-size: .75em;
+  font-size: 0.75em;
   border: 1px solid var(--table-border-color);
   color: white;
   border-radius: 5px;
@@ -849,7 +867,7 @@ svg {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
   z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
 }
 

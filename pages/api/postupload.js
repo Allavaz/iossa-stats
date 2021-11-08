@@ -2,16 +2,16 @@ import { IncomingForm } from "formidable";
 import pushToDB from "../../lib/pushToDB";
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     let form = IncomingForm({ keepExtensions: true, multiples: true });
-    let {fields, files} = await new Promise((resolve, reject) => {
+    let { fields, files } = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) {
           reject(err);
           return;
         }
-        resolve({fields, files});
-      })
+        resolve({ fields, files });
+      });
     });
     if (fields.pw === process.env.KEY) {
       try {
@@ -24,12 +24,12 @@ export default async function handler(req, res) {
       res.end("Wrong Key");
     }
   } else {
-    res.end('Wrong method');
+    res.end("Wrong method");
   }
 }
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
-}
+    bodyParser: false
+  }
+};
