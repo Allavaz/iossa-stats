@@ -622,6 +622,12 @@ table tr td {
   height: 128px;
 }
 
+#fullteamname {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 390px) {
   #header {
     display: none;
@@ -641,12 +647,6 @@ table tr td {
 
   #divstatstable {
     width: calc(100vw - 10px);
-  }
-
-  #fullteamname {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   #nav-logo {
@@ -718,12 +718,6 @@ table tr td {
 @media only screen and (min-width: 391px) and (max-width: 550px) {
   #header {
     display: none;
-  }
-
-  #fullteamname {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   #teamname {
