@@ -60,6 +60,10 @@
         "query": "sd1"
       },
       {
+        "torneo": "Liga Zero",
+        "query": "lz"
+      },
+      {
         "torneo": "Copa D1",
         "query": "cd1"
       },
@@ -104,6 +108,18 @@
         "torneo": "Superliga D1 T8",
         "query": "sd1t8",
         "tabla": "sd1t8"
+      },
+      {
+        "torneo": "Liga Zero T8",
+        "query": "lzt8"
+      },
+      {
+        "torneo": "Liga Zero T8 - Grupo A",
+        "tabla": "lzt8a"
+      },
+      {
+        "torneo": "Liga Zero T8 - Grupo B",
+        "tabla": "lzt8b"
       },
       {
         "torneo": "Copa valencARc T8",
