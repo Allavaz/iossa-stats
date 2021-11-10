@@ -17,6 +17,9 @@ export async function getStaticProps() {
 const torneos = [
   "Superliga D1 T8",
   "Copa valencARc T8",
+  "Liga Zero T8 - Grupo A",
+  "Liga Zero T8 - Grupo B",
+  "Liga Zero T8 - Playoff",
   //'Liga D1 T7',
   //'Liga D2 T7',
   //"Copa valencARc T7",
