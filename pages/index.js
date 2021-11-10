@@ -3,7 +3,11 @@ import { getMatches, getManyPositions } from "../lib/getFromDB";
 import Matches from "../components/matches";
 import MiniPositions from "../components/miniPositions";
 
-const minitables = [{ torneo: "sd1t8", header: "Superliga D1 T8" }];
+const minitables = [
+  { torneo: "sd1t8", header: "Superliga D1 T8" },
+  { torneo: "lzt8a", header: "Liga Zero T8 - Grupo A" },
+  { torneo: "lzt8b", header: "Liga Zero T8 - Grupo B" }
+];
 
 export async function getServerSideProps() {
   let matches = await getMatches("20");
