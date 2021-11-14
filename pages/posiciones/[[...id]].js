@@ -135,7 +135,13 @@ export default function Posiciones({ tablas, category, temporada }) {
           )
         )}
       </select>
-      <div className="colCon" style={{ margin: 0 }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-evenly"
+        }}
+      >
         {tablas.map((item, index) => (
           <FullPositions
             key={index}
