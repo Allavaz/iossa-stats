@@ -21,7 +21,10 @@ export default function MatchIndividualStats({
 
   function onChangeIndivStats(player) {
     let oldsteamid;
-    if (player.info.steam_id !== players[playerEditing].info.steam_id) {
+    if (
+      !playerCreating &&
+      player.info.steam_id !== players[playerEditing].info.steam_id
+    ) {
       oldsteamid = players[playerEditing].info.steam_id;
     }
     changeIndivStats(player, side, playerEditing, oldsteamid);
