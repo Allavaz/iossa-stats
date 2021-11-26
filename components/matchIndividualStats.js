@@ -316,8 +316,13 @@ export default function MatchIndividualStats(props) {
 
   return (
     <div
-      onMouseOver={e => setHovering(true)}
-      onMouseOut={e => setHovering(false)}
+      onMouseOver={e => {
+        setHovering(true);
+      }}
+      onMouseOut={e => {
+        setHovering(false);
+        setPlayerHovering(-1);
+      }}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         {props.editing &&
