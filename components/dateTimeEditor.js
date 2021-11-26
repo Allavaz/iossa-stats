@@ -9,7 +9,7 @@ export default function DateTimeEditor(props) {
   function formatAndSendDate(date) {
     let dt = DateTime.fromISO(date);
     props.onChangeDate(dt.toUTC().toString());
-    props.setDateEditing(false);
+    props.setEditing(null);
   }
 
   let dt = DateTime.fromISO(props.date);
@@ -49,7 +49,7 @@ export default function DateTimeEditor(props) {
           <FontAwesomeIcon
             icon={faTimesCircle}
             style={{ cursor: "pointer" }}
-            onClick={e => props.setDateEditing(false)}
+            onClick={e => props.setEditing(null)}
           ></FontAwesomeIcon>
         </div>
       </div>

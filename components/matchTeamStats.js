@@ -3,19 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getTeamLogo, percentage } from "../utils/Utils";
 import { useState } from "react";
 
-export default function MatchTeamStats({
-  data,
-  style,
-  editable,
-  setTeamStatsEditing
-}) {
+export default function MatchTeamStats(props) {
   const [hovering, setHovering] = useState(false);
 
   return (
     <div
       className="divDataTable"
       id="divStatsTable"
-      style={style}
+      style={props.style}
       onMouseOver={e => setHovering(true)}
       onMouseOut={e => setHovering(false)}
     >
@@ -25,8 +20,8 @@ export default function MatchTeamStats({
             <th>
               <img
                 height="16px"
-                alt={data.teams[0].teamname}
-                src={getTeamLogo(data.teams[0].teamname)}
+                alt={props.data.teams[0].teamname}
+                src={getTeamLogo(props.data.teams[0].teamname)}
               ></img>
             </th>
             <th width="250px">
@@ -37,11 +32,11 @@ export default function MatchTeamStats({
                   alignItems: "center"
                 }}
               >
-                {editable ? <div style={{ flex: 1 }}></div> : null}
+                {props.editable ? <div style={{ flex: 1 }}></div> : null}
                 <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                   ESTADÍSTICAS DEL EQUIPO
                 </div>
-                {editable ? (
+                {props.editable ? (
                   <div
                     style={{ flex: 1, textAlign: "left", marginBottom: "4px" }}
                   >
@@ -51,7 +46,7 @@ export default function MatchTeamStats({
                         cursor: "pointer",
                         opacity: hovering ? "100%" : "0%"
                       }}
-                      onClick={e => setTeamStatsEditing(true)}
+                      onClick={e => props.setEditing("teamStats")}
                     />
                   </div>
                 ) : null}
@@ -60,74 +55,74 @@ export default function MatchTeamStats({
             <th>
               <img
                 height="16px"
-                alt={data.teams[1].teamname}
-                src={getTeamLogo(data.teams[1].teamname)}
+                alt={props.data.teams[1].teamname}
+                src={getTeamLogo(props.data.teams[1].teamname)}
               ></img>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{data.teams[0].statistics.shots}</td>
+            <td>{props.data.teams[0].statistics.shots}</td>
             <td>Tiros</td>
-            <td>{data.teams[1].statistics.shots}</td>
+            <td>{props.data.teams[1].statistics.shots}</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.shotsontarget}</td>
+            <td>{props.data.teams[0].statistics.shotsontarget}</td>
             <td>Tiros al arco</td>
-            <td>{data.teams[1].statistics.shotsontarget}</td>
+            <td>{props.data.teams[1].statistics.shotsontarget}</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.possession}%</td>
+            <td>{props.data.teams[0].statistics.possession}%</td>
             <td>Posesión</td>
-            <td>{data.teams[1].statistics.possession}%</td>
+            <td>{props.data.teams[1].statistics.possession}%</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.passes}</td>
+            <td>{props.data.teams[0].statistics.passes}</td>
             <td>Pases</td>
-            <td>{data.teams[1].statistics.passes}</td>
+            <td>{props.data.teams[1].statistics.passes}</td>
           </tr>
           <tr>
             <td>
               {percentage(
-                data.teams[0].statistics.passescompleted,
-                data.teams[0].statistics.passes
+                props.data.teams[0].statistics.passescompleted,
+                props.data.teams[0].statistics.passes
               )}
               %
             </td>
             <td>Precisión de los pases</td>
             <td>
               {percentage(
-                data.teams[1].statistics.passescompleted,
-                data.teams[1].statistics.passes
+                props.data.teams[1].statistics.passescompleted,
+                props.data.teams[1].statistics.passes
               )}
               %
             </td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.fouls}</td>
+            <td>{props.data.teams[0].statistics.fouls}</td>
             <td>Faltas</td>
-            <td>{data.teams[1].statistics.fouls}</td>
+            <td>{props.data.teams[1].statistics.fouls}</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.yellowcards}</td>
+            <td>{props.data.teams[0].statistics.yellowcards}</td>
             <td>Tarjetas amarillas</td>
-            <td>{data.teams[1].statistics.yellowcards}</td>
+            <td>{props.data.teams[1].statistics.yellowcards}</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.redcards}</td>
+            <td>{props.data.teams[0].statistics.redcards}</td>
             <td>Tarjetas rojas</td>
-            <td>{data.teams[1].statistics.redcards}</td>
+            <td>{props.data.teams[1].statistics.redcards}</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.offsides}</td>
+            <td>{props.data.teams[0].statistics.offsides}</td>
             <td>Offsides</td>
-            <td>{data.teams[1].statistics.offsides}</td>
+            <td>{props.data.teams[1].statistics.offsides}</td>
           </tr>
           <tr>
-            <td>{data.teams[0].statistics.corners}</td>
+            <td>{props.data.teams[0].statistics.corners}</td>
             <td>Córners</td>
-            <td>{data.teams[1].statistics.corners}</td>
+            <td>{props.data.teams[1].statistics.corners}</td>
           </tr>
         </tbody>
       </table>

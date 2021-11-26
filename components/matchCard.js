@@ -1,6 +1,6 @@
 import { getTeamLogo, getTeamShortname, fecha } from "../utils/Utils";
 import MatchEvent from "./matchEvent";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import TorneoEditor from "./torneoEditor";
@@ -10,39 +10,15 @@ import ScoreEditor from "./scoreEditor";
 import MatchEventEditor from "./matchEventEditor";
 
 export default function MatchCard(props) {
-  const [eventEditing, setEventEditing] = useState(-1);
-  const [eventCreating, setEventCreating] = useState(null);
-  const [scoreEditing, setScoreEditing] = useState(false);
   const [scoreHovering, setScoreHovering] = useState(false);
   const [dateHovering, setDateHovering] = useState(false);
-  const [dateEditing, setDateEditing] = useState(false);
-  const [homeTeamNameEditing, setHomeTeamNameEditing] = useState(false);
-  const [awayTeamNameEditing, setAwayTeamNameEditing] = useState(false);
   const [homeTeamNameHovering, setHomeTeamNameHovering] = useState(false);
   const [awayTeamNameHovering, setAwayTeamNameHovering] = useState(false);
-  const [torneoEditing, setTorneoEditing] = useState(false);
   const [torneoHovering, setTorneoHovering] = useState(false);
-
-  useEffect(() => {
-    if (props.teamStatsEditing || props.vodEditing) {
-      setEventEditing(-1);
-      setEventCreating(null);
-      setScoreEditing(false);
-      setScoreHovering(false);
-      setDateHovering(false);
-      setDateEditing(false);
-      setHomeTeamNameEditing(false);
-      setAwayTeamNameEditing(false);
-      setHomeTeamNameHovering(false);
-      setAwayTeamNameHovering(false);
-      setTorneoEditing(false);
-      setTorneoHovering(false);
-    }
-  }, [props]);
 
   function onChangeTorneo(value) {
     props.changeTorneo(value);
-    setTorneoEditing(false);
+    props.setEditing(null);
     setTorneoHovering(false);
   }
 
@@ -53,8 +29,7 @@ export default function MatchCard(props) {
 
   function onChangeTeam(value, side) {
     props.changeTeam(value, side);
-    setHomeTeamNameEditing(false);
-    setAwayTeamNameEditing(false);
+    props.setEditing(null);
     setHomeTeamNameHovering(false);
     setAwayTeamNameHovering(false);
   }
@@ -65,14 +40,13 @@ export default function MatchCard(props) {
   }
 
   function onAddEvent(side) {
-    setEventCreating(side);
-    setEventEditing(props.data.matchevents.length);
+    props.setEditing({ event: props.data.matchevents.length, new: side });
   }
 
   function onChangeEvent(event, playerName, playerSteamId, minute, index) {
     let matchEvents = JSON.parse(JSON.stringify(props.data.matchevents));
-    if (eventCreating) {
-      let team = eventCreating;
+    if (props.editing.new) {
+      let team = props.editing.new;
       if (event === "OWN GOAL") {
         if (eventCreating === "home") {
           team = "away";
@@ -160,11 +134,11 @@ export default function MatchCard(props) {
 
   return (
     <div className="whitespace">
-      {torneoEditing ? (
+      {props.editing === "torneo" ? (
         <TorneoEditor
           torneo={props.data.torneo}
           onChangeTorneo={onChangeTorneo}
-          setTorneoEditing={setTorneoEditing}
+          setEditing={props.setEditing}
         />
       ) : (
         <div
@@ -199,51 +173,42 @@ export default function MatchCard(props) {
                   color: "var(--normal-text-color)"
                 }}
                 onClick={e => {
-                  setTorneoEditing(true);
-                  setHomeTeamNameEditing(false);
-                  setAwayTeamNameEditing(false);
-                  setDateEditing(false);
-                  setEventEditing(-1);
-                  setScoreEditing(false);
                   setHomeTeamNameHovering(false);
                   setAwayTeamNameHovering(false);
                   setDateHovering(false);
                   setScoreHovering(false);
                   setTorneoHovering(false);
-                  props.setTeamStatsEditing(false);
-                  props.setVodEditing(false);
+                  props.setEditing("torneo");
                 }}
               />
             </div>
           ) : null}
         </div>
       )}
-      {eventEditing === -1 ? null : (
+      {props.editing && typeof(props.editing.event) !== "undefined" ? (
         <MatchEventEditor
           item={
-            eventCreating
-              ? newItem(eventCreating)
-              : props.data.matchevents[eventEditing]
+            props.editing.new
+              ? newItem(props.editing.new)
+              : props.data.matchevents[props.editing.event]
           }
-          index={eventCreating ? props.data.matchevents.length : eventEditing}
+          index={props.editing.new ? props.data.matchevents.length : props.editing.event}
           players={props.players}
           onChangeEvent={onChangeEvent}
-          setEventEditing={setEventEditing}
-          setEventCreating={setEventCreating}
-          eventCreating={eventCreating}
+          editing={props.editing}
+          setEditing={props.setEditing}
         />
-      )}
+      ) : null}
       <table className="resulttable">
         <tbody>
           <tr>
             <td>
-              {homeTeamNameEditing ? (
+              {props.editing === "homeTeamName" ? (
                 <TeamNameEditor
                   teams={props.data.teams}
                   side="home"
                   onChangeTeam={onChangeTeam}
-                  setHomeTeamNameEditing={setHomeTeamNameEditing}
-                  setAwayTeamNameEditing={setAwayTeamNameEditing}
+                  setEditing={props.setEditing}
                 />
               ) : (
                 <div
@@ -280,18 +245,11 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          setHomeTeamNameEditing(true);
-                          setAwayTeamNameEditing(false);
-                          setDateEditing(false);
-                          setEventEditing(-1);
-                          setScoreEditing(false);
-                          setTorneoEditing(false);
                           setHomeTeamNameHovering(false);
                           setDateHovering(false);
                           setScoreHovering(false);
                           setTorneoHovering(false);
-                          props.setTeamStatsEditing(false);
-                          props.setVodEditing(false);
+                          props.setEditing("homeTeamName");
                         }}
                       />
                     </div>
@@ -300,11 +258,11 @@ export default function MatchCard(props) {
               )}
             </td>
             <td>
-              {dateEditing ? (
+              {props.editing === "date" ? (
                 <DateTimeEditor
                   date={props.data.fecha}
                   onChangeDate={onChangeDate}
-                  setDateEditing={setDateEditing}
+                  setEditing={props.setEditing}
                 />
               ) : (
                 <div
@@ -341,18 +299,7 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          setDateEditing(true);
-                          setEventEditing(-1);
-                          setScoreEditing(false);
-                          setTorneoEditing(false);
-                          setHomeTeamNameEditing(false);
-                          setAwayTeamNameEditing(false);
-                          setScoreHovering(false);
-                          setTorneoHovering(false);
-                          setHomeTeamNameHovering(false);
-                          setAwayTeamNameHovering(false);
-                          props.setTeamStatsEditing(false);
-                          props.setVodEditing(false);
+                          props.setEditing("date");
                         }}
                       />
                     </div>
@@ -361,13 +308,12 @@ export default function MatchCard(props) {
               )}
             </td>
             <td>
-              {awayTeamNameEditing ? (
+              {props.editing === "awayTeamName" ? (
                 <TeamNameEditor
                   teams={props.data.teams}
                   side="away"
                   onChangeTeam={onChangeTeam}
-                  setHomeTeamNameEditing={setHomeTeamNameEditing}
-                  setAwayTeamNameEditing={setAwayTeamNameEditing}
+                  setEditing={props.setEditing}
                 />
               ) : (
                 <div
@@ -404,18 +350,11 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          setAwayTeamNameEditing(true);
-                          setHomeTeamNameEditing(false);
-                          setDateEditing(false);
-                          setEventEditing(-1);
-                          setScoreEditing(false);
-                          setTorneoEditing(false);
                           setHomeTeamNameHovering(false);
                           setDateHovering(false);
                           setScoreHovering(false);
                           setTorneoHovering(false);
-                          props.setTeamStatsEditing(false);
-                          props.setVodEditing(false);
+                          props.setEditing("awayTeamName");
                         }}
                       />
                     </div>
@@ -433,12 +372,12 @@ export default function MatchCard(props) {
               ></img>
             </td>
             <td>
-              {scoreEditing ? (
+              {props.editing === "score" ? (
                 <ScoreEditor
                   home={props.data.teams[0].score}
                   away={props.data.teams[1].score}
                   onChangeScore={onChangeScore}
-                  setScoreEditing={setScoreEditing}
+                  setEditing={props.setEditing}
                 />
               ) : (
                 <div
@@ -472,18 +411,11 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          setScoreEditing(true);
-                          setDateEditing(false);
-                          setEventEditing(-1);
-                          setTorneoEditing(false);
-                          setHomeTeamNameEditing(false);
-                          setAwayTeamNameEditing(false);
                           setDateHovering(false);
                           setTorneoHovering(false);
                           setHomeTeamNameHovering(false);
                           setAwayTeamNameHovering(false);
-                          props.setTeamStatsEditing(false);
-                          props.setVodEditing(false);
+                          props.setEditing("score");
                         }}
                       />
                     </div>
@@ -509,10 +441,9 @@ export default function MatchCard(props) {
                     side="home"
                     index={index}
                     editable={props.editable}
-                    setEventEditing={setEventEditing}
                     onRemoveEvent={onRemoveEvent}
-                    setScoreEditing={setScoreEditing}
                     setScoreHovering={setScoreHovering}
+                    setEditing={props.setEditing}
                   />
                 ))}
                 {props.editable ? (
@@ -522,18 +453,11 @@ export default function MatchCard(props) {
                       style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("home");
-                        setScoreEditing(false);
-                        setHomeTeamNameEditing(false);
-                        setAwayTeamNameEditing(false);
-                        setDateEditing(false);
-                        setTorneoEditing(false);
                         setScoreHovering(false);
                         setHomeTeamNameHovering(false);
                         setAwayTeamNameHovering(false);
                         setDateHovering(false);
                         setTorneoHovering(false);
-                        props.setTeamStatsEditing(false);
-                        props.setVodEditing(false);
                       }}
                     />
                   </li>
@@ -596,17 +520,11 @@ export default function MatchCard(props) {
                     disabled={props.loading}
                     onClick={e => {
                       props.restartEditing();
-                      setEventEditing(-1);
-                      setEventCreating(null);
-                      setScoreEditing(false);
+                      props.setEditing(null);
                       setScoreHovering(false);
                       setDateHovering(false);
-                      setDateEditing(false);
-                      setHomeTeamNameEditing(false);
-                      setAwayTeamNameEditing(false);
                       setHomeTeamNameHovering(false);
                       setAwayTeamNameHovering(false);
-                      setTorneoEditing(false);
                       setTorneoHovering(false);
                     }}
                   >
@@ -632,10 +550,9 @@ export default function MatchCard(props) {
                     side="away"
                     index={index}
                     editable={props.editable}
-                    setEventEditing={setEventEditing}
                     onRemoveEvent={onRemoveEvent}
-                    setScoreEditing={setScoreEditing}
                     setScoreHovering={setScoreHovering}
+                    setEditing={props.setEditing}
                   />
                 ))}
                 {props.editable ? (
@@ -645,18 +562,11 @@ export default function MatchCard(props) {
                       style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("away");
-                        setScoreEditing(false);
-                        setHomeTeamNameEditing(false);
-                        setAwayTeamNameEditing(false);
-                        setDateEditing(false);
-                        setTorneoEditing(false);
                         setScoreHovering(false);
                         setHomeTeamNameHovering(false);
                         setAwayTeamNameHovering(false);
                         setDateHovering(false);
                         setTorneoHovering(false);
-                        props.setTeamStatsEditing(false);
-                        props.setVodEditing(false);
                       }}
                     />
                   </li>

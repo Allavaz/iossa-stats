@@ -5,37 +5,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import MatchIndivStatsEditor from "./matchIndivStatsEditor";
 
-export default function MatchIndividualStats({
-  players,
-  teamName,
-  editable,
-  changeIndivStats,
-  removePlayer,
-  playersAutocomplete,
-  side
-}) {
+export default function MatchIndividualStats(props) {
   const [playerHovering, setPlayerHovering] = useState(-1);
-  const [playerEditing, setPlayerEditing] = useState(-1);
-  const [playerCreating, setPlayerCreating] = useState(null);
   const [hovering, setHovering] = useState(false);
 
   function onChangeIndivStats(player) {
     let oldsteamid;
     if (
-      !playerCreating &&
-      player.info.steam_id !== players[playerEditing].info.steam_id
+      !props.editing.new &&
+      player.info.steam_id !== props.players[props.editing.player].info.steam_id
     ) {
-      oldsteamid = players[playerEditing].info.steam_id;
+      oldsteamid = props.players[props.editing.player].info.steam_id;
     }
-    changeIndivStats(player, side, playerEditing, oldsteamid);
-    setPlayerCreating(null);
-    setPlayerEditing(-1);
+    props.changeIndivStats(player, props.side, props.editing.player, oldsteamid);
+    props.setEditing(null);
     setPlayerHovering(-1);
     setHovering(false);
   }
 
   function onRemovePlayer(index) {
-    removePlayer(players[index], side, index);
+    props.removePlayer(props.players[index], props.side, index);
   }
 
   const newItem = () => {
@@ -43,7 +32,7 @@ export default function MatchIndividualStats({
       info: {
         name: "",
         steam_id: "",
-        team: teamName
+        team: props.teamName
       },
       statistics: {
         assists: 0,
@@ -85,7 +74,7 @@ export default function MatchIndividualStats({
         sticky: "left",
         width: 120,
         Cell: row => {
-          if (editable) {
+          if (props.editable) {
             return (
               <div
                 style={{
@@ -117,7 +106,7 @@ export default function MatchIndividualStats({
                     <FontAwesomeIcon
                       icon={faEdit}
                       style={{ cursor: "pointer" }}
-                      onClick={e => setPlayerEditing(row.row.index)}
+                      onClick={e => props.setEditing({ player: row.row.index })}
                     />
                     <FontAwesomeIcon
                       icon={faTrashAlt}
@@ -306,10 +295,10 @@ export default function MatchIndividualStats({
         width: 130
       }
     ],
-    [playerHovering, editable]
+    [playerHovering, props.editable]
   );
 
-  const data = useMemo(() => players, [players]);
+  const data = useMemo(() => props.players, [props.players]);
   const tableInstance = useTable({ columns, data }, useSortBy);
 
   const { getTableProps, getTableBodyProps, rows, headerGroups, prepareRow } =
@@ -321,19 +310,18 @@ export default function MatchIndividualStats({
       onMouseOut={e => setHovering(false)}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
-        {playerEditing !== -1 ? (
+        {props.editing && typeof(props.editing.player) !== "undefined" ? (
           <MatchIndivStatsEditor
-            player={playerCreating ? newItem() : players[playerEditing]}
-            team={teamName}
-            setPlayerEditing={setPlayerEditing}
-            playerCreating={playerCreating}
-            setPlayerCreating={setPlayerCreating}
-            players={playersAutocomplete}
+            player={props.editing.new ? newItem() : props.players[props.editing.player]}
+            team={props.teamName}
+            players={props.playersAutocomplete}
             onChangeIndivStats={onChangeIndivStats}
+            setEditing={props.setEditing}
+            editing={props.editing}
           />
         ) : null}
-        <h3>ESTADÍSTICAS INDIVIDUALES - {teamName.toUpperCase()}</h3>
-        {editable ? (
+        <h3>ESTADÍSTICAS INDIVIDUALES - {props.teamName.toUpperCase()}</h3>
+        {props.editable ? (
           <FontAwesomeIcon
             icon={faPlus}
             style={{
@@ -343,8 +331,7 @@ export default function MatchIndividualStats({
               cursor: "pointer"
             }}
             onClick={e => {
-              setPlayerCreating(side);
-              setPlayerEditing(players.length);
+              props.setEditing({ player: props.players.length, new: true });
             }}
           />
         ) : null}

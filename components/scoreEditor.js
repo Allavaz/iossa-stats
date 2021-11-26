@@ -66,7 +66,7 @@ export default function ScoreEditor(props) {
             icon={faTimesCircle}
             style={{ cursor: "pointer" }}
             size="lg"
-            onClick={e => props.setScoreEditing(false)}
+            onClick={e => props.setEditing(null)}
           ></FontAwesomeIcon>
         </div>
       </div>

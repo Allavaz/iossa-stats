@@ -42,11 +42,7 @@ export default function TeamNameEditor(props) {
           <FontAwesomeIcon
             icon={faTimesCircle}
             style={{ cursor: "pointer" }}
-            onClick={e =>
-              props.side === "home"
-                ? props.setHomeTeamNameEditing(false)
-                : props.setAwayTeamNameEditing(false)
-            }
+            onClick={e => props.setEditing(null)}
           ></FontAwesomeIcon>
         </div>
       </div>

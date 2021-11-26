@@ -319,7 +319,7 @@ export default function MatchIndivStatsEditor(props) {
         }}
       >
         <h3 style={{ marginTop: 0 }}>
-          {props.playerCreating ? "CREAR" : "EDITAR"} JUGADOR
+          {props.editing.new ? "CREAR" : "EDITAR"} JUGADOR
         </h3>
         <h3 style={{ marginTop: 0 }}>INFORMACIÓN</h3>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -665,8 +665,7 @@ export default function MatchIndivStatsEditor(props) {
           <button
             className="boton"
             onClick={e => {
-              props.setPlayerEditing(-1);
-              props.setPlayerCreating(null);
+              props.setEditing(null);
             }}
           >
             Cancelar

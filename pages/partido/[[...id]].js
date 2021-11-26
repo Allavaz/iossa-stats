@@ -65,8 +65,7 @@ export default function Match({
   );
   const [editableTablaTorneo, setEditableTablaTorneo] = useState(tablaTorneo);
   const [editableChallonge, setEditableChallonge] = useState(challonge);
-  const [vodEditing, setVodEditing] = useState(false);
-  const [teamStatsEditing, setTeamStatsEditing] = useState(false);
+  const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
 
@@ -588,10 +587,7 @@ export default function Match({
 
   function restartEditing() {
     setEditableData(JSON.parse(JSON.stringify(data)));
-    setTeamStatsEditing(true);
-    setVodEditing(true);
-    setTeamStatsEditing(false);
-    setVodEditing(false);
+    setEditing(null);
   }
 
   function updateMatch(pw) {
@@ -754,10 +750,8 @@ export default function Match({
           restartEditing={restartEditing}
           updateMatch={updateMatch}
           deleteMatch={deleteMatch}
-          setTeamStatsEditing={setTeamStatsEditing}
-          setVodEditing={setVodEditing}
-          teamStatsEditing={teamStatsEditing}
-          vodEditing={vodEditing}
+          editing={editing}
+          setEditing={setEditing}
         />
         <div className="colCon">
           <div
@@ -767,20 +761,19 @@ export default function Match({
               flexGrow: 9999
             }}
           >
-            {!teamStatsEditing ? (
-              <MatchTeamStats
-                data={editable ? editableData : data}
-                editable={editable}
-                setTeamStatsEditing={setTeamStatsEditing}
-              />
-            ) : null}
-            {teamStatsEditing ? (
+            {editing === "teamStats" ? (
               <MatchTeamStatsEditor
                 data={editableData}
                 changeTeamStats={changeTeamStats}
-                setTeamStatsEditing={setTeamStatsEditing}
+                setEditing={setEditing}
               />
-            ) : null}
+            ) : (
+              <MatchTeamStats
+                data={editable ? editableData : data}
+                editable={editable}
+                setEditing={setEditing}
+              />
+            )}
             {editableChallonge || (challonge && !editable) ? (
               <Challonge id={challonge} />
             ) : null}
@@ -825,6 +818,8 @@ export default function Match({
           changeIndivStats={changeIndivStats}
           removePlayer={removePlayer}
           side="home"
+          editing={editing}
+          setEditing={setEditing}
         />
         <MatchIndividualStats
           players={
@@ -840,21 +835,23 @@ export default function Match({
           changeIndivStats={changeIndivStats}
           removePlayer={removePlayer}
           side="away"
+          editing={editing}
+          setEditing={setEditing}
         />
         {(!editable && data.vod) ||
-        (editable && editableData.vod && !vodEditing) ? (
+        (editable && editableData.vod && editing !== "vod") ? (
           <Vod
             vod={editable ? editableData.vod : data.vod}
             editable={editable}
-            setVodEditing={setVodEditing}
+            setEditing={setEditing}
             changeVod={changeVod}
           />
         ) : null}
-        {(editableData.vod === null && editable) || vodEditing ? (
+        {(editableData.vod === null && editable) || editing === "vod" ? (
           <VodEditor
             vod={editableData.vod}
             changeVod={changeVod}
-            setVodEditing={setVodEditing}
+            setEditing={setEditing}
           />
         ) : null}
       </>

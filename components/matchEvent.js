@@ -4,24 +4,15 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-export default function MatchEvent({
-  item,
-  side,
-  index,
-  editable,
-  setEventEditing,
-  setScoreEditing,
-  setScoreHovering,
-  onRemoveEvent
-}) {
+export default function MatchEvent(props) {
   const [eventHovering, setEventHovering] = useState(false);
-  if (side === "home") {
+  if (props.side === "home") {
     if (
-      (item.team === "home" && item.event !== "OWN GOAL") ||
-      (item.team === "away" && item.event === "OWN GOAL")
+      (props.item.team === "home" && props.item.event !== "OWN GOAL") ||
+      (props.item.team === "away" && props.item.event === "OWN GOAL")
     ) {
       return (
-        <li key={index}>
+        <li key={props.index}>
           <div
             style={{
               display: "flex",
@@ -31,7 +22,7 @@ export default function MatchEvent({
             onMouseOver={e => setEventHovering(true)}
             onMouseOut={e => setEventHovering(false)}
           >
-            {editable ? <div style={{ flex: 1 }}></div> : null}
+            {props.editable ? <div style={{ flex: 1 }}></div> : null}
             <div
               style={{
                 marginLeft: "5px",
@@ -39,12 +30,17 @@ export default function MatchEvent({
                 whiteSpace: "normal"
               }}
             >
-              <MatchIcon event={item.event}></MatchIcon>
-              <Link href={`/jugador/${item.player1SteamId}`}>
-                <a>{item.name + " (" + Math.round(item.second / 60) + "')"}</a>
+              <MatchIcon event={props.item.event}></MatchIcon>
+              <Link href={`/jugador/${props.item.player1SteamId}`}>
+                <a>
+                  {props.item.name +
+                    " (" +
+                    Math.round(props.item.second / 60) +
+                    "')"}
+                </a>
               </Link>
             </div>
-            {editable ? (
+            {props.editable ? (
               <div style={{ flex: 1, textAlign: "left" }}>
                 <FontAwesomeIcon
                   style={{
@@ -54,9 +50,8 @@ export default function MatchEvent({
                   }}
                   icon={faEdit}
                   onClick={e => {
-                    setEventEditing(index);
-                    setScoreEditing(false);
-                    setScoreHovering(false);
+                    props.setEditing({ event: props.index });
+                    props.setScoreHovering(false);
                   }}
                 ></FontAwesomeIcon>
                 <FontAwesomeIcon
@@ -67,8 +62,7 @@ export default function MatchEvent({
                   }}
                   icon={faTrashAlt}
                   onClick={e => {
-                    onRemoveEvent(index);
-                    setScoreEditing(false);
+                    props.onRemoveEvent(props.index);
                   }}
                 ></FontAwesomeIcon>
               </div>
@@ -81,11 +75,11 @@ export default function MatchEvent({
     }
   } else {
     if (
-      (item.team === "away" && item.event !== "OWN GOAL") ||
-      (item.team === "home" && item.event === "OWN GOAL")
+      (props.item.team === "away" && props.item.event !== "OWN GOAL") ||
+      (props.item.team === "home" && props.item.event === "OWN GOAL")
     ) {
       return (
-        <li key={index}>
+        <li key={props.index}>
           <div
             style={{
               display: "flex",
@@ -95,7 +89,7 @@ export default function MatchEvent({
             onMouseOver={e => setEventHovering(true)}
             onMouseOut={e => setEventHovering(false)}
           >
-            {editable ? <div style={{ flex: 1 }}></div> : null}
+            {props.editable ? <div style={{ flex: 1 }}></div> : null}
             <div
               style={{
                 marginLeft: "5px",
@@ -103,12 +97,17 @@ export default function MatchEvent({
                 whiteSpace: "normal"
               }}
             >
-              <MatchIcon event={item.event}></MatchIcon>
-              <Link href={`/jugador/${item.player1SteamId}`}>
-                <a>{item.name + " (" + Math.round(item.second / 60) + "')"}</a>
+              <MatchIcon event={props.item.event}></MatchIcon>
+              <Link href={`/jugador/${props.item.player1SteamId}`}>
+                <a>
+                  {props.item.name +
+                    " (" +
+                    Math.round(props.item.second / 60) +
+                    "')"}
+                </a>
               </Link>
             </div>
-            {editable ? (
+            {props.editable ? (
               <div style={{ flex: 1, textAlign: "left" }}>
                 <FontAwesomeIcon
                   style={{
@@ -118,9 +117,8 @@ export default function MatchEvent({
                   }}
                   icon={faEdit}
                   onClick={e => {
-                    setEventEditing(index);
-                    setScoreEditing(false);
-                    setScoreHovering(false);
+                    props.setEditing({ event: props.index });
+                    props.setScoreHovering(false);
                   }}
                 ></FontAwesomeIcon>
                 <FontAwesomeIcon
@@ -131,8 +129,7 @@ export default function MatchEvent({
                   }}
                   icon={faTrashAlt}
                   onClick={e => {
-                    onRemoveEvent(index);
-                    setScoreEditing(false);
+                    props.onRemoveEvent(props.index);
                   }}
                 ></FontAwesomeIcon>
               </div>

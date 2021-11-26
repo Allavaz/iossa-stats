@@ -260,7 +260,7 @@ export default function MatchTeamStatsEditor(props) {
         "corners1",
         teams[1].statistics.corners
       );
-      props.setTeamStatsEditing(false);
+      props.setEditing(null);
       props.changeTeamStats(teams);
     }
   }
@@ -491,7 +491,7 @@ export default function MatchTeamStatsEditor(props) {
         </button>
         <button
           className="boton"
-          onClick={e => props.setTeamStatsEditing(false)}
+          onClick={e => props.setEditing(null)}
         >
           Cancelar
         </button>

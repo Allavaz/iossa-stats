@@ -41,7 +41,7 @@ export default function TorneoEditor(props) {
           <FontAwesomeIcon
             icon={faTimesCircle}
             style={{ cursor: "pointer", color: "var(--normal-text-color)" }}
-            onClick={e => props.setTorneoEditing(false)}
+            onClick={e => props.setEditing(null)}
           ></FontAwesomeIcon>
         </div>
       </div>

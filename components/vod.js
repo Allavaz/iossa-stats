@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-export default function Vod({ vod, editable, setVodEditing, changeVod }) {
+export default function Vod(props) {
   const [hovering, setHovering] = useState(false);
 
   return (
@@ -12,7 +12,7 @@ export default function Vod({ vod, editable, setVodEditing, changeVod }) {
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <h3>VIDEO DEL PARTIDO</h3>
-        {editable ? (
+        {props.editable ? (
           <div
             style={{
               display: "flex",
@@ -25,12 +25,12 @@ export default function Vod({ vod, editable, setVodEditing, changeVod }) {
             <FontAwesomeIcon
               icon={faEdit}
               style={{ cursor: "pointer", opacity: hovering ? "100%" : "0%" }}
-              onClick={e => setVodEditing(true)}
+              onClick={e => props.setEditing("vod")}
             />
             <FontAwesomeIcon
               icon={faTrashAlt}
               style={{ cursor: "pointer", opacity: hovering ? "100%" : "0%" }}
-              onClick={e => changeVod(null)}
+              onClick={e => props.changeVod(null)}
             />
           </div>
         ) : null}
@@ -40,7 +40,7 @@ export default function Vod({ vod, editable, setVodEditing, changeVod }) {
           <iframe
             title="vod"
             className="resp-iframe"
-            src={"https://www.youtube.com/embed/" + vod}
+            src={"https://www.youtube.com/embed/" + props.vod}
             frameBorder="0"
             allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

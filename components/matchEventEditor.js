@@ -23,14 +23,12 @@ export default function MatchEventEditor(props) {
         selectMinuteValue,
         props.index
       );
-      props.setEventCreating(null);
-      props.setEventEditing(-1);
+      props.setEditing(null);
     }
   };
 
   const cancelEditing = () => {
-    props.setEventCreating(null);
-    props.setEventEditing(-1);
+    props.setEditing(null);
   };
 
   const changeSteamIdField = steamid => {
@@ -60,7 +58,7 @@ export default function MatchEventEditor(props) {
         }}
       >
         <h3 style={{ marginTop: 0 }}>
-          {props.eventCreating ? "CREAR" : "EDITAR"} EVENTO
+          {props.editing.new ? "CREAR" : "EDITAR"} EVENTO
         </h3>
         <div
           style={{

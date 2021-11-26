@@ -30,7 +30,7 @@ export default function VodEditor(props) {
           className="boton"
           onClick={e => {
             props.changeVod(document.getElementById("inputVod").value.trim());
-            props.setVodEditing(false);
+            props.setEditing(null);
           }}
         >
           Guardar
