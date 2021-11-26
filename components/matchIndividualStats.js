@@ -17,7 +17,12 @@ export default function MatchIndividualStats(props) {
     ) {
       oldsteamid = props.players[props.editing.player].info.steam_id;
     }
-    props.changeIndivStats(player, props.side, props.editing.player, oldsteamid);
+    props.changeIndivStats(
+      player,
+      props.side,
+      props.editing.player,
+      oldsteamid
+    );
     props.setEditing(null);
     setPlayerHovering(-1);
     setHovering(false);
@@ -106,7 +111,12 @@ export default function MatchIndividualStats(props) {
                     <FontAwesomeIcon
                       icon={faEdit}
                       style={{ cursor: "pointer" }}
-                      onClick={e => props.setEditing({ player: row.row.index })}
+                      onClick={e =>
+                        props.setEditing({
+                          player: row.row.index,
+                          side: props.side
+                        })
+                      }
                     />
                     <FontAwesomeIcon
                       icon={faTrashAlt}
@@ -310,9 +320,15 @@ export default function MatchIndividualStats(props) {
       onMouseOut={e => setHovering(false)}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
-        {props.editing && typeof(props.editing.player) !== "undefined" ? (
+        {props.editing &&
+        typeof props.editing.player !== "undefined" &&
+        props.editing.side === props.side ? (
           <MatchIndivStatsEditor
-            player={props.editing.new ? newItem() : props.players[props.editing.player]}
+            player={
+              props.editing.new
+                ? newItem()
+                : props.players[props.editing.player]
+            }
             team={props.teamName}
             players={props.playersAutocomplete}
             onChangeIndivStats={onChangeIndivStats}
@@ -331,7 +347,11 @@ export default function MatchIndividualStats(props) {
               cursor: "pointer"
             }}
             onClick={e => {
-              props.setEditing({ player: props.players.length, new: true });
+              props.setEditing({
+                player: props.players.length,
+                side: props.side,
+                new: true
+              });
             }}
           />
         ) : null}
