@@ -534,6 +534,13 @@ export default function MatchCard(props) {
                   >
                     Reiniciar edición
                   </button>
+                  <button
+                    className="boton"
+                    onClick={e => props.undo()}
+                    disabled={props.disableUndo}
+                  >
+                    Deshacer
+                  </button>
                   {props.loading ? (
                     <FontAwesomeIcon
                       icon={faSpinner}
@@ -542,13 +549,6 @@ export default function MatchCard(props) {
                       size="lg"
                     />
                   ) : null}
-                  <button
-                    className="boton"
-                    onClick={e => props.undo()}
-                    disabled={props.disableUndo}
-                  >
-                    Deshacer
-                  </button>
                 </div>
               ) : null}
             </td>
