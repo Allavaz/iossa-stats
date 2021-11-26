@@ -16,7 +16,7 @@ export default function ScoreEditor(props) {
     let home = document.getElementById("homeScore").value;
     let away = document.getElementById("awayScore").value;
     props.onChangeScore(home, away);
-    props.setScoreEditing(false);
+    props.setEditing(null);
   }
 
   return (
