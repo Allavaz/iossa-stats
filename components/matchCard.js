@@ -185,14 +185,18 @@ export default function MatchCard(props) {
           ) : null}
         </div>
       )}
-      {props.editing && typeof(props.editing.event) !== "undefined" ? (
+      {props.editing && typeof props.editing.event !== "undefined" ? (
         <MatchEventEditor
           item={
             props.editing.new
               ? newItem(props.editing.new)
               : props.data.matchevents[props.editing.event]
           }
-          index={props.editing.new ? props.data.matchevents.length : props.editing.event}
+          index={
+            props.editing.new
+              ? props.data.matchevents.length
+              : props.editing.event
+          }
           players={props.players}
           onChangeEvent={onChangeEvent}
           editing={props.editing}
@@ -538,6 +542,13 @@ export default function MatchCard(props) {
                       size="lg"
                     />
                   ) : null}
+                  <button
+                    className="boton"
+                    onClick={e => props.undo()}
+                    disabled={props.disableUndo}
+                  >
+                    Deshacer
+                  </button>
                 </div>
               ) : null}
             </td>

@@ -1,5 +1,5 @@
 import MatchCard from "../../components/matchCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
 import Head from "next/head";
 import MatchTeamStats from "../../components/matchTeamStats";
@@ -57,9 +57,9 @@ export default function Match({
   editable,
   players
 }) {
-  const [editableData, setEditableData] = useState(
+  const [editableData, setEditableData] = useState([
     JSON.parse(JSON.stringify(data))
-  );
+  ]);
   const [editableTable, setEditableTable] = useState(
     table ? JSON.parse(JSON.stringify(table)) : null
   );
@@ -72,32 +72,43 @@ export default function Match({
   function changeTorneo(torneo) {
     setEditableTable(null);
     setEditableChallonge(null);
-    setEditableData(prevState => ({ ...prevState, torneo: torneo }));
+    setEditableData(prevState => {
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      data.torneo = torneo;
+      return [...prevState, data];
+    });
+  }
+
+  useEffect(() => {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];
-        if (t.torneo === torneo) {
+        if (t.torneo === editableData[editableData.length - 1].torneo) {
           if (t.challonge) {
             setEditableChallonge(t.challonge);
           } else if (t.tabla) {
             axios.get("/api/positions/" + t.tabla).then(res => {
               setEditableTable(res.data);
+              setEditableTablaTorneo(t.tablaLabel || t.torneo);
             });
-            setEditableTablaTorneo(t.tablaLabel || t.torneo);
           }
         }
       }
     }
-  }
+  }, [editableData[editableData.length - 1].torneo]);
 
   function changeDate(date) {
-    setEditableData(prevState => ({ ...prevState, fecha: date }));
+    setEditableData(prevState => {
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      data.fecha = date
+      return [...prevState, data];
+    });
   }
 
   function changeTeam(value, side) {
     let s = side === "home" ? 0 : 1;
     setEditableData(prevState => {
-      let data = { ...prevState };
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.teams[s].teamname = value;
       for (let i in data.teams[s].playerStatistics) {
         data.teams[s].playerStatistics[i].info.team = value;
@@ -110,13 +121,13 @@ export default function Match({
           }
         }
       }
-      return data;
+      return [...prevState, data];
     });
   }
 
   function changeScore(home, away) {
     setEditableData(prevState => {
-      let data = { ...prevState };
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.teams[0].score = home;
       data.teams[1].score = away;
       data.teams[0].scorereceived = away;
@@ -131,15 +142,15 @@ export default function Match({
         data.teams[0].result = 0;
         data.teams[1].result = 0;
       }
-      return data;
+      return [...prevState, data];
     });
   }
 
   function changeEvents(matchEvents) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.matchevents = matchEvents;
-      return data;
+      return [...prevState, data];
     });
     predictTeamStats();
     predictIndivStats();
@@ -147,7 +158,7 @@ export default function Match({
 
   function predictTeamStats() {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       let events = data.matchevents;
       let homeScore = 0;
       let awayScore = 0;
@@ -326,13 +337,15 @@ export default function Match({
       if (data.teams[1].statistics.shotsontarget < awayGoals) {
         data.teams[1].statistics.shotsontarget = awayGoals;
       }
-      return data;
+      return prevState.map((e, i) =>
+        i === prevState.length - 1 ? data : prevState[i]
+      );
     });
   }
 
   function predictIndivStats() {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       let events = data.matchevents;
       let steamids = [];
       let homePlayerStatistics = data.teams[0].playerStatistics;
@@ -436,7 +449,9 @@ export default function Match({
       data.teams[0].playerStatistics = homePlayerStatistics;
       data.teams[1].playerStatistics = awayPlayerStatistics;
       data.players = playerStatistics;
-      return data;
+      return prevState.map((e, i) =>
+        i === prevState.length - 1 ? data : prevState[i]
+      );
     });
   }
 
@@ -487,15 +502,15 @@ export default function Match({
 
   function changeVod(vod) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.vod = vod;
-      return data;
+      return [...prevState, data];
     });
   }
 
   function changeTeamStats(teams) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.teams[0] = teams[0];
       data.teams[1] = teams[1];
       if (
@@ -523,13 +538,13 @@ export default function Match({
               100);
         }
       }
-      return data;
+      return [...prevState, data];
     });
   }
 
   function changeIndivStats(player, side, index, oldsteamid) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics[index] = player;
       let playerExists = false;
@@ -551,14 +566,14 @@ export default function Match({
           data.matchevents[i].player1SteamId = player.info.steam_id;
         }
       }
-      return data;
+      return [...prevState, data];
     });
     predictTeamStats();
   }
 
   function removePlayer(player, side, index) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState));
+      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics.splice(index, 1);
       for (let i in data.players) {
@@ -569,18 +584,21 @@ export default function Match({
       data.matchevents = data.matchevents.filter(
         event => event.player1SteamId !== player.info.steam_id
       );
-      return data;
+      return [...prevState, data];
     });
     predictTeamStats();
   }
 
   function exportMatch() {
     const element = document.createElement("a");
-    const file = new Blob([JSON.stringify(editableData)], {
-      type: "application/json"
-    });
+    const file = new Blob(
+      [JSON.stringify(editableData[editableData.length - 1])],
+      {
+        type: "application/json"
+      }
+    );
     element.href = URL.createObjectURL(file);
-    element.download = editableData.filename;
+    element.download = editableData[editableData.length - 1].filename;
     document.body.appendChild(element);
     element.click();
   }
@@ -594,15 +612,18 @@ export default function Match({
     if (pw === "") {
       alert("Ingrese la contraseña.");
     } else if (
-      editableData.teams[0].statistics.possession +
-        editableData.teams[1].statistics.possession !==
+      editableData[editableData.length - 1].teams[0].statistics.possession +
+        editableData[editableData.length - 1].teams[1].statistics.possession !==
       100
     ) {
       alert("Las posesiones están desbalanceadas. Revisá las cuentas.");
     } else {
       setLoading(true);
       axios
-        .post("/api/postupdate", { password: pw, data: editableData })
+        .post("/api/postupdate", {
+          password: pw,
+          data: editableData[editableData.length - 1]
+        })
         .then(res => {
           console.log(res.data);
           if (res.data === "wrong pw") {
@@ -624,7 +645,10 @@ export default function Match({
     } else {
       setLoading(true);
       axios
-        .post("/api/postdelete", { password: pw, data: editableData })
+        .post("/api/postdelete", {
+          password: pw,
+          data: editableData[editableData.length - 1]
+        })
         .then(res => {
           if (res.data === "wrong pw") {
             alert("Contraseña incorrecta!");
@@ -637,6 +661,13 @@ export default function Match({
         })
         .catch(e => console.log(e));
     }
+  }
+
+  function undo() {
+    setEditing(null);
+    setEditableData(prevState =>
+      prevState.filter((e, i) => i !== prevState.length - 1)
+    );
   }
 
   if (success === "updating") {
@@ -665,7 +696,9 @@ export default function Match({
                 style={{ margin: 0 }}
                 className="boton"
                 onClick={e => {
-                  router.push("/partido/" + editableData._id);
+                  router.push(
+                    "/partido/" + editableData[editableData.length - 1]._id
+                  );
                   setSuccess(null);
                 }}
               >
@@ -737,7 +770,7 @@ export default function Match({
           <meta name="twitter:site" content="@IOSoccerSA" />
         </Head>
         <MatchCard
-          data={editable ? editableData : data}
+          data={editable ? editableData[editableData.length - 1] : data}
           editable={editable}
           players={players}
           changeTorneo={changeTorneo}
@@ -752,6 +785,8 @@ export default function Match({
           deleteMatch={deleteMatch}
           editing={editing}
           setEditing={setEditing}
+          undo={undo}
+          disableUndo={editableData.length < 2}
         />
         <div className="colCon">
           <div
@@ -763,13 +798,13 @@ export default function Match({
           >
             {editing === "teamStats" ? (
               <MatchTeamStatsEditor
-                data={editableData}
+                data={editableData[editableData.length - 1]}
                 changeTeamStats={changeTeamStats}
                 setEditing={setEditing}
               />
             ) : (
               <MatchTeamStats
-                data={editable ? editableData : data}
+                data={editable ? editableData[editableData.length - 1] : data}
                 editable={editable}
                 setEditing={setEditing}
               />
@@ -807,11 +842,13 @@ export default function Match({
         <MatchIndividualStats
           players={
             editable
-              ? editableData.teams[0].playerStatistics
+              ? editableData[editableData.length - 1].teams[0].playerStatistics
               : data.teams[0].playerStatistics
           }
           teamName={
-            editable ? editableData.teams[0].teamname : data.teams[0].teamname
+            editable
+              ? editableData[editableData.length - 1].teams[0].teamname
+              : data.teams[0].teamname
           }
           editable={editable}
           playersAutocomplete={players}
@@ -824,11 +861,13 @@ export default function Match({
         <MatchIndividualStats
           players={
             editable
-              ? editableData.teams[1].playerStatistics
+              ? editableData[editableData.length - 1].teams[1].playerStatistics
               : data.teams[1].playerStatistics
           }
           teamName={
-            editable ? editableData.teams[1].teamname : data.teams[1].teamname
+            editable
+              ? editableData[editableData.length - 1].teams[1].teamname
+              : data.teams[1].teamname
           }
           editable={editable}
           playersAutocomplete={players}
@@ -839,17 +878,22 @@ export default function Match({
           setEditing={setEditing}
         />
         {(!editable && data.vod) ||
-        (editable && editableData.vod && editing !== "vod") ? (
+        (editable &&
+          editableData[editableData.length - 1].vod &&
+          editing !== "vod") ? (
           <Vod
-            vod={editable ? editableData.vod : data.vod}
+            vod={
+              editable ? editableData[editableData.length - 1].vod : data.vod
+            }
             editable={editable}
             setEditing={setEditing}
             changeVod={changeVod}
           />
         ) : null}
-        {(editableData.vod === null && editable) || editing === "vod" ? (
+        {(editableData[editableData.length - 1].vod === null && editable) ||
+        editing === "vod" ? (
           <VodEditor
-            vod={editableData.vod}
+            vod={editableData[editableData.length - 1].vod}
             changeVod={changeVod}
             setEditing={setEditing}
           />
