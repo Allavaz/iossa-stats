@@ -80,6 +80,18 @@ export default function Match({
   }
 
   useEffect(() => {
+    window.onbeforeunload = e => {
+      if (editableData && editableData.length > 1 && !success) {
+        e = e || window.event;
+        if (e) {
+          e.returnValue = "Sure?";
+        }
+        return "Sure?";
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];
@@ -100,7 +112,7 @@ export default function Match({
   function changeDate(date) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
-      data.fecha = date
+      data.fecha = date;
       return [...prevState, data];
     });
   }
