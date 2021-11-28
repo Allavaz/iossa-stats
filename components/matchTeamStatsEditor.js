@@ -489,10 +489,7 @@ export default function MatchTeamStatsEditor(props) {
         <button className="boton" onClick={e => finishEditing()}>
           Guardar
         </button>
-        <button
-          className="boton"
-          onClick={e => props.setEditing(null)}
-        >
+        <button className="boton" onClick={e => props.setEditing(null)}>
           Cancelar
         </button>
       </div>

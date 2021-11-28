@@ -2,7 +2,13 @@ import { getTeamLogo, getTeamShortname, fecha } from "../utils/Utils";
 import MatchEvent from "./matchEvent";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faEdit, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faEdit,
+  faSpinner,
+  faArrowDown,
+  faUpload
+} from "@fortawesome/free-solid-svg-icons";
 import TorneoEditor from "./torneoEditor";
 import DateTimeEditor from "./dateTimeEditor";
 import TeamNameEditor from "./teamNameEditor";
@@ -15,6 +21,7 @@ export default function MatchCard(props) {
   const [homeTeamNameHovering, setHomeTeamNameHovering] = useState(false);
   const [awayTeamNameHovering, setAwayTeamNameHovering] = useState(false);
   const [torneoHovering, setTorneoHovering] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
   function onChangeTorneo(value) {
     props.changeTorneo(value);
@@ -479,6 +486,40 @@ export default function MatchCard(props) {
                     rowGap: "10px"
                   }}
                 >
+                  {props.create && (
+                    <div
+                      style={{
+                        padding: "20px",
+                        width: "100px",
+                        border: dragging
+                          ? "2px dashed var(--header-color)"
+                          : "2px dashed var(--button-border)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "relative",
+                        zIndex: "20"
+                      }}
+                      onDragEnter={e => setDragging(true)}
+                      onDragLeave={e => setDragging(false)}
+                      onDrop={ev => {
+                        setDragging(false);
+                        props.dropFile(ev);
+                      }}
+                      onDragOver={ev => {
+                        ev.preventDefault();
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faUpload}
+                        style={{
+                          color: "var(--header-color)",
+                          fontSize: "3em",
+                          pointerEvents: "none"
+                        }}
+                      />
+                    </div>
+                  )}
                   <input
                     id="password"
                     disabled={props.loading}
@@ -499,19 +540,21 @@ export default function MatchCard(props) {
                       );
                     }}
                   >
-                    Guardar cambios
+                    {props.create ? "Subir partido" : "Guardar cambios"}
                   </button>
-                  <button
-                    className="boton"
-                    disabled={props.loading}
-                    onClick={e => {
-                      props.deleteMatch(
-                        document.getElementById("password").value
-                      );
-                    }}
-                  >
-                    Eliminar partido
-                  </button>
+                  {!props.create && (
+                    <button
+                      className="boton"
+                      disabled={props.loading}
+                      onClick={e => {
+                        props.deleteMatch(
+                          document.getElementById("password").value
+                        );
+                      }}
+                    >
+                      Eliminar partido
+                    </button>
+                  )}
                   <button
                     className="boton"
                     disabled={props.loading}
@@ -519,21 +562,23 @@ export default function MatchCard(props) {
                   >
                     Exportar JSON
                   </button>
-                  <button
-                    className="boton"
-                    disabled={props.loading}
-                    onClick={e => {
-                      props.restartEditing();
-                      props.setEditing(null);
-                      setScoreHovering(false);
-                      setDateHovering(false);
-                      setHomeTeamNameHovering(false);
-                      setAwayTeamNameHovering(false);
-                      setTorneoHovering(false);
-                    }}
-                  >
-                    Reiniciar edición
-                  </button>
+                  {!props.create && (
+                    <button
+                      className="boton"
+                      disabled={props.loading}
+                      onClick={e => {
+                        props.restartEditing();
+                        props.setEditing(null);
+                        setScoreHovering(false);
+                        setDateHovering(false);
+                        setHomeTeamNameHovering(false);
+                        setAwayTeamNameHovering(false);
+                        setTorneoHovering(false);
+                      }}
+                    >
+                      Reiniciar edición
+                    </button>
+                  )}
                   <button
                     className="boton"
                     onClick={e => props.undo()}

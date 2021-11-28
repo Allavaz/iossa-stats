@@ -14,6 +14,7 @@ import MatchTeamStatsEditor from "../../components/matchTeamStatsEditor";
 import router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import createDocument from "../../lib/createDocument";
 
 export async function getServerSideProps(context) {
   let props = {};
@@ -49,21 +50,104 @@ export async function getServerSideProps(context) {
   }
 }
 
+const blankMatch = {
+  fecha: new Date().toISOString(),
+  torneo: "Torneo",
+  vod: null,
+  teams: [
+    {
+      teamname: "Local",
+      side: "home",
+      score: 0,
+      scorereceived: 0,
+      result: 0,
+      statistics: {
+        shots: 0,
+        shotsontarget: 0,
+        possession: 50,
+        passes: 0,
+        passescompleted: 0,
+        fouls: 0,
+        yellowcards: 0,
+        redcards: 0,
+        offsides: 0,
+        corners: 0,
+        throwins: 0,
+        penalties: 0,
+        freekicks: 0,
+        foulssuffered: 0,
+        goalsconceded: 0,
+        interceptions: 0,
+        owngoals: 0,
+        tackles: 0,
+        tacklescompleted: 0,
+        saves: 0,
+        savescaught: 0,
+        distancecovered: 0,
+        assists: 0,
+        goalkicks: 0
+      },
+      playerStatistics: []
+    },
+    {
+      teamname: "Visitante",
+      side: "away",
+      score: 0,
+      scorereceived: 0,
+      result: 0,
+      statistics: {
+        shots: 0,
+        shotsontarget: 0,
+        possession: 50,
+        passes: 0,
+        passescompleted: 0,
+        fouls: 0,
+        yellowcards: 0,
+        redcards: 0,
+        offsides: 0,
+        corners: 0,
+        throwins: 0,
+        penalties: 0,
+        freekicks: 0,
+        foulssuffered: 0,
+        goalsconceded: 0,
+        interceptions: 0,
+        owngoals: 0,
+        tackles: 0,
+        tacklescompleted: 0,
+        saves: 0,
+        savescaught: 0,
+        distancecovered: 0,
+        assists: 0,
+        goalkicks: 0
+      },
+      playerStatistics: []
+    }
+  ],
+  players: [],
+  matchevents: []
+};
+
 export default function Match({
   data,
   table,
   tablaTorneo,
   challonge,
   editable,
-  players
+  players,
+  create
 }) {
-  const [editableData, setEditableData] = useState([
-    JSON.parse(JSON.stringify(data))
-  ]);
+  const [editableData, setEditableData] = useState(
+    create
+      ? [JSON.parse(JSON.stringify(blankMatch))]
+      : [JSON.parse(JSON.stringify(data))]
+  );
   const [editableTable, setEditableTable] = useState(
     table ? JSON.parse(JSON.stringify(table)) : null
   );
-  const [editableTablaTorneo, setEditableTablaTorneo] = useState(tablaTorneo);
+  const [editableTablaTorneo, setEditableTablaTorneo] = useState(
+    create ? "" : tablaTorneo
+  );
   const [editableChallonge, setEditableChallonge] = useState(challonge);
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -632,15 +716,25 @@ export default function Match({
     } else {
       setLoading(true);
       axios
-        .post("/api/postupdate", {
+        .post(`/api/post${create ? "upload" : "update"}`, {
           password: pw,
           data: editableData[editableData.length - 1]
         })
         .then(res => {
-          console.log(res.data);
           if (res.data === "wrong pw") {
             alert("Contraseña incorrecta!");
-          } else if (res.data === "Success!") {
+          } else if (res.data.status === "Success!") {
+            if (create) {
+              setEditableData(old =>
+                old.map((e, i) => {
+                  if (i === old.length - 1) {
+                    return { ...e, _id: res.data.id };
+                  } else {
+                    return { e };
+                  }
+                })
+              );
+            }
             setSuccess("updating");
           } else {
             alert("Ocurrió un error. Revisá la consola.");
@@ -682,6 +776,28 @@ export default function Match({
     );
   }
 
+  function dropFile(ev) {
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items) {
+      if (
+        ev.dataTransfer.items.length == 1 &&
+        ev.dataTransfer.items[0].kind === "file"
+      ) {
+        let file = ev.dataTransfer.items[0].getAsFile();
+        try {
+          let lastData = editableData[editableData.length - 1];
+          createDocument(file, lastData.torneo, lastData.vod).then(document => {
+            setEditableData(old => [...old, document]);
+          });
+        } catch (error) {
+          alert("Archivo inválido. Intentá con otro.");
+          console.error(error);
+        }
+      }
+    }
+  }
+
   if (success === "updating") {
     return (
       <div className="content">
@@ -701,7 +817,7 @@ export default function Match({
               size="5x"
             ></FontAwesomeIcon>
             <div style={{ color: "--var(header-color)" }}>
-              Partido modificado correctamente.
+              Partido {create ? "subido" : "modificado"} correctamente.
             </div>
             <div>
               <button
@@ -760,30 +876,43 @@ export default function Match({
       <>
         <Head>
           <title>
-            {data.teams[0].teamname} vs. {data.teams[1].teamname} | IOSoccer
-            Sudamérica
+            {create
+              ? "Subir partido | IOSoccer Sudamérica"
+              : `${data.teams[0].teamname} vs. ${data.teams[1].teamname} | IOSoccer
+            Sudamérica`}
           </title>
-          <meta property="og:type" content="website" />
-          <meta
-            property="og:title"
-            content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname}`}
-          />
-          <meta property="og:image" content={"/api/matchcard/" + data._id} />
-          <meta property="og:site_name" content="IOSoccer Sudamérica" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta
-            name="twitter:title"
-            content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname} | IOSoccer Sudamérica`}
-          />
-          <meta
-            name="twitter:image:src"
-            content={"https://stats.iosoccer-sa.bid/api/matchcard/" + data._id}
-          />
-          <meta name="twitter:site" content="@IOSoccerSA" />
+          {!create ? (
+            <>
+              <meta property="og:type" content="website" />
+              <meta
+                property="og:title"
+                content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname}`}
+              />
+              <meta
+                property="og:image"
+                content={"/api/matchcard/" + data._id}
+              />
+              <meta property="og:site_name" content="IOSoccer Sudamérica" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta
+                name="twitter:title"
+                content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname} | IOSoccer Sudamérica`}
+              />
+              <meta
+                name="twitter:image:src"
+                content={
+                  "https://stats.iosoccer-sa.bid/api/matchcard/" + data._id
+                }
+              />
+              <meta name="twitter:site" content="@IOSoccerSA" />
+            </>
+          ) : null}
         </Head>
         <MatchCard
-          data={editable ? editableData[editableData.length - 1] : data}
-          editable={editable}
+          data={
+            editable || create ? editableData[editableData.length - 1] : data
+          }
+          editable={editable || create}
           players={players}
           changeTorneo={changeTorneo}
           changeDate={changeDate}
@@ -799,6 +928,8 @@ export default function Match({
           setEditing={setEditing}
           undo={undo}
           disableUndo={editableData.length < 2}
+          create={create}
+          dropFile={dropFile}
         />
         <div className="colCon">
           <div
@@ -816,12 +947,16 @@ export default function Match({
               />
             ) : (
               <MatchTeamStats
-                data={editable ? editableData[editableData.length - 1] : data}
-                editable={editable}
+                data={
+                  editable || create
+                    ? editableData[editableData.length - 1]
+                    : data
+                }
+                editable={editable || create}
                 setEditing={setEditing}
               />
             )}
-            {editableChallonge || (challonge && !editable) ? (
+            {editableChallonge || (challonge && !(editable || create)) ? (
               <Challonge id={challonge} />
             ) : null}
           </div>
@@ -829,14 +964,17 @@ export default function Match({
             <div style={{ flexGrow: 1 }}>
               <div className="flexTableDiv">
                 <FullPositions
-                  teams={editable ? editableTable : table}
-                  torneo={editable ? editableTablaTorneo : tablaTorneo}
+                  teams={editable || create ? editableTable : table}
+                  torneo={
+                    editable || create ? editableTablaTorneo : tablaTorneo
+                  }
                   unificada={
                     editableTablaTorneo.startsWith("Superliga") ||
-                    (!editable && tablaTorneo.startsWith("Superliga"))
+                    (!(editable || create) &&
+                      tablaTorneo.startsWith("Superliga"))
                   }
                 />
-                {editable ? (
+                {editable || create ? (
                   <p
                     style={{
                       fontSize: "0.8em",
@@ -853,16 +991,16 @@ export default function Match({
         </div>
         <MatchIndividualStats
           players={
-            editable
+            editable || create
               ? editableData[editableData.length - 1].teams[0].playerStatistics
               : data.teams[0].playerStatistics
           }
           teamName={
-            editable
+            editable || create
               ? editableData[editableData.length - 1].teams[0].teamname
               : data.teams[0].teamname
           }
-          editable={editable}
+          editable={editable || create}
           playersAutocomplete={players}
           changeIndivStats={changeIndivStats}
           removePlayer={removePlayer}
@@ -872,16 +1010,16 @@ export default function Match({
         />
         <MatchIndividualStats
           players={
-            editable
+            editable || create
               ? editableData[editableData.length - 1].teams[1].playerStatistics
               : data.teams[1].playerStatistics
           }
           teamName={
-            editable
+            editable || create
               ? editableData[editableData.length - 1].teams[1].teamname
               : data.teams[1].teamname
           }
-          editable={editable}
+          editable={editable || create}
           playersAutocomplete={players}
           changeIndivStats={changeIndivStats}
           removePlayer={removePlayer}
@@ -889,20 +1027,23 @@ export default function Match({
           editing={editing}
           setEditing={setEditing}
         />
-        {(!editable && data.vod) ||
-        (editable &&
+        {(!(editable || create) && data.vod) ||
+        ((editable || create) &&
           editableData[editableData.length - 1].vod &&
           editing !== "vod") ? (
           <Vod
             vod={
-              editable ? editableData[editableData.length - 1].vod : data.vod
+              editable || create
+                ? editableData[editableData.length - 1].vod
+                : data.vod
             }
-            editable={editable}
+            editable={editable || create}
             setEditing={setEditing}
             changeVod={changeVod}
           />
         ) : null}
-        {(editableData[editableData.length - 1].vod === null && editable) ||
+        {(editableData[editableData.length - 1].vod === null &&
+          (editable || create)) ||
         editing === "vod" ? (
           <VodEditor
             vod={editableData[editableData.length - 1].vod}
