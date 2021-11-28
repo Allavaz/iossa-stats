@@ -705,7 +705,9 @@ export default function Match({
   }
 
   function updateMatch(pw) {
-    if (pw === "") {
+    if (editing) {
+      alert("Hay cambios sin guardar!")
+    } else if (pw === "") {
       alert("Ingrese la contraseña.");
     } else if (
       editableData[editableData.length - 1].teams[0].statistics.possession +
