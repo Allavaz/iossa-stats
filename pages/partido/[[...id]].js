@@ -165,7 +165,7 @@ export default function Match({
 
   useEffect(() => {
     window.onbeforeunload = e => {
-      if (editableData && editableData.length > 1 && !success) {
+      if (editableData && editableData.length > 1) {
         e = e || window.event;
         if (e) {
           e.returnValue = "Sure?";
