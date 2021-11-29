@@ -1,4 +1,5 @@
 import createMatchCard from "../../lib/createMatchCard";
+import discordPostMatch from "../../lib/discordPostMatch";
 import uploadMatch from "../../lib/uploadMatch";
 
 export default async function handler(req, res) {
@@ -7,6 +8,7 @@ export default async function handler(req, res) {
       try {
         let id = await uploadMatch(req.body.data);
         await createMatchCard(id);
+        discordPostMatch(id);
         res.json({ status: "Success!", id: id });
       } catch (e) {
         console.error(e);
