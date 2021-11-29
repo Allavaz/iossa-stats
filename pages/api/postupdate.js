@@ -7,10 +7,10 @@ export default async function handler(req, res) {
       try {
         let id = await updateMatch(req.body.data, res);
         await createMatchCard(id);
-        res.json({status: "Success!"})
+        res.json({ status: "Success!" });
       } catch (e) {
         console.error(e);
-        res.json({status: "Error"})
+        res.json({ status: "Error" });
       }
     } else {
       res.end("wrong pw");

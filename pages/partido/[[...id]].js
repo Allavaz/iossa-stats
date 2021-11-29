@@ -479,19 +479,28 @@ export default function Match({
         for (let j in homePlayerStatistics) {
           if (steamids[i].steamid === homePlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(homePlayerStatistics[j], prevState[prevState.length - 1]);
+            predictPlayerStats(
+              homePlayerStatistics[j],
+              prevState[prevState.length - 1]
+            );
           }
         }
         for (let j in awayPlayerStatistics) {
           if (steamids[i].steamid === awayPlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(awayPlayerStatistics[j], prevState[prevState.length - 1]);
+            predictPlayerStats(
+              awayPlayerStatistics[j],
+              prevState[prevState.length - 1]
+            );
           }
         }
         for (let j in playerStatistics) {
           if (steamids[i].steamid === playerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(playerStatistics[j], prevState[prevState.length - 1]);
+            predictPlayerStats(
+              playerStatistics[j],
+              prevState[prevState.length - 1]
+            );
           }
         }
         if (!found) {
@@ -706,7 +715,7 @@ export default function Match({
 
   function updateMatch(pw) {
     if (editing) {
-      alert("Hay cambios sin guardar!")
+      alert("Hay cambios sin guardar!");
     } else if (pw === "") {
       alert("Ingrese la contraseña.");
     } else if (
