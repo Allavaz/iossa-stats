@@ -479,19 +479,19 @@ export default function Match({
         for (let j in homePlayerStatistics) {
           if (steamids[i].steamid === homePlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(homePlayerStatistics[j], prevState);
+            predictPlayerStats(homePlayerStatistics[j], prevState[prevState.length - 1]);
           }
         }
         for (let j in awayPlayerStatistics) {
           if (steamids[i].steamid === awayPlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(awayPlayerStatistics[j], prevState);
+            predictPlayerStats(awayPlayerStatistics[j], prevState[prevState.length - 1]);
           }
         }
         for (let j in playerStatistics) {
           if (steamids[i].steamid === playerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(playerStatistics[j], prevState);
+            predictPlayerStats(playerStatistics[j], prevState[prevState.length - 1]);
           }
         }
         if (!found) {
@@ -532,11 +532,11 @@ export default function Match({
           };
           if (steamids[i].side === "home") {
             p.info.team = data.teams[0].teamname;
-            predictPlayerStats(p, prevState);
+            predictPlayerStats(p, prevState[prevState.length - 1]);
             homePlayerStatistics.push(p);
           } else if (steamids[i].side === "away") {
             p.info.team = data.teams[1].teamname;
-            predictPlayerStats(p, prevState);
+            predictPlayerStats(p, prevState[prevState.length - 1]);
             awayPlayerStatistics.push(p);
           }
           playerStatistics.push(p);
