@@ -25,6 +25,11 @@ export default function VodEditor(props) {
             height: "28px"
           }}
           autoComplete="off"
+          onChange={e =>
+            e.target.value.length
+              ? props.setEditing("vod")
+              : props.setEditing(null)
+          }
         ></input>
         <button
           className="boton"
