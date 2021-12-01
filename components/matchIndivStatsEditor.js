@@ -6,8 +6,6 @@ import AutocompleteSteamIDs from "./autocompleteSteamIDs";
 const itemStyle = {
   display: "flex",
   alignItems: "center",
-  marginRight: "20px",
-  marginBottom: "20px"
 };
 const inputStyle = { marginLeft: "5px" };
 
@@ -306,15 +304,8 @@ export default function MatchIndivStatsEditor(props) {
         style={{
           display: "flex",
           flexDirection: "column",
-          position: "absolute",
-          zIndex: 5,
-          left: 0,
-          right: 0,
-          width: "780px",
-          height: "510px",
+          maxWidth: "780px",
           padding: "20px",
-          top: 0,
-          bottom: 0,
           margin: "auto"
         }}
       >
@@ -322,7 +313,7 @@ export default function MatchIndivStatsEditor(props) {
           {props.editing.new ? "CREAR" : "EDITAR"} JUGADOR
         </h3>
         <h3 style={{ marginTop: 0 }}>INFORMACIÓN</h3>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", rowGap: '15px', columnGap: '15px' }}>
           <div style={itemStyle}>
             <div>Nombre:</div>
             <div style={inputStyle}>
@@ -388,8 +379,8 @@ export default function MatchIndivStatsEditor(props) {
             </div>
           </div>
         </div>
-        <h3 style={{ marginTop: 0 }}>ESTADÍSTICAS</h3>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <h3>ESTADÍSTICAS</h3>
+        <div style={{ display: "flex", flexWrap: "wrap", rowGap: '15px', columnGap: '15px' }}>
           <div style={itemStyle}>
             <div>Asistencias:</div>
             <div style={inputStyle}>
@@ -645,12 +636,12 @@ export default function MatchIndivStatsEditor(props) {
             </div>
           </div>
         </div>
-        <div style={{ fontSize: "0.85em", color: "var(--header-color)" }}>
+        <p style={{ fontSize: "0.85em", color: "var(--header-color)" }}>
           <i>
             Los goles, tarjetas amarillas y rojas se editan desde la sección de
             eventos.
           </i>
-        </div>
+        </p>
         <div
           style={{
             marginTop: "15px",

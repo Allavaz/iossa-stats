@@ -47,11 +47,6 @@ export default function MatchEventEditor(props) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          position: "absolute",
-          zIndex: 5,
-          left: 0,
-          right: 0,
-          width: "520px",
           padding: "20px",
           top: "440px",
           margin: "auto"
@@ -63,9 +58,12 @@ export default function MatchEventEditor(props) {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
-            color: "var(--normal-text-color)"
+            color: "var(--normal-text-color)",
+            flexWrap: "wrap",
+            justifyContent: 'center',
+            rowGap: '10px',
+            columnGap: '10px'
           }}
         >
           <select
