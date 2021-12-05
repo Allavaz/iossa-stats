@@ -14,7 +14,7 @@ import MatchTeamStatsEditor from "../../components/matchTeamStatsEditor";
 import router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import createDocument from "../../lib/createDocument";
+import createJSON from "../../lib/createJSON";
 
 export async function getServerSideProps(context) {
   let props = {};
@@ -798,8 +798,15 @@ export default function Match({
         let file = ev.dataTransfer.items[0].getAsFile();
         try {
           let lastData = editableData[editableData.length - 1];
-          createDocument(file, lastData.torneo, lastData.vod).then(document => {
-            setEditableData(old => [...old, document]);
+          file.text().then(res => {
+            let json = JSON.parse(res);
+            let doc = createJSON(
+              json,
+              lastData.torneo,
+              lastData.vod,
+              file.name
+            );
+            setEditableData(old => [...old, doc]);
           });
         } catch (error) {
           alert("Archivo inválido. Intentá con otro.");
