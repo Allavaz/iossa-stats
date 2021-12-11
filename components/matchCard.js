@@ -55,9 +55,9 @@ export default function MatchCard(props) {
     if (props.editing.new) {
       let team = props.editing.new;
       if (event === "OWN GOAL") {
-        if (eventCreating === "home") {
+        if (props.editing.new === "home") {
           team = "away";
-        } else if (eventCreating === "away") {
+        } else if (props.editing.new === "away") {
           team = "home";
         }
       }
