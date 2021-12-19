@@ -5,7 +5,7 @@ import AutocompleteSteamIDs from "./autocompleteSteamIDs";
 
 const itemStyle = {
   display: "flex",
-  alignItems: "center",
+  alignItems: "center"
 };
 const inputStyle = { marginLeft: "5px" };
 
@@ -313,7 +313,14 @@ export default function MatchIndivStatsEditor(props) {
           {props.editing.new ? "CREAR" : "EDITAR"} JUGADOR
         </h3>
         <h3 style={{ marginTop: 0 }}>INFORMACIÓN</h3>
-        <div style={{ display: "flex", flexWrap: "wrap", rowGap: '15px', columnGap: '15px' }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            rowGap: "15px",
+            columnGap: "15px"
+          }}
+        >
           <div style={itemStyle}>
             <div>Nombre:</div>
             <div style={inputStyle}>
@@ -380,7 +387,14 @@ export default function MatchIndivStatsEditor(props) {
           </div>
         </div>
         <h3>ESTADÍSTICAS</h3>
-        <div style={{ display: "flex", flexWrap: "wrap", rowGap: '15px', columnGap: '15px' }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            rowGap: "15px",
+            columnGap: "15px"
+          }}
+        >
           <div style={itemStyle}>
             <div>Asistencias:</div>
             <div style={inputStyle}>

@@ -35,18 +35,14 @@ export default function Vod(props) {
           </div>
         ) : null}
       </div>
-      <div className="resp-container">
-        <center>
-          <iframe
-            title="vod"
-            className="resp-iframe"
-            src={"https://www.youtube.com/embed/" + props.vod}
-            frameBorder="0"
-            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </center>
-      </div>
+      <iframe
+        title="vod"
+        className="resp-iframe"
+        src={"https://www.youtube.com/embed/" + props.vod}
+        frameBorder="0"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
     </div>
   );
 }

@@ -61,9 +61,9 @@ export default function MatchEventEditor(props) {
             alignItems: "center",
             color: "var(--normal-text-color)",
             flexWrap: "wrap",
-            justifyContent: 'center',
-            rowGap: '10px',
-            columnGap: '10px'
+            justifyContent: "center",
+            rowGap: "10px",
+            columnGap: "10px"
           }}
         >
           <select

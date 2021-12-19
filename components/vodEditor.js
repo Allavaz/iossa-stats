@@ -1,12 +1,10 @@
 export default function VodEditor(props) {
-  let height = (900 / 16) * 9 - (35 + 10);
   return (
     <div>
       <h3>{props.vod ? "EDITAR" : "AGREGAR"} VOD</h3>
       <div
-        className="whitespace"
+        className="whitespace resp-iframe"
         style={{
-          height: height,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
