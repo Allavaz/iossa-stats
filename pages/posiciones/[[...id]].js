@@ -123,7 +123,7 @@ export default function Posiciones({ tablas, category, temporada }) {
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
       </Head>
       <select
-        id="selector"
+        className="selector"
         defaultValue={temporada}
         onChange={e => selectTemporada(e.target.value)}
       >

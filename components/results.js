@@ -249,7 +249,7 @@ export default function Results({ matches, category, pagina }) {
         >
           Anterior
         </button>
-        <div>
+        <div className="pageIndicator">
           Página {pageIndex + 1} de {Math.max(pageCount, 1)}
         </div>
         <button

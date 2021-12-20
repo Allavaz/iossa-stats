@@ -111,7 +111,7 @@ h5 {
   padding-right: 2.5px;
 }
 
-#selector {
+.selector {
   background: var(--button-bg);
   border-radius: 7px;
   border: 1px solid var(--button-border);
@@ -120,6 +120,7 @@ h5 {
   font-size: 12pt;
   margin-top: 15px;
   color: var(--normal-text-color);
+  font-family: "Helvetica", "Arial", sans-serif;
 }
 
 .form {
@@ -226,6 +227,7 @@ h5 {
   font-size: 12pt;
   color: var(--normal-text-color);
   user-select: none;
+  font-family: "Helvetica", "Arial", sans-serif;
 }
 
 .boton:disabled {
@@ -862,4 +864,9 @@ svg {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.pageIndicator {
+  color: var(--normal-text-color);
+  pointer-events: none;
 }

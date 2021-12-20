@@ -29,15 +29,15 @@ export default function Navigation() {
     window.addEventListener("click", hamburgerCloseWhenClickingAway);
   }, []);
 
-  function hideLogo(e) {
-    if (e.path[1].scrollY >= 100 && !mobile) {
+  function hideLogo() {
+    if (window.scrollY >= 100 && !mobile) {
       setLogoShown(true);
     } else {
       setLogoShown(false);
     }
   }
 
-  function changeMobile(e) {
+  function changeMobile() {
     if (window.innerWidth < mobileWidth) {
       setMobile(true);
     } else {

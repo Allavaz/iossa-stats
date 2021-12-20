@@ -4,7 +4,7 @@ export default function Selector({ selectTorneo, selectTemporada, temporada }) {
   return (
     <div className="torSelect">
       <select
-        id="selector"
+        className="selector"
         defaultValue={temporada}
         onChange={e => selectTemporada(e.target.value)}
       >
