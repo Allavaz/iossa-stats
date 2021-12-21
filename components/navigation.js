@@ -3,9 +3,7 @@ import Image from "next/image";
 import logo from "../public/logo-solo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faSun } from "@fortawesome/free-solid-svg-icons";
-import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 const mobileWidth = 550;
 
