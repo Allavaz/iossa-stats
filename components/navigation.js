@@ -30,7 +30,7 @@ export default function Navigation() {
   }, []);
 
   function hideLogo() {
-    if (window.scrollY >= 100 && !mobile) {
+    if (!mobile && window.scrollY >= 100) {
       setLogoShown(true);
     } else {
       setLogoShown(false);
