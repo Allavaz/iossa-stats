@@ -498,7 +498,7 @@ export default function MatchCard(props) {
                         justifyContent: "center",
                         alignItems: "center",
                         position: "relative",
-                        zIndex: "20"
+                        zIndex: "3"
                       }}
                       onDragEnter={e => setDragging(true)}
                       onDragLeave={e => setDragging(false)}

@@ -66,7 +66,10 @@ export default function MatchIndividualStats(props) {
         tackles: 0,
         tacklescompleted: 0,
         throwins: 0,
-        yellowcards: 0
+        yellowcards: 0,
+        keypasses: 0,
+        chancescreated: 0,
+        secondassists: 0
       }
     };
   };
@@ -152,6 +155,11 @@ export default function MatchIndividualStats(props) {
         width: 100
       },
       {
+        Header: "Segundas Asistencias",
+        accessor: "statistics.secondassists",
+        width: 130
+      },
+      {
         Header: "Tiros (al Arco)",
         accessor: "statistics.shotsontarget",
         width: 130,
@@ -193,6 +201,11 @@ export default function MatchIndividualStats(props) {
               ) + "%";
         },
         width: 150
+      },
+      {
+        Header: "Pases Clave",
+        accessor: "statistics.keypasses",
+        width: 130
       },
       {
         Header: "Intercepciones",
@@ -302,6 +315,11 @@ export default function MatchIndividualStats(props) {
       {
         Header: "Goles Recibidos",
         accessor: "statistics.goalsconceded",
+        width: 130
+      },
+      {
+        Header: "Ocasiones Creadas",
+        accessor: "statistics.chancescreated",
         width: 130
       }
     ],

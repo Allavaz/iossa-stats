@@ -169,6 +169,7 @@ function inputSane(teams) {
   a.push(parseValue("pos0", teams[0].statistics.possession));
   a.push(parseValue("passes0", teams[0].statistics.passes));
   a.push(parseValue("passescomp0", teams[0].statistics.passescompleted));
+  a.push(parseValue("keypasses0", teams[0].statistics.keypasses));
   a.push(parseValue("fouls0", teams[0].statistics.fouls));
   a.push(parseValue("offsides0", teams[0].statistics.offsides));
   a.push(parseValue("corners0", teams[0].statistics.corners));
@@ -177,6 +178,7 @@ function inputSane(teams) {
   a.push(parseValue("pos1", teams[1].statistics.possession));
   a.push(parseValue("passes1", teams[1].statistics.passes));
   a.push(parseValue("passescomp1", teams[1].statistics.passescompleted));
+  a.push(parseValue("keypasses1", teams[1].statistics.keypasses));
   a.push(parseValue("fouls1", teams[1].statistics.fouls));
   a.push(parseValue("offsides1", teams[1].statistics.offsides));
   a.push(parseValue("corners1", teams[1].statistics.corners));
@@ -216,6 +218,10 @@ export default function MatchTeamStatsEditor(props) {
         "passescomp0",
         teams[0].statistics.passescompleted
       );
+      teams[0].statistics.keypasses = parseValue(
+        "keypasses0",
+        teams[0].statistics.keypasses
+      );
       teams[0].statistics.fouls = parseValue(
         "fouls0",
         teams[0].statistics.fouls
@@ -228,6 +234,9 @@ export default function MatchTeamStatsEditor(props) {
         "corners0",
         teams[0].statistics.corners
       );
+      teams[0].statistics.chancescreated =
+        teams[0].statistics.assists +
+        parseValue("keypasses0", teams[0].statistics.keypasses);
       teams[1].statistics.shots = parseValue(
         "shots1",
         teams[1].statistics.shots
@@ -248,6 +257,10 @@ export default function MatchTeamStatsEditor(props) {
         "passescomp1",
         teams[1].statistics.passescompleted
       );
+      teams[1].statistics.keypasses = parseValue(
+        "keypasses1",
+        teams[1].statistics.keypasses
+      );
       teams[1].statistics.fouls = parseValue(
         "fouls1",
         teams[1].statistics.fouls
@@ -260,6 +273,9 @@ export default function MatchTeamStatsEditor(props) {
         "corners1",
         teams[1].statistics.corners
       );
+      teams[1].statistics.chancescreated =
+        teams[1].statistics.assists +
+        parseValue("keypasses1", teams[1].statistics.keypasses);
       props.setEditing(null);
       props.changeTeamStats(teams);
     }
@@ -422,6 +438,25 @@ export default function MatchTeamStatsEditor(props) {
           <tr>
             <td>
               <input
+                id="keypasses0"
+                type="text"
+                style={{ width: "5ch", textAlign: "center" }}
+                defaultValue={props.data.teams[0].statistics.keypasses}
+              ></input>
+            </td>
+            <td>Pases Clave</td>
+            <td>
+              <input
+                id="keypasses1"
+                type="text"
+                style={{ width: "5ch", textAlign: "center" }}
+                defaultValue={props.data.teams[1].statistics.keypasses}
+              ></input>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
                 id="fouls0"
                 type="text"
                 style={{ width: "5ch", textAlign: "center" }}
@@ -480,18 +515,32 @@ export default function MatchTeamStatsEditor(props) {
       </table>
       <div
         style={{
-          marginTop: "15px",
           display: "flex",
-          justifyContent: "flex-end",
-          columnGap: "10px"
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "10px"
         }}
       >
-        <button className="boton" onClick={e => finishEditing()}>
-          Guardar
-        </button>
-        <button className="boton" onClick={e => props.setEditing(null)}>
-          Cancelar
-        </button>
+        <p style={{ fontSize: "0.85em", color: "var(--header-color)" }}>
+          <i>
+            Las ocasiones creadas se calculan combinando las asistencias y los
+            pases clave.
+          </i>
+        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            columnGap: "10px"
+          }}
+        >
+          <button className="boton" onClick={e => finishEditing()}>
+            Guardar
+          </button>
+          <button className="boton" onClick={e => props.setEditing(null)}>
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   );

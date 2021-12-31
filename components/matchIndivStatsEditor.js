@@ -192,6 +192,8 @@ export default function MatchIndivStatsEditor(props) {
       parseValue("tacklescompleted", props.player.statistics.tacklescompleted)
     );
     a.push(parseValue("throwins", props.player.statistics.throwins));
+    a.push(parseValue("keypasses", props.player.statistics.keypasses));
+    a.push(parseValue("secondassists", props.player.statistics.secondassists));
     for (let i in a) {
       if (isNaN(a[i])) {
         return false;
@@ -277,6 +279,14 @@ export default function MatchIndivStatsEditor(props) {
               props.player.statistics.tacklescompleted
             ),
             throwins: parseValue("throwins", props.player.statistics.throwins),
+            keypasses: parseValue(
+              "keypasses",
+              props.player.statistics.keypasses
+            ),
+            secondassists: parseValue(
+              "secondassists",
+              props.player.statistics.chancescreated
+            ),
             positions:
               props.player.statistics.positions.length === 0
                 ? [
@@ -289,7 +299,10 @@ export default function MatchIndivStatsEditor(props) {
             redcards: props.player.statistics.redcards,
             yellowcards: props.player.statistics.yellowcards,
             owngoals: props.player.statistics.owngoals,
-            goals: props.player.statistics.goals
+            goals: props.player.statistics.goals,
+            chancescreated:
+              parseValue("assists", props.player.statistics.assists) +
+              parseValue("keypasses", props.player.statistics.keypasses)
           }
         };
         props.onChangeIndivStats(player);
@@ -407,6 +420,17 @@ export default function MatchIndivStatsEditor(props) {
             </div>
           </div>
           <div style={itemStyle}>
+            <div>Segundas Asistencias:</div>
+            <div style={inputStyle}>
+              <input
+                id="secondassists"
+                type="text"
+                defaultValue={props.player.statistics.secondassists}
+                style={{ width: "5ch" }}
+              />
+            </div>
+          </div>
+          <div style={itemStyle}>
             <div>Tiros:</div>
             <div style={inputStyle}>
               <input
@@ -458,6 +482,17 @@ export default function MatchIndivStatsEditor(props) {
                 style={{ width: "5ch" }}
               />{" "}
               %
+            </div>
+          </div>
+          <div style={itemStyle}>
+            <div>Pases Clave:</div>
+            <div style={inputStyle}>
+              <input
+                id="keypasses"
+                type="text"
+                defaultValue={props.player.statistics.keypasses}
+                style={{ width: "5ch" }}
+              />
             </div>
           </div>
           <div style={itemStyle}>
@@ -653,7 +688,8 @@ export default function MatchIndivStatsEditor(props) {
         <p style={{ fontSize: "0.85em", color: "var(--header-color)" }}>
           <i>
             Los goles, tarjetas amarillas y rojas se editan desde la sección de
-            eventos.
+            eventos. Las ocasiones creadas se calculan combinando las asistencias
+            y los pases clave.
           </i>
         </p>
         <div

@@ -260,6 +260,10 @@ export default function Match({
       let awayScore = 0;
       let homeGoals = 0;
       let awayGoals = 0;
+      let homeAssists = 0;
+      let awayAssists = 0;
+      let homeSecondAssists = 0;
+      let awaySecondAssists = 0;
       let homeYellowCards = 0;
       let homeRedCards = 0;
       let homeSecondYellows = 0;
@@ -272,6 +276,8 @@ export default function Match({
       let awayPasses = 0;
       let homePassesCompleted = 0;
       let awayPassesCompleted = 0;
+      let homeKeyPasses = 0;
+      let awayKeyPasses = 0;
       let homeOffsides = 0;
       let awayOffsides = 0;
       let homeCorners = 0;
@@ -280,6 +286,8 @@ export default function Match({
       let awayShots = 0;
       let homeShotsOnTarget = 0;
       let awayShotsOnTarget = 0;
+      let homeChancesCreated = 0;
+      let awayChancesCreated = 0;
       for (let i in events) {
         if (events[i].team === "home") {
           switch (events[i].event) {
@@ -324,6 +332,12 @@ export default function Match({
         }
       }
       for (let i in data.teams[0].playerStatistics) {
+        homeAssists =
+          homeAssists +
+          parseInt(data.teams[0].playerStatistics[i].statistics.assists);
+        homeSecondAssists =
+          homeSecondAssists +
+          parseInt(data.teams[0].playerStatistics[i].statistics.secondassists);
         homeShots =
           homeShots +
           parseInt(data.teams[0].playerStatistics[i].statistics.shots);
@@ -341,12 +355,18 @@ export default function Match({
           parseInt(
             data.teams[0].playerStatistics[i].statistics.passescompleted
           );
+        homeKeyPasses =
+          homeKeyPasses +
+          parseInt(data.teams[0].playerStatistics[i].statistics.keypasses);
         homeOffsides =
           homeOffsides +
           parseInt(data.teams[0].playerStatistics[i].statistics.offsides);
         homeCorners =
           homeCorners +
           parseInt(data.teams[0].playerStatistics[i].statistics.corners);
+        homeChancesCreated =
+          homeChancesCreated +
+          parseInt(data.teams[0].playerStatistics[i].statistics.chancescreated);
       }
       for (let i in data.teams[1].playerStatistics) {
         awayShots =
@@ -366,12 +386,18 @@ export default function Match({
           parseInt(
             data.teams[1].playerStatistics[i].statistics.passescompleted
           );
+        awayKeyPasses =
+          awayKeyPasses +
+          parseInt(data.teams[1].playerStatistics[i].statistics.keypasses);
         awayOffsides =
           awayOffsides +
           parseInt(data.teams[1].playerStatistics[i].statistics.offsides);
         awayCorners =
           awayCorners +
           parseInt(data.teams[1].playerStatistics[i].statistics.corners);
+        awayChancesCreated =
+          awayChancesCreated +
+          parseInt(data.teams[1].playerStatistics[i].statistics.chancescreated);
       }
       data.teams[0].score = homeScore;
       data.teams[0].scorereceived = awayScore;
@@ -387,6 +413,10 @@ export default function Match({
         data.teams[0].result = 0;
         data.teams[1].result = 0;
       }
+      data.teams[0].statistics.assists = homeAssists;
+      data.teams[1].statistics.assists = awayAssists;
+      data.teams[0].statistics.secondassists = homeSecondAssists;
+      data.teams[1].statistics.secondassists = awaySecondAssists;
       data.teams[0].statistics.shots = homeShots;
       data.teams[1].statistics.shots = awayShots;
       data.teams[0].statistics.shotsontarget = homeShotsOnTarget;
@@ -397,10 +427,14 @@ export default function Match({
       data.teams[1].statistics.passes = awayPasses;
       data.teams[0].statistics.passescompleted = homePassesCompleted;
       data.teams[1].statistics.passescompleted = awayPassesCompleted;
+      data.teams[0].statistics.keypasses = homeKeyPasses;
+      data.teams[1].statistics.keypasses = awayKeyPasses;
       data.teams[0].statistics.offsides = homeOffsides;
       data.teams[1].statistics.offsides = awayOffsides;
       data.teams[0].statistics.corners = homeCorners;
       data.teams[1].statistics.corners = awayCorners;
+      data.teams[0].statistics.chancescreated = homeChancesCreated;
+      data.teams[1].statistics.chancescreated = awayChancesCreated;
       data.teams[0].statistics.yellowcards =
         homeYellowCards + homeSecondYellows;
       data.teams[1].statistics.yellowcards =

@@ -62,6 +62,11 @@ export default function IndividualStats({ players, category, pagina }) {
         width: 100
       },
       {
+        Header: "Segundas Asistencias",
+        accessor: "secondassists",
+        width: 130
+      },
+      {
         Header: "Tiros (al Arco)",
         accessor: "shotsontarget",
         width: 130,
@@ -83,6 +88,11 @@ export default function IndividualStats({ players, category, pagina }) {
             ")"
           );
         }
+      },
+      {
+        Header: "Pases Clave",
+        accessor: "keypasses",
+        width: 130
       },
       {
         Header: "Precisión de Pases",
@@ -201,6 +211,11 @@ export default function IndividualStats({ players, category, pagina }) {
       {
         Header: "Goles Recibidos",
         accessor: "goalsconceded",
+        width: 130
+      },
+      {
+        Header: "Ocasiones Creadas",
+        accessor: "chancescreated",
         width: 130
       }
     ],
@@ -343,7 +358,7 @@ export default function IndividualStats({ players, category, pagina }) {
                   }}
                 />
               </td>
-              <td colSpan="23" style={{ borderTop: 0, borderRight: 0 }}>
+              <td colSpan={columns.length - 2} style={{ borderTop: 0, borderRight: 0 }}>
                 {rows.length === 0 ? (
                   <div
                     style={{ display: "flex", color: "var(--header-color)" }}

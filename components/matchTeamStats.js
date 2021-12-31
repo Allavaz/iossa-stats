@@ -100,6 +100,11 @@ export default function MatchTeamStats(props) {
             </td>
           </tr>
           <tr>
+            <td>{props.data.teams[0].statistics.keypasses}</td>
+            <td>Pases Clave</td>
+            <td>{props.data.teams[1].statistics.keypasses}</td>
+          </tr>
+          <tr>
             <td>{props.data.teams[0].statistics.fouls}</td>
             <td>Faltas</td>
             <td>{props.data.teams[1].statistics.fouls}</td>
@@ -123,6 +128,11 @@ export default function MatchTeamStats(props) {
             <td>{props.data.teams[0].statistics.corners}</td>
             <td>Córners</td>
             <td>{props.data.teams[1].statistics.corners}</td>
+          </tr>
+          <tr>
+            <td>{props.data.teams[0].statistics.chancescreated}</td>
+            <td>Ocasiones Creadas</td>
+            <td>{props.data.teams[1].statistics.chancescreated}</td>
           </tr>
         </tbody>
       </table>
