@@ -50,7 +50,17 @@ export default function MatchCard(props) {
     props.setEditing({ event: props.data.matchevents.length, new: side });
   }
 
-  function onChangeEvent(event, playerName, playerSteamId, minute, index) {
+  function onChangeEvent(
+    event,
+    playerName,
+    playerSteamId,
+    playerName2,
+    playerSteamId2,
+    playerName3,
+    playerSteamId3,
+    minute,
+    index
+  ) {
     let matchEvents = JSON.parse(JSON.stringify(props.data.matchevents));
     if (props.editing.new) {
       let team = props.editing.new;
@@ -64,9 +74,14 @@ export default function MatchCard(props) {
       matchEvents.push({
         event: event,
         name: playerName,
-        period: minute * 60 > 45 ? "SECOND HALF" : "FIRST HALF",
         player1SteamId: playerSteamId,
-        player2SteamId: "",
+        ...(playerSteamId2
+          ? { name2: playerName2, player2SteamId: playerSteamId2 }
+          : {}),
+        ...(playerSteamId3
+          ? { name3: playerName3, player3SteamId: playerSteamId3 }
+          : {}),
+        period: minute * 60 > 45 ? "SECOND HALF" : "FIRST HALF",
         second: minute * 60,
         team: team
       });
@@ -74,6 +89,14 @@ export default function MatchCard(props) {
       matchEvents[index].event = event;
       matchEvents[index].name = playerName;
       matchEvents[index].player1SteamId = playerSteamId;
+      if (playerSteamId2) {
+        matchEvents[index].name2 = playerName2;
+        matchEvents[index].player2SteamId = playerSteamId2;
+      }
+      if (playerSteamId3) {
+        matchEvents[index].name3 = playerName3;
+        matchEvents[index].player3SteamId = playerSteamId3;
+      }
       matchEvents[index].second = minute * 60;
       matchEvents[index].period =
         minute * 60 > 45 ? "SECOND HALF" : "FIRST HALF";

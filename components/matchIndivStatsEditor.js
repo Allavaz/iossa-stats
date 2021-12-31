@@ -165,7 +165,6 @@ export default function MatchIndivStatsEditor(props) {
 
   const inputSane = () => {
     let a = [];
-    a.push(parseValue("assists", props.player.statistics.assists));
     a.push(parseValue("corners", props.player.statistics.corners));
     a.push(
       parseValue("distancecovered", props.player.statistics.distancecovered)
@@ -193,7 +192,6 @@ export default function MatchIndivStatsEditor(props) {
     );
     a.push(parseValue("throwins", props.player.statistics.throwins));
     a.push(parseValue("keypasses", props.player.statistics.keypasses));
-    a.push(parseValue("secondassists", props.player.statistics.secondassists));
     for (let i in a) {
       if (isNaN(a[i])) {
         return false;
@@ -222,7 +220,6 @@ export default function MatchIndivStatsEditor(props) {
             team: props.player.info.team
           },
           statistics: {
-            assists: parseValue("assists", props.player.statistics.assists),
             corners: parseValue("corners", props.player.statistics.corners),
             distancecovered: parseValue(
               "distancecovered",
@@ -283,10 +280,6 @@ export default function MatchIndivStatsEditor(props) {
               "keypasses",
               props.player.statistics.keypasses
             ),
-            secondassists: parseValue(
-              "secondassists",
-              props.player.statistics.chancescreated
-            ),
             positions:
               props.player.statistics.positions.length === 0
                 ? [
@@ -300,8 +293,10 @@ export default function MatchIndivStatsEditor(props) {
             yellowcards: props.player.statistics.yellowcards,
             owngoals: props.player.statistics.owngoals,
             goals: props.player.statistics.goals,
+            assists: props.player.statistics.assists,
+            secondassists: props.player.statistics.secondassists,
             chancescreated:
-              parseValue("assists", props.player.statistics.assists) +
+              props.player.statistics.assists +
               parseValue("keypasses", props.player.statistics.keypasses)
           }
         };
@@ -408,28 +403,6 @@ export default function MatchIndivStatsEditor(props) {
             columnGap: "15px"
           }}
         >
-          <div style={itemStyle}>
-            <div>Asistencias:</div>
-            <div style={inputStyle}>
-              <input
-                id="assists"
-                type="text"
-                defaultValue={props.player.statistics.assists}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Segundas Asistencias:</div>
-            <div style={inputStyle}>
-              <input
-                id="secondassists"
-                type="text"
-                defaultValue={props.player.statistics.secondassists}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
           <div style={itemStyle}>
             <div>Tiros:</div>
             <div style={inputStyle}>
@@ -685,11 +658,17 @@ export default function MatchIndivStatsEditor(props) {
             </div>
           </div>
         </div>
-        <p style={{ fontSize: "0.85em", color: "var(--header-color)" }}>
+        <p
+          style={{
+            fontSize: "0.85em",
+            color: "var(--header-color)",
+            lineHeight: "20px"
+          }}
+        >
           <i>
-            Los goles, tarjetas amarillas y rojas se editan desde la sección de
-            eventos. Las ocasiones creadas se calculan combinando las asistencias
-            y los pases clave.
+            Los goles, asistencias, segundas asistencias, tarjetas amarillas y
+            rojas se editan desde la sección de eventos. Las ocasiones creadas
+            se calculan combinando las asistencias y los pases clave.
           </i>
         </p>
         <div

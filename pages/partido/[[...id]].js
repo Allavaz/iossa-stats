@@ -507,6 +507,20 @@ export default function Match({
             name: events[i].name
           });
         }
+        if (events[i].player2SteamId && !steamids.includes(events[i].player2SteamId)) {
+          steamids.push({
+            steamid: events[i].player2SteamId,
+            side: events[i].team,
+            name: events[i].name2
+          });
+        }
+        if (events[i].player3SteamId && !steamids.includes(events[i].player3SteamId)) {
+          steamids.push({
+            steamid: events[i].player3SteamId,
+            side: events[i].team,
+            name: events[i].name3
+          });
+        }
       }
       for (let i in steamids) {
         let found = false;
@@ -570,7 +584,10 @@ export default function Match({
               tackles: 0,
               tacklescompleted: 0,
               throwins: 0,
-              yellowcards: 0
+              yellowcards: 0,
+              keypasses: 0,
+              chancescreated: 0,
+              secondassists: 0
             }
           };
           if (steamids[i].side === "home") {
@@ -601,6 +618,8 @@ export default function Match({
     let yellowCards = 0;
     let secondYellowCards = 0;
     let redCards = 0;
+    let assists = 0;
+    let secondAssists = 0;
     for (let i in events) {
       if (events[i].player1SteamId === player.info.steam_id) {
         player.info.name = events[i].name;
@@ -622,9 +641,21 @@ export default function Match({
             break;
           default:
         }
+      } else if (
+        events[i].player2SteamId === player.info.steam_id &&
+        events[i].event === "GOAL"
+      ) {
+        assists++;
+      } else if (
+        events[i].player3SteamId === player.info.steam_id &&
+        events[i].event === "GOAL"
+      ) {
+        secondAssists++;
       }
     }
     player.statistics.goals = goals;
+    player.statistics.assists = assists;
+    player.statistics.secondassists = secondAssists;
     player.statistics.owngoals = ownGoals;
     player.statistics.yellowcards = yellowCards + secondYellowCards;
     player.statistics.redcards = redCards + secondYellowCards;
