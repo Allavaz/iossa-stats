@@ -248,8 +248,8 @@ export default function Match({
       data.matchevents = matchEvents;
       return [...prevState, data];
     });
-    predictTeamStats();
     predictIndivStats();
+    predictTeamStats();
   }
 
   function predictTeamStats() {
@@ -334,70 +334,70 @@ export default function Match({
       for (let i in data.teams[0].playerStatistics) {
         homeAssists =
           homeAssists +
-          parseInt(data.teams[0].playerStatistics[i].statistics.assists);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.assists) || 0);
         homeSecondAssists =
           homeSecondAssists +
-          parseInt(data.teams[0].playerStatistics[i].statistics.secondassists);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.secondassists) || 0);
         homeShots =
           homeShots +
-          parseInt(data.teams[0].playerStatistics[i].statistics.shots);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.shots) || 0);
         homeShotsOnTarget =
           homeShotsOnTarget +
-          parseInt(data.teams[0].playerStatistics[i].statistics.shotsontarget);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.shotsontarget) || 0);
         homeFouls =
           homeFouls +
-          parseInt(data.teams[0].playerStatistics[i].statistics.fouls);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.fouls) || 0);
         homePasses =
           homePasses +
-          parseInt(data.teams[0].playerStatistics[i].statistics.passes);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.passes) || 0);
         homePassesCompleted =
           homePassesCompleted +
-          parseInt(
+          (parseInt(
             data.teams[0].playerStatistics[i].statistics.passescompleted
-          );
+          ) || 0);
         homeKeyPasses =
           homeKeyPasses +
-          parseInt(data.teams[0].playerStatistics[i].statistics.keypasses);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.keypasses) || 0);
         homeOffsides =
           homeOffsides +
-          parseInt(data.teams[0].playerStatistics[i].statistics.offsides);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.offsides) || 0);
         homeCorners =
           homeCorners +
-          parseInt(data.teams[0].playerStatistics[i].statistics.corners);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.corners) || 0);
         homeChancesCreated =
           homeChancesCreated +
-          parseInt(data.teams[0].playerStatistics[i].statistics.chancescreated);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.chancescreated) || 0);
       }
       for (let i in data.teams[1].playerStatistics) {
         awayShots =
           awayShots +
-          parseInt(data.teams[1].playerStatistics[i].statistics.shots);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.shots) || 0);
         awayShotsOnTarget =
           awayShotsOnTarget +
-          parseInt(data.teams[1].playerStatistics[i].statistics.shotsontarget);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.shotsontarget) || 0);
         awayFouls =
           awayFouls +
-          parseInt(data.teams[1].playerStatistics[i].statistics.fouls);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.fouls) || 0);
         awayPasses =
           awayPasses +
-          parseInt(data.teams[1].playerStatistics[i].statistics.passes);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.passes) || 0);
         awayPassesCompleted =
           awayPassesCompleted +
-          parseInt(
+          (parseInt(
             data.teams[1].playerStatistics[i].statistics.passescompleted
-          );
+          ) || 0);
         awayKeyPasses =
           awayKeyPasses +
-          parseInt(data.teams[1].playerStatistics[i].statistics.keypasses);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.keypasses) || 0);
         awayOffsides =
           awayOffsides +
-          parseInt(data.teams[1].playerStatistics[i].statistics.offsides);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.offsides) || 0);
         awayCorners =
           awayCorners +
-          parseInt(data.teams[1].playerStatistics[i].statistics.corners);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.corners) || 0);
         awayChancesCreated =
           awayChancesCreated +
-          parseInt(data.teams[1].playerStatistics[i].statistics.chancescreated);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.chancescreated) || 0);
       }
       data.teams[0].score = homeScore;
       data.teams[0].scorereceived = awayScore;
