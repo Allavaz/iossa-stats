@@ -465,7 +465,7 @@ export default function MatchIndividualStats(props) {
                       }
                       key={index}
                     >
-                      {cell.value !== undefined ? cell.render("Cell") : "N/A"}
+                      {cell.value != null ? cell.render("Cell") : "N/A"}
                     </td>
                   ))}
                 </tr>
