@@ -214,7 +214,7 @@ export default function MatchIndividualStats(props) {
       },
       {
         Header: "Atajadas (Sin Rebote)",
-        accessor: "savescaught",
+        accessor: "statistics.savescaught",
         width: 180,
         Cell: row => {
           return (
@@ -465,7 +465,7 @@ export default function MatchIndividualStats(props) {
                       }
                       key={index}
                     >
-                      {cell.render("Cell")}
+                      {cell.value !== undefined ? cell.render("Cell") : "N/A"}
                     </td>
                   ))}
                 </tr>

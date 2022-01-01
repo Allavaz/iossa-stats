@@ -99,11 +99,12 @@ export default function MatchTeamStats(props) {
               %
             </td>
           </tr>
-          <tr>
+          {props.data.teams[0].statistics.keypasses &&
+            <tr>
             <td>{props.data.teams[0].statistics.keypasses}</td>
             <td>Pases Clave</td>
             <td>{props.data.teams[1].statistics.keypasses}</td>
-          </tr>
+          </tr>}
           <tr>
             <td>{props.data.teams[0].statistics.fouls}</td>
             <td>Faltas</td>
@@ -129,11 +130,12 @@ export default function MatchTeamStats(props) {
             <td>Córners</td>
             <td>{props.data.teams[1].statistics.corners}</td>
           </tr>
-          <tr>
+          {props.data.teams[0].statistics.chancescreated &&
+            <tr>
             <td>{props.data.teams[0].statistics.chancescreated}</td>
             <td>Ocasiones Creadas</td>
             <td>{props.data.teams[1].statistics.chancescreated}</td>
-          </tr>
+          </tr>}
         </tbody>
       </table>
     </div>
