@@ -40,14 +40,6 @@ export default function MatchTeamStats(props) {
       accessor: i => baseObject(i).fouls
     },
     {
-      label: "Tarjetas amarillas",
-      accessor: i => baseObject(i).yellowcards
-    },
-    {
-      label: "Tarjetas rojas",
-      accessor: i => baseObject(i).redcards
-    },
-    {
       label: "Offsides",
       accessor: i => baseObject(i).offsides
     },
