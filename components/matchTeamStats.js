@@ -18,7 +18,7 @@ export default function MatchTeamStats(props) {
     },
     {
       label: "Posesión",
-      accessor: i => baseObject(i).shotsontarget,
+      accessor: i => baseObject(i).possession,
       extra: "%"
     },
     {
