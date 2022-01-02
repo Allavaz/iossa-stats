@@ -6,6 +6,61 @@ import { useState } from "react";
 export default function MatchTeamStats(props) {
   const [hovering, setHovering] = useState(false);
 
+  const baseObject = i => props.data.teams[i].statistics;
+  const rows = [
+    {
+      label: "Tiros",
+      accessor: i => baseObject(i).shots
+    },
+    {
+      label: "Tiros al arco",
+      accessor: i => baseObject(i).shotsontarget
+    },
+    {
+      label: "Posesión",
+      accessor: i => baseObject(i).shotsontarget,
+      extra: "%"
+    },
+    {
+      label: "Pases",
+      accessor: i => baseObject(i).passes
+    },
+    {
+      label: "Precisión de los pases",
+      accessor: i =>
+        percentage(baseObject(i).passescompleted, baseObject(i).passes),
+      extra: "%"
+    },
+    {
+      label: "Pases clave",
+      accessor: i => baseObject(i).keypasses
+    },
+    {
+      label: "Faltas",
+      accessor: i => baseObject(i).fouls
+    },
+    {
+      label: "Tarjetas amarillas",
+      accessor: i => baseObject(i).yellowcards
+    },
+    {
+      label: "Tarjetas rojas",
+      accessor: i => baseObject(i).redcards
+    },
+    {
+      label: "Offsides",
+      accessor: i => baseObject(i).offsides
+    },
+    {
+      label: "Córners",
+      accessor: i => baseObject(i).corners
+    },
+    {
+      label: "Ocasiones creadas",
+      accessor: i => baseObject(i).chancescreated
+    },
+  ];
+
   return (
     <div
       className="divDataTable"
@@ -62,80 +117,13 @@ export default function MatchTeamStats(props) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{props.data.teams[0].statistics.shots}</td>
-            <td>Tiros</td>
-            <td>{props.data.teams[1].statistics.shots}</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.shotsontarget}</td>
-            <td>Tiros al arco</td>
-            <td>{props.data.teams[1].statistics.shotsontarget}</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.possession}%</td>
-            <td>Posesión</td>
-            <td>{props.data.teams[1].statistics.possession}%</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.passes}</td>
-            <td>Pases</td>
-            <td>{props.data.teams[1].statistics.passes}</td>
-          </tr>
-          <tr>
-            <td>
-              {percentage(
-                props.data.teams[0].statistics.passescompleted,
-                props.data.teams[0].statistics.passes
-              )}
-              %
-            </td>
-            <td>Precisión de los pases</td>
-            <td>
-              {percentage(
-                props.data.teams[1].statistics.passescompleted,
-                props.data.teams[1].statistics.passes
-              )}
-              %
-            </td>
-          </tr>
-          {props.data.teams[0].statistics.keypasses &&
+          {rows.map(e => (e.accessor(0) != null &&
             <tr>
-            <td>{props.data.teams[0].statistics.keypasses}</td>
-            <td>Pases Clave</td>
-            <td>{props.data.teams[1].statistics.keypasses}</td>
-          </tr>}
-          <tr>
-            <td>{props.data.teams[0].statistics.fouls}</td>
-            <td>Faltas</td>
-            <td>{props.data.teams[1].statistics.fouls}</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.yellowcards}</td>
-            <td>Tarjetas amarillas</td>
-            <td>{props.data.teams[1].statistics.yellowcards}</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.redcards}</td>
-            <td>Tarjetas rojas</td>
-            <td>{props.data.teams[1].statistics.redcards}</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.offsides}</td>
-            <td>Offsides</td>
-            <td>{props.data.teams[1].statistics.offsides}</td>
-          </tr>
-          <tr>
-            <td>{props.data.teams[0].statistics.corners}</td>
-            <td>Córners</td>
-            <td>{props.data.teams[1].statistics.corners}</td>
-          </tr>
-          {props.data.teams[0].statistics.chancescreated &&
-            <tr>
-            <td>{props.data.teams[0].statistics.chancescreated}</td>
-            <td>Ocasiones Creadas</td>
-            <td>{props.data.teams[1].statistics.chancescreated}</td>
-          </tr>}
+              <td>{e.accessor(0)}{1 && e.extra}</td>
+              <td>{e.label}</td>
+              <td>{e.accessor(1)}{1 && e.extra}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
