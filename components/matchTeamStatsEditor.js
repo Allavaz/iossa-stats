@@ -3,21 +3,21 @@ import { getTeamLogo, invPercentage, percentage } from "../utils/Utils";
 function evenUpPos(value, side) {
   if (side === "home") {
     if (value.startsWith("+")) {
-      document.getElementById("pos1").value =
+      document.getElementById("possession1").value =
         "+" +
         (100 -
-          parseInt(document.getElementById("pos0").value.replace("+", "")));
+          parseInt(document.getElementById("possession0").value.replace("+", "")));
     } else {
-      document.getElementById("pos1").value = 100 - value;
+      document.getElementById("possession1").value = 100 - value;
     }
   } else if (side === "away") {
     if (value.startsWith("+")) {
-      document.getElementById("pos0").value =
+      document.getElementById("possession0").value =
         "+" +
         (100 -
-          parseInt(document.getElementById("pos1").value.replace("+", "")));
+          parseInt(document.getElementById("possession1").value.replace("+", "")));
     } else {
-      document.getElementById("pos0").value = 100 - value;
+      document.getElementById("possession0").value = 100 - value;
     }
   }
 }
@@ -26,7 +26,7 @@ function parseValue(id, target) {
   let v = document.getElementById(id).value;
   if (v.startsWith("+")) {
     let actualValue = parseInt(v.replace("+", ""));
-    if (id === "shotstarget0") {
+    if (id === "shotsontarget0") {
       let shots0;
       if (document.getElementById("shots0").value.startsWith("+")) {
         shots0 =
@@ -42,7 +42,7 @@ function parseValue(id, target) {
       return Math.round(
         (target + invPercentage(parseInt(actualValue), shots0)) / 2
       );
-    } else if (id === "shotstarget1") {
+    } else if (id === "shotsontarget1") {
       let shots1;
       if (document.getElementById("shots1").value.startsWith("+")) {
         shots1 =
@@ -58,9 +58,9 @@ function parseValue(id, target) {
       return Math.round(
         (target + invPercentage(parseInt(actualValue), shots1)) / 2
       );
-    } else if (id === "pos0" || id === "pos1") {
+    } else if (id === "possession0" || id === "possession1") {
       return Math.round((target + actualValue) / 2);
-    } else if (id === "passescomp0") {
+    } else if (id === "passescompleted0") {
       let passes0;
       if (document.getElementById("passes0").value.startsWith("+")) {
         passes0 =
@@ -76,7 +76,7 @@ function parseValue(id, target) {
       return Math.round(
         (target + invPercentage(parseInt(actualValue), passes0)) / 2
       );
-    } else if (id === "passescomp1") {
+    } else if (id === "passescompleted1") {
       let passes1;
       if (document.getElementById("passes1").value.startsWith("+")) {
         passes1 =
@@ -100,7 +100,7 @@ function parseValue(id, target) {
     return target - actualValue;
   } else {
     let actualValue = parseInt(v);
-    if (id === "shotstarget0") {
+    if (id === "shotsontarget0") {
       let shots0;
       if (document.getElementById("shots0").value.startsWith("+")) {
         shots0 =
@@ -114,7 +114,7 @@ function parseValue(id, target) {
         shots0 = parseInt(document.getElementById("shots0").value);
       }
       return Math.round(invPercentage(parseInt(actualValue), shots0));
-    } else if (id === "shotstarget1") {
+    } else if (id === "shotsontarget1") {
       let shots1;
       if (document.getElementById("shots1").value.startsWith("+")) {
         shots1 =
@@ -128,7 +128,7 @@ function parseValue(id, target) {
         shots1 = parseInt(document.getElementById("shots1").value);
       }
       return Math.round(invPercentage(parseInt(actualValue), shots1));
-    } else if (id === "passescomp0") {
+    } else if (id === "passescompleted0") {
       let passes0;
       if (document.getElementById("passes0").value.startsWith("+")) {
         passes0 =
@@ -142,7 +142,7 @@ function parseValue(id, target) {
         passes0 = parseInt(document.getElementById("passes0").value);
       }
       return Math.round(invPercentage(parseInt(actualValue), passes0));
-    } else if (id === "passescomp1") {
+    } else if (id === "passescompleted1") {
       let passes1;
       if (document.getElementById("passes1").value.startsWith("+")) {
         passes1 =
@@ -162,117 +162,90 @@ function parseValue(id, target) {
   }
 }
 
-function inputSane(teams) {
-  let a = [];
-  a.push(parseValue("shots0", teams[0].statistics.shots));
-  a.push(parseValue("shotstarget0", teams[0].statistics.shotsontarget));
-  a.push(parseValue("pos0", teams[0].statistics.possession));
-  a.push(parseValue("passes0", teams[0].statistics.passes));
-  a.push(parseValue("passescomp0", teams[0].statistics.passescompleted));
-  a.push(parseValue("keypasses0", teams[0].statistics.keypasses));
-  a.push(parseValue("fouls0", teams[0].statistics.fouls));
-  a.push(parseValue("offsides0", teams[0].statistics.offsides));
-  a.push(parseValue("corners0", teams[0].statistics.corners));
-  a.push(parseValue("shots1", teams[1].statistics.shots));
-  a.push(parseValue("shotstarget1", teams[1].statistics.shotsontarget));
-  a.push(parseValue("pos1", teams[1].statistics.possession));
-  a.push(parseValue("passes1", teams[1].statistics.passes));
-  a.push(parseValue("passescomp1", teams[1].statistics.passescompleted));
-  a.push(parseValue("keypasses1", teams[1].statistics.keypasses));
-  a.push(parseValue("fouls1", teams[1].statistics.fouls));
-  a.push(parseValue("offsides1", teams[1].statistics.offsides));
-  a.push(parseValue("corners1", teams[1].statistics.corners));
-  for (let i in a) {
-    if (isNaN(a[i]) || a[i] < 0) {
-      return false;
-    }
-  }
-  return true;
-}
-
 export default function MatchTeamStatsEditor(props) {
+  const baseObject = i => props.data.teams[i].statistics;
+  const statFields = [
+    {
+      label: "Tiros",
+      id: "shots",
+      accessor: i => baseObject(i).shots
+    },
+    {
+      label: "Tiros al arco",
+      id: "shotsontarget",
+      accessor: i => baseObject(i).shotsontarget
+    },
+    {
+      label: "Posesión",
+      accessor: i => baseObject(i).possession,
+      id: "possession",
+      extra: " %",
+      onChange: (e, s) => evenUpPos(e.target.value, s),
+      maxLength: 4
+    },
+    {
+      label: "Pases",
+      id: "passes",
+      accessor: i => baseObject(i).passes
+    },
+    {
+      label: "Precisión de los pases",
+      id: "passescompleted",
+      accessor: i =>
+        percentage(baseObject(i).passescompleted, baseObject(i).passes),
+      extra: " %",
+      maxLength: 4
+    },
+    {
+      label: "Pases clave",
+      id: "keypasses",
+      accessor: i => baseObject(i).keypasses
+    },
+    {
+      label: "Faltas",
+      id: "fouls",
+      accessor: i => baseObject(i).fouls
+    },
+    {
+      label: "Offsides",
+      id: "offsides",
+      accessor: i => baseObject(i).offsides
+    },
+    {
+      label: "Córners",
+      id: "corners",
+      accessor: i => baseObject(i).corners
+    }
+  ];
+
+  const inputSane = () => {
+    let a = [];
+    statFields.forEach(e => {
+      a.push(parseValue(e.id + "0", baseObject(0)[e.id]))
+      a.push(parseValue(e.id + "1", baseObject(1)[e.id]))
+    })
+    for (let i in a) {
+      if (isNaN(a[i]) || a[i] < 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   function finishEditing() {
     let teams = JSON.parse(JSON.stringify(props.data.teams));
     if (!inputSane(teams)) {
       alert(
-        'Valor inválido. Ingrese un número, prefijado por "+" o "-" si se desea sumar o restar, respectivamente.'
+        'Valor(es) inválido(s). Ingrese un número, prefijado por "+" o "-" si se desea sumar o restar, respectivamente.'
       );
     } else {
-      teams[0].statistics.shots = parseValue(
-        "shots0",
-        teams[0].statistics.shots
-      );
-      teams[0].statistics.shotsontarget = parseValue(
-        "shotstarget0",
-        teams[0].statistics.shotsontarget
-      );
-      teams[0].statistics.possession = parseValue(
-        "pos0",
-        teams[0].statistics.possession
-      );
-      teams[0].statistics.passes = parseValue(
-        "passes0",
-        teams[0].statistics.passes
-      );
-      teams[0].statistics.passescompleted = parseValue(
-        "passescomp0",
-        teams[0].statistics.passescompleted
-      );
-      teams[0].statistics.keypasses = parseValue(
-        "keypasses0",
-        teams[0].statistics.keypasses
-      );
-      teams[0].statistics.fouls = parseValue(
-        "fouls0",
-        teams[0].statistics.fouls
-      );
-      teams[0].statistics.offsides = parseValue(
-        "offsides0",
-        teams[0].statistics.offsides
-      );
-      teams[0].statistics.corners = parseValue(
-        "corners0",
-        teams[0].statistics.corners
-      );
+      statFields.forEach(e => {
+        teams[0].statistics[e.id] = parseValue(e.id + "0", teams[0].statistics[e.id])
+        teams[1].statistics[e.id] = parseValue(e.id + "1", teams[1].statistics[e.id])
+      })
       teams[0].statistics.chancescreated =
         teams[0].statistics.assists +
         parseValue("keypasses0", teams[0].statistics.keypasses);
-      teams[1].statistics.shots = parseValue(
-        "shots1",
-        teams[1].statistics.shots
-      );
-      teams[1].statistics.shotsontarget = parseValue(
-        "shotstarget1",
-        teams[1].statistics.shotsontarget
-      );
-      teams[1].statistics.possession = parseValue(
-        "pos1",
-        teams[1].statistics.possession
-      );
-      teams[1].statistics.passes = parseValue(
-        "passes1",
-        teams[1].statistics.passes
-      );
-      teams[1].statistics.passescompleted = parseValue(
-        "passescomp1",
-        teams[1].statistics.passescompleted
-      );
-      teams[1].statistics.keypasses = parseValue(
-        "keypasses1",
-        teams[1].statistics.keypasses
-      );
-      teams[1].statistics.fouls = parseValue(
-        "fouls1",
-        teams[1].statistics.fouls
-      );
-      teams[1].statistics.offsides = parseValue(
-        "offsides1",
-        teams[1].statistics.offsides
-      );
-      teams[1].statistics.corners = parseValue(
-        "corners1",
-        teams[1].statistics.corners
-      );
       teams[1].statistics.chancescreated =
         teams[1].statistics.assists +
         parseValue("keypasses1", teams[1].statistics.keypasses);
@@ -314,203 +287,33 @@ export default function MatchTeamStatsEditor(props) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <input
-                id="shots0"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.shots}
-              ></input>
-            </td>
-            <td>Tiros</td>
-            <td>
-              <input
-                id="shots1"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.shots}
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="shotstarget0"
-                type="text"
-                maxLength={4}
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={percentage(
-                  props.data.teams[0].statistics.shotsontarget,
-                  props.data.teams[0].statistics.shots
-                )}
-              ></input>{" "}
-              %
-            </td>
-            <td>Tiros al arco</td>
-            <td>
-              <input
-                id="shotstarget1"
-                type="text"
-                maxLength={4}
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={percentage(
-                  props.data.teams[1].statistics.shotsontarget,
-                  props.data.teams[1].statistics.shots
-                )}
-              ></input>{" "}
-              %
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="pos0"
-                type="text"
-                maxLength={4}
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.possession}
-                onChange={e => evenUpPos(e.target.value, "home")}
-              ></input>{" "}
-              %
-            </td>
-            <td>Posesión</td>
-            <td>
-              <input
-                id="pos1"
-                type="text"
-                maxLength={4}
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.possession}
-                onChange={e => evenUpPos(e.target.value, "away")}
-              ></input>{" "}
-              %
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="passes0"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.passes}
-              ></input>
-            </td>
-            <td>Pases</td>
-            <td>
-              <input
-                id="passes1"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.passes}
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="passescomp0"
-                type="text"
-                maxLength={4}
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={percentage(
-                  props.data.teams[0].statistics.passescompleted,
-                  props.data.teams[0].statistics.passes
-                )}
-              ></input>{" "}
-              %
-            </td>
-            <td>Precisión de los pases</td>
-            <td>
-              <input
-                id="passescomp1"
-                type="text"
-                maxLength={4}
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={percentage(
-                  props.data.teams[1].statistics.passescompleted,
-                  props.data.teams[1].statistics.passes
-                )}
-              ></input>{" "}
-              %
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="keypasses0"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.keypasses}
-              ></input>
-            </td>
-            <td>Pases Clave</td>
-            <td>
-              <input
-                id="keypasses1"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.keypasses}
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="fouls0"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.fouls}
-              ></input>
-            </td>
-            <td>Faltas</td>
-            <td>
-              <input
-                id="fouls1"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.fouls}
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="offsides0"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.offsides}
-              ></input>
-            </td>
-            <td>Offsides</td>
-            <td>
-              <input
-                id="offsides1"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.offsides}
-              ></input>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input
-                id="corners0"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[0].statistics.corners}
-              ></input>
-            </td>
-            <td>Córners</td>
-            <td>
-              <input
-                id="corners1"
-                type="text"
-                style={{ width: "5ch", textAlign: "center" }}
-                defaultValue={props.data.teams[1].statistics.corners}
-              ></input>
-            </td>
-          </tr>
+          {statFields.map(e => (
+            <tr>
+              <td>
+                <input
+                  id={e.id + "0"}
+                  type="text"
+                  style={{ width: "5ch", textAlign: "center" }}
+                  maxLength={e.maxLength}
+                  onChange={ev => e.onChange ? e.onChange(ev, "home") : null}
+                  defaultValue={e.accessor(0)}
+                >
+                </input>{e.extra}
+              </td>
+              <td>{e.label}</td>
+              <td>
+                <input
+                  id={e.id + "1"}
+                  type="text"
+                  style={{ width: "5ch", textAlign: "center" }}
+                  maxLength={e.maxLength}
+                  defaultValue={e.accessor(1)}
+                  onChange={ev => e.onChange ? e.onChange(ev, "away") : null}
+                >
+                </input>{e.extra}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <div
