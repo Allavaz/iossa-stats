@@ -163,35 +163,153 @@ export default function MatchIndivStatsEditor(props) {
     setPlayerName(value);
   };
 
+  const positions = [
+    "GK",
+    "LB",
+    "RB",
+    "CB",
+    "LM",
+    "RM",
+    "CM",
+    "CF",
+    "LW",
+    "RW"
+  ];
+  const statFields = [
+    {
+      label: "Tiros",
+      id: "shots",
+      defaultValue: props.player.statistics.shots
+    },
+    {
+      label: "Tiros (al arco)",
+      id: "shotsontarget",
+      maxLength: 4,
+      defaultValue: percentage(
+        props.player.statistics.shotsontarget,
+        props.player.statistics.shots
+      ),
+      extra: " %"
+    },
+    {
+      label: "Pases",
+      id: "passes",
+      defaultValue: props.player.statistics.passes
+    },
+    {
+      label: "Pases completados",
+      id: "passescompleted",
+      maxLength: 4,
+      defaultValue: percentage(
+        props.player.statistics.passescompleted,
+        props.player.statistics.passes
+      ),
+      extra: " %"
+    },
+    {
+      label: "Pases clave",
+      id: "keypasses",
+      defaultValue: props.player.statistics.keypasses
+    },
+    {
+      label: "Intercepciones",
+      id: "interceptions",
+      defaultValue: props.player.statistics.interceptions
+    },
+    {
+      label: "Atajadas",
+      id: "saves",
+      defaultValue: props.player.statistics.saves
+    },
+    {
+      label: "Atajadas (sin rebote)",
+      id: "savescaught",
+      maxLength: 4,
+      defaultValue: percentage(
+        props.player.statistics.savescaught,
+        props.player.statistics.saves
+      ),
+      extra: " %"
+    },
+    {
+      label: "Faltas",
+      id: "fouls",
+      defaultValue: props.player.statistics.fouls
+    },
+    {
+      label: "Offsides",
+      id: "offsides",
+      defaultValue: props.player.statistics.offsides
+    },
+    {
+      label: "Distancia recorrida",
+      id: "distancecovered",
+      defaultValue: props.player.statistics.distancecovered,
+      width: "8ch",
+      extra: " m"
+    },
+    {
+      label: "Posesión",
+      id: "possession",
+      defaultValue: props.player.statistics.possession,
+      maxLength: 4,
+      extra: " %"
+    },
+    {
+      label: "Corners",
+      id: "corners",
+      defaultValue: props.player.statistics.corners
+    },
+    {
+      label: "Laterales",
+      id: "throwins",
+      defaultValue: props.player.statistics.throwins
+    },
+    {
+      label: "Penales",
+      id: "penalties",
+      defaultValue: props.player.statistics.penalties
+    },
+    {
+      label: "Tiros libres",
+      id: "freekicks",
+      defaultValue: props.player.statistics.freekicks
+    },
+    {
+      label: "Tackles",
+      id: "tackles",
+      defaultValue: props.player.statistics.tackles
+    },
+    {
+      label: "Tackles completados",
+      id: "tacklescompleted",
+      maxLength: 4,
+      defaultValue: percentage(
+        props.player.statistics.tacklescompleted,
+        props.player.statistics.tackles
+      ),
+      extra: " %"
+    },
+    {
+      label: "Faltas sufridas",
+      id: "foulssuffered",
+      defaultValue: props.player.statistics.foulssuffered
+    },
+    {
+      label: "Saques de arco",
+      id: "goalkicks",
+      defaultValue: props.player.statistics.goalkicks
+    },
+    {
+      label: "Goles recibidos",
+      id: "goalsconceded",
+      defaultValue: props.player.statistics.goalsconceded
+    }
+  ];
+
   const inputSane = () => {
     let a = [];
-    a.push(parseValue("corners", props.player.statistics.corners));
-    a.push(
-      parseValue("distancecovered", props.player.statistics.distancecovered)
-    );
-    a.push(parseValue("fouls", props.player.statistics.fouls));
-    a.push(parseValue("foulssuffered", props.player.statistics.foulssuffered));
-    a.push(parseValue("freekicks", props.player.statistics.freekicks));
-    a.push(parseValue("goalkicks", props.player.statistics.goalkicks));
-    a.push(parseValue("goalsconceded", props.player.statistics.goalsconceded));
-    a.push(parseValue("interceptions", props.player.statistics.interceptions));
-    a.push(parseValue("offsides", props.player.statistics.offsides));
-    a.push(parseValue("passes", props.player.statistics.passes));
-    a.push(
-      parseValue("passescompleted", props.player.statistics.passescompleted)
-    );
-    a.push(parseValue("penalties", props.player.statistics.penalties));
-    a.push(parseValue("possession", props.player.statistics.possession));
-    a.push(parseValue("saves", props.player.statistics.saves));
-    a.push(parseValue("savescaught", props.player.statistics.savescaught));
-    a.push(parseValue("shots", props.player.statistics.shots));
-    a.push(parseValue("shotsontarget", props.player.statistics.shotsontarget));
-    a.push(parseValue("tackles", props.player.statistics.tackles));
-    a.push(
-      parseValue("tacklescompleted", props.player.statistics.tacklescompleted)
-    );
-    a.push(parseValue("throwins", props.player.statistics.throwins));
-    a.push(parseValue("keypasses", props.player.statistics.keypasses));
+    statFields.forEach(e => a.push(parseValue(e.id, e.defaultValue)));
     for (let i in a) {
       if (isNaN(a[i])) {
         return false;
@@ -203,7 +321,7 @@ export default function MatchIndivStatsEditor(props) {
   const finishEditing = () => {
     if (!inputSane()) {
       alert(
-        'Valor inválido. Ingrese un número, prefijado por "+" o "-" si se desea sumar o restar, respectivamente.'
+        'Valor(es) inválido(s). Ingrese un número, prefijado por "+" o "-" si se desea sumar o restar, respectivamente.'
       );
     } else {
       if (playerName === "") {
@@ -220,66 +338,6 @@ export default function MatchIndivStatsEditor(props) {
             team: props.player.info.team
           },
           statistics: {
-            corners: parseValue("corners", props.player.statistics.corners),
-            distancecovered: parseValue(
-              "distancecovered",
-              props.player.statistics.distancecovered
-            ),
-            fouls: parseValue("fouls", props.player.statistics.fouls),
-            foulssuffered: parseValue(
-              "foulssuffered",
-              props.player.statistics.foulssuffered
-            ),
-            freekicks: parseValue(
-              "freekicks",
-              props.player.statistics.freekicks
-            ),
-            goalkicks: parseValue(
-              "goalkicks",
-              props.player.statistics.goalkicks
-            ),
-            goalsconceded: parseValue(
-              "goalsconceded",
-              props.player.statistics.goalsconceded
-            ),
-            interceptions: parseValue(
-              "interceptions",
-              props.player.statistics.interceptions
-            ),
-            offsides: parseValue("offsides", props.player.statistics.offsides),
-            passes: parseValue("passes", props.player.statistics.passes),
-            passescompleted: parseValue(
-              "passescompleted",
-              props.player.statistics.passescompleted
-            ),
-            penalties: parseValue(
-              "penalties",
-              props.player.statistics.penalties
-            ),
-            possession: parseValue(
-              "possession",
-              props.player.statistics.possession
-            ),
-            saves: parseValue("saves", props.player.statistics.saves),
-            savescaught: parseValue(
-              "savescaught",
-              props.player.statistics.savescaught
-            ),
-            shots: parseValue("shots", props.player.statistics.shots),
-            shotsontarget: parseValue(
-              "shotsontarget",
-              props.player.statistics.shotsontarget
-            ),
-            tackles: parseValue("tackles", props.player.statistics.tackles),
-            tacklescompleted: parseValue(
-              "tacklescompleted",
-              props.player.statistics.tacklescompleted
-            ),
-            throwins: parseValue("throwins", props.player.statistics.throwins),
-            keypasses: parseValue(
-              "keypasses",
-              props.player.statistics.keypasses
-            ),
             positions:
               props.player.statistics.positions.length === 0
                 ? [
@@ -300,6 +358,9 @@ export default function MatchIndivStatsEditor(props) {
               parseValue("keypasses", props.player.statistics.keypasses)
           }
         };
+        statFields.forEach(
+          e => (player.statistics[e.id] = parseValue(e.id, e.defaultValue))
+        );
         props.onChangeIndivStats(player);
       }
     }
@@ -380,16 +441,9 @@ export default function MatchIndivStatsEditor(props) {
                     : props.player.statistics.positions[0].position
                 }
               >
-                <option value="GK">GK</option>
-                <option value="LB">LB</option>
-                <option value="RB">RB</option>
-                <option value="CB">CB</option>
-                <option value="LM">LM</option>
-                <option value="RM">RM</option>
-                <option value="CM">CM</option>
-                <option value="CF">CF</option>
-                <option value="LW">LW</option>
-                <option value="RW">RW</option>
+                {positions.map(e => (
+                  <option value={e}>{e}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -403,260 +457,21 @@ export default function MatchIndivStatsEditor(props) {
             columnGap: "15px"
           }}
         >
-          <div style={itemStyle}>
-            <div>Tiros:</div>
-            <div style={inputStyle}>
-              <input
-                id="shots"
-                type="text"
-                defaultValue={props.player.statistics.shots}
-                style={{ width: "5ch" }}
-              />
+          {statFields.map(e => (
+            <div style={itemStyle}>
+              <div>{e.label + ":"}</div>
+              <div style={inputStyle}>
+                <input
+                  id={e.id}
+                  type="text"
+                  defaultValue={e.defaultValue}
+                  style={{ width: e.width ? e.width : "4ch" }}
+                  maxLength={e.maxLength}
+                />
+                {e.extra}
+              </div>
             </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Tiros (al arco):</div>
-            <div style={inputStyle}>
-              <input
-                id="shotsontarget"
-                maxLength={4}
-                type="text"
-                defaultValue={percentage(
-                  props.player.statistics.shotsontarget,
-                  props.player.statistics.shots
-                )}
-                style={{ width: "5ch" }}
-              />{" "}
-              %
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Pases:</div>
-            <div style={inputStyle}>
-              <input
-                id="passes"
-                type="text"
-                defaultValue={props.player.statistics.passes}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Pases completados:</div>
-            <div style={inputStyle}>
-              <input
-                id="passescompleted"
-                maxLength={4}
-                type="text"
-                defaultValue={percentage(
-                  props.player.statistics.passescompleted,
-                  props.player.statistics.passes
-                )}
-                style={{ width: "5ch" }}
-              />{" "}
-              %
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Pases Clave:</div>
-            <div style={inputStyle}>
-              <input
-                id="keypasses"
-                type="text"
-                defaultValue={props.player.statistics.keypasses}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Intercepciones:</div>
-            <div style={inputStyle}>
-              <input
-                id="interceptions"
-                type="text"
-                defaultValue={props.player.statistics.interceptions}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Atajadas:</div>
-            <div style={inputStyle}>
-              <input
-                id="saves"
-                type="text"
-                defaultValue={props.player.statistics.saves}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Atajadas (sin rebote):</div>
-            <div style={inputStyle}>
-              <input
-                id="savescaught"
-                type="text"
-                maxLength={4}
-                defaultValue={percentage(
-                  props.player.statistics.savescaught,
-                  props.player.statistics.saves
-                )}
-                style={{ width: "5ch" }}
-              />{" "}
-              %
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Faltas:</div>
-            <div style={inputStyle}>
-              <input
-                id="fouls"
-                type="text"
-                defaultValue={props.player.statistics.fouls}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Offsides:</div>
-            <div style={inputStyle}>
-              <input
-                id="offsides"
-                type="text"
-                defaultValue={props.player.statistics.offsides}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Distancia recorrida:</div>
-            <div style={inputStyle}>
-              <input
-                id="distancecovered"
-                type="text"
-                defaultValue={props.player.statistics.distancecovered}
-                style={{ width: "8ch" }}
-              />{" "}
-              m
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Posesión:</div>
-            <div style={inputStyle}>
-              <input
-                id="possession"
-                maxLength={4}
-                type="text"
-                defaultValue={props.player.statistics.possession}
-                style={{ width: "5ch" }}
-              />{" "}
-              %
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Córners:</div>
-            <div style={inputStyle}>
-              <input
-                id="corners"
-                type="text"
-                defaultValue={props.player.statistics.corners}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Laterales:</div>
-            <div style={inputStyle}>
-              <input
-                id="throwins"
-                type="text"
-                defaultValue={props.player.statistics.throwins}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Penales:</div>
-            <div style={inputStyle}>
-              <input
-                id="penalties"
-                type="text"
-                defaultValue={props.player.statistics.penalties}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Tiros libres:</div>
-            <div style={inputStyle}>
-              <input
-                id="freekicks"
-                type="text"
-                defaultValue={props.player.statistics.freekicks}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Tackles:</div>
-            <div style={inputStyle}>
-              <input
-                id="tackles"
-                type="text"
-                defaultValue={props.player.statistics.tackles}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Tackles completados:</div>
-            <div style={inputStyle}>
-              <input
-                id="tacklescompleted"
-                maxLength={4}
-                type="text"
-                defaultValue={percentage(
-                  props.player.statistics.tacklescompleted,
-                  props.player.statistics.tackles
-                )}
-                style={{ width: "5ch" }}
-              />{" "}
-              %
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Faltas sufridas:</div>
-            <div style={inputStyle}>
-              <input
-                id="foulssuffered"
-                type="text"
-                defaultValue={props.player.statistics.foulssuffered}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Saques de arco:</div>
-            <div style={inputStyle}>
-              <input
-                id="goalkicks"
-                type="text"
-                defaultValue={props.player.statistics.goalkicks}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
-          <div style={itemStyle}>
-            <div>Goles recibidos:</div>
-            <div style={inputStyle}>
-              <input
-                id="goalsconceded"
-                type="text"
-                defaultValue={props.player.statistics.goalsconceded}
-                style={{ width: "5ch" }}
-              />
-            </div>
-          </div>
+          ))}
         </div>
         <p
           style={{
