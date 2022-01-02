@@ -817,7 +817,7 @@ export default function Match({
           }
           setLoading(false);
         })
-        .catch(e => console.log(e));
+        .catch(e => console.error(e));
     }
   }
 
@@ -841,7 +841,7 @@ export default function Match({
           }
           setLoading(false);
         })
-        .catch(e => console.log(e));
+        .catch(e => console.error(e));
     }
   }
 
