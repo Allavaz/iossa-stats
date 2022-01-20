@@ -287,8 +287,8 @@ export default function MatchTeamStatsEditor(props) {
           </tr>
         </thead>
         <tbody>
-          {statFields.map(e => (
-            <tr>
+          {statFields.map((e, i) => (
+            <tr key={i}>
               <td>
                 <input
                   id={e.id + "0"}

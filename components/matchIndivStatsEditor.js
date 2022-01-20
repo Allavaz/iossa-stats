@@ -441,8 +441,8 @@ export default function MatchIndivStatsEditor(props) {
                     : props.player.statistics.positions[0].position
                 }
               >
-                {positions.map(e => (
-                  <option value={e}>{e}</option>
+                {positions.map((e, i) => (
+                  <option key={i} value={e}>{e}</option>
                 ))}
               </select>
             </div>
@@ -457,8 +457,8 @@ export default function MatchIndivStatsEditor(props) {
             columnGap: "15px"
           }}
         >
-          {statFields.map(e => (
-            <div style={itemStyle}>
+          {statFields.map((e, i) => (
+            <div key={i} style={itemStyle}>
               <div>{e.label + ":"}</div>
               <div style={inputStyle}>
                 <input
