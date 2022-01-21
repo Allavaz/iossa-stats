@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         try {
           let doc = createJSON(req.body, strArr[1], vod);
           let id = await uploadMatch(doc);
-          await createMatchCard(id);
+          await createMatchCard(doc);
           discordPostMatch(id);
           res.json({ status: "Success!", id: id });
         } catch (e) {
