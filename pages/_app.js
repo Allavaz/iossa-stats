@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta name="theme-color" content="#e28800" />
       </Head>
-      <NextNProgress color={"#ff9800"} height={2} showOnShallow={false} />
+      <NextNProgress color="#ff9800" height={2} showOnShallow={false} />
       <Layout>
         <Component {...pageProps} />
       </Layout>
