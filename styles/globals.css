@@ -238,17 +238,6 @@ h5 {
   user-select: none;
 }
 
-.t7,
-.t6,
-.t5,
-.t4,
-.t3,
-.t2,
-.t1,
-.t0 {
-  display: none;
-}
-
 #resultsTable .rt-tr-group {
   cursor: "pointer";
 }
