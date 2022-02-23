@@ -86,15 +86,15 @@ export default function Player({
         }}
         suppressHydrationWarning={true}
       >
-        {process.browser && <Playstyle statsAll={statsAll} />}
+        {typeof window && <Playstyle statsAll={statsAll} />}
         {statsLast10.saves > statsLast10.shotsontarget
-          ? process.browser && (
+          ? typeof window && (
               <SavesConceded
                 playerMatches={playerMatches.slice(0, 10)}
                 id={statsAll.steamid}
               />
             )
-          : process.browser && (
+          : typeof window && (
               <GoalsShots
                 playerMatches={playerMatches.slice(0, 10)}
                 id={statsAll.steamid}
