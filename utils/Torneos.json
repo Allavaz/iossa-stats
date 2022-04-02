@@ -12,6 +12,10 @@
         "query": "d2"
       },
       {
+        "torneo": "Liga D3",
+        "query": "d3"
+      },
+      {
         "torneo": "Copa Master",
         "query": "master"
       },
@@ -97,6 +101,50 @@
       },
       {
         "torneo": "Copa America '21 - Playoff"
+      }
+    ]
+  },
+  {
+    "temporada": "t9",
+    "titulo": "Temporada 9",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T9",
+        "query": "d1t9",
+        "tabla": "d1t9"
+      },
+      {
+        "torneo": "Liga D2 T9",
+        "query": "d2t9",
+        "tabla": "d2t9"
+      },
+      {
+        "torneo": "Liga D3 T9",
+        "query": "d3t9",
+        "tabla": "d3t9"
+      },
+      {
+        "torneo": "Copa valencARc T9",
+        "query": "cvt9"
+      },
+      {
+        "torneo": "Copa Maradei T9 - Grupo A",
+        "tabla": "maradeit9a"
+      },
+      {
+        "torneo": "Copa Maradei T9 - Grupo B",
+        "tabla": "maradeit9b"
+      },
+      {
+        "torneo": "Copa Maradei T9 - Grupo C",
+        "tabla": "maradeit9c"
+      },
+      {
+        "torneo": "Copa Maradei T9 - Grupo D",
+        "tabla": "maradeit9d"
+      },
+      {
+        "torneo": "Copa Maradei T9 - Eliminatorias"
       }
     ]
   },
