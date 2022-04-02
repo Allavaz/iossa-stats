@@ -3,7 +3,7 @@ import { getManyPositions } from "../../lib/getFromDB";
 import Head from "next/head";
 import Torneos from "../../utils/Torneos.json";
 import { useRouter } from "next/router";
-import { temporadaActual } from "../../utils/Utils";
+import temporadaActual from "../../utils/TemporadaActual";
 
 function getTablas(temp) {
   let tablas = [];
@@ -76,7 +76,7 @@ function getTemporada(arg) {
 export async function getServerSideProps(context) {
   let id;
   if (context.params.id) id = context.params.id[0];
-  else id = temporadaActual;
+  else id = temporadaActual();
   if (getAllTemporadas().includes(id)) {
     let listaTablas = getTablas(id);
     let ids = [];

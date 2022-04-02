@@ -1,5 +1,5 @@
-import { getAllQueries, temporadaActual } from "../../utils/Utils";
 import Head from "next/head";
+import { getAllQueries } from "../../utils/Utils";
 import {
   getTop10Assists,
   getTop10Goals,
@@ -11,6 +11,7 @@ import Top10Goleadores from "../../components/top10Goleadores";
 import Top10Asistidores from "../../components/top10Asistidores";
 import Top10Rusticos from "../../components/top10Rusticos";
 import Torneos from "../../utils/Torneos.json";
+import temporadaActual from "../../utils/TemporadaActual";
 
 function getCategory(arg) {
   if (arg === "all") {
@@ -55,7 +56,7 @@ function getTemporada(arg) {
 export async function getServerSideProps(context) {
   let id;
   if (context.params.id) id = context.params.id[0];
-  else id = temporadaActual;
+  else id = temporadaActual();
   if (getAllQueries().includes(id)) {
     let goleadores = await getTop10Goals(id);
     let asistidores = await getTop10Assists(id);
