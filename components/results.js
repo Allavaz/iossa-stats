@@ -6,9 +6,9 @@ import {
   getTeamLogo,
   fecha,
   getTeamShortname,
-  getTournamentIcon,
-  temporadaActual
+  getTournamentIcon
 } from "../utils/Utils";
+import temporadaActual from "../utils/TemporadaActual";
 
 export default function Results({ matches, category, pagina }) {
   const router = useRouter();

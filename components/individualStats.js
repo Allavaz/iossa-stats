@@ -2,7 +2,8 @@ import { useTable, usePagination, useFilters, useSortBy } from "react-table";
 import { useMemo, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { getTeamLogo, temporadaActual } from "../utils/Utils";
+import { getTeamLogo } from "../utils/Utils";
+import temporadaActual from "../utils/TemporadaActual";
 import Image from "next/image";
 
 export default function IndividualStats({ players, category, pagina }) {
