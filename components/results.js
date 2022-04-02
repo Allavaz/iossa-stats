@@ -160,7 +160,7 @@ export default function Results({ matches, category, pagina }) {
             if (router.query.id) {
               id = router.query.id[0];
             } else {
-              id = temporadaActual;
+              id = temporadaActual();
             }
             router.push(`/resultados/${id}/1`, undefined, { shallow: true });
           }}
