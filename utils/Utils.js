@@ -21,6 +21,8 @@ exports.getTournamentIcon = function (tournament) {
     return "/tournaments/superligad1.png";
   } else if (tournament.includes("Liga D2")) {
     return "/tournaments/ligad2.png";
+  } else if (tournament.includes("Liga D3")) {
+    return "/tournaments/ligad3.png";
   } else if (tournament.includes("Copa Master")) {
     return "/tournaments/copamaster.png";
   } else if (tournament.includes("Recopa Master")) {
