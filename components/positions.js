@@ -165,7 +165,9 @@ export default function Positions({ teams, header, mini }) {
             {teams.map((item, index) => (
               <tr key={item._id}>
                 {columns.map(e => (
-                  <td>{e.render ? e.render(item, index) : item[e.accessor]}</td>
+                  <td key={e.header}>
+                    {e.render ? e.render(item, index) : item[e.accessor]}
+                  </td>
                 ))}
               </tr>
             ))}
