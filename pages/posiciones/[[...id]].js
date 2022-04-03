@@ -1,4 +1,4 @@
-import FullPositions from "../../components/fullPositions";
+import Positions from "../../components/positions";
 import { getManyPositions } from "../../lib/getFromDB";
 import Head from "next/head";
 import Torneos from "../../utils/Torneos.json";
@@ -143,11 +143,10 @@ export default function Posiciones({ tablas, category, temporada }) {
         }}
       >
         {tablas.map((item, index) => (
-          <FullPositions
+          <Positions
             key={index}
             teams={item}
-            torneo={getTablas(temporada)[index].name}
-            unificada={getTablas(temporada)[index].table.startsWith("sd")}
+            header={getTablas(temporada)[index].name}
           />
         ))}
       </div>

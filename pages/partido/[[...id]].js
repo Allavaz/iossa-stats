@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
 import Head from "next/head";
 import MatchTeamStats from "../../components/matchTeamStats";
-import FullPositions from "../../components/fullPositions";
+import Positions from "../../components/positions";
 import Torneos from "../../utils/Torneos.json";
 import MatchIndividualStats from "../../components/matchIndividualStats";
 import Vod from "../../components/vod";
@@ -1046,15 +1046,10 @@ export default function Match({
           {editableTable || (table && !editable) ? (
             <div style={{ flexGrow: 1 }}>
               <div className="flexTableDiv">
-                <FullPositions
+                <Positions
                   teams={editable || create ? editableTable : table}
-                  torneo={
+                  header={
                     editable || create ? editableTablaTorneo : tablaTorneo
-                  }
-                  unificada={
-                    editableTablaTorneo.startsWith("Superliga") ||
-                    (!(editable || create) &&
-                      tablaTorneo.startsWith("Superliga"))
                   }
                 />
                 {editable || create ? (

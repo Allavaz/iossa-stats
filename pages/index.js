@@ -1,12 +1,16 @@
 import Head from "next/head";
 import { getMatches, getManyPositions } from "../lib/getFromDB";
 import Matches from "../components/matches";
-import MiniPositions from "../components/miniPositions";
+import Positions from "../components/positions";
 
 const minitables = [
-  { torneo: "sd1t8", header: "Superliga D1 T8" },
-  { torneo: "lzt8a", header: "Liga Zero T8 - Grupo A" },
-  { torneo: "lzt8b", header: "Liga Zero T8 - Grupo B" }
+  { torneo: "d1t9", header: "Liga D1 T9" },
+  { torneo: "d2t9", header: "Liga D2 T9" },
+  { torneo: "d3t9", header: "Liga D3 T9" },
+  { torneo: "maradeit9a", header: "Copa Maradei T9 - Grupo A" },
+  { torneo: "maradeit9b", header: "Copa Maradei T9 - Grupo B" },
+  { torneo: "maradeit9c", header: "Copa Maradei T9 - Grupo C" },
+  { torneo: "maradeit9d", header: "Copa Maradei T9 - Grupo D" },
 ];
 
 export async function getServerSideProps() {
@@ -47,12 +51,12 @@ export default function Home({ matches, tablas }) {
         <Matches matches={matches} />
         <div className="flexTableDiv" style={{ flexGrow: 1 }}>
           {tablas.map((item, index) => (
-            <MiniPositions
+            <Positions
+              mini
               teams={item}
               key={index}
               header={minitables[index].header}
-              unificada={minitables[index].torneo.startsWith("sd")}
-            ></MiniPositions>
+            />
           ))}
         </div>
       </div>
