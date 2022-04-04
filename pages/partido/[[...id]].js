@@ -184,8 +184,8 @@ export default function Match({
             setEditableChallonge(t.challonge);
           } else if (t.tabla) {
             axios.get("/api/positions/" + t.tabla).then(res => {
-              setEditableTable(res.data);
               setEditableTablaTorneo(t.tablaLabel || t.torneo);
+              setEditableTable(res.data);
             });
           }
         }
