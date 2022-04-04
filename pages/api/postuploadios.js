@@ -11,10 +11,10 @@ export default async function handler(req, res) {
       if (strArr[0] == process.env.KEY) {
         try {
           let doc = createJSON(req.body, strArr[1], vod);
-          let id = await uploadMatch(doc);
-          await createMatchCard(doc);
-          discordPostMatch(id);
-          res.json({ status: "Success!", id: id });
+          let data = await uploadMatch(doc);
+          await createMatchCard(data);
+          discordPostMatch(data._id.toString());
+          res.json({ status: "Success!", id: data._id.toString() });
         } catch (e) {
           console.error(e);
           res.json({ status: "Error" });
