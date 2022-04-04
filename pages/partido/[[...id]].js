@@ -961,7 +961,7 @@ export default function Match({
           <title>
             {create
               ? "Subir partido | IOSoccer Sudamérica"
-              : `${data.teams[0].teamname} vs. ${data.teams[1].teamname} | IOSoccer
+              : `${data.teams[0].teamname} ${data.teams[0].score} - ${data.teams[1].score} ${data.teams[1].teamname} | IOSoccer
             Sudamérica`}
           </title>
           {!create ? (
@@ -969,7 +969,7 @@ export default function Match({
               <meta property="og:type" content="website" />
               <meta
                 property="og:title"
-                content={`${data.teams[0].teamname} vs. ${data.teams[1].teamname}`}
+                content={`${data.teams[0].teamname} ${data.teams[0].score} - ${data.teams[1].score} ${data.teams[1].teamname}`}
               />
               <meta
                 property="og:image"
