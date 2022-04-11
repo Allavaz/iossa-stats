@@ -1,14 +1,16 @@
+import { getPlayers } from "../lib/getFromDB";
 import Match from "./partido/[[...id]]";
 
-export async function getStaticPaths() {
-  let paths = [{ params: { id: process.env.ENDPOINT } }];
-  return { paths, fallback: false };
+export async function getServerSideProps(context) {
+  if (context.params.id === process.env.ENDPOINT) {
+    let players = await getPlayers("all");
+    let props = { players: JSON.parse(JSON.stringify(players)) }
+    return { props };
+  } else {
+    return { notFound: true };
+  }
 }
 
-export async function getStaticProps() {
-  return { props: {} };
-}
-
-export default function Upload({}) {
-  return <Match create={true} />;
+export default function Upload({ players }) {
+  return <Match players={players} create />;
 }

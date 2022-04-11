@@ -22,7 +22,7 @@ export default function TorneoEditor(props) {
         <AutocompleteTorneos
           defaultValue={props.torneo}
           setValue={setValue}
-        ></AutocompleteTorneos>
+        />
       </div>
       <div style={{ flex: 1 }}>
         <div
@@ -37,12 +37,12 @@ export default function TorneoEditor(props) {
             icon={faCheckCircle}
             style={{ cursor: "pointer", color: "var(--normal-text-color)" }}
             onClick={e => props.onChangeTorneo(value)}
-          ></FontAwesomeIcon>
+          />
           <FontAwesomeIcon
             icon={faTimesCircle}
             style={{ cursor: "pointer", color: "var(--normal-text-color)" }}
             onClick={e => props.setEditing(null)}
-          ></FontAwesomeIcon>
+          />
         </div>
       </div>
     </div>

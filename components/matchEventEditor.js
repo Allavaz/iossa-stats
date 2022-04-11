@@ -114,7 +114,7 @@ export default function MatchEventEditor(props) {
             onChangePlayer={{ setPlayerName, setPlayerSteamId }}
             changeSteamIdField={changeSteamIdField}
             value={playerName}
-          ></AutocompletePlayers>
+          />
           <AutocompleteSteamIDs
             defaultValue={props.item.name}
             defaultId={props.item.player1SteamId}
@@ -123,7 +123,7 @@ export default function MatchEventEditor(props) {
             onChangePlayer={{ setPlayerName, setPlayerSteamId }}
             changePlayerField={changePlayerField}
             value={playerSteamId}
-          ></AutocompleteSteamIDs>
+          />
           <div>
             {"("}
             <input
@@ -174,7 +174,7 @@ export default function MatchEventEditor(props) {
                 }}
                 changeSteamIdField={changeSteamIdField2}
                 value={playerName2}
-              ></AutocompletePlayers>
+              />
               <AutocompleteSteamIDs
                 defaultValue={props.item.name2 || ""}
                 defaultId={props.item.player2SteamId || ""}
@@ -186,7 +186,7 @@ export default function MatchEventEditor(props) {
                 }}
                 changePlayerField={changePlayerField2}
                 value={playerSteamId2}
-              ></AutocompleteSteamIDs>
+              />
               <div style={{ width: "60px" }} />
             </div>
             <div
@@ -222,7 +222,7 @@ export default function MatchEventEditor(props) {
                 }}
                 changeSteamIdField={changeSteamIdField3}
                 value={playerName3}
-              ></AutocompletePlayers>
+              />
               <AutocompleteSteamIDs
                 defaultValue={props.item.name3 || ""}
                 defaultId={props.item.player3SteamId || ""}
@@ -234,7 +234,7 @@ export default function MatchEventEditor(props) {
                 }}
                 changePlayerField={changePlayerField3}
                 value={playerSteamId3}
-              ></AutocompleteSteamIDs>
+              />
               <div style={{ width: "60px" }} />
             </div>
           </>
