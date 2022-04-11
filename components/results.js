@@ -238,7 +238,7 @@ export default function Results({ matches, category, pagina }) {
             if (router.query.id) {
               id = router.query.id[0];
             } else {
-              id = temporadaActual;
+              id = temporadaActual();
             }
             router.push(`/resultados/${id}/${pageIndex}`, undefined, {
               shallow: true
@@ -260,7 +260,7 @@ export default function Results({ matches, category, pagina }) {
             if (router.query.id) {
               id = router.query.id[0];
             } else {
-              id = temporadaActual;
+              id = temporadaActual();
             }
             router.push(`/resultados/${id}/${pageIndex + 2}`, undefined, {
               shallow: true

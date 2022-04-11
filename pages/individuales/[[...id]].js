@@ -101,7 +101,7 @@ export default function Individuales({ players, category, temporada, page }) {
         selectTorneo={selectTorneo}
         selectTemporada={selectTorneo}
         temporada={temporada}
-      ></Selector>
+      />
       <IndividualStats players={players} category={category} pagina={page} />
     </>
   );
