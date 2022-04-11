@@ -36,7 +36,7 @@ export async function getServerSideProps(context) {
     }
     if (context.params.id.length === 2) {
       if (context.params.id[1] === process.env.ENDPOINT) {
-        props.players = await getPlayers("all");
+        props.players = await getPlayers("mini");
         props.editable = true;
       } else {
         return { notFound: true };
