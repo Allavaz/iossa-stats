@@ -6,7 +6,11 @@ import Positions from "../components/positions";
 const minitables = [
   { torneo: "d1t9", header: "Liga D1 T9" },
   { torneo: "d2t9", header: "Liga D2 T9" },
-  { torneo: "d3t9", header: "Liga D3 T9" }
+  { torneo: "d3t9", header: "Liga D3 T9" },
+  { torneo: "maradeit9a", header: "Copa Maradei T9 - Grupo A"},
+  { torneo: "maradeit9b", header: "Copa Maradei T9 - Grupo B"},
+  { torneo: "maradeit9c", header: "Copa Maradei T9 - Grupo C"},
+  { torneo: "maradeit9d", header: "Copa Maradei T9 - Grupo D"}
 ];
 
 export async function getServerSideProps() {
