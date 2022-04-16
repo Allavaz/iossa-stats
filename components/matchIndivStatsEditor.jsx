@@ -442,7 +442,9 @@ export default function MatchIndivStatsEditor(props) {
                 }
               >
                 {positions.map((e, i) => (
-                  <option key={i} value={e}>{e}</option>
+                  <option key={i} value={e}>
+                    {e}
+                  </option>
                 ))}
               </select>
             </div>

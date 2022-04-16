@@ -50,7 +50,7 @@ export default function MatchTeamStats(props) {
     {
       label: "Ocasiones creadas",
       accessor: i => baseObject(i).chancescreated
-    },
+    }
   ];
 
   return (
@@ -109,13 +109,22 @@ export default function MatchTeamStats(props) {
           </tr>
         </thead>
         <tbody>
-          {rows.map(e => (e.accessor(0) != null &&
-            <tr key={e.label}>
-              <td>{e.accessor(0)}{1 && e.extra}</td>
-              <td>{e.label}</td>
-              <td>{e.accessor(1)}{1 && e.extra}</td>
-            </tr>
-          ))}
+          {rows.map(
+            e =>
+              e.accessor(0) != null && (
+                <tr key={e.label}>
+                  <td>
+                    {e.accessor(0)}
+                    {1 && e.extra}
+                  </td>
+                  <td>{e.label}</td>
+                  <td>
+                    {e.accessor(1)}
+                    {1 && e.extra}
+                  </td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     </div>

@@ -337,13 +337,17 @@ export default function Match({
           (parseInt(data.teams[0].playerStatistics[i].statistics.assists) || 0);
         homeSecondAssists =
           homeSecondAssists +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.secondassists) || 0);
+          (parseInt(
+            data.teams[0].playerStatistics[i].statistics.secondassists
+          ) || 0);
         homeShots =
           homeShots +
           (parseInt(data.teams[0].playerStatistics[i].statistics.shots) || 0);
         homeShotsOnTarget =
           homeShotsOnTarget +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.shotsontarget) || 0);
+          (parseInt(
+            data.teams[0].playerStatistics[i].statistics.shotsontarget
+          ) || 0);
         homeFouls =
           homeFouls +
           (parseInt(data.teams[0].playerStatistics[i].statistics.fouls) || 0);
@@ -357,16 +361,20 @@ export default function Match({
           ) || 0);
         homeKeyPasses =
           homeKeyPasses +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.keypasses) || 0);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.keypasses) ||
+            0);
         homeOffsides =
           homeOffsides +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.offsides) || 0);
+          (parseInt(data.teams[0].playerStatistics[i].statistics.offsides) ||
+            0);
         homeCorners =
           homeCorners +
           (parseInt(data.teams[0].playerStatistics[i].statistics.corners) || 0);
         homeChancesCreated =
           homeChancesCreated +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.chancescreated) || 0);
+          (parseInt(
+            data.teams[0].playerStatistics[i].statistics.chancescreated
+          ) || 0);
       }
       for (let i in data.teams[1].playerStatistics) {
         awayShots =
@@ -374,7 +382,9 @@ export default function Match({
           (parseInt(data.teams[1].playerStatistics[i].statistics.shots) || 0);
         awayShotsOnTarget =
           awayShotsOnTarget +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.shotsontarget) || 0);
+          (parseInt(
+            data.teams[1].playerStatistics[i].statistics.shotsontarget
+          ) || 0);
         awayFouls =
           awayFouls +
           (parseInt(data.teams[1].playerStatistics[i].statistics.fouls) || 0);
@@ -388,16 +398,20 @@ export default function Match({
           ) || 0);
         awayKeyPasses =
           awayKeyPasses +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.keypasses) || 0);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.keypasses) ||
+            0);
         awayOffsides =
           awayOffsides +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.offsides) || 0);
+          (parseInt(data.teams[1].playerStatistics[i].statistics.offsides) ||
+            0);
         awayCorners =
           awayCorners +
           (parseInt(data.teams[1].playerStatistics[i].statistics.corners) || 0);
         awayChancesCreated =
           awayChancesCreated +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.chancescreated) || 0);
+          (parseInt(
+            data.teams[1].playerStatistics[i].statistics.chancescreated
+          ) || 0);
       }
       data.teams[0].score = homeScore;
       data.teams[0].scorereceived = awayScore;
@@ -507,14 +521,20 @@ export default function Match({
             name: events[i].name
           });
         }
-        if (events[i].player2SteamId && !steamids.includes(events[i].player2SteamId)) {
+        if (
+          events[i].player2SteamId &&
+          !steamids.includes(events[i].player2SteamId)
+        ) {
           steamids.push({
             steamid: events[i].player2SteamId,
             side: events[i].team,
             name: events[i].name2
           });
         }
-        if (events[i].player3SteamId && !steamids.includes(events[i].player3SteamId)) {
+        if (
+          events[i].player3SteamId &&
+          !steamids.includes(events[i].player3SteamId)
+        ) {
           steamids.push({
             steamid: events[i].player3SteamId,
             side: events[i].team,

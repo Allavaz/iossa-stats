@@ -6,7 +6,9 @@ function evenUpPos(value, side) {
       document.getElementById("possession1").value =
         "+" +
         (100 -
-          parseInt(document.getElementById("possession0").value.replace("+", "")));
+          parseInt(
+            document.getElementById("possession0").value.replace("+", "")
+          ));
     } else {
       document.getElementById("possession1").value = 100 - value;
     }
@@ -15,7 +17,9 @@ function evenUpPos(value, side) {
       document.getElementById("possession0").value =
         "+" +
         (100 -
-          parseInt(document.getElementById("possession1").value.replace("+", "")));
+          parseInt(
+            document.getElementById("possession1").value.replace("+", "")
+          ));
     } else {
       document.getElementById("possession0").value = 100 - value;
     }
@@ -221,16 +225,16 @@ export default function MatchTeamStatsEditor(props) {
   const inputSane = () => {
     let a = [];
     statFields.forEach(e => {
-      a.push(parseValue(e.id + "0", baseObject(0)[e.id]))
-      a.push(parseValue(e.id + "1", baseObject(1)[e.id]))
-    })
+      a.push(parseValue(e.id + "0", baseObject(0)[e.id]));
+      a.push(parseValue(e.id + "1", baseObject(1)[e.id]));
+    });
     for (let i in a) {
       if (isNaN(a[i]) || a[i] < 0) {
         return false;
       }
     }
     return true;
-  }
+  };
 
   function finishEditing() {
     let teams = JSON.parse(JSON.stringify(props.data.teams));
@@ -240,9 +244,15 @@ export default function MatchTeamStatsEditor(props) {
       );
     } else {
       statFields.forEach(e => {
-        teams[0].statistics[e.id] = parseValue(e.id + "0", teams[0].statistics[e.id])
-        teams[1].statistics[e.id] = parseValue(e.id + "1", teams[1].statistics[e.id])
-      })
+        teams[0].statistics[e.id] = parseValue(
+          e.id + "0",
+          teams[0].statistics[e.id]
+        );
+        teams[1].statistics[e.id] = parseValue(
+          e.id + "1",
+          teams[1].statistics[e.id]
+        );
+      });
       teams[0].statistics.chancescreated =
         teams[0].statistics.assists +
         parseValue("keypasses0", teams[0].statistics.keypasses);
@@ -295,10 +305,10 @@ export default function MatchTeamStatsEditor(props) {
                   type="text"
                   style={{ width: "5ch", textAlign: "center" }}
                   maxLength={e.maxLength}
-                  onChange={ev => e.onChange ? e.onChange(ev, "home") : null}
+                  onChange={ev => (e.onChange ? e.onChange(ev, "home") : null)}
                   defaultValue={e.accessor(0)}
-                >
-                </input>{e.extra}
+                ></input>
+                {e.extra}
               </td>
               <td>{e.label}</td>
               <td>
@@ -308,9 +318,9 @@ export default function MatchTeamStatsEditor(props) {
                   style={{ width: "5ch", textAlign: "center" }}
                   maxLength={e.maxLength}
                   defaultValue={e.accessor(1)}
-                  onChange={ev => e.onChange ? e.onChange(ev, "away") : null}
-                >
-                </input>{e.extra}
+                  onChange={ev => (e.onChange ? e.onChange(ev, "away") : null)}
+                ></input>
+                {e.extra}
               </td>
             </tr>
           ))}

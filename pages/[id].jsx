@@ -4,7 +4,7 @@ import Match from "./partido/[[...id]]";
 export async function getServerSideProps(context) {
   if (context.params.id === process.env.ENDPOINT) {
     let players = await getPlayers("mini");
-    let props = { players: JSON.parse(JSON.stringify(players)) }
+    let props = { players: JSON.parse(JSON.stringify(players)) };
     return { props };
   } else {
     return { notFound: true };

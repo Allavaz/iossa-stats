@@ -19,10 +19,7 @@ export default function TorneoEditor(props) {
     >
       <div style={{ flex: 1 }}></div>
       <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-        <AutocompleteTorneos
-          defaultValue={props.torneo}
-          setValue={setValue}
-        />
+        <AutocompleteTorneos defaultValue={props.torneo} setValue={setValue} />
       </div>
       <div style={{ flex: 1 }}>
         <div

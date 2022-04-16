@@ -359,7 +359,10 @@ export default function IndividualStats({ players, category, pagina }) {
                   }}
                 />
               </td>
-              <td colSpan={columns.length - 2} style={{ borderTop: 0, borderRight: 0 }}>
+              <td
+                colSpan={columns.length - 2}
+                style={{ borderTop: 0, borderRight: 0 }}
+              >
                 {rows.length === 0 ? (
                   <div
                     style={{ display: "flex", color: "var(--header-color)" }}
