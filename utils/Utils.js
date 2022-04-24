@@ -107,3 +107,31 @@ exports.getTeamShortname = function (teamname) {
     return teamname.substring(0, len).toUpperCase();
   }
 };
+
+exports.getTablas = function (temp) {
+  let tablas = [];
+  for (let i in Torneos) {
+    if (Torneos[i].temporada === temp) {
+      for (let j in Torneos[i].torneos) {
+        if (
+          Torneos[i].torneos[j].tabla &&
+          tablas.findIndex(e => e.table === Torneos[i].torneos[j].tabla) === -1
+        ) {
+          tablas.push({
+            table: Torneos[i].torneos[j].tabla,
+            name: Torneos[i].torneos[j].torneo
+          });
+        }
+      }
+    }
+  }
+  return tablas;
+};
+
+exports.getAllTemporadas = function () {
+  let temps = [];
+  for (let i in Torneos) {
+    temps.push(Torneos[i].temporada);
+  }
+  return temps;
+};

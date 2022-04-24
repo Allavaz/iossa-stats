@@ -2,28 +2,23 @@ import Head from "next/head";
 import { getMatches, getManyPositions } from "../lib/getFromDB";
 import Matches from "../components/matches";
 import Positions from "../components/positions";
-
-const minitables = [
-  { torneo: "d1t9", header: "Liga D1 T9" },
-  { torneo: "d2t9", header: "Liga D2 T9" },
-  { torneo: "d3t9", header: "Liga D3 T9" },
-  { torneo: "maradeit9a", header: "Copa Maradei T9 - Grupo A" },
-  { torneo: "maradeit9b", header: "Copa Maradei T9 - Grupo B" },
-  { torneo: "maradeit9c", header: "Copa Maradei T9 - Grupo C" },
-  { torneo: "maradeit9d", header: "Copa Maradei T9 - Grupo D" }
-];
+import temporadaActual from "../utils/TemporadaActual";
+import { getTablas } from "../utils/Utils";
 
 export async function getServerSideProps() {
   let matches = await getMatches("20");
-  let torneos = [];
-  for (let i in minitables) {
-    torneos.push(minitables[i].torneo);
-  }
-  let tablas = await getManyPositions(torneos);
+  let listaTablas = getTablas(temporadaActual());
+  let listaPosiciones = await getManyPositions(
+    listaTablas.map(item => item.table)
+  );
+  let result = listaTablas.map((item, index) => ({
+    ...item,
+    teams: listaPosiciones[index]
+  }));
   return {
     props: {
       matches: JSON.parse(JSON.stringify(matches)),
-      tablas: JSON.parse(JSON.stringify(tablas))
+      tablas: JSON.parse(JSON.stringify(result))
     }
   };
 }
@@ -50,14 +45,17 @@ export default function Home({ matches, tablas }) {
       <div className="colCon">
         <Matches matches={matches} />
         <div className="flexTableDiv" style={{ flexGrow: 1 }}>
-          {tablas.map((item, index) => (
-            <Positions
-              mini
-              teams={item}
-              key={index}
-              header={minitables[index].header}
-            />
-          ))}
+          {tablas.map(
+            (item, index) =>
+              item.teams.length > 0 && (
+                <Positions
+                  mini
+                  teams={item.teams}
+                  key={index}
+                  header={item.name}
+                />
+              )
+          )}
         </div>
       </div>
     </>

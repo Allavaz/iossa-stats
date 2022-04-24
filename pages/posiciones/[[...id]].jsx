@@ -4,34 +4,7 @@ import Head from "next/head";
 import Torneos from "../../utils/Torneos.json";
 import { useRouter } from "next/router";
 import temporadaActual from "../../utils/TemporadaActual";
-
-function getTablas(temp) {
-  let tablas = [];
-  for (let i in Torneos) {
-    if (Torneos[i].temporada === temp) {
-      for (let j in Torneos[i].torneos) {
-        if (
-          Torneos[i].torneos[j].tabla &&
-          tablas.findIndex(e => e.table === Torneos[i].torneos[j].tabla) === -1
-        ) {
-          tablas.push({
-            table: Torneos[i].torneos[j].tabla,
-            name: Torneos[i].torneos[j].torneo
-          });
-        }
-      }
-    }
-  }
-  return tablas;
-}
-
-function getAllTemporadas() {
-  let temps = [];
-  for (let i in Torneos) {
-    temps.push(Torneos[i].temporada);
-  }
-  return temps;
-}
+import { getTablas, getAllTemporadas } from "../../utils/Utils";
 
 function getCategory(arg) {
   if (arg === "all") {
@@ -79,15 +52,17 @@ export async function getServerSideProps(context) {
   else id = temporadaActual();
   if (getAllTemporadas().includes(id)) {
     let listaTablas = getTablas(id);
-    let ids = [];
-    for (let i in listaTablas) {
-      ids.push(listaTablas[i].table);
-    }
-    let tablas = await getManyPositions(ids);
+    let listaPosiciones = await getManyPositions(
+      listaTablas.map(item => item.table)
+    );
+    let result = listaTablas.map((item, index) => ({
+      ...item,
+      teams: listaPosiciones[index]
+    }));
     let category = getCategory(id);
     return {
       props: {
-        tablas: JSON.parse(JSON.stringify(tablas)),
+        tablas: JSON.parse(JSON.stringify(result)),
         category: category,
         temporada: getTemporada(id)
       }
@@ -142,13 +117,12 @@ export default function Posiciones({ tablas, category, temporada }) {
           justifyContent: "space-evenly"
         }}
       >
-        {tablas.map((item, index) => (
-          <Positions
-            key={index}
-            teams={item}
-            header={getTablas(temporada)[index].name}
-          />
-        ))}
+        {tablas.map(
+          (item, index) =>
+            item.teams.length > 0 && (
+              <Positions key={index} teams={item.teams} header={item.name} />
+            )
+        )}
       </div>
     </>
   );
