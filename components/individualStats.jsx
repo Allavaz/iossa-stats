@@ -326,6 +326,7 @@ export default function IndividualStats({ players, category, pagina }) {
               >
                 <input
                   type="text"
+                  placeholder="Buscar jugador…"
                   style={{ textAlign: "center", width: "21ch" }}
                   onChange={e => {
                     setFilter("name", e.target.value);
@@ -344,6 +345,7 @@ export default function IndividualStats({ players, category, pagina }) {
               <td style={{ borderTop: 0, borderLeft: 0, borderRight: 0 }}>
                 <input
                   type="text"
+                  placeholder="Buscar equipo…"
                   style={{ textAlign: "center", width: "23ch" }}
                   onChange={e => {
                     setFilter("team", e.target.value);
