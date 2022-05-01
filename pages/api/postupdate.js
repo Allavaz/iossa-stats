@@ -6,8 +6,8 @@ export default async function handler(req, res) {
     if (req.body.password === process.env.KEY) {
       try {
         let data = await updateMatch(req.body.data, res);
-        await createMatchCard(data);
         res.json({ status: "Success!" });
+        await createMatchCard(data);
       } catch (e) {
         console.error(e);
         res.json({ status: "Error" });

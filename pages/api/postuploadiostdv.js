@@ -11,8 +11,8 @@ export default async function handler(req, res) {
         try {
           let doc = createJSON(req.body, strArr[1], vod);
           let data = await uploadMatch(doc, "matchestdv");
-          discordPostMatchCard(doc);
           res.json({ status: "Success!", id: data._id.toString() });
+          discordPostMatchCard(doc);
         } catch (e) {
           console.error(e);
           res.json({ status: "Error" });
