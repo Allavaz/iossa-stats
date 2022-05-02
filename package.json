@@ -22,7 +22,7 @@
     "luxon": "^2.0.1",
     "mongodb": "^4.0.1",
     "next": "^12.1.0",
-    "nextjs-progressbar": "^0.0.11",
+    "nextjs-progressbar": "^0.0.14",
     "puppeteer": "^13.4.1",
     "react": "17.0.2",
     "react-autosuggest": "^10.1.0",
