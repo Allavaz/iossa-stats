@@ -7,7 +7,11 @@ export default async function handler(req, res) {
       try {
         let data = await updateMatch(req.body.data, res);
         res.json({ status: "Success!" });
-        await createMatchCard(data);
+        try {
+          await createMatchCard(data);
+        } catch (error) {
+          console.error(error);
+        }
       } catch (e) {
         console.error(e);
         res.json({ status: "Error" });

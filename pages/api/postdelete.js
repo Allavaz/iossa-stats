@@ -7,7 +7,11 @@ export default async function handler(req, res) {
       try {
         await deleteMatch(req.body.data);
         res.end("Success!");
-        deleteMatchCard(req.body.data._id);
+        try {
+          deleteMatchCard(req.body.data._id);
+        } catch (error) {
+          console.error(error);
+        }
       } catch (e) {
         console.error(e);
         res.end(e.toString());
