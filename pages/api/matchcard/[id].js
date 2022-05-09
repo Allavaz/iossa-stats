@@ -11,15 +11,15 @@ export default async function handler(req, res) {
       res.setHeader("Content-Type", "image/png");
       res.send(image);
     } else {
-      try {
-        let data = await getMatch(req.query.id);
-        image = await createMatchCard(data);
-        res.setHeader("Content-Type", "image/png");
-        res.send(image);
-      } catch (e) {
+      // try {
+      //   let data = await getMatch(req.query.id);
+      //   image = await createMatchCard(data);
+      //   res.setHeader("Content-Type", "image/png");
+      //   res.send(image);
+      // } catch (e) {
         res.writeHead(404);
         res.end("Error 404: Match not found");
-      }
+      // }
     }
   }
 }
