@@ -15,7 +15,7 @@ export default async function handler(req, res) {
           res.json({ status: "Success!", id: data._id.toString() });
           try {
             // await createMatchCard(data);
-            // discordPostMatch(data._id.toString());
+            discordPostMatch(data._id.toString());
           } catch (error) {
             console.error(error);
           }
