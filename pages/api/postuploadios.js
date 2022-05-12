@@ -1,6 +1,6 @@
 import createJSON from "../../lib/createJSON";
 import uploadMatch from "../../lib/uploadMatch";
-import createMatchCard from "../../lib/createMatchCard";
+// import createMatchCard from "../../lib/createMatchCard";
 import discordPostMatch from "../../lib/discordPostMatch";
 
 export default async function handler(req, res) {

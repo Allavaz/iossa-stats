@@ -1,5 +1,5 @@
 import fs from "fs";
-import createMatchCard from "../../../lib/createMatchCard";
+// import createMatchCard from "../../../lib/createMatchCard";
 import { getMatch } from "../../../lib/getFromDB";
 
 export default async function handler(req, res) {
