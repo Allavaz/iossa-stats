@@ -3,7 +3,7 @@ import Image from "next/image";
 import logo from "../public/logo-solo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 const mobileWidth = 550;
 
@@ -105,7 +105,7 @@ export default function Navigation() {
             onClick={e => setHamburger(!hamburger)}
           >
             <center>
-              <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={hamburger ? faCaretUp : faCaretDown} />
             </center>
           </div>
           <div
