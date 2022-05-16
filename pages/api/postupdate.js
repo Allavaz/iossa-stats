@@ -1,5 +1,5 @@
 import updateMatch from "../../lib/updateMatch";
-// import createMatchCard from "../../lib/createMatchCard";
+import createMatchCard from "../../lib/createMatchCard";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
         let data = await updateMatch(req.body.data, res);
         res.json({ status: "Success!" });
         try {
-          // await createMatchCard(data);
+          await createMatchCard(data);
         } catch (error) {
           console.error(error);
         }
