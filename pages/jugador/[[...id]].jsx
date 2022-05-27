@@ -12,27 +12,26 @@ import PlayerMatches from "../../components/playerMatches";
 export async function getServerSideProps(context) {
   let playerMatches = await getPlayerMatches(context.params.id[0]);
   if (playerMatches.length === 0) return { notFound: true };
-  else {
-    let statsAll = PlayerStats(playerMatches, context.params.id[0]);
-    let statsLast15 = PlayerStats(
-      playerMatches.slice(0, 15),
-      context.params.id[0]
-    );
-    let statsLast10 = PlayerStats(
-      playerMatches.slice(0, 10),
-      context.params.id[0]
-    );
-    let steamInfo = await getSteamInfo(context.params.id[0]);
-    return {
-      props: {
-        playerMatches: JSON.parse(JSON.stringify(playerMatches)),
-        statsAll: statsAll,
-        statsLast15: statsLast15,
-        statsLast10: statsLast10,
-        steamInfo: steamInfo
-      }
-    };
-  }
+  let statsAll = PlayerStats(playerMatches, context.params.id[0]);
+  let statsLast15 = PlayerStats(
+    playerMatches.slice(0, 15),
+    context.params.id[0]
+  );
+  let statsLast10 = PlayerStats(
+    playerMatches.slice(0, 10),
+    context.params.id[0]
+  );
+  let steamInfo = await getSteamInfo(context.params.id[0]);
+  if (!steamInfo) return { notFound: true };
+  return {
+    props: {
+      playerMatches: JSON.parse(JSON.stringify(playerMatches)),
+      statsAll: statsAll,
+      statsLast15: statsLast15,
+      statsLast10: statsLast10,
+      steamInfo: steamInfo
+    }
+  };
 }
 
 export default function Player({
