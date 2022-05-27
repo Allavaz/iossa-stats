@@ -583,7 +583,7 @@ export default function MatchCard(props) {
                     disabled={props.loading}
                     onClick={e => props.exportMatch()}
                   >
-                    Exportar JSON
+                    Descargar JSON
                   </button>
                   {!props.create && (
                     <button
