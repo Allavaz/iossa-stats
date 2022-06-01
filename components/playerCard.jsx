@@ -142,7 +142,9 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
           </div>
         </div>
         <div suppressHydrationWarning={true}>
-          {typeof window && <RadarG statsLast15={statsLast15} />}
+          {typeof window !== "undefined" && (
+            <RadarG statsLast15={statsLast15} />
+          )}
         </div>
         <div
           style={{
