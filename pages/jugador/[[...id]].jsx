@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
   if (!steamInfo) return { notFound: true };
   return {
     props: {
-      playerMatches: JSON.parse(JSON.stringify(playerMatches)),
+      playerMatches,
       statsAll: statsAll,
       statsLast15: statsLast15,
       statsLast10: statsLast10,

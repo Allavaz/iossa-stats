@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
   let props = {};
   let match = await getMatch(context.params.id[0]);
   if (match) {
-    props.data = JSON.parse(JSON.stringify(match));
+    props.data = match;
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];

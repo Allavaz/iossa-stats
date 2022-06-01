@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
     let category = getCategory(id);
     return {
       props: {
-        matches: JSON.parse(JSON.stringify(matches)),
+        matches,
         category: category,
         temporada: getTemporada(id),
         page: parseInt(page)
