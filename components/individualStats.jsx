@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
 import temporadaActual from "../utils/TemporadaActual";
 import Image from "next/image";
+import { secondsToStringDuration } from "../lib/Utils";
 
 export default function IndividualStats({ players, category, pagina }) {
   const router = useRouter();
@@ -218,6 +219,11 @@ export default function IndividualStats({ players, category, pagina }) {
         Header: "Ocasiones Creadas",
         accessor: "chancescreated",
         width: 130
+      },
+      {
+        Header: 'Tiempo Jugado',
+        accessor: "secondsplayed",
+        Cell: row => secondsToStringDuration(row.row.original.secondsplayed)
       }
     ],
     []
@@ -408,7 +414,7 @@ export default function IndividualStats({ players, category, pagina }) {
                       }
                       key={index}
                     >
-                      {cell.render("Cell")}
+                      {cell.value != null ? cell.render("Cell") : "N/A"}
                     </td>
                   ))}
                 </tr>
