@@ -358,10 +358,6 @@ tr {
   display: flex;
   flex-wrap: wrap;
   max-width: 920px;
-  margin: auto;
-  justify-content: space-between;
-  overflow: visible;
-  align-content: flex-start;
   column-gap: 20px;
 }
 
