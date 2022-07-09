@@ -499,7 +499,7 @@ export default function MatchCard(props) {
               </ul>
             </td>
             <td>
-              {props.editable ? (
+              {props.editable && (
                 <div
                   style={{
                     display: "flex",
@@ -618,7 +618,7 @@ export default function MatchCard(props) {
                     />
                   ) : null}
                 </div>
-              ) : null}
+              )}
             </td>
             <td>
               <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
