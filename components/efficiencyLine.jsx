@@ -1,40 +1,44 @@
 import { Line } from "react-chartjs-2";
+import { DateTime } from "luxon";
 
-export default function GoalsShots({ playerMatches, id }) {
+export default function EfficiencyLine({ playerMatches, id, type }) {
   let labels = [];
-  let goals = [];
-  let shots = [];
+  let pinkDots = [];
+  let blueDots = [];
 
   for (let i = 0; i < playerMatches.length; i++) {
-    let year = playerMatches[i].fecha.slice(2, 4);
-    let month = playerMatches[i].fecha.slice(5, 7);
-    let day = playerMatches[i].fecha.slice(8, 10);
-    labels.push(`${day}/${month}/${year}`);
+    let date = DateTime.fromISO(playerMatches[i].fecha);
+    labels.push(date.toFormat("dd/MM"));
     for (let j = 0; j < playerMatches[i].players.length; j++) {
       if (playerMatches[i].players[j].info.steam_id === id) {
-        goals.push(playerMatches[i].players[j].statistics.goals);
-        shots.push(playerMatches[i].players[j].statistics.shotsontarget);
+        if (type === "goals") {
+          pinkDots.push(playerMatches[i].players[j].statistics.goals);
+          blueDots.push(playerMatches[i].players[j].statistics.shotsontarget);
+        } else if (type === "saves") {
+          pinkDots.push(playerMatches[i].players[j].statistics.saves);
+          blueDots.push(playerMatches[i].players[j].statistics.goalsconceded);
+        }
       }
     }
   }
 
   labels.reverse();
-  goals.reverse();
-  shots.reverse();
+  pinkDots.reverse();
+  blueDots.reverse();
 
   let data = {
     labels: labels,
     datasets: [
       {
-        label: "Goles",
-        data: goals,
+        label: type === "goals" ? "Goles" : "Atajadas",
+        data: pinkDots,
         fill: false,
         backgroundColor: "#FF6384",
         borderColor: "#FF6384"
       },
       {
-        label: "Tiros al arco",
-        data: shots,
+        label: type === "goals" ? "Tiros al arco" : "Goles Recibidos",
+        data: blueDots,
         fill: false,
         backgroundColor: "#36A2EB",
         borderColor: "#36A2EB"

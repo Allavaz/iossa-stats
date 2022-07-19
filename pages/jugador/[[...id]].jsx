@@ -5,8 +5,7 @@ import PlayerStats from "../../utils/PlayerStats";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Playstyle from "../../components/playstyle";
-import SavesConceded from "../../components/savesConceded";
-import GoalsShots from "../../components/goalsShots";
+import EfficiencyLine from "../../components/efficiencyLine";
 import PlayerMatches from "../../components/playerMatches";
 
 export async function getServerSideProps(context) {
@@ -86,19 +85,15 @@ export default function Player({
         suppressHydrationWarning={true}
       >
         {typeof window !== "undefined" && <Playstyle statsAll={statsAll} />}
-        {statsLast10.saves > statsLast10.shotsontarget
-          ? typeof window !== "undefined" && (
-              <SavesConceded
-                playerMatches={playerMatches.slice(0, 10)}
-                id={statsAll.steamid}
-              />
-            )
-          : typeof window !== "undefined" && (
-              <GoalsShots
-                playerMatches={playerMatches.slice(0, 10)}
-                id={statsAll.steamid}
-              />
-            )}
+        {typeof window !== "undefined" && (
+          <EfficiencyLine
+            playerMatches={playerMatches.slice(0, 10)}
+            id={statsAll.steamid}
+            type={
+              statsLast10.saves > statsLast10.shotsontarget ? "saves" : "goals"
+            }
+          />
+        )}
       </div>
       <PlayerMatches
         matches={playerMatches.slice(0, 5)}
