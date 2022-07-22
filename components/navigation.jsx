@@ -140,7 +140,7 @@ export default function Navigation() {
           >
             <center>Foro</center>
           </a>
-          <div
+          <button
             id="nav-item"
             onClick={e => toggleNight()}
             style={{ display: hamburger || !mobile ? "block" : "none" }}
@@ -148,7 +148,7 @@ export default function Navigation() {
             <center>
               <FontAwesomeIcon icon={night ? faSun : faMoon}></FontAwesomeIcon>
             </center>
-          </div>
+          </button>
         </div>
       </div>
     </div>
