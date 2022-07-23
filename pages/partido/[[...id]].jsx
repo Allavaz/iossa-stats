@@ -1059,9 +1059,12 @@ export default function Match({
                 setEditing={setEditing}
               />
             )}
-            {editableChallonge || (challonge && !(editable || create)) ? (
-              <Challonge id={challonge} />
-            ) : null}
+            {challonge && (
+              <>
+                <h3 style={{ marginBottom: 0 }}>{data.torneo.toUpperCase()}</h3>
+                <Challonge id={challonge} />
+              </>
+            )}
           </div>
           {editableTable || (table && !editable) ? (
             <div style={{ flexGrow: 1 }}>
