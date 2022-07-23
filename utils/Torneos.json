@@ -74,6 +74,16 @@
       {
         "torneo": "Copa D2",
         "query": "cd2"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro",
+        "challonge": "n9nei23x",
+        "query": "izoro"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata",
+        "challonge": "n9nei23x",
+        "query": "izplata"
       }
     ]
   },
@@ -152,6 +162,16 @@
       },
       {
         "torneo": "Copa Maradei T9 (Desempate 3er Mejor)"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro T9",
+        "challonge": "n9nei23x",
+        "query": "izorot9"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata T9",
+        "challonge": "n9nei23x",
+        "query": "izplatat9"
       }
     ]
   },
