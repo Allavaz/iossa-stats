@@ -482,7 +482,12 @@ export default function IndividualStats({ players, category, pagina }) {
           Anterior
         </button>
         <div className="pageIndicator">
-          Página {pageIndex + 1} de {Math.max(pageCount, 1)}
+          <div>
+            Página {pageIndex + 1} de {Math.max(pageCount, 1)}
+          </div>
+          <div style={{color: "var(--header-color)", fontSize: '0.75em'}}>
+            {players.length} resultado{players.length !== 1 ? 's' : ''}
+          </div>
         </div>
         <button
           className="boton"

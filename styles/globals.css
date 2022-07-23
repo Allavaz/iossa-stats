@@ -852,6 +852,12 @@ svg {
 }
 
 .pageIndicator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: var(--normal-text-color);
   pointer-events: none;
+  user-select: none;
+  gap: 3px;
 }

@@ -250,7 +250,12 @@ export default function Results({ matches, category, pagina }) {
           Anterior
         </button>
         <div className="pageIndicator">
-          Página {pageIndex + 1} de {Math.max(pageCount, 1)}
+          <div>
+            Página {pageIndex + 1} de {Math.max(pageCount, 1)}
+          </div>
+          <div style={{color: "var(--header-color)", fontSize: '0.75em'}}>
+            {matches.length} resultado{matches.length !== 1 ? 's' : ''}
+          </div>
         </div>
         <button
           className="boton"
