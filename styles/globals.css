@@ -532,7 +532,6 @@ th {
   border-right: 1px solid var(--button-border);
   height: 51px;
   line-height: 54px;
-  vertical-align: middle;
   color: var(--normal-text-color);
   cursor: pointer;
 }
