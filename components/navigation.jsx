@@ -3,7 +3,12 @@ import Image from "next/image";
 import logo from "../public/logo-solo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSun,
+  faMoon,
+  faCaretDown,
+  faCaretUp
+} from "@fortawesome/free-solid-svg-icons";
 
 const mobileWidth = 550;
 
@@ -145,9 +150,10 @@ export default function Navigation() {
             onClick={e => toggleNight()}
             style={{ display: hamburger || !mobile ? "block" : "none" }}
           >
-            <center>
-              <FontAwesomeIcon icon={night ? faSun : faMoon}></FontAwesomeIcon>
-            </center>
+            <FontAwesomeIcon
+              style={{ display: "block" }}
+              icon={night ? faSun : faMoon}
+            />
           </button>
         </div>
       </div>
