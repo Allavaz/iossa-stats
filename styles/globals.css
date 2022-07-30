@@ -51,9 +51,12 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body, .selector, .boton, input {
+  font-family: "Arial", sans-serif;
 }
 
 html {
@@ -120,7 +123,6 @@ h5 {
   font-size: 12pt;
   margin-top: 15px;
   color: var(--normal-text-color);
-  font-family: "Helvetica", "Arial", sans-serif;
 }
 
 .form {
@@ -227,7 +229,6 @@ h5 {
   font-size: 12pt;
   color: var(--normal-text-color);
   user-select: none;
-  font-family: "Helvetica", "Arial", sans-serif;
 }
 
 .boton:disabled {
