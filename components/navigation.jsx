@@ -150,10 +150,12 @@ export default function Navigation() {
             onClick={e => toggleNight()}
             style={{ display: hamburger || !mobile ? "block" : "none" }}
           >
-            <FontAwesomeIcon
-              style={{ display: "block" }}
-              icon={night ? faSun : faMoon}
-            />
+            <center>
+              <FontAwesomeIcon
+                style={{ display: "block" }}
+                icon={night ? faSun : faMoon}
+              />
+            </center>
           </button>
         </div>
       </div>
