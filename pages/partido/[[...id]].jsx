@@ -1059,7 +1059,7 @@ export default function Match({
                 setEditing={setEditing}
               />
             )}
-            {challonge && (
+            {(editableChallonge || (challonge && !(editable || create))) && (
               <>
                 <h3 style={{ marginBottom: 0 }}>{data.torneo.toUpperCase()}</h3>
                 <Challonge id={challonge} />
