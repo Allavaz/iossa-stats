@@ -920,7 +920,7 @@ export default function Match({
               icon={faCheckCircle}
               color="--var(header-color)"
               size="5x"
-            ></FontAwesomeIcon>
+            />
             <div style={{ color: "--var(header-color)" }}>
               Partido {create ? "subido" : "modificado"} correctamente.
             </div>
