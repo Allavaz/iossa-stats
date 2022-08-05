@@ -55,7 +55,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body, .selector, .boton, input {
+body, .selector, .boton, input, select {
   font-family: "Arial", sans-serif;
 }
 
