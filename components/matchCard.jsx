@@ -6,7 +6,6 @@ import {
   faPlus,
   faEdit,
   faSpinner,
-  faArrowDown,
   faUpload
 } from "@fortawesome/free-solid-svg-icons";
 import TorneoEditor from "./torneoEditor";
@@ -75,10 +74,10 @@ export default function MatchCard(props) {
         event: event,
         name: playerName,
         player1SteamId: playerSteamId,
-        ...(playerSteamId2
+        ...(event === "GOAL" && playerSteamId2
           ? { name2: playerName2, player2SteamId: playerSteamId2 }
           : {}),
-        ...(playerSteamId3
+        ...(event === "GOAL" && playerSteamId3
           ? { name3: playerName3, player3SteamId: playerSteamId3 }
           : {}),
         period: minute * 60 > 45 ? "SECOND HALF" : "FIRST HALF",
