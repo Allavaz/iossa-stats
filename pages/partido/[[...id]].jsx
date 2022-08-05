@@ -85,7 +85,8 @@ const blankMatch = {
         savescaught: 0,
         distancecovered: 0,
         assists: 0,
-        goalkicks: 0
+        goalkicks: 0,
+        keypasses: 0
       },
       playerStatistics: []
     },
@@ -119,7 +120,8 @@ const blankMatch = {
         savescaught: 0,
         distancecovered: 0,
         assists: 0,
-        goalkicks: 0
+        goalkicks: 0,
+        keypasses: 0
       },
       playerStatistics: []
     }
