@@ -145,7 +145,7 @@ export default function Match({
   const [editableTable, setEditableTable] = useState(
     table ? JSON.parse(JSON.stringify(table)) : null
   );
-  const [editableTablaTorneo, setEditableTablaTorneo] = useState(
+  const [editableTablaHeader, setEditableTablaHeader] = useState(
     create ? "" : tablaTorneo
   );
   const [editableChallonge, setEditableChallonge] = useState(challonge);
@@ -184,7 +184,7 @@ export default function Match({
             setEditableChallonge(t.challonge);
           } else if (t.tabla) {
             axios.get("/api/positions/" + t.tabla).then(res => {
-              setEditableTablaTorneo(t.tablaLabel || t.torneo);
+              setEditableTablaHeader(t.tablaLabel || t.torneo);
               setEditableTable(res.data);
             });
           }
@@ -794,7 +794,7 @@ export default function Match({
   }
 
   function restartEditing() {
-    setEditableData(JSON.parse(JSON.stringify(data)));
+    setEditableData([JSON.parse(JSON.stringify(data))]);
     setEditing(null);
   }
 
@@ -957,7 +957,7 @@ export default function Match({
               icon={faCheckCircle}
               color="--var(header-color)"
               size="5x"
-            ></FontAwesomeIcon>
+            />
             <div style={{ color: "--var(header-color)" }}>
               Partido eliminado correctamente.
             </div>
@@ -984,7 +984,7 @@ export default function Match({
               : `${data.teams[0].teamname} ${data.teams[0].score} - ${data.teams[1].score} ${data.teams[1].teamname} | IOSoccer
             Sudamérica`}
           </title>
-          {!create ? (
+          {!create && (
             <>
               <meta property="og:type" content="website" />
               <meta
@@ -1009,7 +1009,7 @@ export default function Match({
               />
               <meta name="twitter:site" content="@IOSoccerSA" />
             </>
-          ) : null}
+          )}
         </Head>
         <MatchCard
           data={
@@ -1072,7 +1072,7 @@ export default function Match({
                 <Positions
                   teams={editable || create ? editableTable : table}
                   header={
-                    editable || create ? editableTablaTorneo : tablaTorneo
+                    editable || create ? editableTablaHeader : tablaTorneo
                   }
                 />
                 {editable || create ? (
