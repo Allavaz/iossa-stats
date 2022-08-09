@@ -253,8 +253,8 @@ export default function Results({ matches, category, pagina }) {
           <div>
             Página {pageIndex + 1} de {Math.max(pageCount, 1)}
           </div>
-          <div style={{color: "var(--header-color)", fontSize: '0.75em'}}>
-            {rows.length} resultado{rows.length !== 1 ? 's' : ''}
+          <div style={{ color: "var(--header-color)", fontSize: "0.75em" }}>
+            {rows.length} resultado{rows.length !== 1 ? "s" : ""}
           </div>
         </div>
         <button

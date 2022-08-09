@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useTable } from "react-table";
+import { useTable, usePagination, useGlobalFilter } from "react-table";
 import Link from "next/link";
 import {
   getTeamLogo,
@@ -56,7 +56,8 @@ export default function PlayerMatches({ matches, id }) {
           <Link href={`/partido/${row.row.original._id}`}>
             <a>{WonOrLost(row.row.original, id)}</a>
           </Link>
-        )
+        ),
+        disableGlobalFilter: true
       },
       {
         Header: "Local",
@@ -149,13 +150,48 @@ export default function PlayerMatches({ matches, id }) {
   );
 
   const data = useMemo(() => matches, [matches]);
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable(
+    { columns, data, initialState: { pageSize: 10 } },
+    useGlobalFilter,
+    usePagination
+  );
 
-  const { getTableProps, getTableBodyProps, rows, prepareRow } = tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    nextPage,
+    previousPage,
+    setGlobalFilter,
+    rows,
+    state: { pageIndex, pageSize }
+  } = tableInstance;
 
   return (
     <>
-      <h3 style={{ marginTop: 0 }}>ÚLTIMOS RESULTADOS</h3>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "-15px" }}>
+        <h3 style={{ display: "inline", marginRight: "10px" }}>
+          ÚLTIMOS RESULTADOS
+        </h3>
+        <input
+          type="text"
+          placeholder="Buscar equipo/torneo…"
+          onChange={e => setGlobalFilter(e.target.value)}
+          style={{
+            border: "1px solid var(--button-border)",
+            fontSize: "11pt",
+            padding: "5px",
+            height: "20px",
+            backgroundColor: "var(--card-background)",
+            color: "var(--normal-text-color)",
+            boxShadow: "var(--shadow)"
+          }}
+        />
+      </div>
       <div
         className="divDataTable"
         style={{
@@ -165,7 +201,7 @@ export default function PlayerMatches({ matches, id }) {
       >
         <table className="dataTable" {...getTableProps()}>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row, index) => {
+            {page.map((row, index) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()} key={index}>
@@ -180,8 +216,44 @@ export default function PlayerMatches({ matches, id }) {
                 </tr>
               );
             })}
+            {[...Array(pageSize - page.length)].map((e, i) => (
+              <tr key={i}>
+                <td
+                  colSpan="6"
+                  style={{ borderLeft: 0, borderRight: 0, padding: "9px" }}
+                >
+                  &nbsp;
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+      </div>
+      <div className="pagination">
+        <button
+          className="boton"
+          disabled={!canPreviousPage}
+          onClick={e => previousPage()}
+          style={{ margin: 0, marginRight: "10px" }}
+        >
+          Anterior
+        </button>
+        <div className="pageIndicator">
+          <div>
+            Página {pageIndex + 1} de {Math.max(pageCount, 1)}
+          </div>
+          <div style={{ color: "var(--header-color)", fontSize: "0.75em" }}>
+            {rows.length} resultado{rows.length !== 1 ? "s" : ""}
+          </div>
+        </div>
+        <button
+          className="boton"
+          disabled={!canNextPage}
+          onClick={e => nextPage()}
+          style={{ margin: 0, marginLeft: "10px" }}
+        >
+          Siguiente
+        </button>
       </div>
     </>
   );

@@ -78,7 +78,6 @@ export default function Player({
         style={{
           display: "flex",
           flexWrap: "wrap",
-          flexGrow: 1,
           alignContent: "stretch",
           justifyContent: "space-between"
         }}
@@ -96,7 +95,7 @@ export default function Player({
         )}
       </div>
       <PlayerMatches
-        matches={playerMatches.slice(0, 5)}
+        matches={playerMatches}
         id={statsAll.steamid}
       />
     </>
