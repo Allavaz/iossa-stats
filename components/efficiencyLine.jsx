@@ -94,7 +94,8 @@ export default function EfficiencyLine({ playerMatches, id, type }) {
         marginLeft: 0,
         marginRight: 0,
         marginTop: "15px",
-        height: "245px"
+        height: "270px",
+        paddingBottom: "10px"
       }}
       suppressHydrationWarning={true}
     >
