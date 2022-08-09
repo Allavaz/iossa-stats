@@ -101,7 +101,7 @@ export default function Resultados({ matches, category, temporada, page }) {
         selectTorneo={selectTorneo}
         selectTemporada={selectTorneo}
         temporada={temporada}
-      ></Selector>
+      />
       <Results matches={matches} category={category} pagina={page} />
     </>
   );
