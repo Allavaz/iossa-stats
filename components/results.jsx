@@ -8,7 +8,6 @@ import {
   getTeamShortname,
   getTournamentIcon
 } from "../utils/Utils";
-import temporadaActual from "../utils/TemporadaActual";
 
 export default function Results({ matches, category, pagina }) {
   const router = useRouter();
@@ -156,13 +155,7 @@ export default function Results({ matches, category, pagina }) {
           placeholder="Buscar equipo/torneo…"
           onChange={e => {
             setGlobalFilter(e.target.value);
-            let id;
-            if (router.query.id) {
-              id = router.query.id[0];
-            } else {
-              id = temporadaActual();
-            }
-            router.push(`/resultados/${id}/1`, undefined, { shallow: true });
+            router.push(router.asPath.split("?")[0], undefined, { shallow: true });
           }}
           style={{
             border: "1px solid var(--button-border)",
@@ -234,13 +227,9 @@ export default function Results({ matches, category, pagina }) {
           className="boton"
           disabled={!canPreviousPage}
           onClick={e => {
-            let id;
-            if (router.query.id) {
-              id = router.query.id[0];
-            } else {
-              id = temporadaActual();
-            }
-            router.push(`/resultados/${id}/${pageIndex}`, undefined, {
+            const queryParams = new URLSearchParams(window.location.search)
+            queryParams.set("page", pageIndex);
+            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
               shallow: true
             });
             previousPage();
@@ -261,13 +250,9 @@ export default function Results({ matches, category, pagina }) {
           className="boton"
           disabled={!canNextPage}
           onClick={e => {
-            let id;
-            if (router.query.id) {
-              id = router.query.id[0];
-            } else {
-              id = temporadaActual();
-            }
-            router.push(`/resultados/${id}/${pageIndex + 2}`, undefined, {
+            const queryParams = new URLSearchParams(window.location.search)
+            queryParams.set("page", pageIndex + 2);
+            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
               shallow: true
             });
             nextPage();

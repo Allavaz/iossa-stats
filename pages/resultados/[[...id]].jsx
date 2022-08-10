@@ -50,11 +50,12 @@ function getTemporada(arg) {
 export async function getServerSideProps(context) {
   let id;
   let page = 0;
+  const queryparams = new URLSearchParams(context.req.url.split("?")[1]);
+  if (queryparams.has("page")) {
+    page = queryparams.get("page") - 1;
+  }
   if (context.params.id) {
     id = context.params.id[0];
-    if (context.params.id.length === 2) {
-      page = context.params.id[1] - 1;
-    }
   } else id = temporadaActual();
   if (getAllQueries().includes(id)) {
     let matches = await getMatches(id);

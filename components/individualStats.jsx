@@ -3,7 +3,6 @@ import { useMemo, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
-import temporadaActual from "../utils/TemporadaActual";
 import Image from "next/image";
 import { secondsToStringDuration } from "../lib/Utils";
 
@@ -336,15 +335,7 @@ export default function IndividualStats({ players, category, pagina }) {
                   style={{ textAlign: "center", width: "21ch" }}
                   onChange={e => {
                     setFilter("name", e.target.value);
-                    let id;
-                    if (router.query.id) {
-                      id = router.query.id[0];
-                    } else {
-                      id = temporadaActual();
-                    }
-                    router.push(`/individuales/${id}/1`, undefined, {
-                      shallow: true
-                    });
+                    router.push(router.asPath.split("?")[0], undefined, { shallow: true });
                   }}
                 />
               </td>
@@ -355,15 +346,7 @@ export default function IndividualStats({ players, category, pagina }) {
                   style={{ textAlign: "center", width: "23ch" }}
                   onChange={e => {
                     setFilter("team", e.target.value);
-                    let id;
-                    if (router.query.id) {
-                      id = router.query.id[0];
-                    } else {
-                      id = temporadaActual();
-                    }
-                    router.push(`/individuales/${id}/1`, undefined, {
-                      shallow: true
-                    });
+                    router.push(router.asPath.split("?")[0], undefined, { shallow: true });
                   }}
                 />
               </td>
@@ -466,13 +449,9 @@ export default function IndividualStats({ players, category, pagina }) {
           className="boton"
           disabled={!canPreviousPage}
           onClick={e => {
-            let id;
-            if (router.query.id) {
-              id = router.query.id[0];
-            } else {
-              id = temporadaActual();
-            }
-            router.push(`/individuales/${id}/${pageIndex}`, undefined, {
+            const queryParams = new URLSearchParams(window.location.search)
+            queryParams.set("page", pageIndex);
+            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
               shallow: true
             });
             previousPage();
@@ -493,13 +472,9 @@ export default function IndividualStats({ players, category, pagina }) {
           className="boton"
           disabled={!canNextPage}
           onClick={e => {
-            let id;
-            if (router.query.id) {
-              id = router.query.id[0];
-            } else {
-              id = temporadaActual();
-            }
-            router.push(`/individuales/${id}/${pageIndex + 2}`, undefined, {
+            const queryParams = new URLSearchParams(window.location.search)
+            queryParams.set("page", pageIndex + 2);
+            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
               shallow: true
             });
             nextPage();
