@@ -3,7 +3,6 @@ import { useMemo, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
-import Image from "next/image";
 import { secondsToStringDuration } from "../lib/Utils";
 
 export default function IndividualStats({ players, category, pagina }) {
@@ -35,13 +34,13 @@ export default function IndividualStats({ players, category, pagina }) {
                 justifyContent: "center"
               }}
             >
-              <Image
+              <img
                 height="16px"
                 width="16px"
                 src={getTeamLogo(row.row.original.team)}
                 alt={row.row.original.team}
                 layout="fixed"
-              ></Image>{" "}
+              />
               <div style={{ marginLeft: "5px" }}>{row.row.original.team}</div>
             </div>
           );
