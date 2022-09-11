@@ -13,7 +13,7 @@ export default async function handler(req, res) {
           let data = await uploadMatch(doc);
           res.json({ status: "Success!", id: data._id.toString() });
           try {
-            await createMatchCard(data);
+            await createMatchCard({...data, fecha: data.fecha.toISOString()});
             discordPostMatch(data._id.toString());
           } catch (error) {
             console.error(error);
