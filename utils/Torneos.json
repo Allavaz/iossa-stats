@@ -76,6 +76,10 @@
         "query": "cd2"
       },
       {
+        "torneo": "Copa D3",
+        "query": "cd3"
+      },
+      {
         "torneo": "Copa Intrazonal de Oro",
         "challonge": "n9nei23x",
         "query": "izoro"
@@ -111,6 +115,35 @@
       },
       {
         "torneo": "Copa America '21 - Playoff"
+      }
+    ]
+  },
+  {
+    "temporada": "t10",
+    "titulo": "Temporada 10",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T10",
+        "query": "d1t10",
+        "tabla": "d1t10"
+      },
+      {
+        "torneo": "Liga D2 T10",
+        "query": "d2t10",
+        "tabla": "d2t10"
+      },
+      {
+        "torneo": "Liga D3 T10",
+        "query": "d3t10",
+        "tabla": "d3t10"
+      },
+      {
+        "torneo": "Copa D3 T10",
+        "query": "cd3t10"
+      },
+      {
+        "torneo": "Copa valencARc T10",
+        "query": "cvt10"
       }
     ]
   },
