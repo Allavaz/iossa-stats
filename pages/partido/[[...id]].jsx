@@ -801,7 +801,9 @@ export default function Match({
   }
 
   function updateMatch(pw) {
-    if (editing) {
+    if (editableData[editableData.length - 1].torneo === "Torneo") {
+      alert("Te faltó elegir el torneo!");
+    } else if (editing) {
       alert("Hay cambios sin guardar!");
     } else if (pw === "") {
       alert("Ingrese la contraseña.");
