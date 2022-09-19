@@ -425,7 +425,7 @@ export default function IndividualStats({ players, category, pagina }) {
                 >
                   &nbsp;
                 </td>
-                {[...Array(23)].map((e, i) => (
+                {[...Array(columns.length)].map((e, i) => (
                   <td
                     key={i}
                     style={{
