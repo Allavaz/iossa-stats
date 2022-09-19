@@ -3,7 +3,7 @@ import { useMemo, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
-import { secondsToStringDuration } from "../lib/Utils";
+import { secondsToMinutes } from "../lib/Utils";
 
 export default function IndividualStats({ players, category, pagina }) {
   const router = useRouter();
@@ -219,9 +219,9 @@ export default function IndividualStats({ players, category, pagina }) {
         width: 130
       },
       {
-        Header: 'Tiempo Jugado',
+        Header: 'Tiempo Jugado Total',
         accessor: "secondsplayed",
-        Cell: row => secondsToStringDuration(row.row.original.secondsplayed)
+        Cell: row => secondsToMinutes(row.row.original.secondsplayed)
       }
     ],
     []

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import MatchIndivStatsEditor from "./matchIndivStatsEditor";
-import { secondsToStringDuration } from "../lib/Utils";
+import { secondsToMinutes } from "../lib/Utils";
 
 export default function MatchIndividualStats(props) {
   const [playerHovering, setPlayerHovering] = useState(-1);
@@ -326,7 +326,7 @@ export default function MatchIndividualStats(props) {
       {
         Header: 'Tiempo Jugado',
         accessor: "statistics.secondsplayed",
-        Cell: row => secondsToStringDuration(row.row.original.statistics.secondsplayed)
+        Cell: row => secondsToMinutes(row.row.original.statistics.secondsplayed)
       }
     ],
     [playerHovering, props.editable]
