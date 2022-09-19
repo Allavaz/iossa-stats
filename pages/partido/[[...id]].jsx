@@ -181,7 +181,7 @@ export default function Match({
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];
-        if (t.torneo === editableData[editableData.length - 1].torneo) {
+        if (t.torneo === editableData.at(-1).torneo) {
           if (t.challonge) {
             setEditableChallonge(t.challonge);
           } else if (t.tabla) {
@@ -193,7 +193,7 @@ export default function Match({
         }
       }
     }
-  }, [editableData[editableData.length - 1].torneo]);
+  }, [editableData.at(-1).torneo]);
 
   function changeDate(date) {
     setEditableData(prevState => {
@@ -783,14 +783,11 @@ export default function Match({
 
   function exportMatch() {
     const element = document.createElement("a");
-    const file = new Blob(
-      [JSON.stringify(editableData[editableData.length - 1])],
-      {
-        type: "application/json"
-      }
-    );
+    const file = new Blob([JSON.stringify(editableData.at(-1))], {
+      type: "application/json"
+    });
     element.href = URL.createObjectURL(file);
-    element.download = editableData[editableData.length - 1].filename;
+    element.download = editableData.at(-1).filename;
     document.body.appendChild(element);
     element.click();
   }
@@ -801,15 +798,15 @@ export default function Match({
   }
 
   function updateMatch(pw) {
-    if (editableData[editableData.length - 1].torneo === "Torneo") {
+    if (editableData.at(-1).torneo === "Torneo") {
       alert("Te faltó elegir el torneo!");
     } else if (editing) {
       alert("Hay cambios sin guardar!");
     } else if (pw === "") {
       alert("Ingrese la contraseña.");
     } else if (
-      editableData[editableData.length - 1].teams[0].statistics.possession +
-        editableData[editableData.length - 1].teams[1].statistics.possession !==
+      editableData.at(-1).teams[0].statistics.possession +
+        editableData.at(-1).teams[1].statistics.possession !==
       100
     ) {
       alert("Las posesiones están desbalanceadas. Revisá las cuentas.");
@@ -818,7 +815,7 @@ export default function Match({
       axios
         .post(`/api/post${create ? "upload" : "update"}`, {
           password: pw,
-          data: editableData[editableData.length - 1]
+          data: editableData.at(-1)
         })
         .then(res => {
           if (res.data === "wrong pw") {
@@ -853,7 +850,7 @@ export default function Match({
       axios
         .post("/api/postdelete", {
           password: pw,
-          data: editableData[editableData.length - 1]
+          data: editableData.at(-1)
         })
         .then(res => {
           if (res.data === "wrong pw") {
@@ -886,7 +883,7 @@ export default function Match({
       ) {
         let file = ev.dataTransfer.items[0].getAsFile();
         try {
-          let lastData = editableData[editableData.length - 1];
+          let lastData = editableData.at(-1);
           file.text().then(res => {
             let json = JSON.parse(res);
             let doc = createJSON(
@@ -931,9 +928,7 @@ export default function Match({
                 style={{ margin: 0 }}
                 className="boton"
                 onClick={e => {
-                  router.push(
-                    "/partido/" + editableData[editableData.length - 1]._id
-                  );
+                  router.push("/partido/" + editableData.at(-1)._id);
                   setSuccess(null);
                 }}
               >
@@ -1016,9 +1011,7 @@ export default function Match({
           )}
         </Head>
         <MatchCard
-          data={
-            editable || create ? editableData[editableData.length - 1] : data
-          }
+          data={editable || create ? editableData.at(-1) : data}
           editable={editable || create}
           players={players}
           changeTorneo={changeTorneo}
@@ -1048,17 +1041,13 @@ export default function Match({
           >
             {editing === "teamStats" ? (
               <MatchTeamStatsEditor
-                data={editableData[editableData.length - 1]}
+                data={editableData.at(-1)}
                 changeTeamStats={changeTeamStats}
                 setEditing={setEditing}
               />
             ) : (
               <MatchTeamStats
-                data={
-                  editable || create
-                    ? editableData[editableData.length - 1]
-                    : data
-                }
+                data={editable || create ? editableData.at(-1) : data}
                 editable={editable || create}
                 setEditing={setEditing}
               />
@@ -1097,12 +1086,12 @@ export default function Match({
         <MatchIndividualStats
           players={
             editable || create
-              ? editableData[editableData.length - 1].teams[0].playerStatistics
+              ? editableData.at(-1).teams[0].playerStatistics
               : data.teams[0].playerStatistics
           }
           teamName={
             editable || create
-              ? editableData[editableData.length - 1].teams[0].teamname
+              ? editableData.at(-1).teams[0].teamname
               : data.teams[0].teamname
           }
           editable={editable || create}
@@ -1116,12 +1105,12 @@ export default function Match({
         <MatchIndividualStats
           players={
             editable || create
-              ? editableData[editableData.length - 1].teams[1].playerStatistics
+              ? editableData.at(-1).teams[1].playerStatistics
               : data.teams[1].playerStatistics
           }
           teamName={
             editable || create
-              ? editableData[editableData.length - 1].teams[1].teamname
+              ? editableData.at(-1).teams[1].teamname
               : data.teams[1].teamname
           }
           editable={editable || create}
@@ -1134,24 +1123,19 @@ export default function Match({
         />
         {(!(editable || create) && data.vod) ||
         ((editable || create) &&
-          editableData[editableData.length - 1].vod &&
+          editableData.at(-1).vod &&
           editing !== "vod") ? (
           <Vod
-            vod={
-              editable || create
-                ? editableData[editableData.length - 1].vod
-                : data.vod
-            }
+            vod={editable || create ? editableData.at(-1).vod : data.vod}
             editable={editable || create}
             setEditing={setEditing}
             changeVod={changeVod}
           />
         ) : null}
-        {(editableData[editableData.length - 1].vod === null &&
-          (editable || create)) ||
+        {(editableData.at(-1).vod === null && (editable || create)) ||
         editing === "vod" ? (
           <VodEditor
-            vod={editableData[editableData.length - 1].vod}
+            vod={editableData.at(-1).vod}
             changeVod={changeVod}
             setEditing={setEditing}
           />
