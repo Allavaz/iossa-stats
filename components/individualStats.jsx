@@ -21,7 +21,13 @@ export default function IndividualStats({ players, category, pagina }) {
               <a>{row.row.original.name}</a>
             </Link>
           );
-        }
+        },
+        filter: (rows, cIds, fv) =>
+          rows.filter(
+            r =>
+              r.original.name.toLowerCase().includes(fv.toLowerCase()) ||
+              r.original._id.toLowerCase() === fv.toLowerCase()
+          )
       },
       {
         Header: "Equipo",
@@ -219,7 +225,7 @@ export default function IndividualStats({ players, category, pagina }) {
         width: 130
       },
       {
-        Header: 'Tiempo Jugado Total',
+        Header: "Tiempo Jugado Total",
         accessor: "secondsplayed",
         Cell: row => secondsToMinutes(row.row.original.secondsplayed)
       }
@@ -334,7 +340,9 @@ export default function IndividualStats({ players, category, pagina }) {
                   style={{ textAlign: "center", width: "21ch" }}
                   onChange={e => {
                     setFilter("name", e.target.value);
-                    router.push(router.asPath.split("?")[0], undefined, { shallow: true });
+                    router.push(router.asPath.split("?")[0], undefined, {
+                      shallow: true
+                    });
                   }}
                 />
               </td>
@@ -345,7 +353,9 @@ export default function IndividualStats({ players, category, pagina }) {
                   style={{ textAlign: "center", width: "23ch" }}
                   onChange={e => {
                     setFilter("team", e.target.value);
-                    router.push(router.asPath.split("?")[0], undefined, { shallow: true });
+                    router.push(router.asPath.split("?")[0], undefined, {
+                      shallow: true
+                    });
                   }}
                 />
               </td>
@@ -425,7 +435,7 @@ export default function IndividualStats({ players, category, pagina }) {
                 >
                   &nbsp;
                 </td>
-                {[...Array(columns.length)].map((e, i) => (
+                {[...Array(columns.length - 2)].map((e, i) => (
                   <td
                     key={i}
                     style={{
@@ -448,11 +458,15 @@ export default function IndividualStats({ players, category, pagina }) {
           className="boton"
           disabled={!canPreviousPage}
           onClick={e => {
-            const queryParams = new URLSearchParams(window.location.search)
+            const queryParams = new URLSearchParams(window.location.search);
             queryParams.set("page", pageIndex);
-            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
-              shallow: true
-            });
+            router.push(
+              router.asPath.split("?")[0] + "?" + queryParams.toString(),
+              undefined,
+              {
+                shallow: true
+              }
+            );
             previousPage();
           }}
           style={{ margin: 0, marginRight: "10px" }}
@@ -463,19 +477,23 @@ export default function IndividualStats({ players, category, pagina }) {
           <div>
             Página {pageIndex + 1} de {Math.max(pageCount, 1)}
           </div>
-          <div style={{color: "var(--header-color)", fontSize: '0.75em'}}>
-            {rows.length} resultado{rows.length !== 1 ? 's' : ''}
+          <div style={{ color: "var(--header-color)", fontSize: "0.75em" }}>
+            {rows.length} resultado{rows.length !== 1 ? "s" : ""}
           </div>
         </div>
         <button
           className="boton"
           disabled={!canNextPage}
           onClick={e => {
-            const queryParams = new URLSearchParams(window.location.search)
+            const queryParams = new URLSearchParams(window.location.search);
             queryParams.set("page", pageIndex + 2);
-            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
-              shallow: true
-            });
+            router.push(
+              router.asPath.split("?")[0] + "?" + queryParams.toString(),
+              undefined,
+              {
+                shallow: true
+              }
+            );
             nextPage();
           }}
           style={{ margin: 0, marginLeft: "10px" }}
