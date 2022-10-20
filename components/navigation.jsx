@@ -135,16 +135,6 @@ export default function Navigation() {
               <center>Rankings</center>
             </a>
           </Link>
-          <a
-            href="https://forum.iosoccer-sa.bid/"
-            id="nav-item"
-            onClick={e => setHamburger(false)}
-            style={{ display: hamburger || !mobile ? "block" : "none" }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <center>Foro</center>
-          </a>
           <button
             id="nav-item"
             onClick={e => toggleNight()}
