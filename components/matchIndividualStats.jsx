@@ -99,7 +99,7 @@ export default function MatchIndividualStats(props) {
                 </div>
                 <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                   <Link href={"/jugador/" + row.row.original.info.steam_id}>
-                    <a>{row.row.original.info.name}</a>
+                    {row.row.original.info.name}
                   </Link>
                 </div>
                 <div style={{ flex: 1 }}>
@@ -134,7 +134,7 @@ export default function MatchIndividualStats(props) {
           } else {
             return (
               <Link href={"/jugador/" + row.row.original.info.steam_id}>
-                <a>{row.row.original.info.name}</a>
+                {row.row.original.info.name}
               </Link>
             );
           }

@@ -31,22 +31,18 @@ export default function MatchEvent(props) {
               }}
             >
               <MatchIcon event={props.item.event}></MatchIcon>
-              <Link href={`/jugador/${props.item.player1SteamId}`}>
-                <a>
-                  <span>{props.item.name}</span>
-                </a>
+              <Link href={`/jugador/${props.item.player1SteamId}`} passHref>
+                <span>{props.item.name}</span>
               </Link>{" "}
               {props.item.name2 && props.item.event === "GOAL" && (
-                <Link href={`/jugador/${props.item.player2SteamId}`}>
-                  <a>
-                    <span
-                      style={{
-                        fontSize: "0.85em",
-                        color: "var(--header-color)",
-                        fontStyle: "italic"
-                      }}
-                    >{`(${props.item.name2})`}</span>
-                  </a>
+                <Link href={`/jugador/${props.item.player2SteamId}`} passHref>
+                  <span
+                    style={{
+                      fontSize: "0.85em",
+                      color: "var(--header-color)",
+                      fontStyle: "italic"
+                    }}
+                  >{`(${props.item.name2})`}</span>
                 </Link>
               )}{" "}
               {<span>{`(${Math.round(props.item.second / 60)}')`}</span>}
@@ -109,22 +105,18 @@ export default function MatchEvent(props) {
               }}
             >
               <MatchIcon event={props.item.event}></MatchIcon>
-              <Link href={`/jugador/${props.item.player1SteamId}`}>
-                <a>
-                  <span>{props.item.name}</span>
-                </a>
+              <Link href={`/jugador/${props.item.player1SteamId}`} passHref>
+                <span>{props.item.name}</span>
               </Link>{" "}
               {props.item.name2 && props.item.event === "GOAL" && (
-                <Link href={`/jugador/${props.item.player2SteamId}`}>
-                  <a>
-                    <span
-                      style={{
-                        fontSize: "0.85em",
-                        color: "var(--header-color)",
-                        fontStyle: "italic"
-                      }}
-                    >{`(${props.item.name2})`}</span>
-                  </a>
+                <Link href={`/jugador/${props.item.player2SteamId}`} passHref>
+                  <span
+                    style={{
+                      fontSize: "0.85em",
+                      color: "var(--header-color)",
+                      fontStyle: "italic"
+                    }}
+                  >{`(${props.item.name2})`}</span>
                 </Link>
               )}{" "}
               {<span>{`(${Math.round(props.item.second / 60)}')`}</span>}

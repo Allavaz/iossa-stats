@@ -24,23 +24,21 @@ export default function Top10Rusticos({ players, category }) {
               <tr key={item._id}>
                 <td>{index + 1}</td>
                 <td>
-                  <Link href={`/jugador/${item._id}`}>
-                    <a>
-                      <div
-                        className="teamlogo"
-                        style={{
-                          paddingRight: "5px",
-                          justifyContent: "center"
-                        }}
-                      >
-                        <img
-                          height="16px"
-                          src={getTeamLogo(item.team)}
-                          alt={item.team}
-                        ></img>{" "}
-                        <div style={{ marginLeft: "5px" }}>{item.name}</div>
-                      </div>
-                    </a>
+                  <Link href={`/jugador/${item._id}`} passHref>
+                    <div
+                      className="teamlogo"
+                      style={{
+                        paddingRight: "5px",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <img
+                        height="16px"
+                        src={getTeamLogo(item.team)}
+                        alt={item.team}
+                      ></img>{" "}
+                      <div style={{ marginLeft: "5px" }}>{item.name}</div>
+                    </div>
                   </Link>
                 </td>
                 <td>{item.matches}</td>

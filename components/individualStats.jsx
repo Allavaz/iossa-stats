@@ -18,7 +18,7 @@ export default function IndividualStats({ players, category, pagina }) {
         Cell: row => {
           return (
             <Link href={"/jugador/" + row.row.original._id}>
-              <a>{row.row.original.name}</a>
+              {row.row.original.name}
             </Link>
           );
         },

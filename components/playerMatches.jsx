@@ -42,7 +42,7 @@ export default function PlayerMatches({ matches, id }) {
         Cell: row => {
           return (
             <Link href={`/partido/${row.row.original._id}`}>
-              <a>{fecha(row.row.original.fecha)}</a>
+              {fecha(row.row.original.fecha)}
             </Link>
           );
         },
@@ -54,7 +54,7 @@ export default function PlayerMatches({ matches, id }) {
         accessor: "result",
         Cell: row => (
           <Link href={`/partido/${row.row.original._id}`}>
-            <a>{WonOrLost(row.row.original, id)}</a>
+            {WonOrLost(row.row.original, id)}
           </Link>
         ),
         disableGlobalFilter: true
@@ -64,22 +64,20 @@ export default function PlayerMatches({ matches, id }) {
         accessor: "teams[0].teamname",
         Cell: row => {
           return (
-            <Link href={`/partido/${row.row.original._id}`}>
-              <a>
-                <div className="teamlogo" id="home">
-                  <div id="teamname">{row.row.original.teams[0].teamname}</div>
-                  <div id="shortname">
-                    {getTeamShortname(row.row.original.teams[0].teamname)}
-                  </div>{" "}
-                  <div style={{ marginLeft: "5px" }}>
-                    <img
-                      height="16px"
-                      src={getTeamLogo(row.row.original.teams[0].teamname)}
-                      alt={row.row.original.teams[0].teamname}
-                    ></img>
-                  </div>
+            <Link href={`/partido/${row.row.original._id}`} passHref>
+              <div className="teamlogo" id="home">
+                <div id="teamname">{row.row.original.teams[0].teamname}</div>
+                <div id="shortname">
+                  {getTeamShortname(row.row.original.teams[0].teamname)}
+                </div>{" "}
+                <div style={{ marginLeft: "5px" }}>
+                  <img
+                    height="16px"
+                    src={getTeamLogo(row.row.original.teams[0].teamname)}
+                    alt={row.row.original.teams[0].teamname}
+                  ></img>
                 </div>
-              </a>
+              </div>
             </Link>
           );
         }
@@ -104,22 +102,20 @@ export default function PlayerMatches({ matches, id }) {
         accessor: "teams[1].teamname",
         Cell: row => {
           return (
-            <Link href={`/partido/${row.row.original._id}`}>
-              <a>
-                <div className="teamlogo" id="away">
-                  <div style={{ marginRight: "5px" }}>
-                    <img
-                      height="16px"
-                      src={getTeamLogo(row.row.original.teams[1].teamname)}
-                      alt={row.row.original.teams[1].teamname}
-                    ></img>
-                  </div>{" "}
-                  <div id="teamname">{row.row.original.teams[1].teamname}</div>
-                  <div id="shortname">
-                    {getTeamShortname(row.row.original.teams[1].teamname)}
-                  </div>
+            <Link href={`/partido/${row.row.original._id}`} passHref>
+              <div className="teamlogo" id="away">
+                <div style={{ marginRight: "5px" }}>
+                  <img
+                    height="16px"
+                    src={getTeamLogo(row.row.original.teams[1].teamname)}
+                    alt={row.row.original.teams[1].teamname}
+                  ></img>
+                </div>{" "}
+                <div id="teamname">{row.row.original.teams[1].teamname}</div>
+                <div id="shortname">
+                  {getTeamShortname(row.row.original.teams[1].teamname)}
                 </div>
-              </a>
+              </div>
             </Link>
           );
         }
@@ -129,18 +125,16 @@ export default function PlayerMatches({ matches, id }) {
         accessor: "torneo",
         Cell: row => {
           return (
-            <Link href={`/partido/${row.row.original._id}`}>
-              <a>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <img
-                    id="torneoimg"
-                    height="16px"
-                    src={getTournamentIcon(row.row.original.torneo)}
-                    alt={row.row.original.torneo}
-                  ></img>{" "}
-                  <div className="torneo">{row.row.original.torneo}</div>
-                </div>
-              </a>
+            <Link href={`/partido/${row.row.original._id}`} passHref>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <img
+                  id="torneoimg"
+                  height="16px"
+                  src={getTournamentIcon(row.row.original.torneo)}
+                  alt={row.row.original.torneo}
+                ></img>{" "}
+                <div className="torneo">{row.row.original.torneo}</div>
+              </div>
             </Link>
           );
         }
