@@ -67,7 +67,7 @@ export default function Navigation() {
   }
 
   return (
-    <div id="nav-div" onScroll={hideLogo}>
+    <nav id="nav-div" onScroll={hideLogo}>
       <div className="headerContent">
         <div className="nav-contents">
           <Link href="/">
@@ -149,6 +149,6 @@ export default function Navigation() {
           </button>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
