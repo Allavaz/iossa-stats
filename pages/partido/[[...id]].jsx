@@ -1002,9 +1002,7 @@ export default function Match({
               />
               <meta
                 name="twitter:image:src"
-                content={
-                  "https://stats.iosoccer-sa.bid/api/matchcard/" + data._id
-                }
+                content={"https://iosoccer-sa.bid/api/matchcard/" + data._id}
               />
               <meta name="twitter:site" content="@IOSoccerSA" />
             </>
