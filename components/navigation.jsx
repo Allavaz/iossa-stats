@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "../public/logo-solo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -68,39 +70,39 @@ export default function Navigation() {
     <div id="nav-div" onScroll={hideLogo}>
       <div className="headerContent">
         <div className="nav-contents">
-          <Link
-            href="/"
-            id="nav-logo"
-            onClick={e => setHamburger(false)}
-            style={{
-              width: logoShown || mobile ? "50px" : "0",
-              transition: mobile ? "all 0s" : "all .2s ease-in"
-            }}
-            passHref
-          >
-            <img
-              alt="IOSoccer Sudamérica"
-              src="/logo-solo.png"
-              height="40px"
-              width="40px"
-            />
+          <Link href="/">
+            <a
+              id="nav-logo"
+              onClick={e => setHamburger(false)}
+              style={{
+                width: logoShown || mobile ? "50px" : "0",
+                transition: mobile ? "all 0s" : "all .2s ease-in"
+              }}
+            >
+              <div style={{ padding: "5px" }}>
+                <Image
+                  alt="IOSoccer Sudamérica"
+                  src={logo}
+                  height="40px"
+                  width="40px"
+                  layout="fixed"
+                ></Image>
+              </div>
+            </a>
           </Link>
-          <Link
-            href="/individuales"
-            id="nav-item"
-            onClick={e => setHamburger(false)}
-            style={{ borderLeft: "1px solid var(--button-border)" }}
-            passHref
-          >
-            <center>Estadísticas</center>
+          <Link href="/individuales">
+            <a
+              id="nav-item"
+              onClick={e => setHamburger(false)}
+              style={{ borderLeft: "1px solid var(--button-border)" }}
+            >
+              <center>Estadísticas</center>
+            </a>
           </Link>
-          <Link
-            href="/resultados"
-            id="nav-item"
-            onClick={e => setHamburger(false)}
-            passHref
-          >
-            <center>Resultados</center>
+          <Link href="/resultados">
+            <a id="nav-item" onClick={e => setHamburger(false)}>
+              <center>Resultados</center>
+            </a>
           </Link>
           <div
             className="hamburger"
@@ -114,24 +116,24 @@ export default function Navigation() {
           <div
             className="linebreak"
             style={{ display: hamburger ? "block" : "none" }}
-          />
-          <Link
-            href="/posiciones"
-            id="nav-item"
-            onClick={e => setHamburger(false)}
-            style={{ display: hamburger || !mobile ? "block" : "none" }}
-            passHref
-          >
-            <center>Posiciones</center>
+          ></div>
+          <Link href="/posiciones">
+            <a
+              id="nav-item"
+              onClick={e => setHamburger(false)}
+              style={{ display: hamburger || !mobile ? "block" : "none" }}
+            >
+              <center>Posiciones</center>
+            </a>
           </Link>
-          <Link
-            href="/top10"
-            id="nav-item"
-            onClick={e => setHamburger(false)}
-            style={{ display: hamburger || !mobile ? "block" : "none" }}
-            passHref
-          >
-            <center>Rankings</center>
+          <Link href="/top10">
+            <a
+              id="nav-item"
+              onClick={e => setHamburger(false)}
+              style={{ display: hamburger || !mobile ? "block" : "none" }}
+            >
+              <center>Rankings</center>
+            </a>
           </Link>
           <button
             id="nav-item"
