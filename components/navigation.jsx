@@ -3,12 +3,7 @@ import Image from "next/image";
 import logo from "../public/logo-solo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSun,
-  faMoon,
-  faCaretDown,
-  faCaretUp
-} from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 const mobileWidth = 550;
 
@@ -16,7 +11,6 @@ export default function Navigation() {
   const [night, setNight] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [logoShown, setLogoShown] = useState(false);
-  const [hamburger, setHamburger] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", hideLogo);
@@ -29,7 +23,6 @@ export default function Navigation() {
       setNight(true);
     }
     window.addEventListener("resize", changeMobile);
-    window.addEventListener("click", hamburgerCloseWhenClickingAway);
   }, []);
 
   function hideLogo() {
@@ -45,12 +38,6 @@ export default function Navigation() {
       setMobile(true);
     } else {
       setMobile(false);
-    }
-  }
-
-  function hamburgerCloseWhenClickingAway(e) {
-    if (e.clientY > 110) {
-      setHamburger(false);
     }
   }
 
@@ -72,8 +59,6 @@ export default function Navigation() {
         <div className="nav-contents">
           <Link href="/">
             <a
-              id="nav-logo"
-              onClick={e => setHamburger(false)}
               style={{
                 width: logoShown || mobile ? "50px" : "0",
                 transition: mobile ? "all 0s" : "all .2s ease-in"
@@ -91,62 +76,30 @@ export default function Navigation() {
             </a>
           </Link>
           <Link href="/individuales">
-            <a
-              id="nav-item"
-              onClick={e => setHamburger(false)}
-              style={{ borderLeft: "1px solid var(--button-border)" }}
-            >
+            <a style={{ borderLeft: "1px solid var(--button-border)" }}>
               <center>Estadísticas</center>
             </a>
           </Link>
           <Link href="/resultados">
-            <a id="nav-item" onClick={e => setHamburger(false)}>
+            <a>
               <center>Resultados</center>
             </a>
           </Link>
-          <div
-            className="hamburger"
-            id="nav-item"
-            onClick={e => setHamburger(!hamburger)}
-          >
-            <center>
-              <FontAwesomeIcon icon={hamburger ? faCaretUp : faCaretDown} />
-            </center>
-          </div>
-          <div
-            className="linebreak"
-            style={{ display: hamburger ? "block" : "none" }}
-          ></div>
           <Link href="/posiciones">
-            <a
-              id="nav-item"
-              onClick={e => setHamburger(false)}
-              style={{ display: hamburger || !mobile ? "block" : "none" }}
-            >
+            <a>
               <center>Posiciones</center>
             </a>
           </Link>
           <Link href="/top10">
-            <a
-              id="nav-item"
-              onClick={e => setHamburger(false)}
-              style={{ display: hamburger || !mobile ? "block" : "none" }}
-            >
+            <a>
               <center>Rankings</center>
             </a>
           </Link>
-          <button
-            id="nav-item"
-            onClick={e => toggleNight()}
-            style={{ display: hamburger || !mobile ? "block" : "none" }}
-          >
+          <a onClick={e => toggleNight()}>
             <center>
-              <FontAwesomeIcon
-                style={{ display: "block" }}
-                icon={night ? faSun : faMoon}
-              />
+              <FontAwesomeIcon icon={night ? faSun : faMoon} />
             </center>
-          </button>
+          </a>
         </div>
       </div>
     </nav>

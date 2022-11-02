@@ -55,7 +55,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body, .selector, .boton, input, select {
+body,
+.selector,
+.boton,
+input,
+select {
   font-family: "Arial", sans-serif;
 }
 
@@ -312,7 +316,7 @@ h5 {
   width: fit-content;
 }
 
-#nav-item:hover {
+.nav-contents a:nth-child(n + 2):hover {
   animation-name: fade;
   animation-duration: 200ms;
   animation-fill-mode: both;
@@ -518,23 +522,28 @@ th {
 
 .nav-contents {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   position: relative;
   margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
 }
 
-#nav-item {
-  border: 0px;
+.nav-contents::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-contents a {
   background-color: var(--button-bg);
   font-size: 12pt;
   padding-left: 10px;
   padding-right: 10px;
-  border-right: 1px solid var(--button-border);
+  border: 1px solid var(--button-border);
+  margin: -1px;
   height: 51px;
   line-height: 54px;
   color: var(--normal-text-color);
-  cursor: pointer;
 }
 
 .linebreak {
@@ -543,18 +552,14 @@ th {
   border-top: 1px solid var(--button-border);
 }
 
-.hamburger {
-  display: none;
-  cursor: pointer;
-}
-
-#nav-logo {
+.nav-contents a:nth-child(1) {
   background-color: var(--logo-button-bg);
   overflow: hidden;
-  height: 51px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-#nav-logo img {
+.nav-contents a:nth-child(1) img {
   padding: 5px;
 }
 
@@ -664,11 +669,7 @@ table tr td {
     display: block;
   }
 
-  .hamburger {
-    display: block;
-  }
-
-  #nav-item {
+  .nav-contents a {
     flex: 1 0 auto;
   }
 
@@ -749,11 +750,7 @@ table tr td {
     display: block;
   }
 
-  .hamburger {
-    display: block;
-  }
-
-  #nav-item {
+  .nav-contents a {
     flex: 1 0 auto;
   }
 }
