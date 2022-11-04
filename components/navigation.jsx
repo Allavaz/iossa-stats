@@ -60,7 +60,7 @@ export default function Navigation() {
           <Link href="/">
             <a
               style={{
-                width: logoShown || mobile ? "50px" : "0",
+                width: logoShown || mobile ? "50px" : "1px",
                 transition: mobile ? "all 0s" : "all .2s ease-in"
               }}
             >
