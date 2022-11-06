@@ -1,6 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
-import logo from "../public/logo-solo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
@@ -64,15 +62,12 @@ export default function Navigation() {
                 transition: mobile ? "all 0s" : "all .2s ease-in"
               }}
             >
-              <div style={{ padding: "5px" }}>
-                <Image
-                  alt="IOSoccer Sudamérica"
-                  src={logo}
-                  height="40px"
-                  width="40px"
-                  layout="fixed"
-                ></Image>
-              </div>
+              <img
+                alt="IOSoccer Sudamérica"
+                src="/logo-solo.png"
+                height="40px"
+                width="40px"
+              />
             </a>
           </Link>
           <Link href="/individuales">
