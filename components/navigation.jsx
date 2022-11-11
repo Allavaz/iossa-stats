@@ -11,7 +11,9 @@ export default function Navigation() {
   const [logoShown, setLogoShown] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", hideLogo);
+    let header = document.querySelector("#header");
+    let observer = new IntersectionObserver(hideLogo);
+    observer.observe(header);
     if (window.innerWidth < mobileWidth) {
       setMobile(true);
     }
@@ -23,11 +25,11 @@ export default function Navigation() {
     window.addEventListener("resize", changeMobile);
   }, []);
 
-  function hideLogo() {
-    if (!mobile && window.scrollY >= 100) {
-      setLogoShown(true);
-    } else {
+  function hideLogo(entries) {
+    if (entries[0].isIntersecting) {
       setLogoShown(false);
+    } else {
+      setLogoShown(true);
     }
   }
 
@@ -58,7 +60,7 @@ export default function Navigation() {
           <Link href="/">
             <a
               style={{
-                width: logoShown || mobile ? "50px" : "1px",
+                width: logoShown ? "50px" : "1px",
                 transition: mobile ? "all 0s" : "all .2s ease-in"
               }}
             >
