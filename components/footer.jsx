@@ -22,7 +22,7 @@ export default function Footer() {
       icon: faYoutube
     },
     {
-      link: "https://www.twitch.tv/ios_sa",
+      link: "https://www.twitch.tv/IOSSuda",
       icon: faTwitch
     },
     {
