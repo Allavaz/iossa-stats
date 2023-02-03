@@ -59,9 +59,10 @@ export default function Navigation() {
         <div className="nav-contents">
           <Link href="/">
             <a
+              className="home-link"
               style={{
-                width: logoShown ? "50px" : "1px",
-                transition: mobile ? "all 0s" : "all .2s ease-in"
+                width: logoShown ? "50px" : "0px",
+                transition: mobile ? "all 0s" : "width .2s ease-in"
               }}
             >
               <img
@@ -72,31 +73,33 @@ export default function Navigation() {
               />
             </a>
           </Link>
-          <Link href="/individuales">
-            <a style={{ borderLeft: "1px solid var(--button-border)" }}>
-              <center>Estadísticas</center>
+          <div className="scrollable-nav-items">
+            <Link href="/individuales">
+              <a style={{ borderLeft: "1px solid var(--button-border)" }}>
+                <center>Estadísticas</center>
+              </a>
+            </Link>
+            <Link href="/resultados">
+              <a>
+                <center>Resultados</center>
+              </a>
+            </Link>
+            <Link href="/posiciones">
+              <a>
+                <center>Posiciones</center>
+              </a>
+            </Link>
+            <Link href="/top10">
+              <a>
+                <center>Rankings</center>
+              </a>
+            </Link>
+            <a onClick={e => toggleNight()}>
+              <center>
+                <FontAwesomeIcon icon={night ? faSun : faMoon} />
+              </center>
             </a>
-          </Link>
-          <Link href="/resultados">
-            <a>
-              <center>Resultados</center>
-            </a>
-          </Link>
-          <Link href="/posiciones">
-            <a>
-              <center>Posiciones</center>
-            </a>
-          </Link>
-          <Link href="/top10">
-            <a>
-              <center>Rankings</center>
-            </a>
-          </Link>
-          <a onClick={e => toggleNight()}>
-            <center>
-              <FontAwesomeIcon icon={night ? faSun : faMoon} />
-            </center>
-          </a>
+          </div>
         </div>
       </div>
     </nav>
