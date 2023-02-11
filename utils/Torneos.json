@@ -152,6 +152,12 @@
       {
         "torneo": "Copa Intrazonal de Plata T10",
         "query": "izplatat10"
+      },
+      {
+        "torneo": "Promoción D1/D2 T10"
+      },
+      {
+        "torneo": "Promoción D2/D3 T10"
       }
     ]
   },
