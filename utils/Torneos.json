@@ -144,6 +144,14 @@
       {
         "torneo": "Copa valencARc T10",
         "query": "cvt10"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro T10",
+        "query": "izorot10"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata T10",
+        "query": "izplatat10"
       }
     ]
   },
