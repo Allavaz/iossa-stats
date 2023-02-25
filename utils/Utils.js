@@ -128,6 +128,28 @@ exports.getTablas = function (temp) {
   return tablas;
 };
 
+exports.getChallonges = function (temp) {
+  let challonges = [];
+  for (let i in Torneos) {
+    if (Torneos[i].temporada === temp) {
+      for (let j in Torneos[i].torneos) {
+        if (
+          Torneos[i].torneos[j].challonge &&
+          challonges.findIndex(
+            e => e.table === Torneos[i].torneos[j].challonge
+          ) === -1
+        ) {
+          challonges.push({
+            challonge: Torneos[i].torneos[j].challonge,
+            name: Torneos[i].torneos[j].torneo
+          });
+        }
+      }
+    }
+  }
+  return challonges;
+};
+
 exports.getAllTemporadas = function () {
   let temps = [];
   for (let i in Torneos) {

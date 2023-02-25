@@ -4,7 +4,8 @@ import Head from "next/head";
 import Torneos from "../../utils/Torneos.json";
 import { useRouter } from "next/router";
 import temporadaActual from "../../utils/TemporadaActual";
-import { getTablas, getAllTemporadas } from "../../utils/Utils";
+import { getTablas, getAllTemporadas, getChallonges } from "../../utils/Utils";
+import Challonge from "../../components/challonge";
 
 function getCategory(arg) {
   if (arg === "all") {
@@ -52,6 +53,7 @@ export async function getServerSideProps(context) {
   else id = temporadaActual();
   if (getAllTemporadas().includes(id)) {
     let listaTablas = getTablas(id);
+    let listaChallonges = getChallonges(id);
     let listaPosiciones = await getManyPositions(
       listaTablas.map(item => item.table)
     );
@@ -63,6 +65,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         tablas: JSON.parse(JSON.stringify(result)),
+        challonges: JSON.parse(JSON.stringify(listaChallonges)),
         category: category,
         temporada: getTemporada(id)
       }
@@ -72,28 +75,33 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Posiciones({ tablas, category, temporada }) {
+export default function Posiciones({
+  tablas,
+  challonges,
+  category,
+  temporada
+}) {
   const router = useRouter();
 
   function selectTemporada(id) {
-    router.push("/posiciones/" + id);
+    router.push("/torneos/" + id);
   }
 
   return (
     <>
       <Head>
-        <title>Posiciones {category} | IOSoccer Sudamérica</title>
+        <title>Torneos {category} | IOSoccer Sudamérica</title>
         <meta
           name="title"
-          content={`Posiciones ${category} | IOSoccer Sudamérica`}
+          content={`Torneos ${category} | IOSoccer Sudamérica`}
         />
-        <meta name="description" content={`Posiciones ${category}`} />
+        <meta name="description" content={`Torneos ${category}`} />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content={`Posiciones ${category} | IOSoccer Sudamérica`}
+          content={`Torneos ${category} | IOSoccer Sudamérica`}
         />
-        <meta property="og:description" content={`Posiciones ${category}`} />
+        <meta property="og:description" content={`Torneos ${category}`} />
         <meta property="og:image" content="/logo-solo.png" />
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
       </Head>
@@ -124,6 +132,12 @@ export default function Posiciones({ tablas, category, temporada }) {
             )
         )}
       </div>
+      {challonges.map((item, index) => (
+        <div key={index}>
+          <h3 style={{ marginBottom: 0 }}>{item.name.toUpperCase()}</h3>
+          <Challonge id={item.challonge}></Challonge>
+        </div>
+      ))}
     </>
   );
 }

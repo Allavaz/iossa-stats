@@ -84,9 +84,9 @@ export default function Navigation() {
                 <center>Resultados</center>
               </a>
             </Link>
-            <Link href="/posiciones">
+            <Link href="/torneos">
               <a>
-                <center>Posiciones</center>
+                <center>Torneos</center>
               </a>
             </Link>
             <Link href="/top10">
