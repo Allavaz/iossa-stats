@@ -16,7 +16,7 @@ jobs:
       - run: npm run build
 
   deploy:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: appleboy/ssh-action@master
