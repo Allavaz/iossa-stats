@@ -19,7 +19,17 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get package.json changes
+        id: changes-package-json
+        uses: tj-actions/changed-files@v35
+        with:
+          since_last_remote_commit: true
+          files: package.json
+      - if: steps.changes-package-json.outputs.any_changed == 'true'
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -29,6 +39,19 @@ jobs:
             git pull
             Stop-Service -Name "iossa-stats"
             npm ci
+            npm run build
+            Start-Service -Name "iossa-stats"
+          debug: true
+      - if: steps.changes-package-json.outputs.any_changed == 'false'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd C:\Users\Administrador\Desktop\iossa-stats\
+            git pull
+            Stop-Service -Name "iossa-stats"
             npm run build
             Start-Service -Name "iossa-stats"
           debug: true
