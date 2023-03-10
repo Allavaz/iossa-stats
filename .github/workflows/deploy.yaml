@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,5 +24,11 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          script: whoami
+          script: |
+            cd C:\Users\Administrador\Desktop\iossa-stats\
+            git pull
+            Stop-Service -Name "iossa-stats"
+            npm ci
+            npm run build
+            Start-Service -Name "iossa-stats"
           debug: true
