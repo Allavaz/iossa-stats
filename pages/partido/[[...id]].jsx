@@ -163,6 +163,7 @@ export default function Match({
       data.torneo = torneo;
       return [...prevState, data];
     });
+    updateTableOrChallonge(torneo);
   }
 
   useEffect(() => {
@@ -175,13 +176,13 @@ export default function Match({
         return "Sure?";
       }
     };
-  }, []);
+  }, [editableData]);
 
-  useEffect(() => {
+  function updateTableOrChallonge(torneo) {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];
-        if (t.torneo === editableData.at(-1).torneo) {
+        if (t.torneo === torneo) {
           if (t.challonge) {
             setEditableChallonge(t.challonge);
           } else if (t.tabla) {
@@ -193,7 +194,7 @@ export default function Match({
         }
       }
     }
-  }, [editableData.at(-1).torneo]);
+  }
 
   function changeDate(date) {
     setEditableData(prevState => {
