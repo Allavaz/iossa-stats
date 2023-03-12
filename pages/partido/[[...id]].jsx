@@ -635,62 +635,76 @@ export default function Match({
   }
 
   function predictPlayerStats(player, prevState) {
-    let events = prevState.matchevents;
-    let goals = 0;
-    let ownGoals = 0;
-    let yellowCards = 0;
-    let secondYellowCards = 0;
-    let redCards = 0;
-    let assists = 0;
-    let secondAssists = 0;
-    for (let i in events) {
-      if (events[i].player1SteamId === player.info.steam_id) {
-        player.info.name = events[i].name;
-        switch (events[i].event) {
-          case "GOAL":
-            goals++;
-            break;
-          case "OWN GOAL":
-            ownGoals++;
-            break;
-          case "YELLOW CARD":
-            yellowCards++;
-            break;
-          case "SECOND YELLOW":
-            secondYellowCards++;
-            break;
-          case "RED CARD":
-            redCards++;
-            break;
-          default:
+    const events = prevState.matchevents;
+    Object.assign(
+      player.statistics,
+      events.reduce(
+        (acc, item) => {
+          if (item.player1SteamId === player.info.steam_id) {
+            switch (item.event) {
+              case "GOAL":
+                acc.goals += 1;
+                break;
+              case "OWN GOAL":
+                acc.owngoals += 1;
+                break;
+              case "YELLOW CARD":
+                acc.yellowcards += 1;
+                break;
+              case "SECOND YELLOW":
+                acc.secondyellowcards += 1;
+                break;
+              case "RED CARD":
+                acc.redcards += 1;
+                break;
+              default:
+            }
+          } else if (
+            item.player2SteamId === player.info.steam_id &&
+            item.event === "GOAL"
+          ) {
+            acc.assists += 1;
+          } else if (
+            item.player3SteamId === player.info.steam_id &&
+            item.event === "GOAL"
+          ) {
+            acc.secondAssists += 1;
+          }
+          return acc;
+        },
+        {
+          goals: 0,
+          owngoals: 0,
+          yellowcards: 0,
+          secondyellowcards: 0,
+          redcards: 0,
+          assists: 0,
+          secondassists: 0
         }
-      } else if (
-        events[i].player2SteamId === player.info.steam_id &&
-        events[i].event === "GOAL"
-      ) {
-        assists++;
-      } else if (
-        events[i].player3SteamId === player.info.steam_id &&
-        events[i].event === "GOAL"
-      ) {
-        secondAssists++;
+      )
+    );
+    if (
+      player.statistics.fouls <
+      player.statistics.yellowcards +
+        player.statistics.secondyellowcards +
+        player.statistics.redcards
+    ) {
+      player.statistics.fouls =
+        player.statistics.yellowcards +
+        player.statistics.secondyellowcards +
+        player.statistics.redcards;
+    }
+    if (player.statistics.goals > player.statistics.shots) {
+      player.statistics.shots = player.statistics.goals;
+    }
+    if (player.statistics.goals > player.statistics.shotsontarget) {
+      player.statistics.shotsontarget = player.statistics.goals;
+    }
+    events.forEach(e => {
+      if (e.player1SteamId === player.info.steam_id) {
+        player.info.name = e.name;
       }
-    }
-    player.statistics.goals = goals;
-    player.statistics.assists = assists;
-    player.statistics.secondassists = secondAssists;
-    player.statistics.owngoals = ownGoals;
-    player.statistics.yellowcards = yellowCards + secondYellowCards;
-    player.statistics.redcards = redCards + secondYellowCards;
-    if (player.statistics.fouls < yellowCards + secondYellowCards + redCards) {
-      player.statistics.fouls = yellowCards + secondYellowCards + redCards;
-    }
-    if (goals > player.statistics.shots) {
-      player.statistics.shots = goals;
-    }
-    if (goals > player.statistics.shotsontarget) {
-      player.statistics.shotsontarget = goals;
-    }
+    });
   }
 
   function changeVod(vod) {
