@@ -27,7 +27,7 @@ export default function DateTimeEditor(props) {
           id="inputDate"
           type="datetime-local"
           style={{ width: "25ch" }}
-          defaultValue={dt.toFormat("y-LL-dd'T'T")}
+          defaultValue={dt.toFormat("y-LL-dd'T'HH:mm")}
         ></input>
       </div>
       <div style={{ flex: 1 }}>
