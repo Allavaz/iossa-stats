@@ -1,9 +1,10 @@
-import { DateTime } from "luxon";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faTimesCircle
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DateTime } from "luxon";
+import { useMemo } from "react";
 
 export default function DateTimeEditor(props) {
   function formatAndSendDate(date) {
@@ -12,7 +13,8 @@ export default function DateTimeEditor(props) {
     props.setEditing(null);
   }
 
-  let dt = DateTime.fromISO(props.date);
+  const dt = useMemo(() => DateTime.fromISO(props.date), [props.date]);
+
   return (
     <div
       style={{
