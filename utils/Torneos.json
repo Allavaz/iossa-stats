@@ -119,6 +119,64 @@
     ]
   },
   {
+    "temporada": "t11",
+    "titulo": "Temporada 11",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T11",
+        "query": "d1t11",
+        "tabla": "d1t11"
+      },
+      {
+        "torneo": "Liga D2 T11",
+        "query": "d2t11",
+        "tabla": "d2t11"
+      },
+      {
+        "torneo": "Liga D3 T11",
+        "query": "d3t11",
+        "tabla": "d3t11"
+      },
+      {
+        "torneo": "Copa D3 T11",
+        "query": "cd3t11"
+      },
+      {
+        "torneo": "Copa Maradei T11",
+        "query": "maradeit11"
+      },
+      {
+        "torneo": "Copa Maradei T11 - Grupo A",
+        "tabla": "maradeit11a"
+      },
+      {
+        "torneo": "Copa Maradei T11 - Grupo B",
+        "tabla": "maradeit11b"
+      },
+      {
+        "torneo": "Copa Maradei T11 - Grupo C",
+        "tabla": "maradeit11c"
+      },
+      {
+        "torneo": "Copa Maradei T11 - Grupo D",
+        "tabla": "maradeit11d"
+      },
+      {
+        "torneo": "Copa Maradei T11 - Eliminatorias"
+      },
+      {
+        "torneo": "Copa valencARc T11",
+        "query": "cvt11"
+      },
+      {
+        "torneo": "Promoción D1/D2 T11"
+      },
+      {
+        "torneo": "Promoción D2/D3 T11"
+      }
+    ]
+  },
+  {
     "temporada": "t10",
     "titulo": "Temporada 10",
     "torneos": [
