@@ -5,6 +5,9 @@ import { getTeamLogo } from "../utils/Utils";
 import theme from "../styles/autocompleteTeams.module.css";
 
 export default function AutocompleteTeams(props) {
+  const [value, setValue] = useState(props.defaultValue);
+  const [suggestions, setSuggestions] = useState([]);
+
   let teams = [];
   for (let i in Teams) {
     teams.push({
@@ -38,14 +41,19 @@ export default function AutocompleteTeams(props) {
           height="16pt"
           style={{ marginRight: ".5ch" }}
           alt={suggestion.team}
-        ></img>
+        />
       </span>
-      <span>{suggestion.team}</span>
+      <span
+        style={{
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+          overflow: "hidden"
+        }}
+      >
+        {suggestion.team}
+      </span>
     </div>
   );
-
-  const [value, setValue] = useState(props.defaultValue);
-  const [suggestions, setSuggestions] = useState([]);
 
   const onChange = (event, { newValue, method }) => {
     setValue(newValue);
