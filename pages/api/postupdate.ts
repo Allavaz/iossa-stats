@@ -5,10 +5,10 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     if (req.body.password === process.env.KEY) {
       try {
-        let data = await updateMatch(req.body.data, res);
+        let data = await updateMatch(req.body.data);
         res.json({ status: "Success!" });
         try {
-          await createMatchCard({...data, fecha: data.fecha.toISOString()});
+          await createMatchCard({ ...data, fecha: data.fecha.toISOString() });
         } catch (error) {
           console.error(error);
         }
