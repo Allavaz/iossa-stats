@@ -2,8 +2,7 @@ import Head from "next/head";
 import { getMatches, getManyPositions } from "../lib/getFromDB";
 import Matches from "../components/matches";
 import Positions from "../components/positions";
-import temporadaActual from "../utils/TemporadaActual";
-import { getTablas } from "../utils/Utils";
+import { getTablas, temporadaActual } from "../utils/Utils";
 
 export async function getServerSideProps() {
   let matches = await getMatches("20");

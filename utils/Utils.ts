@@ -1,7 +1,9 @@
-var Teams = require("./Teams.json");
-var Torneos = require("./Torneos.json");
+import Teams from "./Teams.json";
+import Torneos from "./Torneos.json";
 
-exports.getAllQueries = function () {
+const temporadaRegex = /t(\d{2})/;
+
+export function getAllQueries() {
   let queries = [];
   for (let i in Torneos) {
     queries.push(Torneos[i].temporada);
@@ -12,9 +14,9 @@ exports.getAllQueries = function () {
     }
   }
   return queries;
-};
+}
 
-exports.getTournamentIcon = function (tournament) {
+export function getTournamentIcon(tournament) {
   if (tournament.includes("Liga D1")) {
     return "/tournaments/ligad1.png";
   } else if (tournament.includes("Superliga D1")) {
@@ -52,53 +54,53 @@ exports.getTournamentIcon = function (tournament) {
   } else {
     return "/logo-solo.png";
   }
-};
+}
 
-exports.plus = function (n) {
+export function plus(n) {
   if (n >= 0) {
     return "+" + n;
   } else {
     return n;
   }
-};
+}
 
-exports.fecha = function (str) {
+export function fecha(str) {
   var year = str.slice(0, 4);
   var month = str.slice(5, 7);
   var day = str.slice(8, 10);
 
   return day + "/" + month + "/" + year;
-};
+}
 
-exports.percentage = function (x, y) {
+export function percentage(x, y) {
   if (y === 0) {
     return 0;
   } else {
     return Math.round((x / y) * 100);
   }
-};
+}
 
-exports.invPercentage = function (x, y) {
+export function invPercentage(x, y) {
   return (x / 100) * y;
-};
+}
 
-exports.filterMethod = (filter, row) => {
+export function filterMethod(filter, row) {
   const id = filter.pivotId || filter.id;
   return row[id] !== undefined
     ? String(row[id].toLowerCase()).includes(filter.value.toLowerCase())
     : true;
-};
+}
 
-exports.getTeamLogo = function (teamname) {
+export function getTeamLogo(teamname) {
   try {
     let shortname = Teams[teamname].toLowerCase();
     return `/clubs/${shortname}.png`;
   } catch {
     return "/logo-iosoccer-128.png";
   }
-};
+}
 
-exports.getTeamShortname = function (teamname) {
+export function getTeamShortname(teamname) {
   const shortname = Teams[teamname];
   if (shortname) {
     return shortname;
@@ -106,9 +108,9 @@ exports.getTeamShortname = function (teamname) {
     let len = Math.min(3, teamname.length);
     return teamname.substring(0, len).toUpperCase();
   }
-};
+}
 
-exports.getTablas = function (temp) {
+export function getTablas(temp) {
   let tablas = [];
   for (let i in Torneos) {
     if (Torneos[i].temporada === temp) {
@@ -126,9 +128,9 @@ exports.getTablas = function (temp) {
     }
   }
   return tablas;
-};
+}
 
-exports.getChallonges = function (temp) {
+export function getChallonges(temp) {
   let challonges = [];
   for (let i in Torneos) {
     if (Torneos[i].temporada === temp) {
@@ -148,12 +150,78 @@ exports.getChallonges = function (temp) {
     }
   }
   return challonges;
-};
+}
 
-exports.getAllTemporadas = function () {
+export function getAllTemporadas() {
+  const ordenes = ["primerorden", "segundoorden", "tercerorden"];
   let temps = [];
   for (let i in Torneos) {
-    temps.push(Torneos[i].temporada);
+    if (!ordenes.includes(Torneos[i].temporada)) {
+      temps.push(Torneos[i].temporada);
+    }
   }
   return temps;
-};
+}
+
+export function getCategory(arg) {
+  if (arg === "all") {
+    return "Totales";
+  } else if (arg === "selecciones") {
+    return "Selecciones";
+  } else if (arg === "primerorden") {
+    return "Primer Orden";
+  } else if (arg === "segundoorden") {
+    return "Segundo Orden";
+  } else if (arg === "tercerorden") {
+    return "Tercer Orden";
+  } else if (arg.match(temporadaRegex)) {
+    return "Temporada " + arg.match(temporadaRegex)[1];
+  } else {
+    for (let i in Torneos) {
+      for (let j in Torneos[i].torneos) {
+        if (arg === Torneos[i].torneos[j].query) {
+          return Torneos[i].torneos[j].torneo;
+        }
+      }
+    }
+  }
+}
+
+export function getTemporada(arg) {
+  const specialArguments = [
+    "all",
+    "selecciones",
+    "primerorden",
+    "segundoorden",
+    "tercerorden"
+  ];
+  if (arg.startsWith("t") || specialArguments.includes(arg)) {
+    return arg;
+  } else {
+    for (let i in Torneos) {
+      for (let j in Torneos[i].torneos) {
+        if (arg === Torneos[i].torneos[j].query) {
+          return Torneos[i].temporada;
+        }
+      }
+    }
+  }
+  if (document.getElementById("selector")) {
+    let selector = document.getElementById("selector") as HTMLSelectElement;
+    for (let i in selector.options) {
+      if (selector.options[i].value === arg) {
+        selector.selectedIndex = parseInt(i);
+      }
+    }
+  }
+}
+
+// Esto asume que en Torneos.json se ordenan las temporadas
+// de la mas nueva a la mas vieja
+export function temporadaActual() {
+  for (let i in Torneos) {
+    if (temporadaRegex.test(Torneos[i].temporada)) {
+      return Torneos[i].temporada;
+    }
+  }
+}

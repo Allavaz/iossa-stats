@@ -92,6 +92,21 @@
     ]
   },
   {
+    "temporada": "primerorden",
+    "titulo": "Primer Orden",
+    "torneos": []
+  },
+  {
+    "temporada": "segundoorden",
+    "titulo": "Segundo Orden",
+    "torneos": []
+  },
+  {
+    "temporada": "tercerorden",
+    "titulo": "Tercer Orden",
+    "torneos": []
+  },
+  {
     "temporada": "selecciones",
     "titulo": "Selecciones",
     "torneos": [

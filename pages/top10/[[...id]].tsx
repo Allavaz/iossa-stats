@@ -1,5 +1,10 @@
 import Head from "next/head";
-import { getAllQueries } from "../../utils/Utils";
+import {
+  getAllQueries,
+  getCategory,
+  getTemporada,
+  temporadaActual
+} from "../../utils/Utils";
 import {
   getTop10Assists,
   getTop10Goals,
@@ -10,48 +15,6 @@ import { useRouter } from "next/router";
 import Top10Goleadores from "../../components/top10Goleadores";
 import Top10Asistidores from "../../components/top10Asistidores";
 import Top10Rusticos from "../../components/top10Rusticos";
-import Torneos from "../../utils/Torneos.json";
-import temporadaActual from "../../utils/TemporadaActual";
-
-function getCategory(arg) {
-  if (arg === "all") {
-    return "Totales";
-  } else if (arg.startsWith("t")) {
-    return "Temporada " + arg.replace("t", "");
-  } else if (arg === "selecciones") {
-    return "Selecciones";
-  } else {
-    for (let i in Torneos) {
-      for (let j in Torneos[i].torneos) {
-        if (arg === Torneos[i].torneos[j].query) {
-          return Torneos[i].torneos[j].torneo;
-        }
-      }
-    }
-  }
-}
-
-function getTemporada(arg) {
-  if (arg.startsWith("t") || arg === "all" || arg === "selecciones") {
-    return arg;
-  } else {
-    for (let i in Torneos) {
-      for (let j in Torneos[i].torneos) {
-        if (arg === Torneos[i].torneos[j].query) {
-          return Torneos[i].temporada;
-        }
-      }
-    }
-  }
-  if (document.getElementById("selector")) {
-    let selector = document.getElementById("selector");
-    for (let i in selector.options) {
-      if (selector.options[i].value === arg) {
-        selector.selectedIndex = i;
-      }
-    }
-  }
-}
 
 export async function getServerSideProps(context) {
   let id;

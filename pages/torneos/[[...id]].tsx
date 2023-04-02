@@ -3,9 +3,13 @@ import { useRouter } from "next/router";
 import Challonge from "../../components/challonge";
 import Positions from "../../components/positions";
 import { getManyPositions } from "../../lib/getFromDB";
-import temporadaActual from "../../utils/TemporadaActual";
 import Torneos from "../../utils/Torneos.json";
-import { getAllTemporadas, getChallonges, getTablas } from "../../utils/Utils";
+import {
+  getAllTemporadas,
+  getChallonges,
+  getTablas,
+  temporadaActual
+} from "../../utils/Utils";
 import { GetServerSideProps } from "next";
 
 function getCategory(arg: string) {
@@ -74,6 +78,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 };
 
+const hideTemporadas = ["all", "primerorden", "segundoorden", "tercerorden"];
+
 export default function Posiciones({
   tablas,
   challonges,
@@ -109,8 +115,8 @@ export default function Posiciones({
         defaultValue={temporada}
         onChange={e => goToTemporada(e.target.value)}
       >
-        {Torneos.map((item, index) =>
-          item.temporada === "all" ? null : (
+        {Torneos.filter(e => !hideTemporadas.includes(e.temporada)).map(
+          (item, index) => (
             <option key={index} value={item.temporada}>
               {item.titulo}
             </option>

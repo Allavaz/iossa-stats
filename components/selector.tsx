@@ -20,25 +20,28 @@ export default function Selector({ selectTorneo, selectTemporada, temporada }) {
           key={index}
           style={{ display: temporada === item.temporada ? "block" : "none" }}
         >
-          <div className="botonera">
-            <button
-              className="boton"
-              onClick={() => selectTorneo(item.temporada)}
-            >
-              Totales
-            </button>
-            {item.torneos.map((e, i) =>
-              e.query === undefined ? null : (
-                <button
-                  className="boton"
-                  key={i}
-                  onClick={() => selectTorneo(e.query)}
-                >
-                  {e.torneo}
-                </button>
-              )
-            )}
-          </div>
+          {item.torneos.length > 1 && (
+            <div className="botonera">
+              <button
+                className="boton"
+                onClick={() => selectTorneo(item.temporada)}
+              >
+                Totales
+              </button>
+              {item.torneos.map(
+                (e, i) =>
+                  e.query && (
+                    <button
+                      className="boton"
+                      key={i}
+                      onClick={() => selectTorneo(e.query)}
+                    >
+                      {e.torneo}
+                    </button>
+                  )
+              )}
+            </div>
+          )}
         </div>
       ))}
     </div>

@@ -1,58 +1,21 @@
 import Results from "../../components/results";
 import { getMatches } from "../../lib/getFromDB";
 import Head from "next/head";
-import Torneos from "../../utils/Torneos.json";
 import Selector from "../../components/selector";
 import { useRouter } from "next/router";
-import { getAllQueries } from "../../utils/Utils";
-import temporadaActual from "../../utils/TemporadaActual";
-
-function getCategory(arg) {
-  if (arg === "all") {
-    return "Totales";
-  } else if (arg.startsWith("t")) {
-    return "Temporada " + arg.replace("t", "");
-  } else if (arg === "selecciones") {
-    return "Selecciones";
-  } else {
-    for (let i in Torneos) {
-      for (let j in Torneos[i].torneos) {
-        if (arg === Torneos[i].torneos[j].query) {
-          return Torneos[i].torneos[j].torneo;
-        }
-      }
-    }
-  }
-}
-
-function getTemporada(arg) {
-  if (arg.startsWith("t") || arg === "all" || arg === "selecciones") {
-    return arg;
-  } else {
-    for (let i in Torneos) {
-      for (let j in Torneos[i].torneos) {
-        if (arg === Torneos[i].torneos[j].query) {
-          return Torneos[i].temporada;
-        }
-      }
-    }
-  }
-  if (document.getElementById("selector")) {
-    let selector = document.getElementById("selector");
-    for (let i in selector.options) {
-      if (selector.options[i].value === arg) {
-        selector.selectedIndex = i;
-      }
-    }
-  }
-}
+import {
+  getAllQueries,
+  getCategory,
+  getTemporada,
+  temporadaActual
+} from "../../utils/Utils";
 
 export async function getServerSideProps(context) {
   let id;
   let page = 0;
   const queryparams = new URLSearchParams(context.req.url.split("?")[1]);
   if (queryparams.has("page")) {
-    page = queryparams.get("page") - 1;
+    page = parseInt(queryparams.get("page")) - 1;
   }
   if (context.params.id) {
     id = context.params.id[0];
@@ -65,7 +28,7 @@ export async function getServerSideProps(context) {
         matches,
         category: category,
         temporada: getTemporada(id),
-        page: parseInt(page)
+        page: page
       }
     };
   } else {
