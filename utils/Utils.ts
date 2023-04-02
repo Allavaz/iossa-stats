@@ -1,7 +1,7 @@
 import Teams from "./Teams.json";
 import Torneos from "./Torneos.json";
 
-const temporadaRegex = /t(\d{2})/;
+const temporadaRegex = /t(\d+)/;
 
 export function getAllQueries() {
   let queries = [];
@@ -195,7 +195,8 @@ export function getTemporada(arg) {
     "segundoorden",
     "tercerorden"
   ];
-  if (arg.startsWith("t") || specialArguments.includes(arg)) {
+  if (arg.match(temporadaRegex) || specialArguments.includes(arg)) {
+    console.log(arg);
     return arg;
   } else {
     for (let i in Torneos) {
