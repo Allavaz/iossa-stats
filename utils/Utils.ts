@@ -196,7 +196,6 @@ export function getTemporada(arg) {
     "tercerorden"
   ];
   if (arg.match(temporadaRegex) || specialArguments.includes(arg)) {
-    console.log(arg);
     return arg;
   } else {
     for (let i in Torneos) {
