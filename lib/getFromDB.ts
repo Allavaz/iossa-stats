@@ -6,13 +6,14 @@ import queries from "./aggregations/queries";
 import top10goals from "./aggregations/top10Goals";
 import top10assists from "./aggregations/top10Assists";
 import top10rusticos from "./aggregations/top10Rusticos";
+import { Match } from "../types";
 
 function serializableMatch(doc) {
-  return ({
+  return {
     ...doc,
     _id: doc._id.toString(),
     fecha: doc.fecha.toISOString()
-  })
+  };
 }
 
 export async function getMatches(id) {
@@ -82,7 +83,7 @@ export async function getManyPositions(ids) {
   }
 }
 
-export async function getMatch(id) {
+export async function getMatch(id: string) {
   try {
     const client = await clientPromise;
     const db = client.db();
@@ -90,7 +91,7 @@ export async function getMatch(id) {
     let doc = await db
       .collection(process.env.DB_COLLECTION)
       .findOne({ _id: o_id });
-    return serializableMatch(doc);
+    return serializableMatch(doc) as Match;
   } catch (e) {
     return null;
   }
