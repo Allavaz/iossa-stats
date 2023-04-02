@@ -1,23 +1,24 @@
-import MatchCard from "../../components/matchCard";
-import { useEffect, useState } from "react";
-import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
+import router from "next/router";
+import { useEffect, useState } from "react";
+import Challonge from "../../components/challonge";
+import MatchCard from "../../components/matchCard";
+import MatchIndividualStats from "../../components/matchIndividualStats";
 import MatchTeamStats from "../../components/matchTeamStats";
 import Positions from "../../components/positions";
-import Torneos from "../../utils/Torneos.json";
-import MatchIndividualStats from "../../components/matchIndividualStats";
 import Vod from "../../components/vod";
-import Challonge from "../../components/challonge";
-import axios from "axios";
 import VodEditor from "../../components/vodEditor";
-import MatchTeamStatsEditor from "../../components/matchTeamStatsEditor";
-import router from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import createJSON from "../../lib/createJSON";
+import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
+import { Match, MatchEvent, Player } from "../../types";
+import Torneos from "../../utils/Torneos.json";
 
-export async function getServerSideProps(context) {
-  let props = {};
+export const getServerSideProps: GetServerSideProps = async context => {
+  let props: any = {};
   let match = await getMatch(context.params.id[0]);
   if (match) {
     props.data = match;
@@ -48,9 +49,11 @@ export async function getServerSideProps(context) {
   } else {
     return { notFound: true };
   }
-}
+};
 
-const blankMatch = {
+const blankMatch: Match = {
+  _id: "",
+  filename: "",
   fecha: new Date().toISOString(),
   torneo: "Torneo",
   vod: null,
@@ -86,7 +89,9 @@ const blankMatch = {
         distancecovered: 0,
         assists: 0,
         goalkicks: 0,
-        keypasses: 0
+        keypasses: 0,
+        chancescreated: 0,
+        secondassists: 0
       },
       playerStatistics: []
     },
@@ -121,7 +126,9 @@ const blankMatch = {
         distancecovered: 0,
         assists: 0,
         goalkicks: 0,
-        keypasses: 0
+        keypasses: 0,
+        chancescreated: 0,
+        secondassists: 0
       },
       playerStatistics: []
     }
@@ -130,7 +137,7 @@ const blankMatch = {
   matchevents: []
 };
 
-export default function Match({
+export default function MatchPage({
   data,
   table,
   tablaTorneo,
@@ -155,7 +162,7 @@ export default function Match({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
 
-  function changeTorneo(torneo) {
+  function changeTorneo(torneo: string) {
     setEditableTable(null);
     setEditableChallonge(null);
     setEditableData(prevState => {
@@ -167,7 +174,7 @@ export default function Match({
   }
 
   useEffect(() => {
-    window.onbeforeunload = e => {
+    window.onbeforeunload = (e: BeforeUnloadEvent) => {
       if (editableData && editableData.length > 1) {
         e = e || window.event;
         if (e) {
@@ -178,7 +185,7 @@ export default function Match({
     };
   }, [editableData]);
 
-  function updateTableOrChallonge(torneo) {
+  function updateTableOrChallonge(torneo: string) {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
         let t = Torneos[i].torneos[j];
@@ -204,19 +211,19 @@ export default function Match({
     });
   }
 
-  function changeTeam(value, side) {
+  function changeTeam(newName: string, side: "home" | "away") {
     let s = side === "home" ? 0 : 1;
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
-      data.teams[s].teamname = value;
+      data.teams[s].teamname = newName;
       for (let i in data.teams[s].playerStatistics) {
-        data.teams[s].playerStatistics[i].info.team = value;
+        data.teams[s].playerStatistics[i].info.team = newName;
         for (let j in data.players) {
           if (
             data.teams[s].playerStatistics[i].info.steam_id ===
             data.players[j].info.steam_id
           ) {
-            data.players[j].info.team = value;
+            data.players[j].info.team = newName;
           }
         }
       }
@@ -224,7 +231,7 @@ export default function Match({
     });
   }
 
-  function changeScore(home, away) {
+  function changeScore(home: number, away: number) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.teams[0].score = home;
@@ -245,7 +252,7 @@ export default function Match({
     });
   }
 
-  function changeEvents(matchEvents) {
+  function changeEvents(matchEvents: MatchEvent[]) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
       data.matchevents = matchEvents;
@@ -575,10 +582,11 @@ export default function Match({
           }
         }
         if (!found) {
-          let p = {
+          let player: Player = {
             info: {
               name: steamids[i].name,
-              steam_id: steamids[i].steamid
+              steam_id: steamids[i].steamid,
+              team: ""
             },
             statistics: {
               assists: 0,
@@ -614,15 +622,15 @@ export default function Match({
             }
           };
           if (steamids[i].side === "home") {
-            p.info.team = data.teams[0].teamname;
-            predictPlayerStats(p, prevState[prevState.length - 1]);
-            homePlayerStatistics.push(p);
+            player.info.team = data.teams[0].teamname;
+            predictPlayerStats(player, prevState[prevState.length - 1]);
+            homePlayerStatistics.push(player);
           } else if (steamids[i].side === "away") {
-            p.info.team = data.teams[1].teamname;
-            predictPlayerStats(p, prevState[prevState.length - 1]);
-            awayPlayerStatistics.push(p);
+            player.info.team = data.teams[1].teamname;
+            predictPlayerStats(player, prevState[prevState.length - 1]);
+            awayPlayerStatistics.push(player);
           }
-          playerStatistics.push(p);
+          playerStatistics.push(player);
         }
       }
       data.teams[0].playerStatistics = homePlayerStatistics;
@@ -715,40 +723,6 @@ export default function Match({
     });
   }
 
-  function changeTeamStats(teams) {
-    setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
-      data.teams[0] = teams[0];
-      data.teams[1] = teams[1];
-      if (
-        data.teams[0].statistics.possession +
-          data.teams[1].statistics.possession !==
-        100
-      ) {
-        if (
-          data.teams[0].statistics.possession >
-          data.teams[1].statistics.possession
-        ) {
-          data.teams[0].statistics.possession =
-            data.teams[0].statistics.possession -
-            (data.teams[0].statistics.possession +
-              data.teams[1].statistics.possession -
-              100);
-        } else if (
-          data.teams[1].statistics.possession >
-          data.teams[0].statistics.possession
-        ) {
-          data.teams[1].statistics.possession =
-            data.teams[1].statistics.possession -
-            (data.teams[0].statistics.possession +
-              data.teams[1].statistics.possession -
-              100);
-        }
-      }
-      return [...prevState, data];
-    });
-  }
-
   function changeIndivStats(player, side, index, oldsteamid) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
@@ -812,12 +786,12 @@ export default function Match({
     setEditing(null);
   }
 
-  function updateMatch(pw) {
+  function updateMatch(password: string) {
     if (editableData.at(-1).torneo === "Torneo") {
       alert("Te faltó elegir el torneo!");
     } else if (editing) {
       alert("Hay cambios sin guardar!");
-    } else if (pw === "") {
+    } else if (password === "") {
       alert("Ingrese la contraseña.");
     } else if (
       editableData.at(-1).teams[0].statistics.possession +
@@ -829,7 +803,7 @@ export default function Match({
       setLoading(true);
       axios
         .post(`/api/post${create ? "upload" : "update"}`, {
-          password: pw,
+          password: password,
           data: editableData.at(-1)
         })
         .then(res => {
@@ -857,14 +831,14 @@ export default function Match({
     }
   }
 
-  function deleteMatch(pw) {
-    if (pw === "") {
+  function deleteMatch(password: string) {
+    if (password === "") {
       alert("Ingrese la contraseña.");
     } else {
       setLoading(true);
       axios
         .post("/api/postdelete", {
-          password: pw,
+          password: password,
           data: editableData.at(-1)
         })
         .then(res => {
@@ -888,7 +862,7 @@ export default function Match({
     );
   }
 
-  function dropFile(ev) {
+  function dropFile(ev: React.DragEvent) {
     ev.preventDefault();
 
     if (ev.dataTransfer.items) {
@@ -1007,7 +981,7 @@ export default function Match({
               />
               <meta
                 property="og:image"
-                content={"/api/matchcard/" + data._id}
+                content={"https://iosoccer-sa.bid/api/matchcard/" + data._id}
               />
               <meta property="og:site_name" content="IOSoccer Sudamérica" />
               <meta name="twitter:card" content="summary_large_image" />
@@ -1052,19 +1026,7 @@ export default function Match({
               flexGrow: 9999
             }}
           >
-            {editing === "teamStats" ? (
-              <MatchTeamStatsEditor
-                data={editableData.at(-1)}
-                changeTeamStats={changeTeamStats}
-                setEditing={setEditing}
-              />
-            ) : (
-              <MatchTeamStats
-                data={editable || create ? editableData.at(-1) : data}
-                editable={editable || create}
-                setEditing={setEditing}
-              />
-            )}
+            <MatchTeamStats data={data} setEditing={setEditing} />
             {(editableChallonge || (challonge && !(editable || create))) && (
               <>
                 <h3 style={{ marginBottom: 0 }}>{data.torneo.toUpperCase()}</h3>
