@@ -1,4 +1,4 @@
-export default function Challonge({ id }) {
+export default function Challonge({ id }: { id: string }) {
   return (
     <iframe
       title="challonge"
@@ -7,9 +7,6 @@ export default function Challonge({ id }) {
       src={"https://challonge.com/" + id + "/module"}
       width="100%"
       height="600"
-      frameBorder="0"
-      scrolling="auto"
-      allowtransparency="true"
     ></iframe>
   );
 }

@@ -1,11 +1,6 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getTeamLogo, percentage } from "../utils/Utils";
-import { useState } from "react";
 
 export default function MatchTeamStats(props) {
-  const [hovering, setHovering] = useState(false);
-
   const baseObject = i => props.data.teams[i].statistics;
   const rows = [
     {
@@ -54,13 +49,7 @@ export default function MatchTeamStats(props) {
   ];
 
   return (
-    <div
-      className="divDataTable"
-      id="divStatsTable"
-      style={props.style}
-      onMouseOver={e => setHovering(true)}
-      onMouseOut={e => setHovering(false)}
-    >
+    <div className="divDataTable" id="divStatsTable" style={props.style}>
       <table className="dataTable" id="teamstatstable">
         <thead>
           <tr>
@@ -71,7 +60,7 @@ export default function MatchTeamStats(props) {
                 src={getTeamLogo(props.data.teams[0].teamname)}
               ></img>
             </th>
-            <th width="250px">
+            <th>
               <div
                 style={{
                   display: "flex",
@@ -83,20 +72,6 @@ export default function MatchTeamStats(props) {
                 <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                   ESTADÍSTICAS DEL EQUIPO
                 </div>
-                {props.editable ? (
-                  <div
-                    style={{ flex: 1, textAlign: "left", marginBottom: "4px" }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      style={{
-                        cursor: "pointer",
-                        opacity: hovering ? "100%" : "0%"
-                      }}
-                      onClick={e => props.setEditing("teamStats")}
-                    />
-                  </div>
-                ) : null}
               </div>
             </th>
             <th>

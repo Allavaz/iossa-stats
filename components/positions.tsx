@@ -74,7 +74,15 @@ const classifications = [
   }
 ];
 
-export default function Positions({ teams, header, mini }) {
+export default function Positions({
+  teams,
+  header,
+  mini = false
+}: {
+  teams: any[];
+  header: string;
+  mini?: boolean;
+}) {
   const classification = classifications.find(c =>
     c.matchingTournaments(header)
   );
@@ -155,15 +163,13 @@ export default function Positions({ teams, header, mini }) {
           <thead>
             <tr>
               {columns.map(e => (
-                <th width={e.width} key={e.header}>
-                  {e.header}
-                </th>
+                <th key={e.header}>{e.header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {teams.map((item, index) => (
-              <tr key={item._id}>
+              <tr key={item.name}>
                 {columns.map(e => (
                   <td key={e.header}>
                     {e.render ? e.render(item, index) : item[e.accessor]}

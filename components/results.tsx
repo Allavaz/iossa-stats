@@ -1,10 +1,10 @@
-import { useMemo, useEffect } from "react";
-import { useTable, usePagination, useGlobalFilter } from "react-table";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
+import { useGlobalFilter, usePagination, useTable } from "react-table";
 import {
-  getTeamLogo,
   fecha,
+  getTeamLogo,
   getTeamShortname,
   getTournamentIcon
 } from "../utils/Utils";
@@ -119,7 +119,7 @@ export default function Results({ matches, category, pagina }) {
 
   const data = useMemo(() => matches, [matches]);
   const tableInstance = useTable(
-    { columns, data, initialState: { pageSize: 15 } },
+    { columns, data, initialState: { pageSize: 15, pageIndex: pagina } },
     useGlobalFilter,
     usePagination
   );
@@ -135,14 +135,9 @@ export default function Results({ matches, category, pagina }) {
     nextPage,
     previousPage,
     setGlobalFilter,
-    gotoPage,
     rows,
     state: { pageIndex, pageSize }
   } = tableInstance;
-
-  useEffect(() => {
-    gotoPage(pagina);
-  }, []);
 
   return (
     <>
@@ -155,7 +150,9 @@ export default function Results({ matches, category, pagina }) {
           placeholder="Buscar equipo/torneo…"
           onChange={e => {
             setGlobalFilter(e.target.value);
-            router.push(router.asPath.split("?")[0], undefined, { shallow: true });
+            router.push(router.asPath.split("?")[0], undefined, {
+              shallow: true
+            });
           }}
           style={{
             border: "1px solid var(--button-border)",
@@ -212,7 +209,7 @@ export default function Results({ matches, category, pagina }) {
             {[...Array(pageSize - page.length)].map((e, i) => (
               <tr key={i}>
                 <td
-                  colSpan="5"
+                  colSpan={5}
                   style={{ borderLeft: 0, borderRight: 0, padding: "9px" }}
                 >
                   &nbsp;
@@ -227,11 +224,15 @@ export default function Results({ matches, category, pagina }) {
           className="boton"
           disabled={!canPreviousPage}
           onClick={e => {
-            const queryParams = new URLSearchParams(window.location.search)
+            const queryParams = new URLSearchParams(window.location.search);
             queryParams.set("page", pageIndex);
-            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
-              shallow: true
-            });
+            router.push(
+              router.asPath.split("?")[0] + "?" + queryParams.toString(),
+              undefined,
+              {
+                shallow: true
+              }
+            );
             previousPage();
           }}
           style={{ margin: 0, marginRight: "10px" }}
@@ -250,11 +251,15 @@ export default function Results({ matches, category, pagina }) {
           className="boton"
           disabled={!canNextPage}
           onClick={e => {
-            const queryParams = new URLSearchParams(window.location.search)
+            const queryParams = new URLSearchParams(window.location.search);
             queryParams.set("page", pageIndex + 2);
-            router.push(router.asPath.split("?")[0] + "?" + queryParams.toString(), undefined, {
-              shallow: true
-            });
+            router.push(
+              router.asPath.split("?")[0] + "?" + queryParams.toString(),
+              undefined,
+              {
+                shallow: true
+              }
+            );
             nextPage();
           }}
           style={{ margin: 0, marginLeft: "10px" }}

@@ -4,6 +4,9 @@ import { getTeamLogo } from "../utils/Utils";
 import theme from "../styles/autocompletePlayers.module.css";
 
 export default function AutocompleteSteamIDs(props) {
+  const [value, setValue] = useState(props.defaultValue);
+  const [suggestions, setSuggestions] = useState([]);
+
   let players = [];
   for (let i in props.players) {
     players.push({
@@ -61,9 +64,6 @@ export default function AutocompleteSteamIDs(props) {
       </div>
     </div>
   );
-
-  const [value, setValue] = useState(props.defaultValue);
-  const [suggestions, setSuggestions] = useState([]);
 
   const onChange = (event, { newValue }) => {
     setValue(newValue);

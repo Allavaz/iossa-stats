@@ -1,20 +1,14 @@
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faTimesCircle
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DateTime } from "luxon";
-import { useMemo } from "react";
+import AutocompleteTeams from "./autocompleteTeams";
 
-export default function DateTimeEditor(props) {
-  function formatAndSendDate(date) {
-    let dt = DateTime.fromISO(date);
-    props.onChangeDate(dt.toUTC().toString());
-    props.setEditing(null);
-  }
-
-  const dt = useMemo(() => DateTime.fromISO(props.date), [props.date]);
-
+export default function TeamNameEditor(props) {
+  let s = props.side === "home" ? 0 : 1;
+  const [value, setValue] = useState(props.teams[s].teamname);
   return (
     <div
       style={{
@@ -23,30 +17,26 @@ export default function DateTimeEditor(props) {
         alignItems: "center"
       }}
     >
-      <div style={{ flex: 1 }}></div>
       <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-        <input
-          id="inputDate"
-          type="datetime-local"
-          style={{ width: "25ch" }}
-          defaultValue={dt.toFormat("y-LL-dd'T'HH:mm")}
-        ></input>
+        <AutocompleteTeams
+          defaultValue={props.teams[s].teamname}
+          setValue={setValue}
+          side={props.side}
+        ></AutocompleteTeams>
       </div>
       <div style={{ flex: 1 }}>
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "space-between",
-            alignItems: "center",
-            width: "30px"
+            height: "30px"
           }}
         >
           <FontAwesomeIcon
             icon={faCheckCircle}
             style={{ cursor: "pointer" }}
-            onClick={e =>
-              formatAndSendDate(document.getElementById("inputDate").value)
-            }
+            onClick={e => props.onChangeTeam(value, props.side)}
           ></FontAwesomeIcon>
           <FontAwesomeIcon
             icon={faTimesCircle}

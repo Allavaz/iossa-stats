@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,9 +7,6 @@ import MatchIndivStatsEditor from "./matchIndivStatsEditor";
 import { secondsToMinutes } from "../lib/Utils";
 
 export default function MatchIndividualStats(props) {
-  const [playerHovering, setPlayerHovering] = useState(-1);
-  const [hovering, setHovering] = useState(false);
-
   function onChangeIndivStats(player) {
     let oldsteamid;
     if (
@@ -25,8 +22,6 @@ export default function MatchIndividualStats(props) {
       oldsteamid
     );
     props.setEditing(null);
-    setPlayerHovering(-1);
-    setHovering(false);
   }
 
   function onRemovePlayer(index) {
@@ -81,89 +76,59 @@ export default function MatchIndividualStats(props) {
         Header: "Jugador",
         accessor: "info.name",
         sticky: "left",
-        width: 120,
-        Cell: row => {
-          if (props.editable) {
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-                onMouseOver={e => setPlayerHovering(row.row.index)}
-                onMouseOut={e => setPlayerHovering(-1)}
-              >
-                <div style={{ flex: 1 }}>
-                  <div style={{ width: "30px" }}></div>
-                </div>
-                <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-                  <Link href={"/jugador/" + row.row.original.info.steam_id}>
-                    <a>{row.row.original.info.name}</a>
-                  </Link>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "30px",
-                      opacity: playerHovering === row.row.index ? "100%" : "0%"
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      style={{ cursor: "pointer" }}
-                      onClick={e =>
-                        props.setEditing({
-                          player: row.row.index,
-                          side: props.side
-                        })
-                      }
-                    />
-                    <FontAwesomeIcon
-                      icon={faTrashAlt}
-                      style={{ cursor: "pointer" }}
-                      onClick={e => onRemovePlayer(row.row.index)}
-                    />
-                  </div>
-                </div>
-              </div>
-            );
-          } else {
-            return (
-              <Link href={"/jugador/" + row.row.original.info.steam_id}>
-                <a>{row.row.original.info.name}</a>
-              </Link>
-            );
-          }
-        }
+        Cell: row => (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              columnGap: "5px"
+            }}
+          >
+            <Link href={"/jugador/" + row.row.original.info.steam_id}>
+              <a>{row.row.original.info.name}</a>
+            </Link>
+            {props.editable && (
+              <>
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    props.setEditing({
+                      player: row.row.index,
+                      side: props.side
+                    })
+                  }
+                />
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => onRemovePlayer(row.row.index)}
+                />
+              </>
+            )}
+          </div>
+        )
       },
       {
         Header: "Pos.",
-        accessor: "statistics.positions[0].position",
-        width: 50
+        accessor: "statistics.positions[0].position"
       },
       {
         Header: "Goles",
-        accessor: "statistics.goals",
-        width: 70
+        accessor: "statistics.goals"
       },
       {
         Header: "Asistencias",
-        accessor: "statistics.assists",
-        width: 100
+        accessor: "statistics.assists"
       },
       {
         Header: "Segundas Asistencias",
-        accessor: "statistics.secondassists",
-        width: 130
+        accessor: "statistics.secondassists"
       },
       {
         Header: "Tiros (al Arco)",
         accessor: "statistics.shotsontarget",
-        width: 130,
         Cell: row => {
           return (
             row.row.original.statistics.shots +
@@ -176,7 +141,6 @@ export default function MatchIndividualStats(props) {
       {
         Header: "Pases (Completados)",
         accessor: "statistics.passes",
-        width: 160,
         Cell: row => {
           return (
             row.row.original.statistics.passes +
@@ -200,23 +164,19 @@ export default function MatchIndividualStats(props) {
                   row.row.original.statistics.passes) *
                   100
               ) + "%";
-        },
-        width: 150
+        }
       },
       {
         Header: "Pases Clave",
-        accessor: "statistics.keypasses",
-        width: 130
+        accessor: "statistics.keypasses"
       },
       {
         Header: "Intercepciones",
-        accessor: "statistics.interceptions",
-        width: 130
+        accessor: "statistics.interceptions"
       },
       {
         Header: "Atajadas (Sin Rebote)",
         accessor: "statistics.savescaught",
-        width: 180,
         Cell: row => {
           return (
             row.row.original.statistics.saves +
@@ -228,33 +188,27 @@ export default function MatchIndividualStats(props) {
       },
       {
         Header: "Faltas",
-        accessor: "statistics.fouls",
-        width: 80
+        accessor: "statistics.fouls"
       },
       {
         Header: "Tarjetas Amarillas",
-        accessor: "statistics.yellowcards",
-        width: 150
+        accessor: "statistics.yellowcards"
       },
       {
         Header: "Tarjetas Rojas",
-        accessor: "statistics.redcards",
-        width: 130
+        accessor: "statistics.redcards"
       },
       {
         Header: "Goles en Contra",
-        accessor: "statistics.owngoals",
-        width: 130
+        accessor: "statistics.owngoals"
       },
       {
         Header: "Offsides",
-        accessor: "statistics.offsides",
-        width: 80
+        accessor: "statistics.offsides"
       },
       {
         Header: "Distancia Recorrida",
         accessor: "statistics.distancecovered",
-        width: 150,
         Cell: row => {
           return (
             Math.round(row.row.original.statistics.distancecovered) / 1000 +
@@ -265,35 +219,29 @@ export default function MatchIndividualStats(props) {
       {
         Header: "Posesión",
         accessor: "statistics.possession",
-        width: 80,
         Cell: row => {
           return Math.round(row.row.original.statistics.possession) + "%";
         }
       },
       {
         Header: "Córners",
-        accessor: "statistics.corners",
-        width: 80
+        accessor: "statistics.corners"
       },
       {
         Header: "Laterales",
-        accessor: "statistics.throwins",
-        width: 90
+        accessor: "statistics.throwins"
       },
       {
         Header: "Penales",
-        accessor: "statistics.penalties",
-        width: 80
+        accessor: "statistics.penalties"
       },
       {
         Header: "Tiros Libres",
-        accessor: "statistics.freekicks",
-        width: 110
+        accessor: "statistics.freekicks"
       },
       {
         Header: "Tackles (Completados)",
         accessor: "statistics.tacklescompleted",
-        width: 180,
         Cell: row => {
           return (
             row.row.original.statistics.tackles +
@@ -305,31 +253,27 @@ export default function MatchIndividualStats(props) {
       },
       {
         Header: "Faltas Sufridas",
-        accessor: "statistics.foulssuffered",
-        width: 120
+        accessor: "statistics.foulssuffered"
       },
       {
         Header: "Saques de Arco",
-        accessor: "statistics.goalkicks",
-        width: 130
+        accessor: "statistics.goalkicks"
       },
       {
         Header: "Goles Recibidos",
-        accessor: "statistics.goalsconceded",
-        width: 130
+        accessor: "statistics.goalsconceded"
       },
       {
         Header: "Ocasiones Creadas",
-        accessor: "statistics.chancescreated",
-        width: 130
+        accessor: "statistics.chancescreated"
       },
       {
-        Header: 'Tiempo Jugado',
+        Header: "Tiempo Jugado",
         accessor: "statistics.secondsplayed",
         Cell: row => secondsToMinutes(row.row.original.statistics.secondsplayed)
       }
     ],
-    [playerHovering, props.editable]
+    [props.editable]
   );
 
   const data = useMemo(() => props.players, [props.players]);
@@ -339,15 +283,7 @@ export default function MatchIndividualStats(props) {
     tableInstance;
 
   return (
-    <div
-      onMouseOver={e => {
-        setHovering(true);
-      }}
-      onMouseOut={e => {
-        setHovering(false);
-        setPlayerHovering(-1);
-      }}
-    >
+    <div>
       <div style={{ display: "flex", alignItems: "center" }}>
         {props.editing &&
         typeof props.editing.player !== "undefined" &&
@@ -372,7 +308,6 @@ export default function MatchIndividualStats(props) {
             style={{
               marginLeft: "5px",
               marginBottom: "2px",
-              opacity: hovering ? "100%" : "0%",
               cursor: "pointer"
             }}
             onClick={e => {

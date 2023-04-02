@@ -1,5 +1,5 @@
 import { getTeamLogo, getTeamShortname, fecha } from "../utils/Utils";
-import MatchEvent from "./matchEvent";
+import MatchEventComponent from "./matchEvent";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,60 +13,91 @@ import DateTimeEditor from "./dateTimeEditor";
 import TeamNameEditor from "./teamNameEditor";
 import ScoreEditor from "./scoreEditor";
 import MatchEventEditor from "./matchEventEditor";
+import { Event, Match, MatchEvent, Player } from "../types";
 
-export default function MatchCard(props) {
-  const [scoreHovering, setScoreHovering] = useState(false);
-  const [dateHovering, setDateHovering] = useState(false);
-  const [homeTeamNameHovering, setHomeTeamNameHovering] = useState(false);
-  const [awayTeamNameHovering, setAwayTeamNameHovering] = useState(false);
-  const [torneoHovering, setTorneoHovering] = useState(false);
+export default function MatchCard({
+  data,
+  editing,
+  editable,
+  players,
+  loading,
+  setEditing,
+  changeTorneo,
+  changeDate,
+  changeTeam,
+  changeScore,
+  changeEvents,
+  create,
+  disableUndo,
+  dropFile,
+  updateMatch,
+  deleteMatch,
+  exportMatch,
+  restartEditing,
+  undo
+}: {
+  data: Match;
+  editable: boolean;
+  players: Player[];
+  editing: any;
+  loading: boolean;
+  setEditing: (editing: any) => void;
+  changeTorneo: (newTorneo: string) => void;
+  changeDate: (newDate: string) => void;
+  changeTeam: (newTeam: string, side: "home" | "away") => void;
+  changeScore: (home: number, away: number) => void;
+  changeEvents: (matchEvents: MatchEvent[]) => void;
+  create: boolean;
+  disableUndo: boolean;
+  dropFile: (ev: React.DragEvent) => void;
+  updateMatch: (password: string) => void;
+  deleteMatch: (password: string) => void;
+  exportMatch: () => void;
+  restartEditing: () => void;
+  undo: () => void;
+}) {
   const [dragging, setDragging] = useState(false);
 
-  function onChangeTorneo(value) {
-    props.changeTorneo(value);
-    props.setEditing(null);
-    setTorneoHovering(false);
+  function onChangeTorneo(value: string) {
+    changeTorneo(value);
+    setEditing(null);
   }
 
-  function onChangeDate(date) {
-    props.changeDate(date);
-    setDateHovering(false);
+  function onChangeDate(date: string) {
+    changeDate(date);
   }
 
-  function onChangeTeam(value, side) {
-    props.changeTeam(value, side);
-    props.setEditing(null);
-    setHomeTeamNameHovering(false);
-    setAwayTeamNameHovering(false);
+  function onChangeTeam(newTeam: string, side: "home" | "away") {
+    changeTeam(newTeam, side);
+    setEditing(null);
   }
 
-  function onChangeScore(home, away) {
-    props.changeScore(home, away);
-    setScoreHovering(false);
+  function onChangeScore(home: number, away: number) {
+    changeScore(home, away);
   }
 
   function onAddEvent(side) {
-    props.setEditing({ event: props.data.matchevents.length, new: side });
+    setEditing({ event: data.matchevents.length, new: side });
   }
 
   function onChangeEvent(
-    event,
-    playerName,
-    playerSteamId,
-    playerName2,
-    playerSteamId2,
-    playerName3,
-    playerSteamId3,
-    minute,
-    index
+    event: Event,
+    playerName: string,
+    playerSteamId: string,
+    playerName2: string,
+    playerSteamId2: string,
+    playerName3: string,
+    playerSteamId3: string,
+    minute: number,
+    index: number
   ) {
-    let matchEvents = JSON.parse(JSON.stringify(props.data.matchevents));
-    if (props.editing.new) {
-      let team = props.editing.new;
+    let matchEvents = JSON.parse(JSON.stringify(data.matchevents));
+    if (editing.new) {
+      let team = editing.new;
       if (event === "OWN GOAL") {
-        if (props.editing.new === "home") {
+        if (editing.new === "home") {
           team = "away";
-        } else if (props.editing.new === "away") {
+        } else if (editing.new === "away") {
           team = "home";
         }
       }
@@ -137,13 +168,13 @@ export default function MatchCard(props) {
       }
     }
 
-    props.changeEvents(matchEvents);
+    changeEvents(matchEvents);
   }
 
   function onRemoveEvent(index) {
-    let matchEvents = JSON.parse(JSON.stringify(props.data.matchevents));
+    let matchEvents = JSON.parse(JSON.stringify(data.matchevents));
     matchEvents.splice(index, 1);
-    props.changeEvents(matchEvents);
+    changeEvents(matchEvents);
   }
 
   function newItem(side) {
@@ -154,20 +185,20 @@ export default function MatchCard(props) {
       player1SteamId: "",
       player2SteamId: "",
       second:
-        props.data.matchevents.length === 0
+        data.matchevents.length === 0
           ? 0
-          : props.data.matchevents[props.data.matchevents.length - 1].second,
+          : data.matchevents[data.matchevents.length - 1].second,
       team: side
     };
   }
 
   return (
     <div className="whitespace">
-      {props.editing === "torneo" ? (
+      {editing === "torneo" ? (
         <TorneoEditor
-          torneo={props.data.torneo}
+          torneo={data.torneo}
           onChangeTorneo={onChangeTorneo}
-          setEditing={props.setEditing}
+          setEditing={setEditing}
         />
       ) : (
         <div
@@ -178,10 +209,8 @@ export default function MatchCard(props) {
             marginTop: "10px",
             height: "22px"
           }}
-          onMouseOver={e => setTorneoHovering(true)}
-          onMouseOut={e => setTorneoHovering(false)}
         >
-          {props.editable ? <div style={{ flex: 1 }}></div> : null}
+          {editable && <div style={{ flex: 1 }} />}
           <div
             style={{
               color: "var(--header-color)",
@@ -190,10 +219,10 @@ export default function MatchCard(props) {
               marginRight: "5px"
             }}
           >
-            {props.data.torneo}
+            {data.torneo}
           </div>
-          {props.editable ? (
-            <div style={{ flex: 1, opacity: torneoHovering ? "100%" : "0%" }}>
+          {editable && (
+            <div style={{ flex: 1 }}>
               <FontAwesomeIcon
                 icon={faEdit}
                 style={{
@@ -202,46 +231,35 @@ export default function MatchCard(props) {
                   color: "var(--normal-text-color)"
                 }}
                 onClick={e => {
-                  setHomeTeamNameHovering(false);
-                  setAwayTeamNameHovering(false);
-                  setDateHovering(false);
-                  setScoreHovering(false);
-                  setTorneoHovering(false);
-                  props.setEditing("torneo");
+                  setEditing("torneo");
                 }}
               />
             </div>
-          ) : null}
+          )}
         </div>
       )}
-      {props.editing && typeof props.editing.event !== "undefined" ? (
+      {editing && typeof editing.event !== "undefined" ? (
         <MatchEventEditor
           item={
-            props.editing.new
-              ? newItem(props.editing.new)
-              : props.data.matchevents[props.editing.event]
+            editing.new ? newItem(editing.new) : data.matchevents[editing.event]
           }
-          index={
-            props.editing.new
-              ? props.data.matchevents.length
-              : props.editing.event
-          }
-          players={props.players}
+          index={editing.new ? data.matchevents.length : editing.event}
+          players={players}
           onChangeEvent={onChangeEvent}
-          editing={props.editing}
-          setEditing={props.setEditing}
+          editing={editing}
+          setEditing={setEditing}
         />
       ) : null}
       <table className="resulttable">
         <tbody>
           <tr>
             <td>
-              {props.editing === "homeTeamName" ? (
+              {editing === "homeTeamName" ? (
                 <TeamNameEditor
-                  teams={props.data.teams}
+                  teams={data.teams}
                   side="home"
                   onChangeTeam={onChangeTeam}
-                  setEditing={props.setEditing}
+                  setEditing={setEditing}
                 />
               ) : (
                 <div
@@ -250,26 +268,17 @@ export default function MatchCard(props) {
                     justifyContent: "center",
                     alignItems: "center"
                   }}
-                  onMouseOver={e => setHomeTeamNameHovering(true)}
-                  onMouseOut={e => setHomeTeamNameHovering(false)}
                 >
-                  {props.editable ? <div style={{ flex: 1 }}></div> : null}
                   <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                     <h2>
-                      <div id="teamname">{props.data.teams[0].teamname}</div>
+                      <div id="teamname">{data.teams[0].teamname}</div>
                       <div id="shortname">
-                        {getTeamShortname(props.data.teams[0].teamname)}
+                        {getTeamShortname(data.teams[0].teamname)}
                       </div>
                     </h2>
                   </div>
-                  {props.editable ? (
-                    <div
-                      style={{
-                        flex: 1,
-                        textAlign: "left",
-                        opacity: homeTeamNameHovering ? "100%" : "0%"
-                      }}
-                    >
+                  {editable && (
+                    <div>
                       <FontAwesomeIcon
                         icon={faEdit}
                         style={{
@@ -278,24 +287,20 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          setHomeTeamNameHovering(false);
-                          setDateHovering(false);
-                          setScoreHovering(false);
-                          setTorneoHovering(false);
-                          props.setEditing("homeTeamName");
+                          setEditing("homeTeamName");
                         }}
                       />
                     </div>
-                  ) : null}
+                  )}
                 </div>
               )}
             </td>
             <td>
-              {props.editing === "date" ? (
+              {editing === "date" ? (
                 <DateTimeEditor
-                  date={props.data.fecha}
+                  date={data.fecha}
                   onChangeDate={onChangeDate}
-                  setEditing={props.setEditing}
+                  setEditing={setEditing}
                 />
               ) : (
                 <div
@@ -304,10 +309,8 @@ export default function MatchCard(props) {
                     justifyContent: "center",
                     alignItems: "center"
                   }}
-                  onMouseOver={e => setDateHovering(true)}
-                  onMouseOut={e => setDateHovering(false)}
                 >
-                  {props.editable ? <div style={{ flex: 1 }}></div> : null}
+                  {editable ? <div style={{ flex: 1 }}></div> : null}
                   <div
                     style={{
                       marginLeft: "5px",
@@ -315,14 +318,13 @@ export default function MatchCard(props) {
                       color: "var(--header-color)"
                     }}
                   >
-                    {fecha(props.data.fecha)}
+                    {fecha(data.fecha)}
                   </div>
-                  {props.editable ? (
+                  {editable ? (
                     <div
                       style={{
                         flex: 1,
-                        textAlign: "left",
-                        opacity: dateHovering ? "100%" : "0%"
+                        textAlign: "left"
                       }}
                     >
                       <FontAwesomeIcon
@@ -332,7 +334,7 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          props.setEditing("date");
+                          setEditing("date");
                         }}
                       />
                     </div>
@@ -341,12 +343,12 @@ export default function MatchCard(props) {
               )}
             </td>
             <td>
-              {props.editing === "awayTeamName" ? (
+              {editing === "awayTeamName" ? (
                 <TeamNameEditor
-                  teams={props.data.teams}
+                  teams={data.teams}
                   side="away"
                   onChangeTeam={onChangeTeam}
-                  setEditing={props.setEditing}
+                  setEditing={setEditing}
                 />
               ) : (
                 <div
@@ -355,26 +357,17 @@ export default function MatchCard(props) {
                     justifyContent: "center",
                     alignItems: "center"
                   }}
-                  onMouseOver={e => setAwayTeamNameHovering(true)}
-                  onMouseOut={e => setAwayTeamNameHovering(false)}
                 >
-                  {props.editable ? <div style={{ flex: 1 }}></div> : null}
                   <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                     <h2>
-                      <div id="teamname">{props.data.teams[1].teamname}</div>
+                      <div id="teamname">{data.teams[1].teamname}</div>
                       <div id="shortname">
-                        {getTeamShortname(props.data.teams[1].teamname)}
+                        {getTeamShortname(data.teams[1].teamname)}
                       </div>
                     </h2>
                   </div>
-                  {props.editable ? (
-                    <div
-                      style={{
-                        flex: 1,
-                        textAlign: "left",
-                        opacity: awayTeamNameHovering ? "100%" : "0%"
-                      }}
-                    >
+                  {editable ? (
+                    <div>
                       <FontAwesomeIcon
                         icon={faEdit}
                         style={{
@@ -382,12 +375,8 @@ export default function MatchCard(props) {
                           fontSize: "1.2em",
                           color: "var(--normal-text-color)"
                         }}
-                        onClick={e => {
-                          setHomeTeamNameHovering(false);
-                          setDateHovering(false);
-                          setScoreHovering(false);
-                          setTorneoHovering(false);
-                          props.setEditing("awayTeamName");
+                        onClick={() => {
+                          setEditing("awayTeamName");
                         }}
                       />
                     </div>
@@ -400,17 +389,17 @@ export default function MatchCard(props) {
             <td>
               <img
                 className="bigClubLogo"
-                alt={props.data.teams[0].teamname}
-                src={getTeamLogo(props.data.teams[0].teamname)}
+                alt={data.teams[0].teamname}
+                src={getTeamLogo(data.teams[0].teamname)}
               ></img>
             </td>
             <td>
-              {props.editing === "score" ? (
+              {editing === "score" ? (
                 <ScoreEditor
-                  home={props.data.teams[0].score}
-                  away={props.data.teams[1].score}
+                  home={data.teams[0].score}
+                  away={data.teams[1].score}
                   onChangeScore={onChangeScore}
-                  setEditing={props.setEditing}
+                  setEditing={setEditing}
                 />
               ) : (
                 <div
@@ -419,21 +408,18 @@ export default function MatchCard(props) {
                     justifyContent: "center",
                     alignItems: "center"
                   }}
-                  onMouseOver={e => setScoreHovering(true)}
-                  onMouseOut={e => setScoreHovering(false)}
                 >
-                  {props.editable ? <div style={{ flex: 1 }}></div> : null}
+                  {editable ? <div style={{ flex: 1 }}></div> : null}
                   <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                     <h2 id="result">
-                      {props.data.teams[0].score} - {props.data.teams[1].score}
+                      {data.teams[0].score} - {data.teams[1].score}
                     </h2>
                   </div>
-                  {props.editable ? (
+                  {editable ? (
                     <div
                       style={{
                         flex: 1,
-                        textAlign: "left",
-                        opacity: scoreHovering ? "100%" : "0%"
+                        textAlign: "left"
                       }}
                     >
                       <FontAwesomeIcon
@@ -444,11 +430,7 @@ export default function MatchCard(props) {
                           color: "var(--normal-text-color)"
                         }}
                         onClick={e => {
-                          setDateHovering(false);
-                          setTorneoHovering(false);
-                          setHomeTeamNameHovering(false);
-                          setAwayTeamNameHovering(false);
-                          props.setEditing("score");
+                          setEditing("score");
                         }}
                       />
                     </div>
@@ -459,38 +441,32 @@ export default function MatchCard(props) {
             <td>
               <img
                 className="bigClubLogo"
-                alt={props.data.teams[1].teamname}
-                src={getTeamLogo(props.data.teams[1].teamname)}
+                alt={data.teams[1].teamname}
+                src={getTeamLogo(data.teams[1].teamname)}
               ></img>
             </td>
           </tr>
           <tr id="eventslist">
             <td>
               <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
-                {props.data.matchevents.map((item, index) => (
-                  <MatchEvent
+                {data.matchevents.map((item, index) => (
+                  <MatchEventComponent
                     item={item}
                     key={index}
                     side="home"
                     index={index}
-                    editable={props.editable}
+                    editable={editable}
                     onRemoveEvent={onRemoveEvent}
-                    setScoreHovering={setScoreHovering}
-                    setEditing={props.setEditing}
+                    setEditing={setEditing}
                   />
                 ))}
-                {props.editable ? (
+                {editable ? (
                   <li>
                     <FontAwesomeIcon
                       icon={faPlus}
                       style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("home");
-                        setScoreHovering(false);
-                        setHomeTeamNameHovering(false);
-                        setAwayTeamNameHovering(false);
-                        setDateHovering(false);
-                        setTorneoHovering(false);
                       }}
                     />
                   </li>
@@ -498,7 +474,7 @@ export default function MatchCard(props) {
               </ul>
             </td>
             <td>
-              {props.editable && (
+              {editable && (
                 <div
                   style={{
                     display: "flex",
@@ -508,7 +484,7 @@ export default function MatchCard(props) {
                     rowGap: "10px"
                   }}
                 >
-                  {props.create && (
+                  {create && (
                     <div
                       style={{
                         padding: "20px",
@@ -526,7 +502,7 @@ export default function MatchCard(props) {
                       onDragLeave={e => setDragging(false)}
                       onDrop={ev => {
                         setDragging(false);
-                        props.dropFile(ev);
+                        dropFile(ev);
                       }}
                       onDragOver={ev => {
                         ev.preventDefault();
@@ -544,7 +520,7 @@ export default function MatchCard(props) {
                   )}
                   <input
                     id="password"
-                    disabled={props.loading}
+                    disabled={loading}
                     type="password"
                     placeholder="Contraseña"
                     style={{
@@ -555,22 +531,30 @@ export default function MatchCard(props) {
                   ></input>
                   <button
                     className="boton"
-                    disabled={props.loading}
+                    disabled={loading}
                     onClick={e => {
-                      props.updateMatch(
-                        document.getElementById("password").value
+                      updateMatch(
+                        (
+                          document.getElementById(
+                            "password"
+                          ) as HTMLInputElement
+                        ).value
                       );
                     }}
                   >
-                    {props.create ? "Subir partido" : "Guardar cambios"}
+                    {create ? "Subir partido" : "Guardar cambios"}
                   </button>
-                  {!props.create && (
+                  {!create && (
                     <button
                       className="boton"
-                      disabled={props.loading}
+                      disabled={loading}
                       onClick={e => {
-                        props.deleteMatch(
-                          document.getElementById("password").value
+                        deleteMatch(
+                          (
+                            document.getElementById(
+                              "password"
+                            ) as HTMLInputElement
+                          ).value
                         );
                       }}
                     >
@@ -579,23 +563,18 @@ export default function MatchCard(props) {
                   )}
                   <button
                     className="boton"
-                    disabled={props.loading}
-                    onClick={e => props.exportMatch()}
+                    disabled={loading}
+                    onClick={e => exportMatch()}
                   >
                     Descargar JSON
                   </button>
-                  {!props.create && (
+                  {!create && (
                     <button
                       className="boton"
-                      disabled={props.loading}
+                      disabled={loading}
                       onClick={e => {
-                        props.restartEditing();
-                        props.setEditing(null);
-                        setScoreHovering(false);
-                        setDateHovering(false);
-                        setHomeTeamNameHovering(false);
-                        setAwayTeamNameHovering(false);
-                        setTorneoHovering(false);
+                        restartEditing();
+                        setEditing(null);
                       }}
                     >
                       Reiniciar edición
@@ -603,12 +582,12 @@ export default function MatchCard(props) {
                   )}
                   <button
                     className="boton"
-                    onClick={e => props.undo()}
-                    disabled={props.disableUndo}
+                    onClick={e => undo()}
+                    disabled={disableUndo}
                   >
                     Deshacer
                   </button>
-                  {props.loading ? (
+                  {loading ? (
                     <FontAwesomeIcon
                       icon={faSpinner}
                       spin
@@ -621,30 +600,24 @@ export default function MatchCard(props) {
             </td>
             <td>
               <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
-                {props.data.matchevents.map((item, index) => (
-                  <MatchEvent
+                {data.matchevents.map((item: MatchEvent, index) => (
+                  <MatchEventComponent
                     item={item}
                     key={index}
                     side="away"
                     index={index}
-                    editable={props.editable}
+                    editable={editable}
                     onRemoveEvent={onRemoveEvent}
-                    setScoreHovering={setScoreHovering}
-                    setEditing={props.setEditing}
+                    setEditing={setEditing}
                   />
                 ))}
-                {props.editable ? (
+                {editable ? (
                   <li>
                     <FontAwesomeIcon
                       icon={faPlus}
                       style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("away");
-                        setScoreHovering(false);
-                        setHomeTeamNameHovering(false);
-                        setAwayTeamNameHovering(false);
-                        setDateHovering(false);
-                        setTorneoHovering(false);
                       }}
                     />
                   </li>

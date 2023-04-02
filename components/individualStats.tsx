@@ -14,7 +14,6 @@ export default function IndividualStats({ players, category, pagina }) {
         Header: "Jugador",
         accessor: "name",
         fixed: "left",
-        width: 150,
         Cell: row => {
           return (
             <Link href={"/jugador/" + row.row.original._id}>
@@ -45,7 +44,6 @@ export default function IndividualStats({ players, category, pagina }) {
                 width="16px"
                 src={getTeamLogo(row.row.original.team)}
                 alt={row.row.original.team}
-                layout="fixed"
               />
               <div style={{ marginLeft: "5px" }}>{row.row.original.team}</div>
             </div>
@@ -54,28 +52,23 @@ export default function IndividualStats({ players, category, pagina }) {
       },
       {
         Header: "Partidos",
-        accessor: "matches",
-        width: 70
+        accessor: "matches"
       },
       {
         Header: "Goles",
-        accessor: "goals",
-        width: 70
+        accessor: "goals"
       },
       {
         Header: "Asistencias",
-        accessor: "assists",
-        width: 100
+        accessor: "assists"
       },
       {
         Header: "Segundas Asistencias",
-        accessor: "secondassists",
-        width: 130
+        accessor: "secondassists"
       },
       {
         Header: "Tiros (al Arco)",
         accessor: "shotsontarget",
-        width: 130,
         Cell: row => {
           return (
             row.row.original.shots + " (" + row.row.original.shotsontarget + ")"
@@ -85,7 +78,6 @@ export default function IndividualStats({ players, category, pagina }) {
       {
         Header: "Pases (Completados)",
         accessor: "passes",
-        width: 160,
         Cell: row => {
           return (
             row.row.original.passes +
@@ -97,8 +89,7 @@ export default function IndividualStats({ players, category, pagina }) {
       },
       {
         Header: "Pases Clave",
-        accessor: "keypasses",
-        width: 130
+        accessor: "keypasses"
       },
       {
         Header: "Precisión de Pases",
@@ -112,18 +103,15 @@ export default function IndividualStats({ players, category, pagina }) {
                 (row.row.original.passescompleted / row.row.original.passes) *
                   100
               ) + "%";
-        },
-        width: 150
+        }
       },
       {
         Header: "Intercepciones",
-        accessor: "interceptions",
-        width: 130
+        accessor: "interceptions"
       },
       {
         Header: "Atajadas (Sin Rebote)",
         accessor: "savescaught",
-        width: 180,
         Cell: row => {
           return (
             row.row.original.saves + " (" + row.row.original.savescaught + ")"
@@ -132,33 +120,27 @@ export default function IndividualStats({ players, category, pagina }) {
       },
       {
         Header: "Faltas",
-        accessor: "fouls",
-        width: 80
+        accessor: "fouls"
       },
       {
         Header: "Tarjetas Amarillas",
-        accessor: "yellowcards",
-        width: 150
+        accessor: "yellowcards"
       },
       {
         Header: "Tarjetas Rojas",
-        accessor: "redcards",
-        width: 130
+        accessor: "redcards"
       },
       {
         Header: "Goles en Contra",
-        accessor: "owngoals",
-        width: 130
+        accessor: "owngoals"
       },
       {
         Header: "Offsides",
-        accessor: "offsides",
-        width: 80
+        accessor: "offsides"
       },
       {
         Header: "Prom. Distancia Recorrida",
         accessor: "distancecovered",
-        width: 200,
         Cell: row => {
           return Math.round(row.row.original.distancecovered) / 1000 + " km";
         }
@@ -166,35 +148,29 @@ export default function IndividualStats({ players, category, pagina }) {
       {
         Header: "Prom. Posesión",
         accessor: "possession",
-        width: 130,
         Cell: row => {
           return Math.round(row.row.original.possession) + "%";
         }
       },
       {
         Header: "Córners",
-        accessor: "corners",
-        width: 80
+        accessor: "corners"
       },
       {
         Header: "Laterales",
-        accessor: "throwins",
-        width: 90
+        accessor: "throwins"
       },
       {
         Header: "Penales",
-        accessor: "penalties",
-        width: 80
+        accessor: "penalties"
       },
       {
         Header: "Tiros Libres",
-        accessor: "freekicks",
-        width: 110
+        accessor: "freekicks"
       },
       {
         Header: "Tackles (Completados)",
         accessor: "tacklescompleted",
-        width: 180,
         Cell: row => {
           return (
             row.row.original.tackles +
@@ -206,23 +182,19 @@ export default function IndividualStats({ players, category, pagina }) {
       },
       {
         Header: "Faltas Sufridas",
-        accessor: "foulssuffered",
-        width: 120
+        accessor: "foulssuffered"
       },
       {
         Header: "Saques de Arco",
-        accessor: "goalkicks",
-        width: 130
+        accessor: "goalkicks"
       },
       {
         Header: "Goles Recibidos",
-        accessor: "goalsconceded",
-        width: 130
+        accessor: "goalsconceded"
       },
       {
         Header: "Ocasiones Creadas",
-        accessor: "chancescreated",
-        width: 130
+        accessor: "chancescreated"
       },
       {
         Header: "Tiempo Jugado Total",
@@ -235,7 +207,7 @@ export default function IndividualStats({ players, category, pagina }) {
 
   const data = useMemo(() => players, [players]);
   const tableInstance = useTable(
-    { columns, data, initialState: { pageSize: 15 } },
+    { columns, data, initialState: { pageSize: 15, pageIndex: pagina } },
     useFilters,
     useSortBy,
     usePagination
@@ -257,10 +229,6 @@ export default function IndividualStats({ players, category, pagina }) {
     rows,
     state: { pageIndex, pageSize }
   } = tableInstance;
-
-  useEffect(() => {
-    gotoPage(pagina);
-  }, []);
 
   return (
     <>
@@ -421,7 +389,6 @@ export default function IndividualStats({ players, category, pagina }) {
                     border: 0,
                     borderBottom: "1px solid var(--table-border-color)",
                     borderRight: "1px solid var(--table-border-color)",
-                    borderBottom: "1px solid var(--table-border-color)",
                     zIndex: 2
                   }}
                 >

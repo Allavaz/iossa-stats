@@ -1,13 +1,14 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Challonge from "../../components/challonge";
 import Positions from "../../components/positions";
 import { getManyPositions } from "../../lib/getFromDB";
-import Head from "next/head";
-import Torneos from "../../utils/Torneos.json";
-import { useRouter } from "next/router";
 import temporadaActual from "../../utils/TemporadaActual";
-import { getTablas, getAllTemporadas, getChallonges } from "../../utils/Utils";
-import Challonge from "../../components/challonge";
+import Torneos from "../../utils/Torneos.json";
+import { getAllTemporadas, getChallonges, getTablas } from "../../utils/Utils";
+import { GetServerSideProps } from "next";
 
-function getCategory(arg) {
+function getCategory(arg: string) {
   if (arg === "all") {
     return "Totales";
   } else if (arg.startsWith("t")) {
@@ -25,7 +26,7 @@ function getCategory(arg) {
   }
 }
 
-function getTemporada(arg) {
+function getTemporada(arg: string) {
   if (arg.startsWith("t") || arg === "all" || arg === "selecciones") {
     return arg;
   } else {
@@ -38,19 +39,17 @@ function getTemporada(arg) {
     }
   }
   if (document.getElementById("selector")) {
-    let selector = document.getElementById("selector");
+    let selector = document.getElementById("selector") as HTMLSelectElement;
     for (let i in selector.options) {
       if (selector.options[i].value === arg) {
-        selector.selectedIndex = i;
+        selector.selectedIndex = parseInt(i);
       }
     }
   }
 }
 
-export async function getServerSideProps(context) {
-  let id;
-  if (context.params.id) id = context.params.id[0];
-  else id = temporadaActual();
+export const getServerSideProps: GetServerSideProps = async context => {
+  const id = context.params.id?.[0] || temporadaActual();
   if (getAllTemporadas().includes(id)) {
     let listaTablas = getTablas(id);
     let listaChallonges = getChallonges(id);
@@ -73,7 +72,7 @@ export async function getServerSideProps(context) {
   } else {
     return { notFound: true };
   }
-}
+};
 
 export default function Posiciones({
   tablas,
@@ -83,7 +82,7 @@ export default function Posiciones({
 }) {
   const router = useRouter();
 
-  function selectTemporada(id) {
+  function goToTemporada(id: string) {
     router.push("/torneos/" + id);
   }
 
@@ -108,7 +107,7 @@ export default function Posiciones({
       <select
         className="selector"
         defaultValue={temporada}
-        onChange={e => selectTemporada(e.target.value)}
+        onChange={e => goToTemporada(e.target.value)}
       >
         {Torneos.map((item, index) =>
           item.temporada === "all" ? null : (
@@ -126,14 +125,18 @@ export default function Posiciones({
         }}
       >
         {tablas.map(
-          (item, index) =>
+          item =>
             item.teams.length > 0 && (
-              <Positions key={index} teams={item.teams} header={item.name} />
+              <Positions
+                key={item.name}
+                teams={item.teams}
+                header={item.name}
+              />
             )
         )}
       </div>
-      {challonges.map((item, index) => (
-        <div key={index}>
+      {challonges.map(item => (
+        <div key={item.name}>
           <h3 style={{ marginBottom: 0 }}>{item.name.toUpperCase()}</h3>
           <Challonge id={item.challonge}></Challonge>
         </div>
