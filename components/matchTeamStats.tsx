@@ -58,7 +58,7 @@ export default function MatchTeamStats(props) {
                 height="16px"
                 alt={props.data.teams[0].teamname}
                 src={getTeamLogo(props.data.teams[0].teamname)}
-              ></img>
+              />
             </th>
             <th>
               <div
@@ -79,7 +79,7 @@ export default function MatchTeamStats(props) {
                 height="16px"
                 alt={props.data.teams[1].teamname}
                 src={getTeamLogo(props.data.teams[1].teamname)}
-              ></img>
+              />
             </th>
           </tr>
         </thead>

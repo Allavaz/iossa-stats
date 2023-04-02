@@ -1026,7 +1026,9 @@ export default function MatchPage({
               flexGrow: 9999
             }}
           >
-            <MatchTeamStats data={data} setEditing={setEditing} />
+            <MatchTeamStats
+              data={editable || create ? editableData.at(-1) : data}
+            />
             {(editableChallonge || (challonge && !(editable || create))) && (
               <>
                 <h3 style={{ marginBottom: 0 }}>{data.torneo.toUpperCase()}</h3>
