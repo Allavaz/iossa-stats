@@ -366,7 +366,6 @@ tr {
 
 .colCon {
   display: flex;
-  flex-wrap: wrap;
   max-width: 920px;
   column-gap: 20px;
 }
@@ -618,6 +617,12 @@ table tr td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 700px) {
+  .colCon {
+    flex-wrap: wrap;
+  }
 }
 
 @media only screen and (max-width: 390px) {

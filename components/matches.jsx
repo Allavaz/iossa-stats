@@ -6,10 +6,7 @@ export default function Matches({ matches }) {
   const router = useRouter();
 
   return (
-    <div
-      className="matchesContainer"
-      style={{ flexBasis: "595px", flexGrow: 9999 }}
-    >
+    <div className="matchesContainer">
       {matches.map((item, id, array) => (
         <div key={id}>
           <h3
