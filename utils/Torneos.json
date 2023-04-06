@@ -81,12 +81,10 @@
       },
       {
         "torneo": "Copa Intrazonal de Oro",
-        "challonge": "n9nei23x",
         "query": "izoro"
       },
       {
         "torneo": "Copa Intrazonal de Plata",
-        "challonge": "sxnc4n87",
         "query": "izplata"
       }
     ]
@@ -181,7 +179,8 @@
       },
       {
         "torneo": "Copa valencARc T11",
-        "query": "cvt11"
+        "query": "cvt11",
+        "challonge": "cvt11"
       },
       {
         "torneo": "Promoción D1/D2 T11"
