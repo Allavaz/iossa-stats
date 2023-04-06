@@ -50,7 +50,11 @@ export default function MatchTeamStats(props) {
 
   return (
     <div className="divDataTable" id="divStatsTable" style={props.style}>
-      <table className="dataTable" id="teamstatstable">
+      <table
+        className="dataTable"
+        id="teamstatstable"
+        style={{ tableLayout: "auto" }}
+      >
         <thead>
           <tr>
             <th>
