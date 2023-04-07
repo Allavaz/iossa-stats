@@ -4,9 +4,10 @@ import { getSteamInfo } from "../../lib/getFromSteam";
 import PlayerStats from "../../utils/PlayerStats";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Playstyle from "../../components/playstyle";
+import PlayerTeamsTable from "../../components/playerTeams";
 import EfficiencyLine from "../../components/efficiencyLine";
 import PlayerMatches from "../../components/playerMatches";
+import PlayerTeams from "../../utils/PlayerTeams";
 
 export async function getServerSideProps(context) {
   let playerMatches = await getPlayerMatches(context.params.id[0]);
@@ -21,14 +22,19 @@ export async function getServerSideProps(context) {
     context.params.id[0]
   );
   let steamInfo = await getSteamInfo(context.params.id[0]);
+  let playerTeams = PlayerTeams(
+    context.params.id[0],
+    playerMatches.sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+  );
   if (!steamInfo) return { notFound: true };
   return {
     props: {
       playerMatches,
-      statsAll: statsAll,
-      statsLast15: statsLast15,
-      statsLast10: statsLast10,
-      steamInfo: steamInfo
+      statsAll,
+      statsLast15,
+      statsLast10,
+      steamInfo,
+      playerTeams
     }
   };
 }
@@ -38,7 +44,8 @@ export default function Player({
   statsAll,
   statsLast15,
   statsLast10,
-  steamInfo
+  steamInfo,
+  playerTeams
 }) {
   const [date, setDate] = useState(new Date());
 
@@ -79,11 +86,12 @@ export default function Player({
           display: "flex",
           flexWrap: "wrap",
           alignContent: "stretch",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          columnGap: "10px"
         }}
         suppressHydrationWarning={true}
       >
-        {typeof window !== "undefined" && <Playstyle statsAll={statsAll} />}
+        <PlayerTeamsTable teams={playerTeams} />
         {typeof window !== "undefined" && (
           <EfficiencyLine
             playerMatches={playerMatches.slice(0, 10)}
@@ -94,10 +102,7 @@ export default function Player({
           />
         )}
       </div>
-      <PlayerMatches
-        matches={playerMatches}
-        id={statsAll.steamid}
-      />
+      <PlayerMatches matches={playerMatches} id={statsAll.steamid} />
     </>
   );
 }

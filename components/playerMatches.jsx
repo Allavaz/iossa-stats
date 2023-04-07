@@ -173,7 +173,7 @@ export default function PlayerMatches({ matches, id }) {
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center", marginTop: "-15px" }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <h3 style={{ display: "inline", marginRight: "10px" }}>
           ÚLTIMOS RESULTADOS
         </h3>
