@@ -6,7 +6,7 @@ export default async function jugador(
   res: NextApiResponse
 ) {
   if (req.method !== "GET") {
-    return res.status(404).end("404");
+    return res.status(400).end("400: Bad request");
   }
 
   if (req.query.args.length > 0) {
@@ -18,7 +18,7 @@ export default async function jugador(
       if (player) {
         return res.json(player);
       } else {
-        return res.status(404).end("404");
+        return res.status(404).end("404: Player info not found");
       }
     } catch (err) {
       console.error(err);
