@@ -6,7 +6,10 @@ import queries from "./aggregations/queries";
 import top10goals from "./aggregations/top10Goals";
 import top10assists from "./aggregations/top10Assists";
 import top10rusticos from "./aggregations/top10Rusticos";
+import player from "./aggregations/player";
 import { Match } from "../types";
+
+const OBJECT_ID_LENGTH = 24;
 
 function serializableMatch(doc) {
   return {
@@ -181,5 +184,29 @@ export async function getPlayerMatches(id) {
     return docs.map(doc => serializableMatch(doc));
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function getPlayer(steam_id: string, arg: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    if (arg.length === OBJECT_ID_LENGTH) {
+      const o_id = new ObjectId(arg);
+      let docs = await db
+        .collection(process.env.DB_COLLECTION)
+        .aggregate([{ $match: { _id: o_id } }, ...player(steam_id)])
+        .toArray();
+      return docs[0];
+    } else {
+      let docs = await db
+        .collection(process.env.DB_COLLECTION)
+        .aggregate([{ $match: queries(arg) }, ...player(steam_id)])
+        .toArray();
+      return docs[0];
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
   }
 }
