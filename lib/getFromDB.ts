@@ -100,22 +100,28 @@ export async function getMatch(id: string) {
   }
 }
 
-export async function getPlayers(id) {
+export async function getPlayers(arg: string) {
   try {
     const client = await clientPromise;
     const db = client.db();
     let docs;
-    if (id === "mini") {
+    if (arg === "mini") {
       // returns only steamid, name and team
       docs = await db
         .collection(process.env.DB_COLLECTION)
         .aggregate(players("all"))
         .project({ name: true, team: true })
         .toArray();
+    } else if (arg.length === OBJECT_ID_LENGTH) {
+      const o_id = new ObjectId(arg);
+      docs = await db
+        .collection(process.env.DB_COLLECTION)
+        .aggregate([{ $match: { _id: o_id } }, ...players("all")])
+        .toArray();
     } else {
       docs = await db
         .collection(process.env.DB_COLLECTION)
-        .aggregate(players(id))
+        .aggregate(players(arg))
         .toArray();
     }
     return docs;
