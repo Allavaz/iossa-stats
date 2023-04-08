@@ -55,6 +55,18 @@ export default function IndividualStats({ players, category, pagina }) {
         accessor: "matches"
       },
       {
+        Header: "Victorias",
+        accessor: "wins"
+      },
+      {
+        Header: "Derrotas",
+        accessor: "losses"
+      },
+      {
+        Header: "Empates",
+        accessor: "draws"
+      },
+      {
         Header: "Goles",
         accessor: "goals"
       },
