@@ -22,9 +22,7 @@ export async function getServerSideProps(context) {
     context.params.id[0]
   );
   let steamInfo = await getSteamInfo(context.params.id[0]);
-  const playerMatchesReversed = [...playerMatches].sort(
-    (a, b) => new Date(a.fecha) - new Date(b.fecha)
-  );
+  const playerMatchesReversed = [...playerMatches].reverse();
   let playerTeams = PlayerTeams(context.params.id[0], playerMatchesReversed);
   if (!steamInfo) return { notFound: true };
   return {
