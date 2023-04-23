@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface PlayerStatistics {
   goals: number;
   assists: number;
@@ -74,7 +76,7 @@ export interface Player {
 }
 
 export interface Match {
-  _id: string;
+  _id?: ObjectId;
   filename: string;
   fecha: string;
   torneo: string;

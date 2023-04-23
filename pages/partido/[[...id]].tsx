@@ -52,7 +52,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
 };
 
 const blankMatch: Match = {
-  _id: "",
   filename: "",
   fecha: new Date().toISOString(),
   torneo: "Torneo",
