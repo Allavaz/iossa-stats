@@ -165,7 +165,7 @@ export default function MatchPage({
     setEditableTable(null);
     setEditableChallonge(null);
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.torneo = torneo;
       return [...prevState, data];
     });
@@ -202,9 +202,9 @@ export default function MatchPage({
     }
   }
 
-  function changeDate(date) {
+  function changeDate(date: string) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.fecha = date;
       return [...prevState, data];
     });
@@ -213,7 +213,7 @@ export default function MatchPage({
   function changeTeam(newName: string, side: "home" | "away") {
     let s = side === "home" ? 0 : 1;
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.teams[s].teamname = newName;
       for (let i in data.teams[s].playerStatistics) {
         data.teams[s].playerStatistics[i].info.team = newName;
@@ -232,7 +232,7 @@ export default function MatchPage({
 
   function changeScore(home: number, away: number) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.teams[0].score = home;
       data.teams[1].score = away;
       data.teams[0].scorereceived = away;
@@ -253,7 +253,7 @@ export default function MatchPage({
 
   function changeEvents(matchEvents: MatchEvent[]) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.matchevents = matchEvents;
       return [...prevState, data];
     });
@@ -263,7 +263,7 @@ export default function MatchPage({
 
   function predictTeamStats() {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let events = data.matchevents;
       let homeScore = 0;
       let awayScore = 0;
@@ -498,7 +498,7 @@ export default function MatchPage({
 
   function predictIndivStats() {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let events = data.matchevents;
       let steamids = [];
       let homePlayerStatistics = data.teams[0].playerStatistics;
@@ -556,28 +556,19 @@ export default function MatchPage({
         for (let j in homePlayerStatistics) {
           if (steamids[i].steamid === homePlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(
-              homePlayerStatistics[j],
-              prevState[prevState.length - 1]
-            );
+            predictPlayerStats(homePlayerStatistics[j], prevState.at(-1));
           }
         }
         for (let j in awayPlayerStatistics) {
           if (steamids[i].steamid === awayPlayerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(
-              awayPlayerStatistics[j],
-              prevState[prevState.length - 1]
-            );
+            predictPlayerStats(awayPlayerStatistics[j], prevState.at(-1));
           }
         }
         for (let j in playerStatistics) {
           if (steamids[i].steamid === playerStatistics[j].info.steam_id) {
             found = true;
-            predictPlayerStats(
-              playerStatistics[j],
-              prevState[prevState.length - 1]
-            );
+            predictPlayerStats(playerStatistics[j], prevState.at(-1));
           }
         }
         if (!found) {
@@ -622,11 +613,11 @@ export default function MatchPage({
           };
           if (steamids[i].side === "home") {
             player.info.team = data.teams[0].teamname;
-            predictPlayerStats(player, prevState[prevState.length - 1]);
+            predictPlayerStats(player, prevState.at(-1));
             homePlayerStatistics.push(player);
           } else if (steamids[i].side === "away") {
             player.info.team = data.teams[1].teamname;
-            predictPlayerStats(player, prevState[prevState.length - 1]);
+            predictPlayerStats(player, prevState.at(-1));
             awayPlayerStatistics.push(player);
           }
           playerStatistics.push(player);
@@ -641,7 +632,7 @@ export default function MatchPage({
     });
   }
 
-  function predictPlayerStats(player, prevState) {
+  function predictPlayerStats(player: Player, prevState: Match) {
     const events = prevState.matchevents;
     Object.assign(
       player.statistics,
@@ -659,7 +650,8 @@ export default function MatchPage({
                 acc.yellowcards += 1;
                 break;
               case "SECOND YELLOW":
-                acc.secondyellowcards += 1;
+                acc.yellowcards += 1;
+                acc.redcards += 1;
                 break;
               case "RED CARD":
                 acc.redcards += 1;
@@ -675,7 +667,7 @@ export default function MatchPage({
             item.player3SteamId === player.info.steam_id &&
             item.event === "GOAL"
           ) {
-            acc.secondAssists += 1;
+            acc.secondassists += 1;
           }
           return acc;
         },
@@ -683,7 +675,6 @@ export default function MatchPage({
           goals: 0,
           owngoals: 0,
           yellowcards: 0,
-          secondyellowcards: 0,
           redcards: 0,
           assists: 0,
           secondassists: 0
@@ -692,14 +683,10 @@ export default function MatchPage({
     );
     if (
       player.statistics.fouls <
-      player.statistics.yellowcards +
-        player.statistics.secondyellowcards +
-        player.statistics.redcards
+      player.statistics.yellowcards + player.statistics.redcards
     ) {
       player.statistics.fouls =
-        player.statistics.yellowcards +
-        player.statistics.secondyellowcards +
-        player.statistics.redcards;
+        player.statistics.yellowcards + player.statistics.redcards;
     }
     if (player.statistics.goals > player.statistics.shots) {
       player.statistics.shots = player.statistics.goals;
@@ -707,24 +694,29 @@ export default function MatchPage({
     if (player.statistics.goals > player.statistics.shotsontarget) {
       player.statistics.shotsontarget = player.statistics.goals;
     }
-    events.forEach(e => {
+    events.forEach((e: MatchEvent) => {
       if (e.player1SteamId === player.info.steam_id) {
         player.info.name = e.name;
       }
     });
   }
 
-  function changeVod(vod) {
+  function changeVod(vod: string) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.vod = vod;
       return [...prevState, data];
     });
   }
 
-  function changeIndivStats(player, side, index, oldsteamid) {
+  function changeIndivStats(
+    player: Player,
+    side: "home" | "away",
+    index: number,
+    oldsteamid: string
+  ) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics[index] = player;
       let playerExists = false;
@@ -751,9 +743,9 @@ export default function MatchPage({
     predictTeamStats();
   }
 
-  function removePlayer(player, side, index) {
+  function removePlayer(player: Player, side: "home" | "away", index: number) {
     setEditableData(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState[prevState.length - 1]));
+      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics.splice(index, 1);
       for (let i in data.players) {
@@ -762,7 +754,7 @@ export default function MatchPage({
         }
       }
       data.matchevents = data.matchevents.filter(
-        event => event.player1SteamId !== player.info.steam_id
+        (event: MatchEvent) => event.player1SteamId !== player.info.steam_id
       );
       return [...prevState, data];
     });
