@@ -490,7 +490,7 @@ export default function MatchPage({
       if (data.teams[1].statistics.shotsontarget < awayGoals) {
         data.teams[1].statistics.shotsontarget = awayGoals;
       }
-      return prevState.map((e, i) =>
+      return prevState.map((_, i) =>
         i === prevState.length - 1 ? data : prevState[i]
       );
     });
@@ -626,7 +626,7 @@ export default function MatchPage({
       data.teams[0].playerStatistics = homePlayerStatistics;
       data.teams[1].playerStatistics = awayPlayerStatistics;
       data.players = playerStatistics;
-      return prevState.map((e, i) =>
+      return prevState.map((_, i) =>
         i === prevState.length - 1 ? data : prevState[i]
       );
     });
@@ -720,7 +720,7 @@ export default function MatchPage({
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics[index] = player;
       let playerExists = false;
-      let steamidlookup;
+      let steamidlookup: string;
       if (oldsteamid) steamidlookup = oldsteamid;
       else steamidlookup = player.info.steam_id;
       for (let i in data.players) {
@@ -849,7 +849,7 @@ export default function MatchPage({
   function undo() {
     setEditing(null);
     setEditableData(prevState =>
-      prevState.filter((e, i) => i !== prevState.length - 1)
+      prevState.filter((_, i) => i !== prevState.length - 1)
     );
   }
 
@@ -907,7 +907,7 @@ export default function MatchPage({
               <button
                 style={{ margin: 0 }}
                 className="boton"
-                onClick={e => {
+                onClick={_ => {
                   router.push("/partido/" + editableData.at(-1)._id);
                   setSuccess(null);
                 }}
@@ -944,7 +944,7 @@ export default function MatchPage({
               <button
                 style={{ margin: 0 }}
                 className="boton"
-                onClick={e => router.push("/")}
+                onClick={_ => router.push("/")}
               >
                 Volver al inicio
               </button>
