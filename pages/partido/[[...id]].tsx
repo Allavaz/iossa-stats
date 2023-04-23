@@ -1030,8 +1030,12 @@ export default function MatchPage({
             />
             {(editableChallonge || (challonge && !(editable || create))) && (
               <>
-                <h3 style={{ marginBottom: 0 }}>{data.torneo.toUpperCase()}</h3>
-                <Challonge id={challonge} />
+                <h3 style={{ marginBottom: 0 }}>
+                  {editableChallonge
+                    ? editableData.at(-1).torneo.toUpperCase()
+                    : data.torneo.toUpperCase()}
+                </h3>
+                <Challonge id={editableChallonge || challonge} />
               </>
             )}
           </div>
