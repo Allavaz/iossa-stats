@@ -45,7 +45,7 @@ export default function Player({
   steamInfo,
   playerTeams
 }) {
-  const [date, setDate] = useState(new Date());
+  const [_, setDate] = useState(new Date());
 
   useEffect(() => {
     // Este codigo redibuja los graficos cuando se cambia de tema claro
