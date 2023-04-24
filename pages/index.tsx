@@ -3,6 +3,7 @@ import { getMatches, getManyPositions } from "../lib/getFromDB";
 import Matches from "../components/matches";
 import PositionsComponent from "../components/positions";
 import { getTablas, temporadaActual } from "../utils/Utils";
+import { Match, Positions } from "../types";
 
 export async function getServerSideProps() {
   let matches = await getMatches("20");
@@ -22,7 +23,16 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home({ matches, tablas }) {
+interface Props {
+  matches: Match[];
+  tablas: {
+    table: string;
+    name: string;
+    teams: Positions[];
+  }[];
+}
+
+export default function Home({ matches, tablas }: Props) {
   return (
     <>
       <Head>

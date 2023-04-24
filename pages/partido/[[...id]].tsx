@@ -9,7 +9,7 @@ import Challonge from "../../components/challonge";
 import MatchCard from "../../components/matchCard";
 import MatchIndividualStats from "../../components/matchIndividualStats";
 import MatchTeamStats from "../../components/matchTeamStats";
-import Positions from "../../components/positions";
+import PositionsComponent from "../../components/positions";
 import Vod from "../../components/vod";
 import VodEditor from "../../components/vodEditor";
 import createJSON from "../../lib/createJSON";
@@ -1034,7 +1034,7 @@ export default function MatchPage({
           {editableTable || (table && !editable) ? (
             <div style={{ flexGrow: 1 }}>
               <div className="flexTableDiv">
-                <Positions
+                <PositionsComponent
                   teams={editable || create ? editableTable : table}
                   header={
                     editable || create ? editableTablaHeader : tablaTorneo

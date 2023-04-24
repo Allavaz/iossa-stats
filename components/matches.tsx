@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
+import { Match } from "../types";
 import { fecha } from "../utils/Utils";
 import MatchRow from "./matchRow";
 
-export default function Matches({ matches }) {
+export default function Matches({ matches }: { matches: Match[] }) {
   const router = useRouter();
 
   return (
     <div className="matchesContainer">
-      {matches.map((item, id, array) => (
+      {matches.map((match, id, array) => (
         <div key={id}>
           <h3
             style={{
@@ -18,16 +19,16 @@ export default function Matches({ matches }) {
                   : "none"
             }}
           >
-            RESULTADOS DEL {fecha(item.fecha)}
+            RESULTADOS DEL {fecha(match.fecha)}
           </h3>
           <div className="divDataTable" id="divMatchesTable" key={id}>
-            <MatchRow match={item}></MatchRow>
+            <MatchRow match={match} />
           </div>
         </div>
       ))}
       <br></br>
       <center>
-        <button className="boton" onClick={e => router.push("/resultados")}>
+        <button className="boton" onClick={_ => router.push("/resultados")}>
           Ver más...
         </button>
       </center>

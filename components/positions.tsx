@@ -74,7 +74,7 @@ const classifications = [
   }
 ];
 
-export default function Positions({
+export default function PositionsComponent({
   teams,
   header,
   mini = false

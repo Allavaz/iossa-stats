@@ -120,3 +120,15 @@ export type Event =
   | "RED CARD"
   | "OWN GOAL"
   | "SECOND YELLOW";
+
+export interface Positions {
+  _id: string;
+  PJ: number;
+  Pts: number;
+  GF: number;
+  GC: number;
+  PG: number;
+  PE: number;
+  PP: number;
+  DF: number;
+}

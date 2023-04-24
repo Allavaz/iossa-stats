@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Challonge from "../../components/challonge";
-import Positions from "../../components/positions";
+import PositionsComponent from "../../components/positions";
 import { getManyPositions } from "../../lib/getFromDB";
 import Torneos from "../../utils/Torneos.json";
 import {
@@ -133,7 +133,7 @@ export default function Posiciones({
         {tablas.map(
           item =>
             item.teams.length > 0 && (
-              <Positions
+              <PositionsComponent
                 key={item.name}
                 teams={item.teams}
                 header={item.name}
