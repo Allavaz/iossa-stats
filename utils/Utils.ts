@@ -91,7 +91,7 @@ export function filterMethod(filter, row) {
     : true;
 }
 
-export function getTeamLogo(teamname) {
+export function getTeamLogo(teamname: string) {
   try {
     let shortname = Teams[teamname].toLowerCase();
     return `/clubs/${shortname}.png`;
