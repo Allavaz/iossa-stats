@@ -244,7 +244,7 @@ export default function IndividualStats({ players, category, pagina }) {
 
   return (
     <>
-      <h3>ESTADÍSTICAS INDIVIDUALES - {category.toUpperCase()}</h3>
+      <h3>Estadísticas Individuales - {category}</h3>
       <div
         className="divDataTable"
         style={{

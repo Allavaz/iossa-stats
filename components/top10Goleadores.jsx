@@ -5,7 +5,7 @@ export default function Top10Goleadores({ players, category }) {
   return (
     <div className="rankingChildDiv">
       <center>
-        <h3>TOP 10 GOLEADORES - {category.toUpperCase()}</h3>
+        <h3>Top 10 Goleadores - {category}</h3>
       </center>
       <div className="divDataTable" id="divstatstable">
         <table className="dataTable" id="statstable">

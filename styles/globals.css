@@ -94,6 +94,7 @@ td {
 
 h3 {
   color: var(--header-color);
+  text-transform: uppercase;
 }
 
 h5 {

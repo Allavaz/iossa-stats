@@ -157,7 +157,7 @@ export default function PositionsComponent({
 
   return (
     <div>
-      <h3>{header.toUpperCase()}</h3>
+      <h3>{header}</h3>
       <div className="divDataTable">
         <table className="dataTable">
           <thead>

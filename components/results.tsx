@@ -143,7 +143,7 @@ export default function Results({ matches, category, pagina }) {
     <>
       <div style={{ display: "flex", alignItems: "center" }}>
         <h3 style={{ display: "inline", marginRight: "10px" }}>
-          RESULTADOS - {category.toUpperCase()}
+          Resultados - {category}
         </h3>
         <input
           type="text"

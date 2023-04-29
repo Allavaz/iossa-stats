@@ -143,7 +143,7 @@ export default function Posiciones({
       </div>
       {challonges.map(item => (
         <div key={item.name}>
-          <h3 style={{ marginBottom: 0 }}>{item.name.toUpperCase()}</h3>
+          <h3 style={{ marginBottom: 0 }}>{item.name}</h3>
           <Challonge id={item.challonge}></Challonge>
         </div>
       ))}

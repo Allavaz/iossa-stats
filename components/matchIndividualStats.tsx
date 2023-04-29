@@ -301,7 +301,7 @@ export default function MatchIndividualStats(props) {
             editing={props.editing}
           />
         ) : null}
-        <h3>ESTADÍSTICAS INDIVIDUALES - {props.teamName.toUpperCase()}</h3>
+        <h3>Estadísticas Individuales - {props.teamName}</h3>
         {props.editable ? (
           <FontAwesomeIcon
             icon={faPlus}
