@@ -8,22 +8,20 @@ import PlayerTeamsTable from "../../components/playerTeams";
 import EfficiencyLine from "../../components/efficiencyLine";
 import PlayerMatches from "../../components/playerMatches";
 import PlayerTeams from "../../utils/PlayerTeams";
+import { GetServerSideProps } from "next";
 
-export async function getServerSideProps(context) {
-  let playerMatches = await getPlayerMatches(context.params.id[0]);
+export const getServerSideProps: GetServerSideProps = async context => {
+  let playerMatches = await getPlayerMatches(context.params.id);
   if (playerMatches.length === 0) return { notFound: true };
-  let statsAll = PlayerStats(playerMatches, context.params.id[0]);
-  let statsLast15 = PlayerStats(
-    playerMatches.slice(0, 15),
-    context.params.id[0]
-  );
-  let statsLast10 = PlayerStats(
-    playerMatches.slice(0, 10),
-    context.params.id[0]
-  );
-  let steamInfo = await getSteamInfo(context.params.id[0]);
+  let statsAll = PlayerStats(playerMatches, context.params.id);
+  let statsLast15 = PlayerStats(playerMatches.slice(0, 15), context.params.id);
+  let statsLast10 = PlayerStats(playerMatches.slice(0, 10), context.params.id);
+  let steamInfo = await getSteamInfo(context.params.id);
   const playerMatchesReversed = [...playerMatches].reverse();
-  let playerTeams = PlayerTeams(context.params.id[0], playerMatchesReversed);
+  let playerTeams = PlayerTeams(
+    context.params.id as string,
+    playerMatchesReversed
+  );
   if (!steamInfo) return { notFound: true };
   return {
     props: {
@@ -35,7 +33,7 @@ export async function getServerSideProps(context) {
       playerTeams
     }
   };
-}
+};
 
 export default function Player({
   playerMatches,
