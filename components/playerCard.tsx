@@ -1,7 +1,7 @@
 import { getTeamLogo } from "../utils/Utils";
 import RadarG from "./radarG";
 
-function getPosColor(pos) {
+function getPosColor(pos: string) {
   switch (pos) {
     case "GK":
       return "#f2c350";
@@ -61,7 +61,7 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
         >
           <div className="profilepicture">
             <img
-              src={steamInfo.avatarfull}
+              src={steamInfo.profilePicture}
               alt={statsAll.name}
               height="150px"
             />
