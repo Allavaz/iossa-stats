@@ -782,8 +782,6 @@ table tr td {
   box-shadow: var(--shadow);
   border-radius: 5px;
   border: 1px solid var(--button-border);
-  width: 150px;
-  height: 150px;
 }
 
 .stat {
