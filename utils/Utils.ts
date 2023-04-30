@@ -1,7 +1,7 @@
 import Teams from "./Teams.json";
 import Torneos from "./Torneos.json";
 
-const temporadaRegex = /t(\d+)/;
+const temporadaRegex = /^t(\d+)/;
 
 export function getAllQueries() {
   let queries = [];
