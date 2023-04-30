@@ -11,14 +11,20 @@ import PlayerTeams from "../../utils/PlayerTeams";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  let playerMatches = await getPlayerMatches(context.params.id);
+  const playerMatches = await getPlayerMatches(context.params.id);
   if (playerMatches.length === 0) return { notFound: true };
-  let statsAll = PlayerStats(playerMatches, context.params.id);
-  let statsLast15 = PlayerStats(playerMatches.slice(0, 15), context.params.id);
-  let statsLast10 = PlayerStats(playerMatches.slice(0, 10), context.params.id);
-  let steamInfo = await getSteamInfo(context.params.id);
+  const statsAll = PlayerStats(playerMatches, context.params.id);
+  const statsLast15 = PlayerStats(
+    playerMatches.slice(0, 15),
+    context.params.id
+  );
+  const statsLast10 = PlayerStats(
+    playerMatches.slice(0, 10),
+    context.params.id
+  );
+  const steamInfo = await getSteamInfo([context.params.id as string]);
   const playerMatchesReversed = [...playerMatches].reverse();
-  let playerTeams = PlayerTeams(
+  const playerTeams = PlayerTeams(
     context.params.id as string,
     playerMatchesReversed
   );
@@ -29,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       statsAll,
       statsLast15,
       statsLast10,
-      steamInfo,
+      steamInfo: steamInfo[0],
       playerTeams
     }
   };
