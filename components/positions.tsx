@@ -169,7 +169,7 @@ export default function PositionsComponent({
           </thead>
           <tbody>
             {teams.map((item, index) => (
-              <tr key={item.name}>
+              <tr key={item._id}>
                 {columns.map(e => (
                   <td key={e.header}>
                     {e.render ? e.render(item, index) : item[e.accessor]}
