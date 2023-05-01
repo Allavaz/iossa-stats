@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       if (playerInfo) {
         player.profilePicture = playerInfo.profilePicture;
       }
-      const positions = await getPlayerPositions(player._id);
+      const positions = await getPlayerPositions(player._id, temporadaActual());
       player.positions = positions;
     }
 

@@ -1,18 +1,18 @@
 import { ObjectId } from "mongodb";
 import { Match, Player } from "../types";
 import player from "./aggregations/player";
+import playerPositions from "./aggregations/playerPositions";
 import players from "./aggregations/players";
 import positions from "./aggregations/positions";
 import queries from "./aggregations/queries";
+import team from "./aggregations/team";
+import teamRivals from "./aggregations/teamRivals";
+import teamTournaments from "./aggregations/teamTournaments";
 import top10assists from "./aggregations/top10Assists";
 import top10goals from "./aggregations/top10Goals";
 import top10rusticos from "./aggregations/top10Rusticos";
-import clientPromise from "./mongodb";
-import teamTournaments from "./aggregations/teamTournaments";
-import teamRivals from "./aggregations/teamRivals";
-import team from "./aggregations/team";
 import top10Saves from "./aggregations/top10Saves";
-import playerPositions from "./aggregations/playerPositions";
+import clientPromise from "./mongodb";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -340,13 +340,13 @@ export async function getTeamStats(teamname: string, arg: string) {
   }
 }
 
-export async function getPlayerPositions(steamid: string) {
+export async function getPlayerPositions(steamid: string, arg: string) {
   try {
     const client = await clientPromise;
     const db = client.db();
     const docs = await db
       .collection(process.env.DB_COLLECTION)
-      .aggregate(playerPositions(steamid))
+      .aggregate([{ $match: queries(arg) }, ...playerPositions(steamid)])
       .toArray();
     return docs.map(doc => ({
       position: doc._id,
