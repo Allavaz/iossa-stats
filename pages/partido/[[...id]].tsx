@@ -632,7 +632,7 @@ export default function MatchPage({
     });
   }
 
-  function predictPlayerStats(player: Player, prevState: Match) {
+  function predictPlayerStats(player: MatchPlayer, prevState: Match) {
     const events = prevState.matchevents;
     Object.assign(
       player.statistics,
@@ -710,7 +710,7 @@ export default function MatchPage({
   }
 
   function changeIndivStats(
-    player: Player,
+    player: MatchPlayer,
     side: "home" | "away",
     index: number,
     oldsteamid: string
@@ -743,7 +743,11 @@ export default function MatchPage({
     predictTeamStats();
   }
 
-  function removePlayer(player: Player, side: "home" | "away", index: number) {
+  function removePlayer(
+    player: MatchPlayer,
+    side: "home" | "away",
+    index: number
+  ) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
