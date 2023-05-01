@@ -23,6 +23,7 @@ import Torneos from "../../utils/Torneos.json";
 import PositionsComponent from "../../components/positions";
 import TeamAsistidores from "../../components/teamAsistidores";
 import TeamHistoricos from "../../components/teamHistoricos";
+import TeamArqueros from "../../components/teamArqueros";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   try {
@@ -201,6 +202,7 @@ export default function EquipoPage(props: Props) {
           <TeamHistoricos players={props.allPlayers} />
           <TeamGoleadores players={props.allPlayers} />
           <TeamAsistidores players={props.allPlayers} />
+          <TeamArqueros players={props.allPlayers} />
           <TeamRivals rivals={props.rivals.filter(r => r.matches > 2)} />
         </div>
         <TeamMatches matches={props.matches} teamname={props.teamname} />
