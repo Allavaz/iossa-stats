@@ -13,6 +13,7 @@ import top10goals from "./aggregations/top10Goals";
 import top10rusticos from "./aggregations/top10Rusticos";
 import top10Saves from "./aggregations/top10Saves";
 import clientPromise from "./mongodb";
+import teamPlayers from "./aggregations/teamPlayers";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -247,11 +248,7 @@ export async function getTeamPlayers(
     const db = client.db();
     let docs = await db
       .collection(process.env.DB_COLLECTION)
-      .aggregate([
-        { $match: { "teams.teamname": teamname } },
-        ...players(arg),
-        { $match: { team: teamname } }
-      ])
+      .aggregate(teamPlayers(teamname, arg))
       .toArray();
     return docs;
   } catch (error) {
