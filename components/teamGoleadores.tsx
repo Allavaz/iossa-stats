@@ -31,6 +31,16 @@ export default function TeamGoleadores(props: Props) {
             </tr>
           </thead>
           <tbody>
+            {top10Goleadores.length === 0 && (
+              <tr>
+                <td
+                  colSpan={4}
+                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
+                >
+                  Este equipo no tiene goleadores todavía.
+                </td>
+              </tr>
+            )}
             {top10Goleadores.map((player, index) => (
               <tr key={player._id}>
                 <td>{index + 1}</td>

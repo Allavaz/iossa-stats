@@ -7,7 +7,7 @@ interface Props {
   teamname: string;
   logo: string;
   matches: Match[];
-  lastTournament: {
+  lastLiga: {
     _id: string;
     position?: number;
     matches: number;
@@ -56,12 +56,16 @@ function forma(matches: Match[], teamname: string) {
 }
 
 function isTeamActive(lastTournament) {
-  const temporada = Torneos.find(t => t.temporada === temporadaActual()) as {
-    torneos: { torneo: string }[];
-  };
-  if (temporada.torneos.find(t => t.torneo === lastTournament._id)) {
-    return true;
-  } else {
+  try {
+    const temporada = Torneos.find(t => t.temporada === temporadaActual()) as {
+      torneos: { torneo: string }[];
+    };
+    if (temporada.torneos.find(t => t.torneo === lastTournament._id)) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (_) {
     return false;
   }
 }
@@ -73,7 +77,7 @@ export default function TeamCard(props: Props) {
   const lastActivity = DateTime.fromISO(props.matches[0].fecha).toFormat(
     "yyyy"
   );
-  const isActive = isTeamActive(props.lastTournament);
+  const isActive = isTeamActive(props.lastLiga);
 
   return (
     <div className="whitespace" style={{ padding: "20px" }}>
@@ -114,9 +118,11 @@ export default function TeamCard(props: Props) {
             </div>
             {isActive ? (
               <>
-                <div
-                  style={{ color: "var(--header-color)" }}
-                >{`${props.lastTournament.position}º en ${props.lastTournament._id}`}</div>
+                {props.lastLiga && (
+                  <div
+                    style={{ color: "var(--header-color)" }}
+                  >{`${props.lastLiga.position}º en ${props.lastLiga._id}`}</div>
+                )}
                 <div style={{ color: "var(--header-color)" }}>
                   Activo desde {activeSince}
                 </div>

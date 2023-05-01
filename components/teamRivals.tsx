@@ -13,51 +13,60 @@ interface Props {
 
 export default function TeamRivals(props: Props) {
   return (
-    props.rivals.length > 0 && (
-      <div style={{ flexGrow: 1 }}>
-        <h3 style={{ marginTop: 0 }}>Historial vs otros equipos</h3>
-        <div className="divDataTable">
-          <table className="dataTable">
-            <thead>
+    <div style={{ flexGrow: 1 }}>
+      <h3 style={{ marginTop: 0 }}>Historial vs otros equipos</h3>
+      <div className="divDataTable">
+        <table className="dataTable">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>PJ</th>
+              <th>PG</th>
+              <th>PE</th>
+              <th>PP</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.rivals.length === 0 && (
               <tr>
-                <th>Equipo</th>
-                <th>PJ</th>
-                <th>PG</th>
-                <th>PE</th>
-                <th>PP</th>
+                <td
+                  colSpan={5}
+                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
+                >
+                  Este equipo no tiene suficientes partidos contra otros
+                  equipos.
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {props.rivals.map(rival => (
-                <tr key={rival._id}>
-                  <td>
-                    <Link href={`/equipo/${rival._id}`}>
-                      <a>
-                        <div
-                          className="teamlogo"
-                          style={{ justifyContent: "center" }}
-                        >
-                          <img
-                            height="16px"
-                            src={getTeamLogo(rival._id)}
-                            alt={rival._id}
-                            style={{ marginRight: "5px" }}
-                          />
-                          {rival._id}
-                        </div>
-                      </a>
-                    </Link>
-                  </td>
-                  <td>{rival.matches}</td>
-                  <td>{rival.wins}</td>
-                  <td>{rival.draws}</td>
-                  <td>{rival.losses}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            )}
+            {props.rivals.map(rival => (
+              <tr key={rival._id}>
+                <td>
+                  <Link href={`/equipo/${rival._id}`}>
+                    <a>
+                      <div
+                        className="teamlogo"
+                        style={{ justifyContent: "center" }}
+                      >
+                        <img
+                          height="16px"
+                          src={getTeamLogo(rival._id)}
+                          alt={rival._id}
+                          style={{ marginRight: "5px" }}
+                        />
+                        {rival._id}
+                      </div>
+                    </a>
+                  </Link>
+                </td>
+                <td>{rival.matches}</td>
+                <td>{rival.wins}</td>
+                <td>{rival.draws}</td>
+                <td>{rival.losses}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    )
+    </div>
   );
 }

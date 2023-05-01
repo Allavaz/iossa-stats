@@ -23,6 +23,16 @@ export default function TeamLigas(props: Props) {
             </tr>
           </thead>
           <tbody>
+            {props.tournaments.length === 0 && (
+              <tr>
+                <td
+                  colSpan={2}
+                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
+                >
+                  Este equipo no ha participado en ninguna liga todavía.
+                </td>
+              </tr>
+            )}
             {props.tournaments.map(tournament => (
               <tr key={tournament._id}>
                 <td>

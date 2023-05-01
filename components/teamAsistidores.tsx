@@ -31,6 +31,16 @@ export default function TeamAsistidores(props: Props) {
             </tr>
           </thead>
           <tbody>
+            {top10Asistidores.length === 0 && (
+              <tr>
+                <td
+                  colSpan={4}
+                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
+                >
+                  Este equipo no tiene asistidores todavía.
+                </td>
+              </tr>
+            )}
             {top10Asistidores.map((player, index) => (
               <tr key={player._id}>
                 <td>{index + 1}</td>

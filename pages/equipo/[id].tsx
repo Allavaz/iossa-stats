@@ -47,9 +47,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       getTeamStats(context.params.id as string, "all")
     ]);
 
-    if (!rosterInfo) return { notFound: true };
-
-    if (!tournaments) return { notFound: true };
+    if (!tournaments || tournaments.length === 0) return { notFound: true };
 
     for (const tournament of tournaments) {
       if (
@@ -83,12 +81,12 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
     let positions: { position: string; seconds: string }[];
 
-    if (isTeamActive(tournaments.filter(t => t.position)[0])) {
+    const ligas = tournaments.filter(t => t.position);
+
+    if (ligas.length > 0 && isTeamActive(ligas[0])) {
       const torneos = Torneos.find(t => t.temporada === temporadaActual())
         .torneos as { torneo: string; query: string }[];
-      const id = torneos.find(
-        t => t.torneo === tournaments.filter(t => t.position)[0]._id
-      ).query;
+      const id = torneos.find(t => t.torneo === ligas[0]._id).query;
       positions = await getPositions(id);
     }
 
@@ -146,6 +144,8 @@ interface Props {
 }
 
 export default function EquipoPage(props: Props) {
+  const lastLiga = props.tournaments.filter(t => t.position)[0];
+
   return (
     <>
       <Head>
@@ -172,7 +172,7 @@ export default function EquipoPage(props: Props) {
           teamname={props.teamname}
           logo={props.logo}
           matches={props.matches}
-          lastTournament={props.tournaments.filter(t => t.position)[0]}
+          lastLiga={lastLiga}
           stats={props.stats}
         />
         {props.roster.length > 0 && <Roster roster={props.roster} />}
@@ -188,10 +188,7 @@ export default function EquipoPage(props: Props) {
           {props.positions && (
             <div style={{ marginTop: "-1em", flexGrow: 1 }}>
               <PositionsComponent
-                header={
-                  "Posiciones " +
-                  props.tournaments.filter(t => t.position)[0]._id
-                }
+                header={"Posiciones " + lastLiga._id}
                 teams={props.positions}
                 highlight={props.teamname}
               />
