@@ -22,6 +22,7 @@ import { getTeamLogo, temporadaActual } from "../../utils/Utils";
 import Torneos from "../../utils/Torneos.json";
 import PositionsComponent from "../../components/positions";
 import TeamAsistidores from "../../components/teamAsistidores";
+import TeamHistoricos from "../../components/teamHistoricos";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   try {
@@ -138,6 +139,8 @@ interface Props {
     wins: number;
     draws: number;
     losses: number;
+    firstmatch: string;
+    lastmatch: string;
   }[];
   stats: TeamStats;
   positions?: Positions[];
@@ -195,6 +198,7 @@ export default function EquipoPage(props: Props) {
             </div>
           )}
           <TeamLigas tournaments={props.tournaments.filter(t => t.position)} />
+          <TeamHistoricos players={props.allPlayers} />
           <TeamGoleadores players={props.allPlayers} />
           <TeamAsistidores players={props.allPlayers} />
           <TeamRivals rivals={props.rivals.filter(r => r.matches > 2)} />
