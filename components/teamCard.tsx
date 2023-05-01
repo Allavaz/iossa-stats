@@ -137,7 +137,7 @@ export default function TeamCard(props: Props) {
         <div
           style={{
             display: "flex",
-            columnGap: "20px",
+            gap: "20px",
             flexWrap: "wrap",
             justifyContent: "center"
           }}
