@@ -1,13 +1,13 @@
-const queries = require("./queries");
+import queries from "./queries";
 
-module.exports = arg => {
+export default function top10Saves(arg) {
   return [
     { $match: queries(arg) },
     { $sort: { fecha: 1 } },
     {
       $project: {
         "players.info": 1,
-        "players.statistics.assists": 1
+        "players.statistics": 1
       }
     },
     {
@@ -32,8 +32,14 @@ module.exports = arg => {
         matches: {
           $sum: 1
         },
-        assists: {
-          $sum: "$players.statistics.assists"
+        saves: {
+          $sum: "$players.statistics.saves"
+        },
+        savescaught: {
+          $sum: "$players.statistics.savescaught"
+        },
+        goalsconceded: {
+          $sum: "$players.statistics.goalsconceded"
         }
       }
     },
@@ -52,4 +58,4 @@ module.exports = arg => {
       }
     }
   ];
-};
+}

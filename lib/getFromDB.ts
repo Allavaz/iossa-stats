@@ -1,13 +1,18 @@
 import { ObjectId } from "mongodb";
-import clientPromise from "./mongodb";
-import positions from "./aggregations/positions";
-import players from "./aggregations/players";
-import queries from "./aggregations/queries";
-import top10goals from "./aggregations/top10Goals";
-import top10assists from "./aggregations/top10Assists";
-import top10rusticos from "./aggregations/top10Rusticos";
+import { Match, Player } from "../types";
 import player from "./aggregations/player";
-import { Match } from "../types";
+import players from "./aggregations/players";
+import positions from "./aggregations/positions";
+import queries from "./aggregations/queries";
+import top10assists from "./aggregations/top10Assists";
+import top10goals from "./aggregations/top10Goals";
+import top10rusticos from "./aggregations/top10Rusticos";
+import clientPromise from "./mongodb";
+import teamTournaments from "./aggregations/teamTournaments";
+import teamRivals from "./aggregations/teamRivals";
+import team from "./aggregations/team";
+import top10Saves from "./aggregations/top10Saves";
+import playerPositions from "./aggregations/playerPositions";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -52,13 +57,13 @@ export async function getMatches(id) {
   }
 }
 
-export async function getPositions(id) {
+export async function getPositions(arg: string) {
   try {
     const client = await clientPromise;
     const db = client.db();
     let docs = await db
       .collection(process.env.DB_COLLECTION)
-      .aggregate(positions(id))
+      .aggregate(positions(queries(arg, true)))
       .toArray();
     return docs;
   } catch (error) {
@@ -66,7 +71,7 @@ export async function getPositions(id) {
   }
 }
 
-export async function getManyPositions(ids) {
+export async function getManyPositions(ids: string[]) {
   let tables = [];
   if (ids.length) {
     try {
@@ -75,7 +80,7 @@ export async function getManyPositions(ids) {
       for (let i in ids) {
         let doc = await db
           .collection(process.env.DB_COLLECTION)
-          .aggregate(positions(ids[i]))
+          .aggregate(positions(queries(ids[i], true)))
           .toArray();
         tables.push(doc);
       }
@@ -178,6 +183,22 @@ export async function getTop10Rusticos(id) {
   }
 }
 
+export async function getTop10Saves(id) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(top10Saves(id))
+      .sort({ savescaught: -1, saves: -1, goalsconceded: 1, matches: 1 })
+      .limit(10)
+      .toArray();
+    return docs;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function getPlayerMatches(id) {
   try {
     const client = await clientPromise;
@@ -214,5 +235,124 @@ export async function getPlayer(steam_id: string, arg: string) {
   } catch (error) {
     console.error(error);
     throw new Error(error);
+  }
+}
+
+export async function getTeamPlayers(
+  teamname: string,
+  arg: string
+): Promise<Player[]> {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate([
+        { $match: { "teams.teamname": teamname } },
+        ...players(arg),
+        { $match: { team: teamname } }
+      ])
+      .toArray();
+    return docs;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamMatches(
+  teamname: string,
+  arg: string
+): Promise<Match[]> {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .find({ ...queries(arg), "teams.teamname": teamname })
+      .sort({ fecha: -1 })
+      .toArray();
+    return docs.map(doc => serializableMatch(doc));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamTournaments(teamname: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(teamTournaments(teamname))
+      .toArray();
+    return docs.map(doc => ({
+      ...doc,
+      firstmatch: doc.firstmatch.toISOString(),
+      lastmatch: doc.lastmatch.toISOString()
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTournamentPosition(
+  teamname: string,
+  tournament: string
+) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(positions({ torneo: tournament }))
+      .toArray();
+    return docs.findIndex(doc => doc._id === teamname) + 1;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamRivals(teamname: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(teamRivals(teamname))
+      .toArray();
+    return docs;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamStats(teamname: string, arg: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(team(teamname, arg))
+      .toArray();
+    return docs[0];
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getPlayerPositions(steamid: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(playerPositions(steamid))
+      .toArray();
+    return docs.map(doc => ({
+      position: doc._id,
+      seconds: doc.seconds
+    }));
+  } catch (error) {
+    console.error(error);
   }
 }

@@ -1,6 +1,6 @@
-const queries = require("./queries");
+import queries from "./queries";
 
-module.exports = arg => {
+export default function players(arg) {
   return [
     { $match: queries(arg) },
     { $sort: { fecha: -1 } },
@@ -176,4 +176,4 @@ module.exports = arg => {
       }
     }
   ];
-};
+}

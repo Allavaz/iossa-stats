@@ -11,8 +11,12 @@ import PlayerTeams from "../../utils/PlayerTeams";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const playerMatches = await getPlayerMatches(context.params.id);
+  const [playerMatches, steamInfo] = await Promise.all([
+    getPlayerMatches(context.params.id as string),
+    getSteamInfo([context.params.id as string])
+  ]);
   if (playerMatches.length === 0) return { notFound: true };
+  if (!steamInfo) return { notFound: true };
   const statsAll = PlayerStats(playerMatches, context.params.id);
   const statsLast15 = PlayerStats(
     playerMatches.slice(0, 15),
@@ -22,13 +26,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
     playerMatches.slice(0, 10),
     context.params.id
   );
-  const steamInfo = await getSteamInfo([context.params.id as string]);
   const playerMatchesReversed = [...playerMatches].reverse();
   const playerTeams = PlayerTeams(
     context.params.id as string,
     playerMatchesReversed
   );
-  if (!steamInfo) return { notFound: true };
   return {
     props: {
       playerMatches,
@@ -89,7 +91,7 @@ export default function Player({
           flexWrap: "wrap",
           alignContent: "stretch",
           justifyContent: "space-between",
-          columnGap: "10px"
+          columnGap: "20px"
         }}
         suppressHydrationWarning={true}
       >

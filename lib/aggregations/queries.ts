@@ -1,26 +1,3 @@
-const tempregex = /^t([0-9]+)/i;
-const d1regex = /^d1t([0-9]+)/i;
-const d2regex = /^d2t([0-9]+)/i;
-const d3regex = /^d3t([0-9]+)/i;
-const cd1regex = /^cd1t([0-9]+)/i;
-const cd2regex = /^cd2t([0-9]+)/i;
-const cd3regex = /^cd3t([0-9]+)/i;
-const sd1regex = /^sd1t([0-9]+)/i;
-const lzregex = /^lzt([0-9]+)/i;
-const cgregex = /^cgt([0-9]+)/i;
-const masterregex = /^mastert([0-9]+)/i;
-const recopamasterregex = /^recopamastert([0-9]+)/i;
-const supercopamasterregex = /^supercopamastert([0-9]+)/i;
-const cvregex = /^cvt([0-9]+)/i;
-const maradeiregex = /^maradeit([0-9]+)/i;
-const recopamaradeiregex = /^recopamaradeit([0-9]+)/i;
-const lmregex = /^lmt([0-9]+)/i;
-const ddhregex = /^ddht([0-9]+)/i;
-const americaregex = /^americat([0-9]+)/i;
-const copadelsurregex = /^copadelsurt([0-9]+)/i;
-const izororegex = /^izorot([0-9]+)/i;
-const izplataregex = /^izplatat([0-9]+)/i;
-
 const primerOrden = [
   "Liga D1",
   "Copa Master",
@@ -41,7 +18,30 @@ const primerOrden = [
 const segundoOrden = ["Liga D2", "Copa D2", "Copa Intrazonal de Plata"];
 const tercerOrden = ["Liga D3", "Copa D3", "Liga Zero"];
 
-function getRegex(arg) {
+function getRegex(arg: string) {
+  const tempregex = /^t([0-9]+)/i;
+  const d1regex = /^d1t([0-9]+)/i;
+  const d2regex = /^d2t([0-9]+)/i;
+  const d3regex = /^d3t([0-9]+)/i;
+  const cd1regex = /^cd1t([0-9]+)/i;
+  const cd2regex = /^cd2t([0-9]+)/i;
+  const cd3regex = /^cd3t([0-9]+)/i;
+  const sd1regex = /^sd1t([0-9]+)/i;
+  const lzregex = /^lzt([0-9]+)/i;
+  const cgregex = /^cgt([0-9]+)/i;
+  const masterregex = /^mastert([0-9]+)/i;
+  const recopamasterregex = /^recopamastert([0-9]+)/i;
+  const supercopamasterregex = /^supercopamastert([0-9]+)/i;
+  const cvregex = /^cvt([0-9]+)/i;
+  const maradeiregex = /^maradeit([0-9]+)/i;
+  const recopamaradeiregex = /^recopamaradeit([0-9]+)/i;
+  const lmregex = /^lmt([0-9]+)/i;
+  const ddhregex = /^ddht([0-9]+)/i;
+  const americaregex = /^americat([0-9]+)/i;
+  const copadelsurregex = /^copadelsurt([0-9]+)/i;
+  const izororegex = /^izorot([0-9]+)/i;
+  const izplataregex = /^izplatat([0-9]+)/i;
+
   if (tempregex.test(arg)) {
     const match = arg.match(tempregex);
     return { $regex: "T" + match[1] + "\\s|T" + match[1] + "$" };
@@ -169,10 +169,55 @@ function getRegex(arg) {
   }
 }
 
-module.exports = arg => {
+function getPositionRegex(arg) {
+  const d1regex = /^d1t([0-9]+)/i;
+  const d2regex = /^d2t([0-9]+)/i;
+  const d3regex = /^d3t([0-9]+)/i;
+  const maradeiregex = /^maradeit([0-9]+)([a-z])/i;
+  const americaregex = /^americat([0-9]+)/i;
+  const sd1regex = /^sd1t([0-9]+)/i;
+  const lmregex = /^lmt([0-9]+)/i;
+  const ddhregex = /^ddht([0-9]+)/i;
+
+  if (d1regex.test(arg)) {
+    const match = arg.match(d1regex);
+    return "Liga D1 T" + match[1];
+  } else if (d2regex.test(arg)) {
+    const match = arg.match(d2regex);
+    return "Liga D2 T" + match[1];
+  } else if (d3regex.test(arg)) {
+    const match = arg.match(d3regex);
+    return "Liga D3 T" + match[1];
+  } else if (maradeiregex.test(arg)) {
+    const match = arg.match(maradeiregex);
+    return `Copa Maradei T${match[1]} - Grupo ${match[2].toUpperCase()}`;
+  } else if (sd1regex.test(arg)) {
+    const match = arg.match(sd1regex);
+    return "Superliga D1 T" + match[1];
+  } else if (americaregex.test(arg)) {
+    const match = arg.match(americaregex);
+    return "Copa America T" + match[1];
+  } else if (lmregex.test(arg)) {
+    const match = arg.match(lmregex);
+    return "Liga Master T" + match[1];
+  } else if (ddhregex.test(arg)) {
+    const match = arg.match(ddhregex);
+    return "Division de Honor T" + match[1];
+  } else if (arg === "lzt8a") {
+    return "Liga Zero T8 - Grupo A";
+  } else if (arg === "lzt8b") {
+    return "Liga Zero T8 - Grupo B";
+  } else if (arg === "america21r") {
+    return "Copa America '21 - Regular";
+  }
+}
+
+export default function queries(arg: string, positions = false) {
   if (arg === "all") {
     return {};
+  } else if (positions) {
+    return { torneo: getPositionRegex(arg) };
   } else {
     return { torneo: getRegex(arg) };
   }
-};
+}

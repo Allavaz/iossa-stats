@@ -14,6 +14,7 @@ import TeamNameEditor from "./teamNameEditor";
 import ScoreEditor from "./scoreEditor";
 import MatchEventEditor from "./matchEventEditor";
 import { Event, Match, MatchEvent, Player } from "../types";
+import Link from "next/link";
 
 export default function MatchCard({
   data,
@@ -269,14 +270,16 @@ export default function MatchCard({
                     alignItems: "center"
                   }}
                 >
-                  <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-                    <h2>
-                      <div id="teamname">{data.teams[0].teamname}</div>
-                      <div id="shortname">
-                        {getTeamShortname(data.teams[0].teamname)}
-                      </div>
-                    </h2>
-                  </div>
+                  <Link href={`/equipo/${data.teams[0].teamname}`}>
+                    <a style={{ marginLeft: "5px", marginRight: "5px" }}>
+                      <h2>
+                        <div id="teamname">{data.teams[0].teamname}</div>
+                        <div id="shortname">
+                          {getTeamShortname(data.teams[0].teamname)}
+                        </div>
+                      </h2>
+                    </a>
+                  </Link>
                   {editable && (
                     <div>
                       <FontAwesomeIcon
@@ -358,14 +361,16 @@ export default function MatchCard({
                     alignItems: "center"
                   }}
                 >
-                  <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-                    <h2>
-                      <div id="teamname">{data.teams[1].teamname}</div>
-                      <div id="shortname">
-                        {getTeamShortname(data.teams[1].teamname)}
-                      </div>
-                    </h2>
-                  </div>
+                  <Link href={`/equipo/${data.teams[1].teamname}`}>
+                    <a style={{ marginLeft: "5px", marginRight: "5px" }}>
+                      <h2>
+                        <div id="teamname">{data.teams[1].teamname}</div>
+                        <div id="shortname">
+                          {getTeamShortname(data.teams[1].teamname)}
+                        </div>
+                      </h2>
+                    </a>
+                  </Link>
                   {editable ? (
                     <div>
                       <FontAwesomeIcon
@@ -387,11 +392,15 @@ export default function MatchCard({
           </tr>
           <tr>
             <td>
-              <img
-                className="bigClubLogo"
-                alt={data.teams[0].teamname}
-                src={getTeamLogo(data.teams[0].teamname)}
-              ></img>
+              <Link href={`/equipo/${data.teams[0].teamname}`}>
+                <a>
+                  <img
+                    className="bigClubLogo"
+                    alt={data.teams[0].teamname}
+                    src={getTeamLogo(data.teams[0].teamname)}
+                  />
+                </a>
+              </Link>
             </td>
             <td>
               {editing === "score" ? (
@@ -439,11 +448,15 @@ export default function MatchCard({
               )}
             </td>
             <td>
-              <img
-                className="bigClubLogo"
-                alt={data.teams[1].teamname}
-                src={getTeamLogo(data.teams[1].teamname)}
-              ></img>
+              <Link href={`/equipo/${data.teams[1].teamname}`}>
+                <a>
+                  <img
+                    className="bigClubLogo"
+                    alt={data.teams[1].teamname}
+                    src={getTeamLogo(data.teams[1].teamname)}
+                  />
+                </a>
+              </Link>
             </td>
           </tr>
           <tr id="eventslist">

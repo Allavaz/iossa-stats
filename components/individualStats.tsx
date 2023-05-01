@@ -1,5 +1,5 @@
 import { useTable, usePagination, useFilters, useSortBy } from "react-table";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
@@ -33,20 +33,22 @@ export default function IndividualStats({ players, category, pagina }) {
         accessor: "team",
         Cell: row => {
           return (
-            <div
-              className="teamlogo"
-              style={{
-                justifyContent: "center"
-              }}
-            >
-              <img
-                height="16px"
-                width="16px"
-                src={getTeamLogo(row.row.original.team)}
-                alt={row.row.original.team}
-              />
-              <div style={{ marginLeft: "5px" }}>{row.row.original.team}</div>
-            </div>
+            <Link href={`/equipo/${row.row.original.team}`}>
+              <a
+                className="teamlogo"
+                style={{
+                  justifyContent: "center"
+                }}
+              >
+                <img
+                  height="16px"
+                  width="16px"
+                  src={getTeamLogo(row.row.original.team)}
+                  alt={row.row.original.team}
+                />
+                <div style={{ marginLeft: "5px" }}>{row.row.original.team}</div>
+              </a>
+            </Link>
           );
         }
       },
@@ -236,7 +238,6 @@ export default function IndividualStats({ players, category, pagina }) {
     pageCount,
     nextPage,
     previousPage,
-    gotoPage,
     setFilter,
     rows,
     state: { pageIndex, pageSize }

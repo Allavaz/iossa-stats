@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
 
 const ColoredBar = ({ color }) => {
@@ -77,11 +78,13 @@ const classifications = [
 export default function PositionsComponent({
   teams,
   header,
-  mini = false
+  mini = false,
+  highlight
 }: {
   teams: any[];
   header: string;
   mini?: boolean;
+  highlight?: string;
 }) {
   const classification = classifications.find(c =>
     c.matchingTournaments(header)
@@ -91,30 +94,32 @@ export default function PositionsComponent({
     {
       header: "#",
       width: "15px",
-      render: (item, index) => index + 1
+      render: (_, index) => index + 1
     },
     {
       header: "Equipo",
       render: (item, index) => (
-        <div className="teamlogo">
-          {classification &&
-            classification.colors.find(c => c.matchingIndexes(index)) && (
-              <ColoredBar
-                color={
-                  classification.colors.find(c => c.matchingIndexes(index))
-                    .color
-                }
-              />
-            )}
-          <img
-            height="16px"
-            src={getTeamLogo(item._id)}
-            alt={item._id}
-            style={{ marginRight: "5px" }}
-          />
-          <div id={mini ? "fullteamname" : "teamname"}>{item._id}</div>
-          {!mini && <div id="shortname">{getTeamShortname(item._id)}</div>}
-        </div>
+        <Link href={`/equipo/${item._id}`}>
+          <a className="teamlogo">
+            {classification &&
+              classification.colors.find(c => c.matchingIndexes(index)) && (
+                <ColoredBar
+                  color={
+                    classification.colors.find(c => c.matchingIndexes(index))
+                      .color
+                  }
+                />
+              )}
+            <img
+              height="16px"
+              src={getTeamLogo(item._id)}
+              alt={item._id}
+              style={{ marginRight: "5px" }}
+            />
+            <div id={mini ? "fullteamname" : "teamname"}>{item._id}</div>
+            {!mini && <div id="shortname">{getTeamShortname(item._id)}</div>}
+          </a>
+        </Link>
       )
     },
     {
@@ -171,7 +176,12 @@ export default function PositionsComponent({
             {teams.map((item, index) => (
               <tr key={item._id}>
                 {columns.map(e => (
-                  <td key={e.header}>
+                  <td
+                    key={e.header}
+                    style={{
+                      fontWeight: highlight === item._id ? "bold" : "unset"
+                    }}
+                  >
                     {e.render ? e.render(item, index) : item[e.accessor]}
                   </td>
                 ))}

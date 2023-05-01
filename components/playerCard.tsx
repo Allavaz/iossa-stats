@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
 import RadarG from "./radarG";
 
@@ -106,15 +107,17 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
             >
               {steamInfo.personaname}
             </div>
-            <div style={{ color: "var(--header-color)", marginTop: "5px" }}>
-              <img
-                height="16px"
-                src={getTeamLogo(statsAll.team)}
-                alt={statsAll.team}
-                style={{ verticalAlign: "text-top", marginRight: "0.25ch" }}
-              ></img>{" "}
-              {statsAll.team}
-            </div>
+            <Link href={`/equipo/${statsAll.team}`}>
+              <a style={{ color: "var(--header-color)", marginTop: "5px" }}>
+                <img
+                  height="16px"
+                  src={getTeamLogo(statsAll.team)}
+                  alt={statsAll.team}
+                  style={{ verticalAlign: "text-top", marginRight: "0.25ch" }}
+                />{" "}
+                {statsAll.team}
+              </a>
+            </Link>
             <div
               className="playersummary"
               style={{ marginTop: "10px", fontSize: "0.75em" }}

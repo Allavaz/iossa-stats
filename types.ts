@@ -36,7 +36,7 @@ export interface PlayerStatistics {
   }[];
 }
 
-export interface TeamStatistics {
+export interface MatchTeamStats {
   assists: number;
   shots: number;
   shotsontarget: number;
@@ -66,7 +66,20 @@ export interface TeamStatistics {
   secondassists: number;
 }
 
-export interface Player {
+export interface Player extends PlayerStatistics {
+  _id: string;
+  steamID: string;
+  name: string;
+  team: string;
+  matches: number;
+  profilePicture?: string;
+  positions: {
+    position: string;
+    seconds: number;
+  }[];
+}
+
+export interface MatchPlayer {
   info: {
     name: string;
     steam_id: string;
@@ -82,7 +95,7 @@ export interface Match {
   torneo: string;
   vod: string | null;
   teams: MatchTeam[];
-  players: Player[];
+  players: MatchPlayer[];
   matchevents: MatchEvent[];
 }
 
@@ -92,7 +105,7 @@ export interface MatchTeam {
   score: number;
   scorereceived: number;
   result: -1 | 0 | 1;
-  statistics: TeamStatistics;
+  statistics: MatchTeamStats;
   playerStatistics: PlayerStatistics[];
 }
 
@@ -131,4 +144,15 @@ export interface Positions {
   PE: number;
   PP: number;
   DF: number;
+}
+
+export interface TeamStats {
+  _id: string;
+  name: string;
+  matches: number;
+  goals: number;
+  assists: number;
+  wins: number;
+  draws: number;
+  losses: number;
 }
