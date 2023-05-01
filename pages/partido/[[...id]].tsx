@@ -14,7 +14,7 @@ import Vod from "../../components/vod";
 import VodEditor from "../../components/vodEditor";
 import createJSON from "../../lib/createJSON";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
-import { Match, MatchEvent, Player } from "../../types";
+import { Match, MatchEvent, MatchPlayer, Player } from "../../types";
 import Torneos from "../../utils/Torneos.json";
 
 export const getServerSideProps: GetServerSideProps = async context => {
@@ -572,7 +572,7 @@ export default function MatchPage({
           }
         }
         if (!found) {
-          let player: Player = {
+          let player: MatchPlayer = {
             info: {
               name: steamids[i].name,
               steam_id: steamids[i].steamid,
