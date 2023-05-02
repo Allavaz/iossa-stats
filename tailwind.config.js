@@ -8,13 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        iossa: "#ff9800"
-      },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans]
       }
     }
   },
+  darkMode: "class",
   plugins: []
 };

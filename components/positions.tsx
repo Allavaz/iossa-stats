@@ -1,16 +1,13 @@
 import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
+import Title from "./commons/title";
 
 const ColoredBar = ({ color }) => {
   return (
     <div
       style={{
-        marginTop: "-5px",
-        marginBottom: "-5px",
         height: "26px",
         width: "4px",
-        marginLeft: "-5px",
-        marginRight: "5px",
         backgroundColor: color
       }}
     />
@@ -100,7 +97,7 @@ export default function PositionsComponent({
       header: "Equipo",
       render: (item, index) => (
         <Link href={`/equipo/${item._id}`}>
-          <a className="teamlogo">
+          <a className="flex items-center gap-x-1">
             {classification &&
               classification.colors.find(c => c.matchingIndexes(index)) && (
                 <ColoredBar
@@ -110,14 +107,11 @@ export default function PositionsComponent({
                   }
                 />
               )}
-            <img
-              height="16px"
-              src={getTeamLogo(item._id)}
-              alt={item._id}
-              style={{ marginRight: "5px" }}
-            />
-            <div id={mini ? "fullteamname" : "teamname"}>{item._id}</div>
-            {!mini && <div id="shortname">{getTeamShortname(item._id)}</div>}
+            <img className="h-6" src={getTeamLogo(item._id)} alt={item._id} />
+            <div className={`${!mini && "hidden"} sm:block`}>{item._id}</div>
+            {!mini && (
+              <div className="sm:hidden">{getTeamShortname(item._id)}</div>
+            )}
           </a>
         </Link>
       )
@@ -161,23 +155,32 @@ export default function PositionsComponent({
   ];
 
   return (
-    <div>
-      <h3>{header}</h3>
-      <div className="divDataTable">
-        <table className="dataTable">
+    <div className="flex flex-col gap-y-4 text-sm">
+      <Title>{header}</Title>
+      <div className="shadow-lg overflow-x-auto flex">
+        <table className="min-w-max text-center grow">
           <thead>
-            <tr>
+            <tr className="dark:bg-neutral-900 bg-white">
               {columns.map(e => (
-                <th key={e.header}>{e.header}</th>
+                <th
+                  className="py-1 px-2 border border-neutral-200 dark:border-neutral-700"
+                  key={e.header}
+                >
+                  {e.header}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {teams.map((item, index) => (
-              <tr key={item._id}>
+              <tr
+                className="odd:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950"
+                key={item._id}
+              >
                 {columns.map(e => (
                   <td
                     key={e.header}
+                    className="py-1 px-2 border border-neutral-200 dark:border-neutral-700"
                     style={{
                       fontWeight: highlight === item._id ? "bold" : "unset"
                     }}
@@ -190,8 +193,11 @@ export default function PositionsComponent({
             {classification &&
               classification.colors.map(c => (
                 <tr key={c.label}>
-                  <td colSpan={columns.length}>
-                    <div className="teamlogo">
+                  <td
+                    className="py-1 px-2 border border-neutral-200 dark:border-neutral-700"
+                    colSpan={columns.length}
+                  >
+                    <div className="flex items-center gap-x-2">
                       <ColoredBar color={c.color} />
                       {c.label}
                     </div>

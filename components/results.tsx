@@ -8,6 +8,8 @@ import {
   getTeamShortname,
   getTournamentIcon
 } from "../utils/Utils";
+import Title from "./commons/title";
+import Button from "./commons/button";
 
 export default function Results({ matches, category, pagina }) {
   const router = useRouter();
@@ -141,10 +143,8 @@ export default function Results({ matches, category, pagina }) {
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <h3 style={{ display: "inline", marginRight: "10px" }}>
-          Resultados - {category}
-        </h3>
+      <div className="flex gap-x-2 items-center">
+        <Title style={{ display: "inline" }}>Resultados - {category}</Title>
         <input
           type="text"
           placeholder="Buscar equipo/torneo…"
@@ -154,15 +154,7 @@ export default function Results({ matches, category, pagina }) {
               shallow: true
             });
           }}
-          style={{
-            border: "1px solid var(--button-border)",
-            fontSize: "11pt",
-            padding: "5px",
-            height: "20px",
-            backgroundColor: "var(--card-background)",
-            color: "var(--normal-text-color)",
-            boxShadow: "var(--shadow)"
-          }}
+          className="p-1 border shadow-lg border-neutral-200 bg-white dark:bg-neutral-900 dark:border-neutral-700"
         />
       </div>
       <div
@@ -219,9 +211,8 @@ export default function Results({ matches, category, pagina }) {
           </tbody>
         </table>
       </div>
-      <div className="pagination">
-        <button
-          className="boton"
+      <div className="flex gap-x-4 justify-center">
+        <Button
           disabled={!canPreviousPage}
           onClick={e => {
             const queryParams = new URLSearchParams(window.location.search);
@@ -235,20 +226,18 @@ export default function Results({ matches, category, pagina }) {
             );
             previousPage();
           }}
-          style={{ margin: 0, marginRight: "10px" }}
         >
           Anterior
-        </button>
-        <div className="pageIndicator">
+        </Button>
+        <div className="flex flex-col items-center">
           <div>
             Página {pageIndex + 1} de {Math.max(pageCount, 1)}
           </div>
-          <div style={{ color: "var(--header-color)", fontSize: "0.75em" }}>
+          <div className="text-sm text-neutral-500">
             {rows.length} resultado{rows.length !== 1 ? "s" : ""}
           </div>
         </div>
-        <button
-          className="boton"
+        <Button
           disabled={!canNextPage}
           onClick={e => {
             const queryParams = new URLSearchParams(window.location.search);
@@ -262,10 +251,9 @@ export default function Results({ matches, category, pagina }) {
             );
             nextPage();
           }}
-          style={{ margin: 0, marginLeft: "10px" }}
         >
           Siguiente
-        </button>
+        </Button>
       </div>
     </>
   );

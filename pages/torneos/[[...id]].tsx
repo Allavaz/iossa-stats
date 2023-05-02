@@ -11,6 +11,8 @@ import {
   temporadaActual
 } from "../../utils/Utils";
 import { GetServerSideProps } from "next";
+import Title from "../../components/commons/title";
+import Select from "../../components/commons/select";
 
 function getCategory(arg: string) {
   if (arg === "all") {
@@ -110,43 +112,40 @@ export default function Posiciones({
         <meta property="og:image" content="/logo-solo.png" />
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
       </Head>
-      <select
-        className="selector"
-        defaultValue={temporada}
-        onChange={e => goToTemporada(e.target.value)}
-      >
-        {Torneos.filter(e => !hideTemporadas.includes(e.temporada)).map(
-          (item, index) => (
-            <option key={index} value={item.temporada}>
-              {item.titulo}
-            </option>
-          )
-        )}
-      </select>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly"
-        }}
-      >
-        {tablas.map(
-          item =>
-            item.teams.length > 0 && (
-              <PositionsComponent
-                key={item.name}
-                teams={item.teams}
-                header={item.name}
-              />
+      <div className="flex flex-col gap-y-4">
+        <Select
+          defaultValue={temporada}
+          onChange={e => goToTemporada(e.target.value)}
+        >
+          {Torneos.filter(e => !hideTemporadas.includes(e.temporada)).map(
+            (item, index) => (
+              <option key={index} value={item.temporada}>
+                {item.titulo}
+              </option>
             )
-        )}
-      </div>
-      {challonges.map(item => (
-        <div key={item.name}>
-          <h3 style={{ marginBottom: 0 }}>{item.name}</h3>
-          <Challonge id={item.challonge}></Challonge>
+          )}
+        </Select>
+        <div className="flex flex-wrap justify-center gap-4">
+          {tablas.map(
+            item =>
+              item.teams.length > 0 && (
+                <div className="grow overflow-x-auto">
+                  <PositionsComponent
+                    key={item.name}
+                    teams={item.teams}
+                    header={item.name}
+                  />
+                </div>
+              )
+          )}
         </div>
-      ))}
+        {challonges.map(item => (
+          <div className="flex flex-col gap-y-4" key={item.name}>
+            <Title>{item.name}</Title>
+            <Challonge id={item.challonge} />
+          </div>
+        ))}
+      </div>
     </>
   );
 }

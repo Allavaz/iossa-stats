@@ -32,29 +32,24 @@ export default function Footer() {
   ];
 
   return (
-    <div id="footer-wrapper">
-      <div id="footer-text">
-        <hr></hr>
-        <center>
-          <table className="footerTable">
-            <tbody>
-              <tr>
-                {socials.map((item, index) => (
-                  <td key={index}>
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FontAwesomeIcon icon={item.icon}></FontAwesomeIcon>
-                    </a>
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-          <p>Hecho con ♥ por Allavaz.</p>
-        </center>
+    <div className="w-full">
+      <div className="m-auto my-5 flex w-full max-w-6xl flex-col items-center justify-center gap-y-3">
+        <div className="my-6 w-full border-t border-dashed border-neutral-300 dark:border-neutral-600" />
+        <div className="flex gap-x-3">
+          {socials.map((item, index) => (
+            <div key={index}>
+              <a
+                className="text-3xl text-neutral-500 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-500"
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={item.icon}></FontAwesomeIcon>
+              </a>
+            </div>
+          ))}
+        </div>
+        <p className="text-neutral-500">Hecho con ♥ por Allavaz.</p>
       </div>
     </div>
   );

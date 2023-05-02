@@ -6,3 +6,7 @@
   font-family: "Inter var";
   src: url("../public/Inter-VariableFont_slnt,wght.ttf");
 }
+
+.dark {
+  color-scheme: dark;
+}

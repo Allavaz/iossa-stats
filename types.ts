@@ -72,6 +72,9 @@ export interface Player extends PlayerStatistics {
   name: string;
   team: string;
   matches: number;
+  wins: number;
+  draws: number;
+  losses: number;
   profilePicture?: string;
   positions: {
     position: string;

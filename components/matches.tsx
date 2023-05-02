@@ -2,15 +2,18 @@ import { useRouter } from "next/router";
 import { Match } from "../types";
 import { fecha } from "../utils/Utils";
 import MatchRow from "./matchRow";
+import Title from "./commons/title";
+import React from "react";
+import Button from "./commons/button";
 
 export default function Matches({ matches }: { matches: Match[] }) {
   const router = useRouter();
 
   return (
-    <div className="matchesContainer">
+    <div className="flex grow flex-col gap-y-4 items-center">
       {matches.map((match, id, array) => (
-        <div key={id}>
-          <h3
+        <React.Fragment key={id}>
+          <Title
             style={{
               display:
                 id === 0 ||
@@ -20,18 +23,11 @@ export default function Matches({ matches }: { matches: Match[] }) {
             }}
           >
             RESULTADOS DEL {fecha(match.fecha)}
-          </h3>
-          <div className="divDataTable" id="divMatchesTable" key={id}>
-            <MatchRow match={match} />
-          </div>
-        </div>
+          </Title>
+          <MatchRow match={match} />
+        </React.Fragment>
       ))}
-      <br></br>
-      <center>
-        <button className="boton" onClick={_ => router.push("/resultados")}>
-          Ver más...
-        </button>
-      </center>
+      <Button onClick={_ => router.push("/resultados")}>Ver más...</Button>
     </div>
   );
 }
