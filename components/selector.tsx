@@ -4,7 +4,7 @@ import Select from "./commons/select";
 
 export default function Selector({ selectTorneo, selectTemporada, temporada }) {
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-4">
       <Select
         defaultValue={temporada}
         onChange={e => selectTemporada(e.target.value)}
