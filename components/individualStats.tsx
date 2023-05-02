@@ -32,8 +32,7 @@ export default function IndividualStats(props: Props) {
         <Link href={"/jugador/" + info.row.original._id}>
           <a>{info.getValue()}</a>
         </Link>
-      ),
-      enablePinning: true
+      )
     }),
     columnHelper.accessor("team", {
       header: () => "Equipo",
@@ -182,12 +181,8 @@ export default function IndividualStats(props: Props) {
       pagination: {
         pageIndex: props.pagina,
         pageSize: 15
-      },
-      columnPinning: {
-        left: ["name"]
       }
-    },
-    enablePinning: true
+    }
   });
 
   return (
