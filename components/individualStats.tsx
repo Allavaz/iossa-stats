@@ -2,7 +2,9 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
 import { useRouter } from "next/router";
@@ -174,6 +176,8 @@ export default function IndividualStats(props: Props) {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     initialState: {
       pagination: {
         pageIndex: props.pagina,
@@ -196,30 +200,58 @@ export default function IndividualStats(props: Props) {
               <tr className="dark:bg-neutral-900 bg-white" key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
                   <th
-                    className="py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"
+                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 ${
+                      header.id === "name" ? "sticky left-0 border-r" : ""
+                    }`}
                     key={header.id}
-                    style={
-                      header.id === "name"
-                        ? {
-                            position: "sticky",
-                            left: 0,
-                            borderRightWidth: "1px"
-                          }
-                        : {}
-                    }
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className="cursor-pointer select-none"
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
+                        {{ asc: " ↑", desc: " ↓" }[
+                          header.column.getIsSorted() as string
+                        ] ?? null}
+                      </div>
+                    )}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
           <tbody>
+            <tr>
+              <td className="sticky left-0 p-1 border-x border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+                <input
+                  className="p-1 text-center"
+                  placeholder="Buscar jugador…"
+                  onChange={e =>
+                    table.getColumn("name").setFilterValue(e.target.value)
+                  }
+                />
+              </td>
+              <td className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+                <input
+                  className="p-1 text-center"
+                  placeholder="Buscar equipo…"
+                  onChange={e =>
+                    table.getColumn("team").setFilterValue(e.target.value)
+                  }
+                />
+              </td>
+              <td
+                className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950 text-left text-neutral-500 dark:text-neutral-400"
+                colSpan={columns.length - 2}
+              >
+                {table.getPrePaginationRowModel().rows.length === 0 &&
+                  "No hay jugadores"}
+              </td>
+            </tr>
             {table.getRowModel().rows.map(row => (
               <tr
                 className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 group"
@@ -227,17 +259,10 @@ export default function IndividualStats(props: Props) {
               >
                 {row.getVisibleCells().map(cell => (
                   <td
-                    className="py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950"
+                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
+                      cell.column.id === "name" ? "sticky left-0 border-r" : ""
+                    }`}
                     key={cell.id}
-                    style={
-                      cell.column.id === "name"
-                        ? {
-                            position: "sticky",
-                            left: 0,
-                            borderRightWidth: "1px"
-                          }
-                        : {}
-                    }
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -271,7 +296,7 @@ export default function IndividualStats(props: Props) {
         <div className="flex flex-col items-center">
           <div>
             Página {table.getState().pagination.pageIndex + 1} de{" "}
-            {table.getPageCount()}
+            {Math.max(table.getPageCount(), 1)}
           </div>
           <div className="text-neutral-500 text-sm">
             {table.getPrePaginationRowModel().rows.length} resultado
