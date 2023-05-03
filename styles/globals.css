@@ -10,3 +10,8 @@
 .dark {
   color-scheme: dark;
 }
+
+.italic {
+  font-variation-settings: "slnt" -7;
+  font-style: oblique 7deg;
+}
