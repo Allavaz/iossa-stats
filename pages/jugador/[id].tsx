@@ -1,29 +1,26 @@
 import PlayerCard from "../../components/playerCard";
-import { getPlayerMatches } from "../../lib/getFromDB";
+import { getPlayerMatches, getPlayerScoredTeams } from "../../lib/getFromDB";
 import { getSteamInfo } from "../../lib/getFromSteam";
 import PlayerStats from "../../utils/PlayerStats";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import PlayerTeamsTable from "../../components/playerTeams";
-import EfficiencyLine from "../../components/efficiencyLine";
 import PlayerMatches from "../../components/playerMatches";
 import PlayerTeams from "../../utils/PlayerTeams";
 import { GetServerSideProps } from "next";
+import PlayerMostScoredTeams from "../../components/playerMostScoredTeams";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const [playerMatches, steamInfo] = await Promise.all([
+  const [playerMatches, steamInfo, teamsMostScored] = await Promise.all([
     getPlayerMatches(context.params.id as string),
-    getSteamInfo([context.params.id as string])
+    getSteamInfo([context.params.id as string]),
+    getPlayerScoredTeams(context.params.id as string)
   ]);
   if (playerMatches.length === 0) return { notFound: true };
   if (!steamInfo) return { notFound: true };
   const statsAll = PlayerStats(playerMatches, context.params.id);
   const statsLast15 = PlayerStats(
     playerMatches.slice(0, 15),
-    context.params.id
-  );
-  const statsLast10 = PlayerStats(
-    playerMatches.slice(0, 10),
     context.params.id
   );
   const playerMatchesReversed = [...playerMatches].reverse();
@@ -36,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       playerMatches,
       statsAll,
       statsLast15,
-      statsLast10,
+      teamsMostScored,
       steamInfo: steamInfo[0],
       playerTeams
     }
@@ -47,7 +44,7 @@ export default function Player({
   playerMatches,
   statsAll,
   statsLast15,
-  statsLast10,
+  teamsMostScored,
   steamInfo,
   playerTeams
 }) {
@@ -93,18 +90,9 @@ export default function Player({
           justifyContent: "space-between",
           columnGap: "20px"
         }}
-        suppressHydrationWarning={true}
       >
         <PlayerTeamsTable teams={playerTeams} />
-        {typeof window !== "undefined" && (
-          <EfficiencyLine
-            playerMatches={playerMatches.slice(0, 10)}
-            id={statsAll.steamid}
-            type={
-              statsLast10.saves > statsLast10.shotsontarget ? "saves" : "goals"
-            }
-          />
-        )}
+        <PlayerMostScoredTeams teams={teamsMostScored} />
       </div>
       <PlayerMatches matches={playerMatches} id={statsAll.steamid} />
     </>
