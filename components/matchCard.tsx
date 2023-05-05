@@ -15,6 +15,7 @@ import ScoreEditor from "./scoreEditor";
 import MatchEventEditor from "./matchEventEditor";
 import { Event, Match, MatchEvent, Player } from "../types";
 import Link from "next/link";
+import Card from "./commons/card";
 
 export default function MatchCard({
   data,
@@ -194,51 +195,7 @@ export default function MatchCard({
   }
 
   return (
-    <div className="whitespace">
-      {editing === "torneo" ? (
-        <TorneoEditor
-          torneo={data.torneo}
-          onChangeTorneo={onChangeTorneo}
-          setEditing={setEditing}
-        />
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "10px",
-            height: "22px"
-          }}
-        >
-          {editable && <div style={{ flex: 1 }} />}
-          <div
-            style={{
-              color: "var(--header-color)",
-              fontSize: "10pt",
-              marginLeft: "5px",
-              marginRight: "5px"
-            }}
-          >
-            {data.torneo}
-          </div>
-          {editable && (
-            <div style={{ flex: 1 }}>
-              <FontAwesomeIcon
-                icon={faEdit}
-                style={{
-                  cursor: "pointer",
-                  fontSize: "10pt",
-                  color: "var(--normal-text-color)"
-                }}
-                onClick={e => {
-                  setEditing("torneo");
-                }}
-              />
-            </div>
-          )}
-        </div>
-      )}
+    <Card>
       {editing && typeof editing.event !== "undefined" ? (
         <MatchEventEditor
           item={
@@ -251,10 +208,35 @@ export default function MatchCard({
           setEditing={setEditing}
         />
       ) : null}
-      <table className="resulttable">
+      <table className="w-full text-center table-fixed align-middle">
         <tbody>
           <tr>
-            <td>
+            <td className="p-1" colSpan={3}>
+              {editing === "torneo" ? (
+                <TorneoEditor
+                  torneo={data.torneo}
+                  onChangeTorneo={onChangeTorneo}
+                  setEditing={setEditing}
+                />
+              ) : (
+                <div className="flex justify-center gap-x-2">
+                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                    {data.torneo}
+                  </div>
+                  {editable && (
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={e => {
+                        setEditing("torneo");
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td className="p-1">
               {editing === "homeTeamName" ? (
                 <TeamNameEditor
                   teams={data.teams}
@@ -263,42 +245,29 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
+                <div>
                   <Link href={`/equipo/${data.teams[0].teamname}`}>
-                    <a style={{ marginLeft: "5px", marginRight: "5px" }}>
-                      <h2>
-                        <div id="teamname">{data.teams[0].teamname}</div>
-                        <div id="shortname">
-                          {getTeamShortname(data.teams[0].teamname)}
-                        </div>
-                      </h2>
+                    <a className="font-bold text-3xl">
+                      <div className="hidden sm:block">
+                        {data.teams[0].teamname}
+                      </div>
+                      <div className="sm:hidden">
+                        {getTeamShortname(data.teams[0].teamname)}
+                      </div>
                     </a>
                   </Link>
                   {editable && (
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.2em",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={e => {
-                          setEditing("homeTeamName");
-                        }}
-                      />
-                    </div>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={e => {
+                        setEditing("homeTeamName");
+                      }}
+                    />
                   )}
                 </div>
               )}
             </td>
-            <td>
+            <td className="p-1">
               {editing === "date" ? (
                 <DateTimeEditor
                   date={data.fecha}
@@ -306,46 +275,22 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  {editable ? <div style={{ flex: 1 }}></div> : null}
-                  <div
-                    style={{
-                      marginLeft: "5px",
-                      marginRight: "5px",
-                      color: "var(--header-color)"
-                    }}
-                  >
+                <div>
+                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
                     {fecha(data.fecha)}
                   </div>
                   {editable ? (
-                    <div
-                      style={{
-                        flex: 1,
-                        textAlign: "left"
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={e => {
+                        setEditing("date");
                       }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={e => {
-                          setEditing("date");
-                        }}
-                      />
-                    </div>
+                    />
                   ) : null}
                 </div>
               )}
             </td>
-            <td>
+            <td className="p-1">
               {editing === "awayTeamName" ? (
                 <TeamNameEditor
                   teams={data.teams}
@@ -362,47 +307,39 @@ export default function MatchCard({
                   }}
                 >
                   <Link href={`/equipo/${data.teams[1].teamname}`}>
-                    <a style={{ marginLeft: "5px", marginRight: "5px" }}>
-                      <h2>
-                        <div id="teamname">{data.teams[1].teamname}</div>
-                        <div id="shortname">
-                          {getTeamShortname(data.teams[1].teamname)}
-                        </div>
-                      </h2>
+                    <a className="font-bold text-3xl">
+                      <div className="hidden sm:block">
+                        {data.teams[1].teamname}
+                      </div>
+                      <div className="sm:hidden">
+                        {getTeamShortname(data.teams[1].teamname)}
+                      </div>
                     </a>
                   </Link>
                   {editable ? (
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.2em",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={() => {
-                          setEditing("awayTeamName");
-                        }}
-                      />
-                    </div>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => {
+                        setEditing("awayTeamName");
+                      }}
+                    />
                   ) : null}
                 </div>
               )}
             </td>
           </tr>
           <tr>
-            <td>
+            <td className="p-4">
               <Link href={`/equipo/${data.teams[0].teamname}`}>
-                <a>
+                <a className="flex justify-center">
                   <img
-                    className="bigClubLogo"
                     alt={data.teams[0].teamname}
                     src={getTeamLogo(data.teams[0].teamname)}
                   />
                 </a>
               </Link>
             </td>
-            <td>
+            <td className="p-4">
               {editing === "score" ? (
                 <ScoreEditor
                   home={data.teams[0].score}
@@ -411,47 +348,30 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  {editable ? <div style={{ flex: 1 }}></div> : null}
-                  <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-                    <h2 id="result">
-                      {data.teams[0].score} - {data.teams[1].score}
-                    </h2>
+                <div>
+                  <div className="font-bold text-4xl">
+                    {data.teams[0].score} - {data.teams[1].score}
                   </div>
                   {editable ? (
-                    <div
+                    <FontAwesomeIcon
+                      icon={faEdit}
                       style={{
-                        flex: 1,
-                        textAlign: "left"
+                        cursor: "pointer",
+                        fontSize: "1.2em",
+                        color: "var(--normal-text-color)"
                       }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.2em",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={e => {
-                          setEditing("score");
-                        }}
-                      />
-                    </div>
+                      onClick={e => {
+                        setEditing("score");
+                      }}
+                    />
                   ) : null}
                 </div>
               )}
             </td>
-            <td>
+            <td className="p-4">
               <Link href={`/equipo/${data.teams[1].teamname}`}>
-                <a>
+                <a className="flex justify-center">
                   <img
-                    className="bigClubLogo"
                     alt={data.teams[1].teamname}
                     src={getTeamLogo(data.teams[1].teamname)}
                   />
@@ -459,9 +379,9 @@ export default function MatchCard({
               </Link>
             </td>
           </tr>
-          <tr id="eventslist">
-            <td>
-              <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
+          <tr className="align-top">
+            <td className="p-1">
+              <ul>
                 {data.matchevents.map((item, index) => (
                   <MatchEventComponent
                     item={item}
@@ -477,7 +397,6 @@ export default function MatchCard({
                   <li>
                     <FontAwesomeIcon
                       icon={faPlus}
-                      style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("home");
                       }}
@@ -486,17 +405,9 @@ export default function MatchCard({
                 ) : null}
               </ul>
             </td>
-            <td>
+            <td className="p-1">
               {editable && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    rowGap: "10px"
-                  }}
-                >
+                <div>
                   {create && (
                     <div
                       style={{
@@ -541,7 +452,7 @@ export default function MatchCard({
                       width: "20ch",
                       height: "22px"
                     }}
-                  ></input>
+                  />
                   <button
                     className="boton"
                     disabled={loading}
@@ -612,7 +523,7 @@ export default function MatchCard({
               )}
             </td>
             <td>
-              <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
+              <ul>
                 {data.matchevents.map((item: MatchEvent, index) => (
                   <MatchEventComponent
                     item={item}
@@ -628,7 +539,6 @@ export default function MatchCard({
                   <li>
                     <FontAwesomeIcon
                       icon={faPlus}
-                      style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("away");
                       }}
@@ -640,6 +550,6 @@ export default function MatchCard({
           </tr>
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 }

@@ -155,17 +155,14 @@ export default function PositionsComponent({
   ];
 
   return (
-    <div className="flex flex-col gap-y-4 text-sm">
+    <div className="flex flex-col gap-y-4">
       <Title>{header}</Title>
-      <div className="shadow-lg overflow-x-auto flex">
+      <div className="shadow-lg overflow-x-auto flex text-sm border rounded-lg border-neutral-200 dark:border-neutral-700">
         <table className="min-w-max text-center grow">
           <thead>
-            <tr className="dark:bg-neutral-900 bg-white">
+            <tr className="dark:bg-neutral-900 bg-white border-b border-neutral-100 dark:border-neutral-700">
               {columns.map(e => (
-                <th
-                  className="py-1 px-2 border border-neutral-200 dark:border-neutral-700"
-                  key={e.header}
-                >
+                <th className="py-1 px-2" key={e.header}>
                   {e.header}
                 </th>
               ))}
@@ -174,16 +171,15 @@ export default function PositionsComponent({
           <tbody>
             {teams.map((item, index) => (
               <tr
-                className="odd:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950"
+                className="odd:bg-neutral-100 even:bg-white dark:even:bg-neutral-900 dark:odd:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 last:border-none"
                 key={item._id}
               >
                 {columns.map(e => (
                   <td
                     key={e.header}
-                    className="py-1 px-2 border border-neutral-200 dark:border-neutral-700"
-                    style={{
-                      fontWeight: highlight === item._id ? "bold" : "unset"
-                    }}
+                    className={`p-1 ${
+                      highlight === item._id ? "bold" : "font-normal"
+                    }`}
                   >
                     {e.render ? e.render(item, index) : item[e.accessor]}
                   </td>
@@ -193,10 +189,7 @@ export default function PositionsComponent({
             {classification &&
               classification.colors.map(c => (
                 <tr key={c.label}>
-                  <td
-                    className="py-1 px-2 border border-neutral-200 dark:border-neutral-700"
-                    colSpan={columns.length}
-                  >
+                  <td className="py-1 px-2" colSpan={columns.length}>
                     <div className="flex items-center gap-x-2">
                       <ColoredBar color={c.color} />
                       {c.label}

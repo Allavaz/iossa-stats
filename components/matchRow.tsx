@@ -9,7 +9,7 @@ export default function MatchRow({ match }) {
   return (
     <Link href={"/partido/" + match._id}>
       <a className="flex w-full bg-white text-sm shadow-lg transition-colors hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-        <div className="flex w-[40%] items-center justify-end gap-x-2 border p-3 dark:border-neutral-700">
+        <div className="flex w-[40%] items-center justify-end gap-x-2 border p-3 border-neutral-200 dark:border-neutral-700">
           <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
             {match.teams[0].teamname}
           </div>

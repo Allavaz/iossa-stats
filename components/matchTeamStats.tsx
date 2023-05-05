@@ -49,41 +49,38 @@ export default function MatchTeamStats(props) {
   ];
 
   return (
-    <div className="divDataTable" id="divStatsTable" style={props.style}>
-      <table
-        className="dataTable"
-        id="teamstatstable"
-        style={{ tableLayout: "auto" }}
-      >
+    <div
+      className="shadow-lg overflow-x-auto flex text-sm rounded-lg border border-neutral-200 dark:border-neutral-700"
+      style={props.style}
+    >
+      <table className="min-w-max text-center grow">
         <thead>
-          <tr>
-            <th>
-              <img
-                height="16px"
-                alt={props.data.teams[0].teamname}
-                src={getTeamLogo(props.data.teams[0].teamname)}
-              />
+          <tr className="dark:bg-neutral-900 bg-white border-b border-neutral-200 dark:border-neutral-700">
+            <th className="py-1 px-2">
+              <div className="flex justify-center">
+                <img
+                  className="h-6"
+                  alt={props.data.teams[0].teamname}
+                  src={getTeamLogo(props.data.teams[0].teamname)}
+                />
+              </div>
             </th>
-            <th>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
+            <th className="py-1 px-2">
+              <div>
                 {props.editable ? <div style={{ flex: 1 }}></div> : null}
                 <div style={{ marginLeft: "5px", marginRight: "5px" }}>
                   ESTADÍSTICAS DEL EQUIPO
                 </div>
               </div>
             </th>
-            <th>
-              <img
-                height="16px"
-                alt={props.data.teams[1].teamname}
-                src={getTeamLogo(props.data.teams[1].teamname)}
-              />
+            <th className="py-1 px-2">
+              <div className="flex justify-center">
+                <img
+                  className="h-6"
+                  alt={props.data.teams[1].teamname}
+                  src={getTeamLogo(props.data.teams[1].teamname)}
+                />
+              </div>
             </th>
           </tr>
         </thead>
@@ -91,13 +88,16 @@ export default function MatchTeamStats(props) {
           {rows.map(
             e =>
               e.accessor(0) != null && (
-                <tr key={e.label}>
-                  <td>
+                <tr
+                  className="odd:bg-neutral-100 even:bg-white dark:even:bg-neutral-900 dark:odd:bg-neutral-950 border-b last:border-none border-neutral-200 dark:border-neutral-800"
+                  key={e.label}
+                >
+                  <td className="py-1 px-2">
                     {e.accessor(0)}
                     {1 && e.extra}
                   </td>
-                  <td>{e.label}</td>
-                  <td>
+                  <td className="py-1 px-2">{e.label}</td>
+                  <td className="py-1 px-2">
                     {e.accessor(1)}
                     {1 && e.extra}
                   </td>

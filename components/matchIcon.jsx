@@ -3,49 +3,38 @@ export default function MatchIcon({ event }) {
     case "GOAL":
       return (
         <img
+          className="dark:invert h-5"
           src="/matchicons/pelota.png"
-          id="pelota"
           alt="Gol"
-          height="15px"
-          style={{ marginRight: "5px", verticalAlign: "text-top" }}
-        ></img>
+        />
       );
     case "OWN GOAL":
       return (
         <img
+          className="dark:invert h-5"
           src="/matchicons/gc.png"
-          id="pelota"
           alt="Gol en Contra"
-          height="15px"
-          style={{ marginRight: "5px", verticalAlign: "text-top" }}
-        ></img>
+        />
       );
     case "YELLOW CARD":
       return (
         <img
+          className="h-5"
           src="/matchicons/yellowcard.png"
           alt="Tarjeta Amarilla"
-          height="15px"
-          style={{ marginRight: "5px", verticalAlign: "text-top" }}
-        ></img>
+        />
       );
     case "RED CARD":
       return (
-        <img
-          src="/matchicons/redcard.png"
-          alt="Tarjeta Roja"
-          height="15px"
-          style={{ marginRight: "5px", verticalAlign: "text-top" }}
-        ></img>
+        <img className="h-5" src="/matchicons/redcard.png" alt="Tarjeta Roja" />
       );
     case "SECOND YELLOW":
       return (
         <img
+          className="h-5"
           src="/matchicons/doubleyellowcard.png"
           alt="Doble Amarilla"
-          height="15px"
-          style={{ marginRight: "5px", verticalAlign: "text-top" }}
-        ></img>
+        />
       );
     default:
       return null;

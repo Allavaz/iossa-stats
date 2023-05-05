@@ -50,32 +50,25 @@ export default function IndividualStats(props: Props) {
       )
     }),
     columnHelper.accessor("matches", {
-      header: () => "Partidos",
-      cell: info => info.getValue()
+      header: () => "Partidos"
     }),
     columnHelper.accessor("wins", {
-      header: () => "Victorias",
-      cell: info => info.getValue()
+      header: () => "Victorias"
     }),
     columnHelper.accessor("losses", {
-      header: () => "Derrotas",
-      cell: info => info.getValue()
+      header: () => "Derrotas"
     }),
     columnHelper.accessor("draws", {
-      header: () => "Empates",
-      cell: info => info.getValue()
+      header: () => "Empates"
     }),
     columnHelper.accessor("goals", {
-      header: () => "Goles",
-      cell: info => info.getValue()
+      header: () => "Goles"
     }),
     columnHelper.accessor("assists", {
-      header: () => "Asistencias",
-      cell: info => info.getValue()
+      header: () => "Asistencias"
     }),
     columnHelper.accessor("secondassists", {
-      header: () => "Segundas asistencias",
-      cell: info => info.getValue()
+      header: () => "Segundas asistencias"
     }),
     columnHelper.accessor("shots", {
       header: () => "Tiros (al arco)",
@@ -86,8 +79,7 @@ export default function IndividualStats(props: Props) {
       cell: info => `${info.getValue()} (${info.row.original.passescompleted})`
     }),
     columnHelper.accessor("keypasses", {
-      header: () => "Pases clave",
-      cell: info => info.getValue()
+      header: () => "Pases clave"
     }),
     columnHelper.accessor("passescompleted", {
       header: () => "Precisión de pases",
@@ -97,32 +89,26 @@ export default function IndividualStats(props: Props) {
         )}%`
     }),
     columnHelper.accessor("interceptions", {
-      header: () => "Intercepciones",
-      cell: info => info.getValue()
+      header: () => "Intercepciones"
     }),
     columnHelper.accessor("saves", {
       header: () => "Atajadas (sin rebote)",
       cell: info => `${info.getValue()} (${info.row.original.savescaught})`
     }),
     columnHelper.accessor("fouls", {
-      header: () => "Faltas",
-      cell: info => info.getValue()
+      header: () => "Faltas"
     }),
     columnHelper.accessor("yellowcards", {
-      header: () => "Tarjetas amarillas",
-      cell: info => info.getValue()
+      header: () => "Tarjetas amarillas"
     }),
     columnHelper.accessor("redcards", {
-      header: () => "Tarjetas rojas",
-      cell: info => info.getValue()
+      header: () => "Tarjetas rojas"
     }),
     columnHelper.accessor("owngoals", {
-      header: () => "Goles en contra",
-      cell: info => info.getValue()
+      header: () => "Goles en contra"
     }),
     columnHelper.accessor("offsides", {
-      header: () => "Offsides",
-      cell: info => info.getValue()
+      header: () => "Offsides"
     }),
     columnHelper.accessor("distancecovered", {
       header: () => "Prom. distancia recorrida",
@@ -133,36 +119,29 @@ export default function IndividualStats(props: Props) {
       cell: info => `${Math.round(info.getValue())}%`
     }),
     columnHelper.accessor("corners", {
-      header: () => "Córners",
-      cell: info => info.getValue()
+      header: () => "Córners"
     }),
     columnHelper.accessor("throwins", {
-      header: () => "Laterales",
-      cell: info => info.getValue()
+      header: () => "Laterales"
     }),
     columnHelper.accessor("penalties", {
-      header: () => "Penales",
-      cell: info => info.getValue()
+      header: () => "Penales"
     }),
     columnHelper.accessor("freekicks", {
-      header: () => "Tiros libres",
-      cell: info => info.getValue()
+      header: () => "Tiros libres"
     }),
     columnHelper.accessor("tackles", {
       header: () => "Tackles (completados)",
       cell: info => `${info.getValue()} (${info.row.original.tacklescompleted})`
     }),
     columnHelper.accessor("foulssuffered", {
-      header: () => "Faltas recibidas",
-      cell: info => info.getValue()
+      header: () => "Faltas recibidas"
     }),
     columnHelper.accessor("goalkicks", {
-      header: () => "Saques de arco",
-      cell: info => info.getValue()
+      header: () => "Saques de arco"
     }),
     columnHelper.accessor("chancescreated", {
-      header: () => "Ocasiones creadas",
-      cell: info => info.getValue()
+      header: () => "Ocasiones creadas"
     }),
     columnHelper.accessor("secondsplayed", {
       header: () => "Tiempo jugado total",
@@ -186,7 +165,7 @@ export default function IndividualStats(props: Props) {
   });
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <>
       <Title>Estadísticas Individuales - {props.category}</Title>
       <div className="shadow-lg overflow-x-auto flex border-t border-r border-neutral-200 dark:border-neutral-700">
         <table className="min-w-max text-center text-sm border-separate border-spacing-0">
@@ -221,18 +200,18 @@ export default function IndividualStats(props: Props) {
           </thead>
           <tbody>
             <tr>
-              <td className="sticky left-0 p-1 border-x border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+              <td className="sticky left-0 border-x border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
                 <input
-                  className="p-1 text-center"
+                  className="p-1 text-center bg-neutral-100 dark:bg-neutral-950"
                   placeholder="Buscar jugador…"
                   onChange={e =>
                     table.getColumn("name").setFilterValue(e.target.value)
                   }
                 />
               </td>
-              <td className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+              <td className="border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
                 <input
-                  className="p-1 text-center"
+                  className="p-1 text-center bg-neutral-100 dark:bg-neutral-950"
                   placeholder="Buscar equipo…"
                   onChange={e =>
                     table.getColumn("team").setFilterValue(e.target.value)
@@ -240,7 +219,7 @@ export default function IndividualStats(props: Props) {
                 />
               </td>
               <td
-                className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950 text-left text-neutral-500 dark:text-neutral-400"
+                className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950 text-left text-neutral-500 dark:text-neutral-400 italic"
                 colSpan={columns.length - 2}
               >
                 {table.getPrePaginationRowModel().rows.length === 0 &&
@@ -319,6 +298,6 @@ export default function IndividualStats(props: Props) {
           Siguiente
         </Button>
       </div>
-    </div>
+    </>
   );
 }

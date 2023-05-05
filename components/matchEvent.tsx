@@ -26,22 +26,8 @@ export default function MatchEventComponent({
     ) {
       return (
         <li key={index}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-            className="invisibleUnlessHoverParent"
-          >
-            {editable ? <div style={{ flex: 1 }}></div> : null}
-            <div
-              style={{
-                marginLeft: "5px",
-                marginRight: "5px",
-                whiteSpace: "normal"
-              }}
-            >
+          <div>
+            <div className="flex gap-x-1 items-center justify-center text-sm p-1">
               <MatchIcon event={item.event}></MatchIcon>
               <Link href={`/jugador/${item.player1SteamId}`}>
                 <a>
@@ -51,13 +37,7 @@ export default function MatchEventComponent({
               {item.name2 && item.event === "GOAL" && (
                 <Link href={`/jugador/${item.player2SteamId}`}>
                   <a>
-                    <span
-                      style={{
-                        fontSize: "0.85em",
-                        color: "var(--header-color)",
-                        fontStyle: "italic"
-                      }}
-                    >{`(${item.name2})`}</span>
+                    <span className="italic text-xs">{`(${item.name2})`}</span>
                   </a>
                 </Link>
               )}{" "}
@@ -66,27 +46,17 @@ export default function MatchEventComponent({
             {editable ? (
               <div style={{ flex: 1, textAlign: "left" }}>
                 <FontAwesomeIcon
-                  className="invisibleUnlessHover"
-                  style={{
-                    marginLeft: "5px",
-                    cursor: "pointer"
-                  }}
                   icon={faEdit}
                   onClick={e => {
                     setEditing({ event: index });
                   }}
-                ></FontAwesomeIcon>
+                />
                 <FontAwesomeIcon
-                  className="invisibleUnlessHover"
-                  style={{
-                    marginLeft: "5px",
-                    cursor: "pointer"
-                  }}
                   icon={faTrashAlt}
                   onClick={e => {
                     onRemoveEvent(index);
                   }}
-                ></FontAwesomeIcon>
+                />
               </div>
             ) : null}
           </div>
@@ -102,67 +72,41 @@ export default function MatchEventComponent({
     ) {
       return (
         <li key={index}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-            className="invisibleUnlessHoverParent"
-          >
-            {editable ? <div style={{ flex: 1 }}></div> : null}
-            <div
-              style={{
-                marginLeft: "5px",
-                marginRight: "5px",
-                whiteSpace: "normal"
-              }}
-            >
-              <MatchIcon event={item.event}></MatchIcon>
-              <Link href={`/jugador/${item.player1SteamId}`}>
+          <div className="flex gap-x-1 items-center justify-center text-sm p-1">
+            <MatchIcon event={item.event}></MatchIcon>
+            <Link href={`/jugador/${item.player1SteamId}`}>
+              <a>
+                <span>{item.name}</span>
+              </a>
+            </Link>{" "}
+            {item.name2 && item.event === "GOAL" && (
+              <Link href={`/jugador/${item.player2SteamId}`}>
                 <a>
-                  <span>{item.name}</span>
+                  <span
+                    style={{
+                      fontSize: "0.85em",
+                      color: "var(--header-color)",
+                      fontStyle: "italic"
+                    }}
+                  >{`(${item.name2})`}</span>
                 </a>
-              </Link>{" "}
-              {item.name2 && item.event === "GOAL" && (
-                <Link href={`/jugador/${item.player2SteamId}`}>
-                  <a>
-                    <span
-                      style={{
-                        fontSize: "0.85em",
-                        color: "var(--header-color)",
-                        fontStyle: "italic"
-                      }}
-                    >{`(${item.name2})`}</span>
-                  </a>
-                </Link>
-              )}{" "}
-              {<span>{`(${Math.round(item.second / 60)}')`}</span>}
-            </div>
+              </Link>
+            )}{" "}
+            {<span>{`(${Math.round(item.second / 60)}')`}</span>}
             {editable ? (
               <div style={{ flex: 1, textAlign: "left" }}>
                 <FontAwesomeIcon
-                  className="invisibleUnlessHover"
-                  style={{
-                    marginLeft: "5px",
-                    cursor: "pointer"
-                  }}
                   icon={faEdit}
                   onClick={e => {
                     setEditing({ event: index });
                   }}
-                ></FontAwesomeIcon>
+                />
                 <FontAwesomeIcon
-                  className="invisibleUnlessHover"
-                  style={{
-                    marginLeft: "5px",
-                    cursor: "pointer"
-                  }}
                   icon={faTrashAlt}
                   onClick={e => {
                     onRemoveEvent(index);
                   }}
-                ></FontAwesomeIcon>
+                />
               </div>
             ) : null}
           </div>

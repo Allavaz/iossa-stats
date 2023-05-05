@@ -4,7 +4,7 @@ import Select from "./commons/select";
 
 export default function Selector({ selectTorneo, selectTemporada, temporada }) {
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-2">
       <Select
         defaultValue={temporada}
         onChange={e => selectTemporada(e.target.value)}
@@ -22,7 +22,7 @@ export default function Selector({ selectTorneo, selectTemporada, temporada }) {
           style={{ display: temporada === item.temporada ? "block" : "none" }}
         >
           {item.torneos.length > 1 && (
-            <div className="flex flex-wrap gap-x-2">
+            <div className="flex flex-wrap gap-2">
               <Button onClick={() => selectTorneo(item.temporada)}>
                 Totales
               </Button>

@@ -1,10 +1,18 @@
 import { useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import MatchIndivStatsEditor from "./matchIndivStatsEditor";
 import { secondsToMinutes } from "../lib/Utils";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable
+} from "@tanstack/react-table";
+import { MatchPlayer } from "../types";
+import Title from "./commons/title";
 
 export default function MatchIndividualStats(props) {
   function onChangeIndivStats(player) {
@@ -70,221 +78,190 @@ export default function MatchIndividualStats(props) {
     };
   };
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Jugador",
-        accessor: "info.name",
-        sticky: "left",
-        Cell: row => (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              columnGap: "5px"
-            }}
-          >
-            <Link href={"/jugador/" + row.row.original.info.steam_id}>
-              <a>{row.row.original.info.name}</a>
-            </Link>
-            {props.editable && (
-              <>
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    props.setEditing({
-                      player: row.row.index,
-                      side: props.side
-                    })
-                  }
-                />
-                <FontAwesomeIcon
-                  icon={faTrashAlt}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => onRemovePlayer(row.row.index)}
-                />
-              </>
-            )}
-          </div>
-        )
-      },
-      {
-        Header: "Pos.",
-        accessor: "statistics.positions[0].position"
-      },
-      {
-        Header: "Goles",
-        accessor: "statistics.goals"
-      },
-      {
-        Header: "Asistencias",
-        accessor: "statistics.assists"
-      },
-      {
-        Header: "Segundas Asistencias",
-        accessor: "statistics.secondassists"
-      },
-      {
-        Header: "Tiros (al Arco)",
-        accessor: "statistics.shotsontarget",
-        Cell: row => {
-          return (
-            row.row.original.statistics.shots +
-            " (" +
-            row.row.original.statistics.shotsontarget +
-            ")"
-          );
-        }
-      },
-      {
-        Header: "Pases (Completados)",
-        accessor: "statistics.passes",
-        Cell: row => {
-          return (
-            row.row.original.statistics.passes +
-            " (" +
-            row.row.original.statistics.passescompleted +
-            ")"
-          );
-        }
-      },
-      {
-        Header: "Precisión de Pases",
-        accessor: "statistics.passescompleted",
-        Cell: row => {
-          return isNaN(
-            row.row.original.statistics.passescompleted /
-              row.row.original.statistics.passes
-          )
-            ? "0%"
-            : Math.round(
-                (row.row.original.statistics.passescompleted /
-                  row.row.original.statistics.passes) *
-                  100
-              ) + "%";
-        }
-      },
-      {
-        Header: "Pases Clave",
-        accessor: "statistics.keypasses"
-      },
-      {
-        Header: "Intercepciones",
-        accessor: "statistics.interceptions"
-      },
-      {
-        Header: "Atajadas (Sin Rebote)",
-        accessor: "statistics.savescaught",
-        Cell: row => {
-          return (
-            row.row.original.statistics.saves +
-            " (" +
-            row.row.original.statistics.savescaught +
-            ")"
-          );
-        }
-      },
-      {
-        Header: "Faltas",
-        accessor: "statistics.fouls"
-      },
-      {
-        Header: "Tarjetas Amarillas",
-        accessor: "statistics.yellowcards"
-      },
-      {
-        Header: "Tarjetas Rojas",
-        accessor: "statistics.redcards"
-      },
-      {
-        Header: "Goles en Contra",
-        accessor: "statistics.owngoals"
-      },
-      {
-        Header: "Offsides",
-        accessor: "statistics.offsides"
-      },
-      {
-        Header: "Distancia Recorrida",
-        accessor: "statistics.distancecovered",
-        Cell: row => {
-          return (
-            Math.round(row.row.original.statistics.distancecovered) / 1000 +
-            " km"
-          );
-        }
-      },
-      {
-        Header: "Posesión",
-        accessor: "statistics.possession",
-        Cell: row => {
-          return Math.round(row.row.original.statistics.possession) + "%";
-        }
-      },
-      {
-        Header: "Córners",
-        accessor: "statistics.corners"
-      },
-      {
-        Header: "Laterales",
-        accessor: "statistics.throwins"
-      },
-      {
-        Header: "Penales",
-        accessor: "statistics.penalties"
-      },
-      {
-        Header: "Tiros Libres",
-        accessor: "statistics.freekicks"
-      },
-      {
-        Header: "Tackles (Completados)",
-        accessor: "statistics.tacklescompleted",
-        Cell: row => {
-          return (
-            row.row.original.statistics.tackles +
-            " (" +
-            row.row.original.statistics.tacklescompleted +
-            ")"
-          );
-        }
-      },
-      {
-        Header: "Faltas Sufridas",
-        accessor: "statistics.foulssuffered"
-      },
-      {
-        Header: "Saques de Arco",
-        accessor: "statistics.goalkicks"
-      },
-      {
-        Header: "Goles Recibidos",
-        accessor: "statistics.goalsconceded"
-      },
-      {
-        Header: "Ocasiones Creadas",
-        accessor: "statistics.chancescreated"
-      },
-      {
-        Header: "Tiempo Jugado",
-        accessor: "statistics.secondsplayed",
-        Cell: row => secondsToMinutes(row.row.original.statistics.secondsplayed)
+  const columnHelper = createColumnHelper<MatchPlayer>();
+
+  const columns = [
+    columnHelper.accessor(row => row.info.name, {
+      id: "name",
+      header: "Jugador",
+      cell: info => (
+        <div className="flex items-center justify-center gap-x-1">
+          <Link href={"/jugador/" + info.row.original.info.steam_id}>
+            <a>{info.getValue()}</a>
+          </Link>
+          {props.editable && (
+            <>
+              <FontAwesomeIcon
+                icon={faEdit}
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  props.setEditing({
+                    player: info.row.index,
+                    side: props.side
+                  })
+                }
+              />
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                style={{ cursor: "pointer" }}
+                onClick={() => onRemovePlayer(info.row.index)}
+              />
+            </>
+          )}
+        </div>
+      )
+    }),
+    columnHelper.accessor(row => row.statistics.positions[0].position, {
+      id: "position",
+      header: "Posición"
+    }),
+    columnHelper.accessor(row => row.statistics.goals, {
+      id: "goals",
+      header: "Goles"
+    }),
+    columnHelper.accessor(row => row.statistics.assists, {
+      id: "assists",
+      header: "Asistencias"
+    }),
+    columnHelper.accessor(row => row.statistics.secondassists, {
+      id: "secondassists",
+      header: "Segundas asistencias"
+    }),
+    columnHelper.accessor(row => row.statistics.shots, {
+      id: "shots",
+      header: "Tiros (al arco)",
+      cell: info => {
+        return `${info.getValue()} (${
+          info.row.original.statistics.shotsontarget
+        })`;
       }
-    ],
-    [props.editable]
-  );
+    }),
+    columnHelper.accessor(row => row.statistics.passes, {
+      id: "passes",
+      header: "Pases (completados)",
+      cell: info => {
+        return `${info.getValue()} (${
+          info.row.original.statistics.passescompleted
+        })`;
+      }
+    }),
+    columnHelper.accessor(
+      row =>
+        isNaN(row.statistics.passescompleted / row.statistics.passes)
+          ? 0
+          : Math.round(
+              (row.statistics.passescompleted / row.statistics.passes) * 100
+            ),
+      {
+        id: "passaccuracy",
+        header: "Precisión de pases",
+        cell: info => `${info.getValue()}%`
+      }
+    ),
+    columnHelper.accessor(row => row.statistics.keypasses, {
+      id: "keypasses",
+      header: "Pases clave"
+    }),
+    columnHelper.accessor(row => row.statistics.interceptions, {
+      id: "interceptions",
+      header: "Intercepciones"
+    }),
+    columnHelper.accessor(row => row.statistics.saves, {
+      id: "saves",
+      header: "Atajadas (sin rebote)",
+      cell: info => {
+        return `${info.getValue()} (${
+          info.row.original.statistics.savescaught
+        })`;
+      }
+    }),
+    columnHelper.accessor(row => row.statistics.fouls, {
+      id: "fouls",
+      header: "Faltas"
+    }),
+    columnHelper.accessor(row => row.statistics.yellowcards, {
+      id: "yellowcards",
+      header: "Tarjetas amarillas"
+    }),
+    columnHelper.accessor(row => row.statistics.redcards, {
+      id: "redcards",
+      header: "Tarjetas rojas"
+    }),
+    columnHelper.accessor(row => row.statistics.owngoals, {
+      id: "owngoals",
+      header: "Goles en contra"
+    }),
+    columnHelper.accessor(row => row.statistics.offsides, {
+      id: "offsides",
+      header: "Offsides"
+    }),
+    columnHelper.accessor(
+      row => (row.statistics.distancecovered / 1000).toPrecision(4),
+      {
+        id: "distancecovered",
+        header: "Distancia recorrida",
+        cell: info => `${info.getValue()} km`
+      }
+    ),
+    columnHelper.accessor(row => Math.round(row.statistics.possession), {
+      id: "possession",
+      header: "Posesión",
+      cell: info => `${info.getValue()}%`
+    }),
+    columnHelper.accessor(row => row.statistics.corners, {
+      id: "corners",
+      header: "Corners"
+    }),
+    columnHelper.accessor(row => row.statistics.throwins, {
+      id: "throwins",
+      header: "Laterales"
+    }),
+    columnHelper.accessor(row => row.statistics.penalties, {
+      id: "penalties",
+      header: "Penales"
+    }),
+    columnHelper.accessor(row => row.statistics.freekicks, {
+      id: "freekicks",
+      header: "Tiros libres"
+    }),
+    columnHelper.accessor(row => row.statistics.tackles, {
+      id: "tackles",
+      header: "Tackles (completados)",
+      cell: info => {
+        return `${info.getValue()} (${
+          info.row.original.statistics.tacklescompleted
+        })`;
+      }
+    }),
+    columnHelper.accessor(row => row.statistics.foulssuffered, {
+      id: "foulssuffered",
+      header: "Faltas recibidas"
+    }),
+    columnHelper.accessor(row => row.statistics.goalkicks, {
+      id: "goalkicks",
+      header: "Saques de arco"
+    }),
+    columnHelper.accessor(row => row.statistics.goalsconceded, {
+      id: "goalsconceded",
+      header: "Goles recibidos"
+    }),
+    columnHelper.accessor(row => row.statistics.secondsplayed, {
+      id: "secondsplayed",
+      header: "Tiempo jugado",
+      cell: info => secondsToMinutes(info.getValue())
+    })
+  ];
 
-  const data = useMemo(() => props.players, [props.players]);
-  const tableInstance = useTable({ columns, data }, useSortBy);
-
-  const { getTableProps, getTableBodyProps, rows, headerGroups, prepareRow } =
-    tableInstance;
+  const table = useReactTable({
+    data: props.players,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel()
+  });
 
   return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center" }}>
+    <>
+      <div>
         {props.editing &&
         typeof props.editing.player !== "undefined" &&
         props.editing.side === props.side ? (
@@ -301,16 +278,11 @@ export default function MatchIndividualStats(props) {
             editing={props.editing}
           />
         ) : null}
-        <h3>Estadísticas Individuales - {props.teamName}</h3>
+        <Title>Estadísticas Individuales - {props.teamName}</Title>
         {props.editable ? (
           <FontAwesomeIcon
             icon={faPlus}
-            style={{
-              marginLeft: "5px",
-              marginBottom: "2px",
-              cursor: "pointer"
-            }}
-            onClick={e => {
+            onClick={_ => {
               props.setEditing({
                 player: props.players.length,
                 side: props.side,
@@ -320,101 +292,58 @@ export default function MatchIndividualStats(props) {
           />
         ) : null}
       </div>
-      <div
-        className="divDataTable"
-        style={{
-          borderRight: "1px solid var(--table-border-color)",
-          borderLeft: "1px solid var(--table-border-color)",
-          borderTop: "1px solid var(--table-border-color)"
-        }}
-      >
-        <table
-          {...getTableProps()}
-          style={{ borderCollapse: "initial" }}
-          className="dataTable"
-        >
+      <div className="shadow-lg overflow-x-auto flex border-t border-r border-neutral-200 dark:border-neutral-700">
+        <table className="min-w-max text-center text-sm border-separate border-spacing-0">
           <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr className="dark:bg-neutral-900 bg-white" key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
                   <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={
-                      column.Header === "Jugador"
-                        ? {
-                            position: "sticky",
-                            left: 0,
-                            border: "0px",
-                            borderBottom: "1px solid var(--table-border-color)",
-                            borderRight: "1px solid var(--table-border-color)",
-                            cursor: "pointer",
-                            userSelect: "none"
-                          }
-                        : {
-                            border: 0,
-                            borderBottom: "1px solid var(--table-border-color)",
-                            borderLeft:
-                              column.Header === "Pos."
-                                ? 0
-                                : "1px solid var(--table-border-color)",
-                            cursor: "pointer",
-                            userSelect: "none"
-                          }
-                    }
-                    key={index}
+                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 ${
+                      header.id === "name" ? "sticky left-0 border-r" : ""
+                    }`}
+                    key={header.id}
                   >
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <span>&#9660; </span>
-                      ) : (
-                        <span>&#9650; </span>
-                      )
-                    ) : null}
-                    {column.render("Header")}
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className="cursor-pointer select-none"
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{ asc: " ↑", desc: " ↓" }[
+                          header.column.getIsSorted() as string
+                        ] ?? null}
+                      </div>
+                    )}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, index) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => (
-                    <td
-                      {...cell.getCellProps()}
-                      style={
-                        cell.column.Header === "Jugador"
-                          ? {
-                              position: "sticky",
-                              left: 0,
-                              border: 0,
-                              borderBottom:
-                                "1px solid var(--table-border-color)",
-                              borderRight: "1px solid var(--table-border-color)"
-                            }
-                          : {
-                              border: 0,
-                              borderLeft:
-                                cell.column.Header === "Pos."
-                                  ? 0
-                                  : "1px solid var(--table-border-color)",
-                              borderBottom:
-                                "1px solid var(--table-border-color)"
-                            }
-                      }
-                      key={index}
-                    >
-                      {cell.value != null ? cell.render("Cell") : "N/A"}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
+          <tbody>
+            {table.getRowModel().rows.map(row => (
+              <tr
+                className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 group"
+                key={row.id}
+              >
+                {row.getVisibleCells().map(cell => (
+                  <td
+                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
+                      cell.column.id === "name" ? "sticky left-0 border-r" : ""
+                    }`}
+                    key={cell.id}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
