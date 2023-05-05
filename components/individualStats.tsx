@@ -167,14 +167,14 @@ export default function IndividualStats(props: Props) {
   return (
     <>
       <Title>Estadísticas Individuales - {props.category}</Title>
-      <div className="shadow-lg overflow-x-auto flex border-t border-r border-neutral-200 dark:border-neutral-700">
+      <div className="shadow-lg overflow-x-auto flex border-t border-x border-neutral-200 dark:border-neutral-700 rounded-lg">
         <table className="min-w-max text-center text-sm border-separate border-spacing-0">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
               <tr className="dark:bg-neutral-900 bg-white" key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
                   <th
-                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 ${
+                    className={`py-1 px-2 border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 ${
                       header.id === "name" ? "sticky left-0 border-r" : ""
                     }`}
                     key={header.id}
@@ -200,7 +200,7 @@ export default function IndividualStats(props: Props) {
           </thead>
           <tbody>
             <tr>
-              <td className="sticky left-0 border-x border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+              <td className="sticky left-0 border-r border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
                 <input
                   className="p-1 text-center bg-neutral-100 dark:bg-neutral-950"
                   placeholder="Buscar jugador…"
@@ -209,7 +209,7 @@ export default function IndividualStats(props: Props) {
                   }
                 />
               </td>
-              <td className="border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+              <td className="border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
                 <input
                   className="p-1 text-center bg-neutral-100 dark:bg-neutral-950"
                   placeholder="Buscar equipo…"
@@ -233,7 +233,7 @@ export default function IndividualStats(props: Props) {
               >
                 {row.getVisibleCells().map(cell => (
                   <td
-                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
+                    className={`py-1 px-2 border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
                       cell.column.id === "name" ? "sticky left-0 border-r" : ""
                     }`}
                     key={cell.id}

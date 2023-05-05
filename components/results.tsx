@@ -139,26 +139,21 @@ export default function Results(props: Props) {
           className="p-1 border shadow-lg border-neutral-200 bg-white dark:bg-neutral-900 dark:border-neutral-700"
         />
       </div>
-      <div className="shadow-lg overflow-x-auto flex">
+      <div className="shadow-lg overflow-x-auto flex rounded-lg border border-neutral-200 dark:border-neutral-700">
         {table.getPrePaginationRowModel().rows.length === 0 ? (
           <div className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950 text-left text-neutral-500 dark:text-neutral-400 italic">
             No hay partidos
           </div>
         ) : null}
-        <table className="grow min-w-max text-center text-sm border-t border-r border-neutral-200 dark:border-neutral-700 overflow-x-auto">
+        <table className="grow min-w-max text-center text-sm border-neutral-200 dark:border-neutral-700 overflow-x-auto">
           <tbody>
             {table.getRowModel().rows.map(row => (
               <tr
-                className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 group"
+                className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-700"
                 key={row.id}
               >
                 {row.getVisibleCells().map(cell => (
-                  <td
-                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
-                      cell.column.id === "name" ? "sticky left-0 border-r" : ""
-                    }`}
-                    key={cell.id}
-                  >
+                  <td className="py-1 px-2" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
