@@ -70,27 +70,27 @@ export default function Navigation() {
               </a>
             </Link>
             <Link href="/individuales">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700">
+              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
                 Estadísticas
               </a>
             </Link>
             <Link href="/resultados">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700">
+              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
                 Resultados
               </a>
             </Link>
             <Link href="/torneos">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700">
+              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
                 Torneos
               </a>
             </Link>
             <Link href="/top10">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700">
+              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
                 Rankings
               </a>
             </Link>
             <a
-              className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-700"
+              className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
               onClick={_ => toggleNight()}
             >
               <FontAwesomeIcon icon={night ? faSun : faMoon} />
