@@ -167,14 +167,14 @@ export default function IndividualStats(props: Props) {
   return (
     <>
       <Title>Estadísticas Individuales - {props.category}</Title>
-      <div className="shadow-lg overflow-x-auto flex border-t border-x border-neutral-200 dark:border-neutral-700 rounded-lg">
-        <table className="min-w-max text-center text-sm border-separate border-spacing-0">
+      <div className="flex overflow-x-auto rounded-lg border-x border-t border-neutral-200 shadow-lg dark:border-neutral-700">
+        <table className="min-w-max border-separate border-spacing-0 text-center text-sm">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
-              <tr className="dark:bg-neutral-900 bg-white" key={headerGroup.id}>
+              <tr className="bg-white dark:bg-neutral-900" key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
                   <th
-                    className={`py-1 px-2 border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 ${
+                    className={`border-b border-neutral-200 bg-white px-2 py-1 dark:border-neutral-700 dark:bg-neutral-900 ${
                       header.id === "name" ? "sticky left-0 border-r" : ""
                     }`}
                     key={header.id}
@@ -200,18 +200,18 @@ export default function IndividualStats(props: Props) {
           </thead>
           <tbody>
             <tr>
-              <td className="sticky left-0 border-r border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+              <td className="sticky left-0 border-b border-r border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-950">
                 <input
-                  className="p-1 text-center bg-neutral-100 dark:bg-neutral-950"
+                  className="bg-neutral-100 p-1 text-center dark:bg-neutral-950"
                   placeholder="Buscar jugador…"
                   onChange={e =>
                     table.getColumn("name").setFilterValue(e.target.value)
                   }
                 />
               </td>
-              <td className="border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950">
+              <td className="border-b border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-950">
                 <input
-                  className="p-1 text-center bg-neutral-100 dark:bg-neutral-950"
+                  className="bg-neutral-100 p-1 text-center dark:bg-neutral-950"
                   placeholder="Buscar equipo…"
                   onChange={e =>
                     table.getColumn("team").setFilterValue(e.target.value)
@@ -219,7 +219,7 @@ export default function IndividualStats(props: Props) {
                 />
               </td>
               <td
-                className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950 text-left text-neutral-500 dark:text-neutral-400 italic"
+                className="border-b border-l border-neutral-200 bg-neutral-100 p-1 text-left italic text-neutral-500 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-400"
                 colSpan={columns.length - 2}
               >
                 {table.getPrePaginationRowModel().rows.length === 0 &&
@@ -228,12 +228,12 @@ export default function IndividualStats(props: Props) {
             </tr>
             {table.getRowModel().rows.map(row => (
               <tr
-                className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 group"
+                className="group even:bg-neutral-100 dark:bg-neutral-950 dark:even:bg-neutral-900"
                 key={row.id}
               >
                 {row.getVisibleCells().map(cell => (
                   <td
-                    className={`py-1 px-2 border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
+                    className={`border-neutral-200 px-2 py-1 group-odd:bg-neutral-100 group-even:bg-white dark:border-neutral-700 dark:group-odd:bg-neutral-950 dark:group-even:bg-neutral-900 ${
                       cell.column.id === "name" ? "sticky left-0 border-r" : ""
                     }`}
                     key={cell.id}
@@ -246,7 +246,7 @@ export default function IndividualStats(props: Props) {
           </tbody>
         </table>
       </div>
-      <div className="flex gap-x-4 justify-center">
+      <div className="flex justify-center gap-x-4">
         <Button
           disabled={!table.getCanPreviousPage()}
           onClick={e => {
@@ -272,7 +272,7 @@ export default function IndividualStats(props: Props) {
             Página {table.getState().pagination.pageIndex + 1} de{" "}
             {Math.max(table.getPageCount(), 1)}
           </div>
-          <div className="text-neutral-500 text-sm">
+          <div className="text-sm text-neutral-500">
             {table.getPrePaginationRowModel().rows.length} resultado
             {table.getPrePaginationRowModel().rows.length !== 1 ? "s" : ""}
           </div>

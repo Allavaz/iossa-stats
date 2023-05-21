@@ -39,7 +39,7 @@ export default function Footer() {
           {socials.map((item, index) => (
             <div key={index}>
               <a
-                className="text-3xl text-neutral-500 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-500 transition-colors"
+                className="text-3xl text-neutral-500 transition-colors hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-500"
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"

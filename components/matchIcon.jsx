@@ -3,7 +3,7 @@ export default function MatchIcon({ event }) {
     case "GOAL":
       return (
         <img
-          className="dark:invert h-5"
+          className="h-5 dark:invert"
           src="/matchicons/pelota.png"
           alt="Gol"
         />
@@ -11,7 +11,7 @@ export default function MatchIcon({ event }) {
     case "OWN GOAL":
       return (
         <img
-          className="dark:invert h-5"
+          className="h-5 dark:invert"
           src="/matchicons/gc.png"
           alt="Gol en Contra"
         />

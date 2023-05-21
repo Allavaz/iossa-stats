@@ -27,7 +27,7 @@ export default function MatchEventComponent({
       return (
         <li key={index}>
           <div>
-            <div className="flex gap-x-1 items-center justify-center text-sm p-1">
+            <div className="flex items-center justify-center gap-x-1 p-1 text-sm">
               <MatchIcon event={item.event}></MatchIcon>
               <Link href={`/jugador/${item.player1SteamId}`}>
                 <a>
@@ -37,7 +37,7 @@ export default function MatchEventComponent({
               {item.name2 && item.event === "GOAL" && (
                 <Link href={`/jugador/${item.player2SteamId}`}>
                   <a>
-                    <span className="italic text-xs">{`(${item.name2})`}</span>
+                    <span className="text-xs italic">{`(${item.name2})`}</span>
                   </a>
                 </Link>
               )}{" "}
@@ -72,7 +72,7 @@ export default function MatchEventComponent({
     ) {
       return (
         <li key={index}>
-          <div className="flex gap-x-1 items-center justify-center text-sm p-1">
+          <div className="flex items-center justify-center gap-x-1 p-1 text-sm">
             <MatchIcon event={item.event}></MatchIcon>
             <Link href={`/jugador/${item.player1SteamId}`}>
               <a>

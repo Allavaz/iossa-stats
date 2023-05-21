@@ -44,7 +44,7 @@ export default function Results(props: Props) {
       header: "Local",
       cell: info => (
         <Link href={`/equipo/${info.getValue()}`}>
-          <a className="flex items-center gap-x-1 justify-center">
+          <a className="flex items-center justify-center gap-x-1">
             <img
               src={getTeamLogo(info.getValue())}
               alt={info.getValue()}
@@ -78,7 +78,7 @@ export default function Results(props: Props) {
       header: "Visitante",
       cell: info => (
         <Link href={`/equipo/${info.getValue()}`}>
-          <a className="flex items-center gap-x-1 justify-center">
+          <a className="flex items-center justify-center gap-x-1">
             <img
               src={getTeamLogo(info.getValue())}
               alt={info.getValue()}
@@ -94,7 +94,7 @@ export default function Results(props: Props) {
       header: "Torneo",
       cell: info => (
         <Link href={"/partido/" + info.row.original._id}>
-          <a className="flex items-center gap-x-1 justify-center">
+          <a className="flex items-center justify-center gap-x-1">
             <img
               src={getTournamentIcon(info.getValue())}
               alt={info.getValue()}
@@ -123,7 +123,7 @@ export default function Results(props: Props) {
 
   return (
     <>
-      <div className="flex gap-2 items-center flex-wrap">
+      <div className="flex flex-wrap items-center gap-2">
         <Title style={{ display: "inline", width: "fit-content" }}>
           Resultados - {props.category}
         </Title>
@@ -136,24 +136,24 @@ export default function Results(props: Props) {
               shallow: true
             });
           }}
-          className="p-1 border shadow-lg border-neutral-200 bg-white dark:bg-neutral-900 dark:border-neutral-700"
+          className="border border-neutral-200 bg-white p-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
         />
       </div>
-      <div className="shadow-lg overflow-x-auto flex rounded-lg border border-neutral-200 dark:border-neutral-700">
+      <div className="flex overflow-x-auto rounded-lg border border-neutral-200 shadow-lg dark:border-neutral-700">
         {table.getPrePaginationRowModel().rows.length === 0 ? (
-          <div className="p-1 border-l border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-950 text-left text-neutral-500 dark:text-neutral-400 italic">
+          <div className="border-b border-l border-neutral-200 bg-neutral-100 p-1 text-left italic text-neutral-500 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-400">
             No hay partidos
           </div>
         ) : null}
-        <table className="grow min-w-max text-center text-sm border-neutral-200 dark:border-neutral-700 overflow-x-auto">
+        <table className="min-w-max grow overflow-x-auto border-neutral-200 text-center text-sm dark:border-neutral-700">
           <tbody>
             {table.getRowModel().rows.map(row => (
               <tr
-                className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-700"
+                className="border-neutral-200 even:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-950 dark:even:bg-neutral-900"
                 key={row.id}
               >
                 {row.getVisibleCells().map(cell => (
-                  <td className="py-1 px-2" key={cell.id}>
+                  <td className="px-2 py-1" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -162,7 +162,7 @@ export default function Results(props: Props) {
           </tbody>
         </table>
       </div>
-      <div className="flex gap-x-4 justify-center">
+      <div className="flex justify-center gap-x-4">
         <Button
           disabled={!table.getCanPreviousPage()}
           onClick={e => {
@@ -188,7 +188,7 @@ export default function Results(props: Props) {
             Página {table.getState().pagination.pageIndex + 1} de{" "}
             {Math.max(table.getPageCount(), 1)}
           </div>
-          <div className="text-neutral-500 text-sm">
+          <div className="text-sm text-neutral-500">
             {table.getPrePaginationRowModel().rows.length} resultado
             {table.getPrePaginationRowModel().rows.length !== 1 ? "s" : ""}
           </div>

@@ -292,14 +292,14 @@ export default function MatchIndividualStats(props) {
           />
         ) : null}
       </div>
-      <div className="shadow-lg overflow-x-auto flex border-t border-r border-neutral-200 dark:border-neutral-700">
-        <table className="min-w-max text-center text-sm border-separate border-spacing-0">
+      <div className="flex overflow-x-auto border-r border-t border-neutral-200 shadow-lg dark:border-neutral-700">
+        <table className="min-w-max border-separate border-spacing-0 text-center text-sm">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
-              <tr className="dark:bg-neutral-900 bg-white" key={headerGroup.id}>
+              <tr className="bg-white dark:bg-neutral-900" key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
                   <th
-                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 ${
+                    className={`border-b border-l border-neutral-200 bg-white px-2 py-1 dark:border-neutral-700 dark:bg-neutral-900 ${
                       header.id === "name" ? "sticky left-0 border-r" : ""
                     }`}
                     key={header.id}
@@ -326,12 +326,12 @@ export default function MatchIndividualStats(props) {
           <tbody>
             {table.getRowModel().rows.map(row => (
               <tr
-                className="even:bg-neutral-100 dark:even:bg-neutral-900 dark:bg-neutral-950 group"
+                className="group even:bg-neutral-100 dark:bg-neutral-950 dark:even:bg-neutral-900"
                 key={row.id}
               >
                 {row.getVisibleCells().map(cell => (
                   <td
-                    className={`py-1 px-2 border-l border-b border-neutral-200 dark:border-neutral-700 group-even:bg-white dark:group-even:bg-neutral-900 group-odd:bg-neutral-100 dark:group-odd:bg-neutral-950 ${
+                    className={`border-b border-l border-neutral-200 px-2 py-1 group-odd:bg-neutral-100 group-even:bg-white dark:border-neutral-700 dark:group-odd:bg-neutral-950 dark:group-even:bg-neutral-900 ${
                       cell.column.id === "name" ? "sticky left-0 border-r" : ""
                     }`}
                     key={cell.id}

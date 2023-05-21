@@ -1038,7 +1038,7 @@ export default function MatchPage({
                   }
                 />
                 {editable || create ? (
-                  <div className="text-sm text-neutral-500 dark:text-neutral-400 italic">
+                  <div className="text-sm italic text-neutral-500 dark:text-neutral-400">
                     La tabla se actualizará luego de subir el partido.
                   </div>
                 ) : null}

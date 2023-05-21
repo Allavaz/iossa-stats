@@ -40,12 +40,12 @@ export default function Navigation() {
 
   return (
     <nav onScroll={hideLogo}>
-      <div className="fixed top-0 w-full border-b border-neutral-300 bg-white shadow-md dark:border-neutral-700 dark:bg-neutral-900 z-50">
+      <div className="fixed top-0 z-50 w-full border-b border-neutral-300 bg-white shadow-md dark:border-neutral-700 dark:bg-neutral-900">
         <div className="m-auto max-w-6xl overflow-x-scroll sm:overflow-x-hidden">
           <div className="flex">
             <Link href="/">
               <a
-                className="hidden sm:flex items-center overflow-hidden bg-[#e28800] dark:bg-[#a56200] dark:border-neutral-700"
+                className="hidden items-center overflow-hidden bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:flex"
                 style={{
                   width: logoShown ? "50px" : "0px",
                   transition: "width .2s ease-in"
@@ -60,7 +60,7 @@ export default function Navigation() {
               </a>
             </Link>
             <Link href="/">
-              <a className="flex sm:hidden items-center bg-[#e28800] dark:bg-[#a56200] dark:border-neutral-700">
+              <a className="flex items-center bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:hidden">
                 <img
                   className="min-h-[50px] min-w-[50px] p-1"
                   alt="IOSoccer Sudamérica"

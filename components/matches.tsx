@@ -10,7 +10,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
   const router = useRouter();
 
   return (
-    <div className="flex grow flex-col gap-y-4 items-center">
+    <div className="flex grow flex-col items-center gap-y-4">
       {matches.map((match, id, array) => (
         <React.Fragment key={id}>
           <Title

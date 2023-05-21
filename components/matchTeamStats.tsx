@@ -50,13 +50,13 @@ export default function MatchTeamStats(props) {
 
   return (
     <div
-      className="shadow-lg overflow-x-auto flex text-sm rounded-lg border border-neutral-200 dark:border-neutral-700"
+      className="flex overflow-x-auto rounded-lg border border-neutral-200 text-sm shadow-lg dark:border-neutral-700"
       style={props.style}
     >
-      <table className="min-w-max text-center grow">
+      <table className="min-w-max grow text-center">
         <thead>
-          <tr className="dark:bg-neutral-900 bg-white border-b border-neutral-200 dark:border-neutral-700">
-            <th className="py-1 px-2">
+          <tr className="border-b border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900">
+            <th className="px-2 py-1">
               <div className="flex justify-center">
                 <img
                   className="h-6"
@@ -65,7 +65,7 @@ export default function MatchTeamStats(props) {
                 />
               </div>
             </th>
-            <th className="py-1 px-2">
+            <th className="px-2 py-1">
               <div>
                 {props.editable ? <div style={{ flex: 1 }}></div> : null}
                 <div style={{ marginLeft: "5px", marginRight: "5px" }}>
@@ -73,7 +73,7 @@ export default function MatchTeamStats(props) {
                 </div>
               </div>
             </th>
-            <th className="py-1 px-2">
+            <th className="px-2 py-1">
               <div className="flex justify-center">
                 <img
                   className="h-6"
@@ -89,15 +89,15 @@ export default function MatchTeamStats(props) {
             e =>
               e.accessor(0) != null && (
                 <tr
-                  className="odd:bg-neutral-100 even:bg-white dark:even:bg-neutral-900 dark:odd:bg-neutral-950 border-b last:border-none border-neutral-200 dark:border-neutral-800"
+                  className="border-b border-neutral-200 last:border-none odd:bg-neutral-100 even:bg-white dark:border-neutral-800 dark:odd:bg-neutral-950 dark:even:bg-neutral-900"
                   key={e.label}
                 >
-                  <td className="py-1 px-2">
+                  <td className="px-2 py-1">
                     {e.accessor(0)}
                     {1 && e.extra}
                   </td>
-                  <td className="py-1 px-2">{e.label}</td>
-                  <td className="py-1 px-2">
+                  <td className="px-2 py-1">{e.label}</td>
+                  <td className="px-2 py-1">
                     {e.accessor(1)}
                     {1 && e.extra}
                   </td>

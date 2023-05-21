@@ -208,7 +208,7 @@ export default function MatchCard({
           setEditing={setEditing}
         />
       ) : null}
-      <table className="w-full text-center table-fixed align-middle">
+      <table className="w-full table-fixed text-center align-middle">
         <tbody>
           <tr>
             <td className="p-1" colSpan={3}>
@@ -247,7 +247,7 @@ export default function MatchCard({
               ) : (
                 <div>
                   <Link href={`/equipo/${data.teams[0].teamname}`}>
-                    <a className="font-bold text-3xl">
+                    <a className="text-3xl font-bold">
                       <div className="hidden sm:block">
                         {data.teams[0].teamname}
                       </div>
@@ -307,7 +307,7 @@ export default function MatchCard({
                   }}
                 >
                   <Link href={`/equipo/${data.teams[1].teamname}`}>
-                    <a className="font-bold text-3xl">
+                    <a className="text-3xl font-bold">
                       <div className="hidden sm:block">
                         {data.teams[1].teamname}
                       </div>
@@ -349,7 +349,7 @@ export default function MatchCard({
                 />
               ) : (
                 <div>
-                  <div className="font-bold text-4xl">
+                  <div className="text-4xl font-bold">
                     {data.teams[0].score} - {data.teams[1].score}
                   </div>
                   {editable ? (

@@ -8,7 +8,7 @@ interface Props {
 export default function Select(props: Props) {
   return (
     <select
-      className="p-2 border rounded-lg border-neutral-200 shadow-lg w-fit bg-white dark:bg-neutral-900 dark:border-neutral-700"
+      className="w-fit rounded-lg border border-neutral-200 bg-white p-2 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
       onChange={props.onChange}
       style={props.style}
       defaultValue={props.defaultValue}

@@ -157,12 +157,12 @@ export default function PositionsComponent({
   return (
     <div className="flex flex-col gap-y-4">
       <Title>{header}</Title>
-      <div className="shadow-lg overflow-x-auto flex text-sm border rounded-lg border-neutral-200 dark:border-neutral-700">
-        <table className="min-w-max text-center grow">
+      <div className="flex overflow-x-auto rounded-lg border border-neutral-200 text-sm shadow-lg dark:border-neutral-700">
+        <table className="min-w-max grow text-center">
           <thead>
-            <tr className="dark:bg-neutral-900 bg-white border-b border-neutral-100 dark:border-neutral-700">
+            <tr className="border-b border-neutral-100 bg-white dark:border-neutral-700 dark:bg-neutral-900">
               {columns.map(e => (
-                <th className="py-1 px-2" key={e.header}>
+                <th className="px-2 py-1" key={e.header}>
                   {e.header}
                 </th>
               ))}
@@ -171,7 +171,7 @@ export default function PositionsComponent({
           <tbody>
             {teams.map((item, index) => (
               <tr
-                className="odd:bg-neutral-100 even:bg-white dark:even:bg-neutral-900 dark:odd:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 last:border-none"
+                className="border-b border-neutral-200 last:border-none odd:bg-neutral-100 even:bg-white dark:border-neutral-800 dark:odd:bg-neutral-950 dark:even:bg-neutral-900"
                 key={item._id}
               >
                 {columns.map(e => (
@@ -189,7 +189,7 @@ export default function PositionsComponent({
             {classification &&
               classification.colors.map(c => (
                 <tr key={c.label}>
-                  <td className="py-1 px-2" colSpan={columns.length}>
+                  <td className="px-2 py-1" colSpan={columns.length}>
                     <div className="flex items-center gap-x-2">
                       <ColoredBar color={c.color} />
                       {c.label}

@@ -7,8 +7,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
-} from 'chart.js';
+  Legend
+} from "chart.js";
 import { DateTime } from "luxon";
 
 ChartJS.register(
