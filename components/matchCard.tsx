@@ -371,7 +371,7 @@ export default function MatchCard({
                 />
               ) : (
                 <div className="flex items-center justify-center gap-x-2">
-                  <div className="font-heading text-4xl">
+                  <div className="whitespace-nowrap font-heading text-3xl">
                     {data.teams[0].score} - {data.teams[1].score}
                   </div>
                   {editable ? (
