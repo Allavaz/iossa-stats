@@ -23,7 +23,7 @@ export default function Top10Arqueros({ players, category }) {
               <Table.BodyCell>{index + 1}</Table.BodyCell>
               <Table.BodyCell>
                 <Link href={`/jugador/${item._id}`}>
-                  <a className="flex w-full items-center justify-center">
+                  <a className="flex items-center justify-center gap-x-1">
                     <img
                       className="h-6"
                       src={getTeamLogo(item.team)}
