@@ -14,7 +14,7 @@ export default function Layout({ children }) {
     <>
       <Navigation />
       <Header />
-      <div className="mt-16 px-1 sm:m-auto sm:max-w-6xl">
+      <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl">
         <main>{children}</main>
       </div>
       <Footer />

@@ -4,7 +4,12 @@
 
 @font-face {
   font-family: "Inter var";
-  src: url("../public/Inter-VariableFont_slnt,wght.ttf");
+  src: url("../public/fonts/Inter-VariableFont_slnt,wght.ttf");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/Poppins-Bold.ttf");
 }
 
 .dark {

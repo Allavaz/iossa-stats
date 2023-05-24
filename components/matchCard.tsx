@@ -16,6 +16,8 @@ import MatchEventEditor from "./matchEventEditor";
 import { Event, Match, MatchEvent, Player } from "../types";
 import Link from "next/link";
 import Card from "./commons/card";
+import Button from "./commons/button";
+import Modal from "./commons/modal";
 
 export default function MatchCard({
   data,
@@ -59,6 +61,22 @@ export default function MatchCard({
   undo: () => void;
 }) {
   const [dragging, setDragging] = useState(false);
+
+  function filterEvents(events: MatchEvent[], side: "home" | "away") {
+    if (side === "home") {
+      return events.filter(
+        event =>
+          (event.team === "home" && event.event !== "OWN GOAL") ||
+          (event.team === "away" && event.event === "OWN GOAL")
+      );
+    } else if (side === "away") {
+      return events.filter(
+        event =>
+          (event.team === "away" && event.event !== "OWN GOAL") ||
+          (event.team === "home" && event.event === "OWN GOAL")
+      );
+    } else return [];
+  }
 
   function onChangeTorneo(value: string) {
     changeTorneo(value);
@@ -197,16 +215,20 @@ export default function MatchCard({
   return (
     <Card>
       {editing && typeof editing.event !== "undefined" ? (
-        <MatchEventEditor
-          item={
-            editing.new ? newItem(editing.new) : data.matchevents[editing.event]
-          }
-          index={editing.new ? data.matchevents.length : editing.event}
-          players={players}
-          onChangeEvent={onChangeEvent}
-          editing={editing}
-          setEditing={setEditing}
-        />
+        <Modal>
+          <MatchEventEditor
+            item={
+              editing.new
+                ? newItem(editing.new)
+                : data.matchevents[editing.event]
+            }
+            index={editing.new ? data.matchevents.length : editing.event}
+            players={players}
+            onChangeEvent={onChangeEvent}
+            editing={editing}
+            setEditing={setEditing}
+          />
+        </Modal>
       ) : null}
       <table className="w-full table-fixed text-center align-middle">
         <tbody>
@@ -225,8 +247,9 @@ export default function MatchCard({
                   </div>
                   {editable && (
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faEdit}
-                      onClick={e => {
+                      onClick={_ => {
                         setEditing("torneo");
                       }}
                     />
@@ -245,9 +268,9 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div>
+                <div className="flex items-center justify-center gap-x-2">
                   <Link href={`/equipo/${data.teams[0].teamname}`}>
-                    <a className="text-3xl font-bold">
+                    <a className="font-heading text-2xl">
                       <div className="hidden sm:block">
                         {data.teams[0].teamname}
                       </div>
@@ -258,8 +281,9 @@ export default function MatchCard({
                   </Link>
                   {editable && (
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faEdit}
-                      onClick={e => {
+                      onClick={_ => {
                         setEditing("homeTeamName");
                       }}
                     />
@@ -275,14 +299,15 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div>
+                <div className="flex items-center justify-center gap-x-2">
                   <div className="text-sm text-neutral-500 dark:text-neutral-400">
                     {fecha(data.fecha)}
                   </div>
                   {editable ? (
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faEdit}
-                      onClick={e => {
+                      onClick={_ => {
                         setEditing("date");
                       }}
                     />
@@ -299,15 +324,9 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
+                <div className="flex items-center justify-center gap-x-2">
                   <Link href={`/equipo/${data.teams[1].teamname}`}>
-                    <a className="text-3xl font-bold">
+                    <a className="font-heading text-2xl">
                       <div className="hidden sm:block">
                         {data.teams[1].teamname}
                       </div>
@@ -318,6 +337,7 @@ export default function MatchCard({
                   </Link>
                   {editable ? (
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faEdit}
                       onClick={() => {
                         setEditing("awayTeamName");
@@ -330,14 +350,16 @@ export default function MatchCard({
           </tr>
           <tr>
             <td className="p-4">
-              <Link href={`/equipo/${data.teams[0].teamname}`}>
-                <a className="flex justify-center">
-                  <img
-                    alt={data.teams[0].teamname}
-                    src={getTeamLogo(data.teams[0].teamname)}
-                  />
-                </a>
-              </Link>
+              <div className="flex justify-center">
+                <Link href={`/equipo/${data.teams[0].teamname}`}>
+                  <a>
+                    <img
+                      alt={data.teams[0].teamname}
+                      src={getTeamLogo(data.teams[0].teamname)}
+                    />
+                  </a>
+                </Link>
+              </div>
             </td>
             <td className="p-4">
               {editing === "score" ? (
@@ -348,18 +370,14 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div>
-                  <div className="text-4xl font-bold">
+                <div className="flex items-center justify-center gap-x-2">
+                  <div className="font-heading text-4xl">
                     {data.teams[0].score} - {data.teams[1].score}
                   </div>
                   {editable ? (
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faEdit}
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.2em",
-                        color: "var(--normal-text-color)"
-                      }}
                       onClick={e => {
                         setEditing("score");
                       }}
@@ -369,24 +387,25 @@ export default function MatchCard({
               )}
             </td>
             <td className="p-4">
-              <Link href={`/equipo/${data.teams[1].teamname}`}>
-                <a className="flex justify-center">
-                  <img
-                    alt={data.teams[1].teamname}
-                    src={getTeamLogo(data.teams[1].teamname)}
-                  />
-                </a>
-              </Link>
+              <div className="flex justify-center">
+                <Link href={`/equipo/${data.teams[1].teamname}`}>
+                  <a>
+                    <img
+                      alt={data.teams[1].teamname}
+                      src={getTeamLogo(data.teams[1].teamname)}
+                    />
+                  </a>
+                </Link>
+              </div>
             </td>
           </tr>
           <tr className="align-top">
             <td className="p-1">
               <ul>
-                {data.matchevents.map((item, index) => (
+                {filterEvents(data.matchevents, "home").map((item, index) => (
                   <MatchEventComponent
                     item={item}
                     key={index}
-                    side="home"
                     index={index}
                     editable={editable}
                     onRemoveEvent={onRemoveEvent}
@@ -396,6 +415,7 @@ export default function MatchCard({
                 {editable ? (
                   <li>
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faPlus}
                       onClick={e => {
                         onAddEvent("home");
@@ -407,7 +427,7 @@ export default function MatchCard({
             </td>
             <td className="p-1">
               {editable && (
-                <div>
+                <div className="flex flex-col items-center gap-y-3">
                   {create && (
                     <div
                       style={{
@@ -422,14 +442,14 @@ export default function MatchCard({
                         position: "relative",
                         zIndex: "3"
                       }}
-                      onDragEnter={e => setDragging(true)}
-                      onDragLeave={e => setDragging(false)}
-                      onDrop={ev => {
+                      onDragEnter={_ => setDragging(true)}
+                      onDragLeave={_ => setDragging(false)}
+                      onDrop={e => {
                         setDragging(false);
-                        dropFile(ev);
+                        dropFile(e);
                       }}
-                      onDragOver={ev => {
-                        ev.preventDefault();
+                      onDragOver={e => {
+                        e.preventDefault();
                       }}
                     >
                       <FontAwesomeIcon
@@ -443,18 +463,13 @@ export default function MatchCard({
                     </div>
                   )}
                   <input
+                    className="rounded-lg border border-neutral-200 bg-white p-1 text-center shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
                     id="password"
                     disabled={loading}
                     type="password"
                     placeholder="Contraseña"
-                    style={{
-                      textAlign: "center",
-                      width: "20ch",
-                      height: "22px"
-                    }}
                   />
-                  <button
-                    className="boton"
+                  <Button
                     disabled={loading}
                     onClick={e => {
                       updateMatch(
@@ -467,10 +482,9 @@ export default function MatchCard({
                     }}
                   >
                     {create ? "Subir partido" : "Guardar cambios"}
-                  </button>
+                  </Button>
                   {!create && (
-                    <button
-                      className="boton"
+                    <Button
                       disabled={loading}
                       onClick={e => {
                         deleteMatch(
@@ -483,18 +497,13 @@ export default function MatchCard({
                       }}
                     >
                       Eliminar partido
-                    </button>
+                    </Button>
                   )}
-                  <button
-                    className="boton"
-                    disabled={loading}
-                    onClick={e => exportMatch()}
-                  >
+                  <Button disabled={loading} onClick={e => exportMatch()}>
                     Descargar JSON
-                  </button>
+                  </Button>
                   {!create && (
-                    <button
-                      className="boton"
+                    <Button
                       disabled={loading}
                       onClick={e => {
                         restartEditing();
@@ -502,15 +511,11 @@ export default function MatchCard({
                       }}
                     >
                       Reiniciar edición
-                    </button>
+                    </Button>
                   )}
-                  <button
-                    className="boton"
-                    onClick={e => undo()}
-                    disabled={disableUndo}
-                  >
+                  <Button onClick={e => undo()} disabled={disableUndo}>
                     Deshacer
-                  </button>
+                  </Button>
                   {loading ? (
                     <FontAwesomeIcon
                       icon={faSpinner}
@@ -524,20 +529,22 @@ export default function MatchCard({
             </td>
             <td>
               <ul>
-                {data.matchevents.map((item: MatchEvent, index) => (
-                  <MatchEventComponent
-                    item={item}
-                    key={index}
-                    side="away"
-                    index={index}
-                    editable={editable}
-                    onRemoveEvent={onRemoveEvent}
-                    setEditing={setEditing}
-                  />
-                ))}
+                {filterEvents(data.matchevents, "away").map(
+                  (item: MatchEvent, index) => (
+                    <MatchEventComponent
+                      item={item}
+                      key={index}
+                      index={index}
+                      editable={editable}
+                      onRemoveEvent={onRemoveEvent}
+                      setEditing={setEditing}
+                    />
+                  )
+                )}
                 {editable ? (
                   <li>
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faPlus}
                       onClick={e => {
                         onAddEvent("away");

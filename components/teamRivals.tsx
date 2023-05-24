@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
+import Title from "./commons/title";
+import Table from "./commons/table";
 
 interface Props {
   rivals: {
@@ -13,60 +15,51 @@ interface Props {
 
 export default function TeamRivals(props: Props) {
   return (
-    <div style={{ flexGrow: 1 }}>
-      <h3 style={{ marginTop: 0 }}>Historial vs otros equipos</h3>
-      <div className="divDataTable">
-        <table className="dataTable">
-          <thead>
-            <tr>
-              <th>Equipo</th>
-              <th>PJ</th>
-              <th>PG</th>
-              <th>PE</th>
-              <th>PP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.rivals.length === 0 && (
-              <tr>
-                <td
-                  colSpan={5}
-                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
-                >
+    <div className="flex flex-col gap-y-4">
+      <Title>Historial vs otros equipos</Title>
+      <Table>
+        <thead>
+          <Table.HeaderRow>
+            <Table.HeaderCell>Equipo</Table.HeaderCell>
+            <Table.HeaderCell>PJ</Table.HeaderCell>
+            <Table.HeaderCell>PG</Table.HeaderCell>
+            <Table.HeaderCell>PE</Table.HeaderCell>
+            <Table.HeaderCell>PP</Table.HeaderCell>
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {props.rivals.length === 0 && (
+            <Table.BodyRow>
+              <Table.BodyCell colSpan={5}>
+                <span className="italic text-neutral-500 dark:text-neutral-400">
                   Este equipo no tiene suficientes partidos contra otros
                   equipos.
-                </td>
-              </tr>
-            )}
-            {props.rivals.map(rival => (
-              <tr key={rival._id}>
-                <td>
-                  <Link href={`/equipo/${rival._id}`}>
-                    <a>
-                      <div
-                        className="teamlogo"
-                        style={{ justifyContent: "center" }}
-                      >
-                        <img
-                          height="16px"
-                          src={getTeamLogo(rival._id)}
-                          alt={rival._id}
-                          style={{ marginRight: "5px" }}
-                        />
-                        {rival._id}
-                      </div>
-                    </a>
-                  </Link>
-                </td>
-                <td>{rival.matches}</td>
-                <td>{rival.wins}</td>
-                <td>{rival.draws}</td>
-                <td>{rival.losses}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </span>
+              </Table.BodyCell>
+            </Table.BodyRow>
+          )}
+          {props.rivals.map(rival => (
+            <Table.BodyRow key={rival._id}>
+              <Table.BodyCell>
+                <Link href={`/equipo/${rival._id}`}>
+                  <a className="flex items-center justify-center gap-x-1">
+                    <img
+                      className="h-6"
+                      src={getTeamLogo(rival._id)}
+                      alt={rival._id}
+                    />
+                    {rival._id}
+                  </a>
+                </Link>
+              </Table.BodyCell>
+              <Table.BodyCell>{rival.matches}</Table.BodyCell>
+              <Table.BodyCell>{rival.wins}</Table.BodyCell>
+              <Table.BodyCell>{rival.draws}</Table.BodyCell>
+              <Table.BodyCell>{rival.losses}</Table.BodyCell>
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

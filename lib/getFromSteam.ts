@@ -14,6 +14,7 @@ export async function getSteamInfo(ids: string[]) {
     );
     return info.data.response.players.map(player => ({
       profilePicture: player.avatarfull,
+      personaname: player.personaname,
       steamid: new SteamID(player.steamid).getSteam2RenderedID()
     }));
   } catch (e) {

@@ -13,6 +13,8 @@ import {
 } from "@tanstack/react-table";
 import { MatchPlayer } from "../types";
 import Title from "./commons/title";
+import Table from "./commons/table";
+import Modal from "./commons/modal";
 
 export default function MatchIndividualStats(props) {
   function onChangeIndivStats(player) {
@@ -265,85 +267,80 @@ export default function MatchIndividualStats(props) {
         {props.editing &&
         typeof props.editing.player !== "undefined" &&
         props.editing.side === props.side ? (
-          <MatchIndivStatsEditor
-            player={
-              props.editing.new
-                ? newItem()
-                : props.players[props.editing.player]
-            }
-            team={props.teamName}
-            players={props.playersAutocomplete}
-            onChangeIndivStats={onChangeIndivStats}
-            setEditing={props.setEditing}
-            editing={props.editing}
-          />
+          <Modal>
+            <MatchIndivStatsEditor
+              player={
+                props.editing.new
+                  ? newItem()
+                  : props.players[props.editing.player]
+              }
+              team={props.teamName}
+              players={props.playersAutocomplete}
+              onChangeIndivStats={onChangeIndivStats}
+              setEditing={props.setEditing}
+              editing={props.editing}
+            />
+          </Modal>
         ) : null}
-        <Title>Estadísticas Individuales - {props.teamName}</Title>
-        {props.editable ? (
-          <FontAwesomeIcon
-            icon={faPlus}
-            onClick={_ => {
-              props.setEditing({
-                player: props.players.length,
-                side: props.side,
-                new: true
-              });
-            }}
-          />
-        ) : null}
+        <div className="flex items-center gap-x-2">
+          <Title style={{ display: "inline", width: "fit-content" }}>
+            Estadísticas Individuales - {props.teamName}
+          </Title>
+          {props.editable ? (
+            <FontAwesomeIcon
+              className="cursor-pointer"
+              icon={faPlus}
+              onClick={_ => {
+                props.setEditing({
+                  player: props.players.length,
+                  side: props.side,
+                  new: true
+                });
+              }}
+            />
+          ) : null}
+        </div>
       </div>
-      <div className="flex overflow-x-auto border-r border-t border-neutral-200 shadow-lg dark:border-neutral-700">
-        <table className="min-w-max border-separate border-spacing-0 text-center text-sm">
-          <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr className="bg-white dark:bg-neutral-900" key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th
-                    className={`border-b border-l border-neutral-200 bg-white px-2 py-1 dark:border-neutral-700 dark:bg-neutral-900 ${
-                      header.id === "name" ? "sticky left-0 border-r" : ""
-                    }`}
-                    key={header.id}
-                  >
-                    {header.isPlaceholder ? null : (
-                      <div
-                        className="cursor-pointer select-none"
-                        onClick={header.column.getToggleSortingHandler()}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{ asc: " ↑", desc: " ↓" }[
-                          header.column.getIsSorted() as string
-                        ] ?? null}
-                      </div>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map(row => (
-              <tr
-                className="group even:bg-neutral-100 dark:bg-neutral-950 dark:even:bg-neutral-900"
-                key={row.id}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <td
-                    className={`border-b border-l border-neutral-200 px-2 py-1 group-odd:bg-neutral-100 group-even:bg-white dark:border-neutral-700 dark:group-odd:bg-neutral-950 dark:group-even:bg-neutral-900 ${
-                      cell.column.id === "name" ? "sticky left-0 border-r" : ""
-                    }`}
-                    key={cell.id}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table sticky>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <Table.HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <Table.HeaderCell sticky={header.id === "name"} key={header.id}>
+                  {header.isPlaceholder ? null : (
+                    <div
+                      className="cursor-pointer select-none"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {{ asc: " ↑", desc: " ↓" }[
+                        header.column.getIsSorted() as string
+                      ] ?? null}
+                    </div>
+                  )}
+                </Table.HeaderCell>
+              ))}
+            </Table.HeaderRow>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <Table.BodyRow key={row.id} sticky>
+              {row.getVisibleCells().map(cell => (
+                <Table.BodyCell
+                  sticky={cell.column.id === "name"}
+                  key={cell.id}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.BodyCell>
+              ))}
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
     </>
   );
 }

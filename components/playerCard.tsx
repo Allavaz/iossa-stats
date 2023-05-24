@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
-import RadarG from "./radarG";
+import Card from "./commons/card";
 
 function getPosColor(pos: string) {
   switch (pos) {
@@ -29,7 +29,7 @@ function getPosColor(pos: string) {
   }
 }
 
-export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
+export default function PlayerCard({ statsAll, steamInfo }) {
   let positions = [];
 
   for (let i in statsAll.positions) {
@@ -39,42 +39,18 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
   }
 
   return (
-    <div
-      className="whitespace"
-      style={{ paddingBottom: "0px", marginBottom: 0, flexGrow: 1 }}
-    >
-      <div
-        style={{
-          display: "flex",
-          padding: "10px",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          alignItems: "center"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexGrow: 1,
-            maxWidth: "328px",
-            marginBottom: "10px"
-          }}
-        >
-          <div className="profilepicture">
+    <Card>
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between">
+        <div className="flex gap-x-4">
+          <div className="flex flex-col gap-y-2">
             <img
               src={steamInfo.profilePicture}
               alt={statsAll.name}
-              height="150px"
+              className="h-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
             />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                width: "100%"
-              }}
-            >
+            <div className="flex justify-between">
               <div
-                className="position"
+                className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
                 style={{ backgroundColor: getPosColor(statsAll.lastpos) }}
               >
                 {statsAll.lastpos}
@@ -83,7 +59,7 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
                 if (index < 2) {
                   return (
                     <div
-                      className="position"
+                      className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
                       key={item}
                       style={{ backgroundColor: getPosColor(item) }}
                     >
@@ -94,123 +70,111 @@ export default function PlayerCard({ statsAll, statsLast15, steamInfo }) {
               })}
             </div>
           </div>
-          <div>
-            <div className="playername">{statsAll.name}</div>
+          <div className="flex flex-col gap-y-2">
+            <div className="font-heading text-2xl">{statsAll.name}</div>
             <div
-              style={{
-                marginTop: "5px",
-                color: "var(--header-color)",
-                marginBottom: "10px",
-                display:
-                  statsAll.name === steamInfo.personaname ? "none" : "block"
-              }}
+              className={`text-neutral-500 dark:text-neutral-400 ${
+                statsAll.name === steamInfo.personaname ? "hidden" : ""
+              }`}
             >
               {steamInfo.personaname}
             </div>
             <Link href={`/equipo/${statsAll.team}`}>
-              <a style={{ color: "var(--header-color)", marginTop: "5px" }}>
+              <a className="flex items-center gap-x-1 text-neutral-500 dark:text-neutral-400">
                 <img
-                  height="16px"
+                  className="h-6"
                   src={getTeamLogo(statsAll.team)}
                   alt={statsAll.team}
-                  style={{ verticalAlign: "text-top", marginRight: "0.25ch" }}
-                />{" "}
-                {statsAll.team}
+                />
+                <div>{statsAll.team}</div>
               </a>
             </Link>
-            <div
-              className="playersummary"
-              style={{ marginTop: "10px", fontSize: "0.75em" }}
-            >{`${statsAll.matches} partido${
-              statsAll.matches === 1 ? "" : "s"
-            }`}</div>
-            <div
-              className="playersummary"
-              style={{ marginTop: "5px", fontSize: "0.75em" }}
-            >{`${statsAll.wins} victoria${
-              statsAll.wins === 1 ? "" : "s"
-            }`}</div>
-            <div
-              className="playersummary"
-              style={{ marginTop: "5px", fontSize: "0.75em" }}
-            >{`${statsAll.draws} empate${
-              statsAll.draws === 1 ? "" : "s"
-            }`}</div>
-            <div
-              className="playersummary"
-              style={{ marginTop: "5px", fontSize: "0.75em" }}
-            >{`${statsAll.losses} derrota${
-              statsAll.losses === 1 ? "" : "s"
-            }`}</div>
+            <div className="flex flex-col gap-y-1">
+              <div className="text-xs text-neutral-500 dark:text-neutral-400">{`${
+                statsAll.matches
+              } partido${statsAll.matches === 1 ? "" : "s"}`}</div>
+              <div className="text-xs text-neutral-500 dark:text-neutral-400">{`${
+                statsAll.wins
+              } victoria${statsAll.wins === 1 ? "" : "s"}`}</div>
+              <div className="text-xs text-neutral-500 dark:text-neutral-400">{`${
+                statsAll.draws
+              } empate${statsAll.draws === 1 ? "" : "s"}`}</div>
+              <div className="text-xs text-neutral-500 dark:text-neutral-400">{`${
+                statsAll.losses
+              } derrota${statsAll.losses === 1 ? "" : "s"}`}</div>
+            </div>
           </div>
         </div>
-        <div suppressHydrationWarning={true}>
-          {typeof window !== "undefined" && (
-            <RadarG statsLast15={statsLast15} />
-          )}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            textAlign: "center",
-            maxWidth: "260px",
-            flexWrap: "wrap"
-          }}
-        >
-          <div className="stat">
-            <div className="value">
+        <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col items-center gap-y-1">
+            <div className="text-2xl">
               {Math.round(
                 (statsAll.wins / (statsAll.wins + statsAll.losses)) * 100
               )}
               %
             </div>
-            <div className="label">Victorias</div>
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
+              Victorias
+            </div>
           </div>
           {statsAll.saves > statsAll.shotsontarget ? (
-            <div className="stat">
-              <div className="value">{statsAll.savescaught}</div>
-              <div className="label">Atajadas (S/Rebote)</div>
+            <div className="flex flex-col items-center gap-y-1">
+              <div className="text-2xl">{statsAll.savescaught}</div>
+              <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                Atajadas (S/Rebote)
+              </div>
             </div>
           ) : (
-            <div className="stat">
-              <div className="value">{statsAll.goals}</div>
-              <div className="label">Goles</div>
+            <div className="flex flex-col items-center gap-y-1">
+              <div className="text-2xl">{statsAll.goals}</div>
+              <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                Goles
+              </div>
             </div>
           )}
-          <div className="stat">
-            <div className="value">{statsAll.assists}</div>
-            <div className="label">Asistencias</div>
+          <div className="flex flex-col items-center gap-y-1">
+            <div className="text-2xl">{statsAll.assists}</div>
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
+              Asistencias
+            </div>
           </div>
-          <div className="stat">
-            <div className="value">
+          <div className="flex flex-col items-center gap-y-1">
+            <div className="text-2xl">
               {Math.round((statsAll.passescompleted / statsAll.passes) * 100)}%
             </div>
-            <div className="label">Precisión de Pases</div>
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
+              Precisión de Pases
+            </div>
           </div>
           {statsAll.saves > statsAll.shotsontarget ? (
-            <div className="stat">
-              <div className="value">
+            <div className="flex flex-col items-center gap-y-1">
+              <div className="text-2xl">
                 {Math.round(
                   (statsAll.saves / (statsAll.saves + statsAll.goalsconceded)) *
                     100
                 )}
                 %
               </div>
-              <div className="label">Atajadas</div>
+              <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                Atajadas
+              </div>
             </div>
           ) : (
-            <div className="stat">
-              <div className="value">{statsAll.shotsontarget}</div>
-              <div className="label">Tiros al arco</div>
+            <div className="flex flex-col items-center gap-y-1">
+              <div className="text-2xl">{statsAll.shotsontarget}</div>
+              <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                Tiros al arco
+              </div>
             </div>
           )}
-          <div className="stat">
-            <div className="value">{Math.round(statsAll.possession)}%</div>
-            <div className="label">Posesión</div>
+          <div className="flex flex-col items-center gap-y-1">
+            <div className="text-2xl">{Math.round(statsAll.possession)}%</div>
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
+              Posesión
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }

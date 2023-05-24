@@ -18,23 +18,37 @@ import {
 import { Match } from "../types";
 import Table from "./commons/table";
 
-function WonOrLost(match: Match, teamname: string) {
-  const team = match.teams.find(team => team.teamname === teamname);
-  if (team.result === 1) {
-    return <div style={{ color: "green" }}>W</div>;
-  } else if (team.result === -1) {
-    return <div style={{ color: "red" }}>L</div>;
-  } else if (team.result === 0) {
-    return <div style={{ color: "orange" }}>D</div>;
+function WonOrLost(match, playerID) {
+  for (let i in match.teams[0].playerStatistics) {
+    if (match.teams[0].playerStatistics[i].info.steam_id === playerID) {
+      if (match.teams[0].result === 1) {
+        return <div style={{ color: "green" }}>W</div>;
+      } else if (match.teams[0].result === -1) {
+        return <div style={{ color: "red" }}>L</div>;
+      } else if (match.teams[0].result === 0) {
+        return <div style={{ color: "orange" }}>D</div>;
+      }
+    }
+  }
+  for (let i in match.teams[1].playerStatistics) {
+    if (match.teams[1].playerStatistics[i].info.steam_id === playerID) {
+      if (match.teams[1].result === 1) {
+        return <div style={{ color: "green" }}>W</div>;
+      } else if (match.teams[1].result === -1) {
+        return <div style={{ color: "red" }}>L</div>;
+      } else if (match.teams[1].result === 0) {
+        return <div style={{ color: "orange" }}>D</div>;
+      }
+    }
   }
 }
 
 interface Props {
   matches: Match[];
-  teamname: string;
+  id: string;
 }
 
-export default function TeamMatches(props: Props) {
+export default function PlayerMatches(props: Props) {
   const columnHelper = createColumnHelper<Match>();
 
   const columns = [
@@ -50,7 +64,7 @@ export default function TeamMatches(props: Props) {
     columnHelper.display({
       id: "result",
       header: "Resultado",
-      cell: info => WonOrLost(info.row.original, props.teamname)
+      cell: info => WonOrLost(info.row.original, props.id)
     }),
     columnHelper.accessor(row => row.teams[0].teamname, {
       id: "home",

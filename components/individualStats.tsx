@@ -14,6 +14,7 @@ import { secondsToMinutes } from "../lib/Utils";
 import Title from "./commons/title";
 import Button from "./commons/button";
 import { Player } from "../types";
+import Table from "./commons/table";
 
 interface Props {
   players: Player[];
@@ -167,85 +168,76 @@ export default function IndividualStats(props: Props) {
   return (
     <>
       <Title>Estadísticas Individuales - {props.category}</Title>
-      <div className="flex overflow-x-auto rounded-lg border-x border-t border-neutral-200 shadow-lg dark:border-neutral-700">
-        <table className="min-w-max border-separate border-spacing-0 text-center text-sm">
-          <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr className="bg-white dark:bg-neutral-900" key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th
-                    className={`border-b border-neutral-200 bg-white px-2 py-1 dark:border-neutral-700 dark:bg-neutral-900 ${
-                      header.id === "name" ? "sticky left-0 border-r" : ""
-                    }`}
-                    key={header.id}
-                  >
-                    {header.isPlaceholder ? null : (
-                      <div
-                        className="cursor-pointer select-none"
-                        onClick={header.column.getToggleSortingHandler()}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{ asc: " ↑", desc: " ↓" }[
-                          header.column.getIsSorted() as string
-                        ] ?? null}
-                      </div>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            <tr>
-              <td className="sticky left-0 border-b border-r border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-950">
-                <input
-                  className="bg-neutral-100 p-1 text-center dark:bg-neutral-950"
-                  placeholder="Buscar jugador…"
-                  onChange={e =>
-                    table.getColumn("name").setFilterValue(e.target.value)
-                  }
-                />
-              </td>
-              <td className="border-b border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-950">
-                <input
-                  className="bg-neutral-100 p-1 text-center dark:bg-neutral-950"
-                  placeholder="Buscar equipo…"
-                  onChange={e =>
-                    table.getColumn("team").setFilterValue(e.target.value)
-                  }
-                />
-              </td>
-              <td
-                className="border-b border-l border-neutral-200 bg-neutral-100 p-1 text-left italic text-neutral-500 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-400"
-                colSpan={columns.length - 2}
-              >
-                {table.getPrePaginationRowModel().rows.length === 0 &&
-                  "No hay jugadores"}
-              </td>
-            </tr>
-            {table.getRowModel().rows.map(row => (
-              <tr
-                className="group even:bg-neutral-100 dark:bg-neutral-950 dark:even:bg-neutral-900"
-                key={row.id}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <td
-                    className={`border-neutral-200 px-2 py-1 group-odd:bg-neutral-100 group-even:bg-white dark:border-neutral-700 dark:group-odd:bg-neutral-950 dark:group-even:bg-neutral-900 ${
-                      cell.column.id === "name" ? "sticky left-0 border-r" : ""
-                    }`}
-                    key={cell.id}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table sticky>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <Table.HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <Table.HeaderCell
+                  key={header.id}
+                  sticky={header.column.id == "name"}
+                >
+                  {header.isPlaceholder ? null : (
+                    <div
+                      className="cursor-pointer select-none"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {{ asc: " ↑", desc: " ↓" }[
+                        header.column.getIsSorted() as string
+                      ] ?? null}
+                    </div>
+                  )}
+                </Table.HeaderCell>
+              ))}
+            </Table.HeaderRow>
+          ))}
+          <Table.HeaderRow>
+            <Table.HeaderCell sticky>
+              <input
+                className="bg-neutral-100 p-1 text-center font-normal dark:bg-neutral-950"
+                placeholder="Buscar jugador…"
+                onChange={e =>
+                  table.getColumn("name").setFilterValue(e.target.value)
+                }
+              />
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              <input
+                className="bg-neutral-100 p-1 text-center font-normal dark:bg-neutral-950"
+                placeholder="Buscar equipo…"
+                onChange={e =>
+                  table.getColumn("team").setFilterValue(e.target.value)
+                }
+              />
+            </Table.HeaderCell>
+            <Table.HeaderCell colSpan={columns.length - 2}>
+              {table.getPrePaginationRowModel().rows.length === 0 && (
+                <div className="text-left font-normal italic text-neutral-500 dark:text-neutral-400">
+                  No hay jugadores
+                </div>
+              )}
+            </Table.HeaderCell>
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <Table.BodyRow sticky key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <Table.BodyCell
+                  sticky={cell.column.id === "name"}
+                  key={cell.id}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.BodyCell>
+              ))}
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
       <div className="flex justify-center gap-x-4">
         <Button
           disabled={!table.getCanPreviousPage()}

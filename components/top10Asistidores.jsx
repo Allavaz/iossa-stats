@@ -1,53 +1,43 @@
 import { getTeamLogo } from "../utils/Utils";
 import Link from "next/link";
+import Title from "./commons/title";
+import Table from "./commons/table";
 
 export default function Top10Asistidores({ players, category }) {
   return (
-    <div className="rankingChildDiv">
-      <center>
-        <h3>Top 10 Asistidores - {category}</h3>
-      </center>
-      <div className="divDataTable" id="divstatstable">
-        <table className="dataTable" id="statstable">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Jugador</th>
-              <th>Partidos</th>
-              <th>Asistencias</th>
-            </tr>
-          </thead>
-          <tbody>
-            {players.map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>
-                  <Link href={`/jugador/${item._id}`}>
-                    <a>
-                      <div
-                        className="teamlogo"
-                        style={{
-                          paddingRight: "5px",
-                          justifyContent: "center"
-                        }}
-                      >
-                        <img
-                          height="16px"
-                          src={getTeamLogo(item.team)}
-                          alt={item.team}
-                        ></img>{" "}
-                        <div style={{ marginLeft: "5px" }}>{item.name}</div>
-                      </div>
-                    </a>
-                  </Link>
-                </td>
-                <td>{item.matches}</td>
-                <td>{item.assists}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="flex flex-col gap-y-4">
+      <Title>Top 10 Asistidores - {category}</Title>
+      <Table>
+        <thead>
+          <Table.HeaderRow>
+            <Table.HeaderCell>#</Table.HeaderCell>
+            <Table.HeaderCell>Jugador</Table.HeaderCell>
+            <Table.HeaderCell>Partidos</Table.HeaderCell>
+            <Table.HeaderCell>Asistencias</Table.HeaderCell>
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {players.map((item, index) => (
+            <Table.BodyRow key={item._id}>
+              <Table.BodyCell>{index + 1}</Table.BodyCell>
+              <Table.BodyCell>
+                <Link href={`/jugador/${item._id}`}>
+                  <a className="flex items-center justify-center gap-x-1">
+                    <img
+                      className="h-6"
+                      src={getTeamLogo(item.team)}
+                      alt={item.team}
+                    />
+                    <div>{item.name}</div>
+                  </a>
+                </Link>
+              </Table.BodyCell>
+              <Table.BodyCell>{item.matches}</Table.BodyCell>
+              <Table.BodyCell>{item.assists}</Table.BodyCell>
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

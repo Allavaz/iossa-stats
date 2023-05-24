@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
 import Title from "./commons/title";
+import Table from "./commons/table";
 
 const ColoredBar = ({ color }) => {
   return (
@@ -157,49 +158,43 @@ export default function PositionsComponent({
   return (
     <div className="flex flex-col gap-y-4">
       <Title>{header}</Title>
-      <div className="flex overflow-x-auto rounded-lg border border-neutral-200 text-sm shadow-lg dark:border-neutral-700">
-        <table className="min-w-max grow text-center">
-          <thead>
-            <tr className="border-b border-neutral-100 bg-white dark:border-neutral-700 dark:bg-neutral-900">
+      <Table>
+        <thead>
+          <Table.HeaderRow>
+            {columns.map(e => (
+              <Table.HeaderCell key={e.header}>{e.header}</Table.HeaderCell>
+            ))}
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {teams.map((item, index) => (
+            <Table.BodyRow key={item._id}>
               {columns.map(e => (
-                <th className="px-2 py-1" key={e.header}>
-                  {e.header}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {teams.map((item, index) => (
-              <tr
-                className="border-b border-neutral-200 last:border-none odd:bg-neutral-100 even:bg-white dark:border-neutral-800 dark:odd:bg-neutral-950 dark:even:bg-neutral-900"
-                key={item._id}
-              >
-                {columns.map(e => (
-                  <td
-                    key={e.header}
-                    className={`p-1 ${
+                <Table.BodyCell key={e.header}>
+                  <span
+                    className={`${
                       highlight === item._id ? "bold" : "font-normal"
                     }`}
                   >
                     {e.render ? e.render(item, index) : item[e.accessor]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-            {classification &&
-              classification.colors.map(c => (
-                <tr key={c.label}>
-                  <td className="px-2 py-1" colSpan={columns.length}>
-                    <div className="flex items-center gap-x-2">
-                      <ColoredBar color={c.color} />
-                      {c.label}
-                    </div>
-                  </td>
-                </tr>
+                  </span>
+                </Table.BodyCell>
               ))}
-          </tbody>
-        </table>
-      </div>
+            </Table.BodyRow>
+          ))}
+          {classification &&
+            classification.colors.map(c => (
+              <Table.BodyRow key={c.label}>
+                <Table.BodyCell colSpan={columns.length}>
+                  <div className="flex items-center gap-x-2">
+                    <ColoredBar color={c.color} />
+                    {c.label}
+                  </div>
+                </Table.BodyCell>
+              </Table.BodyRow>
+            ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

@@ -26,44 +26,27 @@ export default function DateTimeEditor({
   const dt = useMemo(() => DateTime.fromISO(date), [date]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-    >
-      <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-        <input
-          id="inputDate"
-          type="datetime-local"
-          style={{ width: "25ch" }}
-          defaultValue={dt.toFormat("y-LL-dd'T'HH:mm")}
-        ></input>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "30px"
-        }}
-      >
-        <FontAwesomeIcon
-          icon={faCheckCircle}
-          style={{ cursor: "pointer" }}
-          onClick={e =>
-            formatAndSendDate(
-              (document.getElementById("inputDate") as HTMLInputElement).value
-            )
-          }
-        ></FontAwesomeIcon>
-        <FontAwesomeIcon
-          icon={faTimesCircle}
-          style={{ cursor: "pointer" }}
-          onClick={e => setEditing(null)}
-        ></FontAwesomeIcon>
-      </div>
+    <div className="flex items-center justify-center gap-x-1">
+      <input
+        id="inputDate"
+        type="datetime-local"
+        className="w-48 rounded-lg border border-neutral-200 text-center dark:border-neutral-700"
+        defaultValue={dt.toFormat("y-LL-dd'T'HH:mm")}
+      />
+      <FontAwesomeIcon
+        icon={faCheckCircle}
+        className="cursor-pointer"
+        onClick={_ =>
+          formatAndSendDate(
+            (document.getElementById("inputDate") as HTMLInputElement).value
+          )
+        }
+      />
+      <FontAwesomeIcon
+        icon={faTimesCircle}
+        className="cursor-pointer"
+        onClick={_ => setEditing(null)}
+      />
     </div>
   );
 }

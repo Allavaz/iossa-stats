@@ -14,6 +14,7 @@ import top10rusticos from "./aggregations/top10Rusticos";
 import top10Saves from "./aggregations/top10Saves";
 import clientPromise from "./mongodb";
 import teamPlayers from "./aggregations/teamPlayers";
+import playerScoredTeams from "./aggregations/playerScoredTeams";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -348,6 +349,23 @@ export async function getPlayerPositions(steamid: string, arg: string) {
     return docs.map(doc => ({
       position: doc._id,
       seconds: doc.seconds
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getPlayerScoredTeams(steamid: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(playerScoredTeams(steamid))
+      .toArray();
+    return docs.map(doc => ({
+      teamname: doc._id,
+      goalsscored: doc.goalsscored
     }));
   } catch (error) {
     console.error(error);

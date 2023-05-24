@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { Match, TeamStats } from "../types";
 import Torneos from "../utils/Torneos.json";
 import { temporadaActual } from "../utils/Utils";
+import Card from "./commons/card";
 
 interface Props {
   teamname: string;
@@ -19,15 +20,7 @@ interface Props {
 
 function forma(matches: Match[], teamname: string) {
   return (
-    <div
-      style={{
-        color: "var(--normal-text-color)",
-        fontSize: "1.5em",
-        whiteSpace: "nowrap",
-        display: "flex",
-        columnGap: "5px"
-      }}
-    >
+    <div className="flex gap-x-1 whitespace-nowrap text-2xl">
       {matches.map(match => {
         const result = match.teams.find(t => t.teamname === teamname).result;
         switch (result) {
@@ -80,147 +73,59 @@ export default function TeamCard(props: Props) {
   const isActive = isTeamActive(props.lastLiga);
 
   return (
-    <div className="whitespace" style={{ padding: "20px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          rowGap: "20px",
-          columnGap: "20px",
-          padding: "0 10px"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            columnGap: "20px",
-            flexGrow: 1
-          }}
-        >
-          <img src={props.logo} alt={props.teamname} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              rowGap: "10px"
-            }}
-          >
-            <div
-              style={{
-                fontWeight: "bold",
-                fontSize: "1.5em",
-                color: "var(--normal-text-color)"
-              }}
-            >
+    <Card>
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between sm:p-4">
+        <div className="flex items-center justify-center gap-x-4">
+          <img className="h-32" src={props.logo} alt={props.teamname} />
+          <div className="flex flex-col gap-y-2">
+            <div className="font-heading text-2xl">
               {props.teamname} {!isActive && "⚰️"}
             </div>
             {isActive ? (
               <>
                 {props.lastLiga && (
-                  <div
-                    style={{ color: "var(--header-color)" }}
-                  >{`${props.lastLiga.position}º en ${props.lastLiga._id}`}</div>
+                  <div className="text-neutral-500 dark:text-neutral-400">{`${props.lastLiga.position}º en ${props.lastLiga._id}`}</div>
                 )}
-                <div style={{ color: "var(--header-color)" }}>
+                <div className="text-neutral-500 dark:text-neutral-400">
                   Activo desde {activeSince}
                 </div>
               </>
             ) : (
-              <div style={{ color: "var(--header-color)" }}>
+              <div className="text-neutral-500 dark:text-neutral-400">
                 Activo por última vez en {lastActivity}
               </div>
             )}
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            flexWrap: "wrap",
-            justifyContent: "center"
-          }}
-        >
+        <div className="flex flex-wrap justify-center gap-4">
           {isActive && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
+            <div className="flex flex-col items-center justify-center gap-y-1">
               {forma(props.matches.slice(0, 5), props.teamname)}
-              <div
-                style={{ color: "var(--header-color)", fontSize: "0.75rem" }}
-              >
+              <div className="text-xs text-neutral-500 dark:text-neutral-400">
                 Forma
               </div>
             </div>
           )}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <div
-              style={{
-                color: "var(--normal-text-color)",
-                fontSize: "1.5em"
-              }}
-            >
-              {props.stats.matches}
-            </div>
-            <div style={{ color: "var(--header-color)", fontSize: "0.75rem" }}>
+          <div className="flex flex-col items-center justify-center gap-y-1">
+            <div className="text-2xl">{props.stats.matches}</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">
               Partidos
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <div
-              style={{
-                color: "var(--normal-text-color)",
-                fontSize: "1.5em"
-              }}
-            >
-              {props.stats.wins}
-            </div>
-            <div style={{ color: "var(--header-color)", fontSize: "0.75rem" }}>
+          <div className="flex flex-col items-center justify-center gap-y-1">
+            <div className="text-2xl">{props.stats.wins}</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">
               Victorias
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <div
-              style={{
-                color: "var(--normal-text-color)",
-                fontSize: "1.5em"
-              }}
-            >
-              {props.stats.losses}
-            </div>
-            <div style={{ color: "var(--header-color)", fontSize: "0.75rem" }}>
+          <div className="flex flex-col items-center justify-center gap-y-1">
+            <div className="text-2xl">{props.stats.losses}</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">
               Derrotas
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }

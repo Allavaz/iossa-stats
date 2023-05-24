@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Player } from "../types";
+import Card from "./commons/card";
+import Title from "./commons/title";
 
 function getPosColor(pos: string) {
   switch (pos) {
@@ -34,65 +36,35 @@ interface Props {
 
 export default function Roster(props: Props) {
   return (
-    <div
-      className="whitespace"
-      style={{
-        padding: "20px"
-      }}
-    >
-      <h3 style={{ marginTop: 0 }}>Plantel actual</h3>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly",
-          rowGap: "15px",
-          columnGap: "15px"
-        }}
-      >
-        {props.roster.map(player => (
-          <Link href={`/jugador/${player._id}`} key={player._id}>
-            <a>
-              <div className="profilepicture" style={{ marginRight: 0 }}>
+    <Card>
+      <div className="flex flex-col gap-y-4">
+        <Title>Plantel actual</Title>
+        <div className="flex flex-wrap justify-evenly gap-4">
+          {props.roster.map(player => (
+            <Link href={`/jugador/${player._id}`} key={player._id}>
+              <a className="flex flex-col items-center gap-y-2">
                 <img
+                  className="h-28 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
                   src={player.profilePicture}
                   alt={player.name}
-                  height="100px"
                 />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "5px",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <div
-                  className="position"
-                  key={player.positions[0].position}
-                  style={{
-                    backgroundColor: getPosColor(player.positions[0].position)
-                  }}
-                >
-                  {player.positions[0].position}
+                <div className="flex items-center gap-x-2">
+                  <div
+                    className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
+                    key={player.positions[0].position}
+                    style={{
+                      backgroundColor: getPosColor(player.positions[0].position)
+                    }}
+                  >
+                    {player.positions[0].position}
+                  </div>
+                  <div className="text-sm">{player.name}</div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "10px",
-                    color: "var(--normal-text-color)",
-                    fontSize: "0.9em"
-                  }}
-                >
-                  {player.name}
-                </div>
-              </div>
-            </a>
-          </Link>
-        ))}
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
+    </Card>
   );
 }

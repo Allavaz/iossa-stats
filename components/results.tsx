@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 import {
   fecha,
   getTeamLogo,
@@ -18,6 +17,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 import { Match } from "../types";
+import Table from "./commons/table";
 
 interface Props {
   matches: Match[];
@@ -136,32 +136,27 @@ export default function Results(props: Props) {
               shallow: true
             });
           }}
-          className="border border-neutral-200 bg-white p-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
+          className="rounded-lg border border-neutral-200 bg-white p-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
         />
       </div>
-      <div className="flex overflow-x-auto rounded-lg border border-neutral-200 shadow-lg dark:border-neutral-700">
+      <Table>
         {table.getPrePaginationRowModel().rows.length === 0 ? (
           <div className="border-b border-l border-neutral-200 bg-neutral-100 p-1 text-left italic text-neutral-500 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-400">
             No hay partidos
           </div>
         ) : null}
-        <table className="min-w-max grow overflow-x-auto border-neutral-200 text-center text-sm dark:border-neutral-700">
-          <tbody>
-            {table.getRowModel().rows.map(row => (
-              <tr
-                className="border-neutral-200 even:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-950 dark:even:bg-neutral-900"
-                key={row.id}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <td className="px-2 py-1" key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <Table.BodyRow key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <Table.BodyCell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.BodyCell>
+              ))}
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
       <div className="flex justify-center gap-x-4">
         <Button
           disabled={!table.getCanPreviousPage()}
