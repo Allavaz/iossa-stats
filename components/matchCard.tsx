@@ -15,6 +15,9 @@ import ScoreEditor from "./scoreEditor";
 import MatchEventEditor from "./matchEventEditor";
 import { Event, Match, MatchEvent, Player } from "../types";
 import Link from "next/link";
+import Card from "./commons/card";
+import Button from "./commons/button";
+import Modal from "./commons/modal";
 
 export default function MatchCard({
   data,
@@ -58,6 +61,22 @@ export default function MatchCard({
   undo: () => void;
 }) {
   const [dragging, setDragging] = useState(false);
+
+  function filterEvents(events: MatchEvent[], side: "home" | "away") {
+    if (side === "home") {
+      return events.filter(
+        event =>
+          (event.team === "home" && event.event !== "OWN GOAL") ||
+          (event.team === "away" && event.event === "OWN GOAL")
+      );
+    } else if (side === "away") {
+      return events.filter(
+        event =>
+          (event.team === "away" && event.event !== "OWN GOAL") ||
+          (event.team === "home" && event.event === "OWN GOAL")
+      );
+    } else return [];
+  }
 
   function onChangeTorneo(value: string) {
     changeTorneo(value);
@@ -194,67 +213,53 @@ export default function MatchCard({
   }
 
   return (
-    <div className="whitespace">
-      {editing === "torneo" ? (
-        <TorneoEditor
-          torneo={data.torneo}
-          onChangeTorneo={onChangeTorneo}
-          setEditing={setEditing}
-        />
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "10px",
-            height: "22px"
-          }}
-        >
-          {editable && <div style={{ flex: 1 }} />}
-          <div
-            style={{
-              color: "var(--header-color)",
-              fontSize: "10pt",
-              marginLeft: "5px",
-              marginRight: "5px"
-            }}
-          >
-            {data.torneo}
-          </div>
-          {editable && (
-            <div style={{ flex: 1 }}>
-              <FontAwesomeIcon
-                icon={faEdit}
-                style={{
-                  cursor: "pointer",
-                  fontSize: "10pt",
-                  color: "var(--normal-text-color)"
-                }}
-                onClick={e => {
-                  setEditing("torneo");
-                }}
-              />
-            </div>
-          )}
-        </div>
-      )}
+    <Card>
       {editing && typeof editing.event !== "undefined" ? (
-        <MatchEventEditor
-          item={
-            editing.new ? newItem(editing.new) : data.matchevents[editing.event]
-          }
-          index={editing.new ? data.matchevents.length : editing.event}
-          players={players}
-          onChangeEvent={onChangeEvent}
-          editing={editing}
-          setEditing={setEditing}
-        />
+        <Modal>
+          <MatchEventEditor
+            item={
+              editing.new
+                ? newItem(editing.new)
+                : data.matchevents[editing.event]
+            }
+            index={editing.new ? data.matchevents.length : editing.event}
+            players={players}
+            onChangeEvent={onChangeEvent}
+            editing={editing}
+            setEditing={setEditing}
+          />
+        </Modal>
       ) : null}
-      <table className="resulttable">
+      <table className="w-full table-fixed text-center align-middle">
         <tbody>
           <tr>
-            <td>
+            <td className="p-1" colSpan={3}>
+              {editing === "torneo" ? (
+                <TorneoEditor
+                  torneo={data.torneo}
+                  onChangeTorneo={onChangeTorneo}
+                  setEditing={setEditing}
+                />
+              ) : (
+                <div className="flex justify-center gap-x-2">
+                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                    {data.torneo}
+                  </div>
+                  {editable && (
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      icon={faEdit}
+                      onClick={_ => {
+                        setEditing("torneo");
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td className="p-1">
               {editing === "homeTeamName" ? (
                 <TeamNameEditor
                   teams={data.teams}
@@ -263,42 +268,30 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
+                <div className="flex items-center justify-center gap-x-2">
                   <Link href={`/equipo/${data.teams[0].teamname}`}>
-                    <a style={{ marginLeft: "5px", marginRight: "5px" }}>
-                      <h2>
-                        <div id="teamname">{data.teams[0].teamname}</div>
-                        <div id="shortname">
-                          {getTeamShortname(data.teams[0].teamname)}
-                        </div>
-                      </h2>
+                    <a className="font-heading text-2xl">
+                      <div className="hidden sm:block">
+                        {data.teams[0].teamname}
+                      </div>
+                      <div className="sm:hidden">
+                        {getTeamShortname(data.teams[0].teamname)}
+                      </div>
                     </a>
                   </Link>
                   {editable && (
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.2em",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={e => {
-                          setEditing("homeTeamName");
-                        }}
-                      />
-                    </div>
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      icon={faEdit}
+                      onClick={_ => {
+                        setEditing("homeTeamName");
+                      }}
+                    />
                   )}
                 </div>
               )}
             </td>
-            <td>
+            <td className="p-1">
               {editing === "date" ? (
                 <DateTimeEditor
                   date={data.fecha}
@@ -306,46 +299,23 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  {editable ? <div style={{ flex: 1 }}></div> : null}
-                  <div
-                    style={{
-                      marginLeft: "5px",
-                      marginRight: "5px",
-                      color: "var(--header-color)"
-                    }}
-                  >
+                <div className="flex items-center justify-center gap-x-2">
+                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
                     {fecha(data.fecha)}
                   </div>
                   {editable ? (
-                    <div
-                      style={{
-                        flex: 1,
-                        textAlign: "left"
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      icon={faEdit}
+                      onClick={_ => {
+                        setEditing("date");
                       }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={e => {
-                          setEditing("date");
-                        }}
-                      />
-                    </div>
+                    />
                   ) : null}
                 </div>
               )}
             </td>
-            <td>
+            <td className="p-1">
               {editing === "awayTeamName" ? (
                 <TeamNameEditor
                   teams={data.teams}
@@ -354,55 +324,44 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
+                <div className="flex items-center justify-center gap-x-2">
                   <Link href={`/equipo/${data.teams[1].teamname}`}>
-                    <a style={{ marginLeft: "5px", marginRight: "5px" }}>
-                      <h2>
-                        <div id="teamname">{data.teams[1].teamname}</div>
-                        <div id="shortname">
-                          {getTeamShortname(data.teams[1].teamname)}
-                        </div>
-                      </h2>
+                    <a className="font-heading text-2xl">
+                      <div className="hidden sm:block">
+                        {data.teams[1].teamname}
+                      </div>
+                      <div className="sm:hidden">
+                        {getTeamShortname(data.teams[1].teamname)}
+                      </div>
                     </a>
                   </Link>
                   {editable ? (
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.2em",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={() => {
-                          setEditing("awayTeamName");
-                        }}
-                      />
-                    </div>
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      icon={faEdit}
+                      onClick={() => {
+                        setEditing("awayTeamName");
+                      }}
+                    />
                   ) : null}
                 </div>
               )}
             </td>
           </tr>
           <tr>
-            <td>
-              <Link href={`/equipo/${data.teams[0].teamname}`}>
-                <a>
-                  <img
-                    className="bigClubLogo"
-                    alt={data.teams[0].teamname}
-                    src={getTeamLogo(data.teams[0].teamname)}
-                  />
-                </a>
-              </Link>
+            <td className="p-4">
+              <div className="flex justify-center">
+                <Link href={`/equipo/${data.teams[0].teamname}`}>
+                  <a>
+                    <img
+                      alt={data.teams[0].teamname}
+                      src={getTeamLogo(data.teams[0].teamname)}
+                    />
+                  </a>
+                </Link>
+              </div>
             </td>
-            <td>
+            <td className="p-4">
               {editing === "score" ? (
                 <ScoreEditor
                   home={data.teams[0].score}
@@ -411,62 +370,42 @@ export default function MatchCard({
                   setEditing={setEditing}
                 />
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  {editable ? <div style={{ flex: 1 }}></div> : null}
-                  <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-                    <h2 id="result">
-                      {data.teams[0].score} - {data.teams[1].score}
-                    </h2>
+                <div className="flex items-center justify-center gap-x-2">
+                  <div className="font-heading text-4xl">
+                    {data.teams[0].score} - {data.teams[1].score}
                   </div>
                   {editable ? (
-                    <div
-                      style={{
-                        flex: 1,
-                        textAlign: "left"
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      icon={faEdit}
+                      onClick={e => {
+                        setEditing("score");
                       }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        style={{
-                          cursor: "pointer",
-                          fontSize: "1.2em",
-                          color: "var(--normal-text-color)"
-                        }}
-                        onClick={e => {
-                          setEditing("score");
-                        }}
-                      />
-                    </div>
+                    />
                   ) : null}
                 </div>
               )}
             </td>
-            <td>
-              <Link href={`/equipo/${data.teams[1].teamname}`}>
-                <a>
-                  <img
-                    className="bigClubLogo"
-                    alt={data.teams[1].teamname}
-                    src={getTeamLogo(data.teams[1].teamname)}
-                  />
-                </a>
-              </Link>
+            <td className="p-4">
+              <div className="flex justify-center">
+                <Link href={`/equipo/${data.teams[1].teamname}`}>
+                  <a>
+                    <img
+                      alt={data.teams[1].teamname}
+                      src={getTeamLogo(data.teams[1].teamname)}
+                    />
+                  </a>
+                </Link>
+              </div>
             </td>
           </tr>
-          <tr id="eventslist">
-            <td>
-              <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
-                {data.matchevents.map((item, index) => (
+          <tr className="align-top">
+            <td className="p-1">
+              <ul>
+                {filterEvents(data.matchevents, "home").map((item, index) => (
                   <MatchEventComponent
                     item={item}
                     key={index}
-                    side="home"
                     index={index}
                     editable={editable}
                     onRemoveEvent={onRemoveEvent}
@@ -476,8 +415,8 @@ export default function MatchCard({
                 {editable ? (
                   <li>
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faPlus}
-                      style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("home");
                       }}
@@ -486,17 +425,9 @@ export default function MatchCard({
                 ) : null}
               </ul>
             </td>
-            <td>
+            <td className="p-1">
               {editable && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    rowGap: "10px"
-                  }}
-                >
+                <div className="flex flex-col items-center gap-y-3">
                   {create && (
                     <div
                       style={{
@@ -511,14 +442,14 @@ export default function MatchCard({
                         position: "relative",
                         zIndex: "3"
                       }}
-                      onDragEnter={e => setDragging(true)}
-                      onDragLeave={e => setDragging(false)}
-                      onDrop={ev => {
+                      onDragEnter={_ => setDragging(true)}
+                      onDragLeave={_ => setDragging(false)}
+                      onDrop={e => {
                         setDragging(false);
-                        dropFile(ev);
+                        dropFile(e);
                       }}
-                      onDragOver={ev => {
-                        ev.preventDefault();
+                      onDragOver={e => {
+                        e.preventDefault();
                       }}
                     >
                       <FontAwesomeIcon
@@ -532,18 +463,13 @@ export default function MatchCard({
                     </div>
                   )}
                   <input
+                    className="rounded-lg border border-neutral-200 bg-white p-1 text-center shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
                     id="password"
                     disabled={loading}
                     type="password"
                     placeholder="Contraseña"
-                    style={{
-                      textAlign: "center",
-                      width: "20ch",
-                      height: "22px"
-                    }}
-                  ></input>
-                  <button
-                    className="boton"
+                  />
+                  <Button
                     disabled={loading}
                     onClick={e => {
                       updateMatch(
@@ -556,10 +482,9 @@ export default function MatchCard({
                     }}
                   >
                     {create ? "Subir partido" : "Guardar cambios"}
-                  </button>
+                  </Button>
                   {!create && (
-                    <button
-                      className="boton"
+                    <Button
                       disabled={loading}
                       onClick={e => {
                         deleteMatch(
@@ -572,18 +497,13 @@ export default function MatchCard({
                       }}
                     >
                       Eliminar partido
-                    </button>
+                    </Button>
                   )}
-                  <button
-                    className="boton"
-                    disabled={loading}
-                    onClick={e => exportMatch()}
-                  >
+                  <Button disabled={loading} onClick={e => exportMatch()}>
                     Descargar JSON
-                  </button>
+                  </Button>
                   {!create && (
-                    <button
-                      className="boton"
+                    <Button
                       disabled={loading}
                       onClick={e => {
                         restartEditing();
@@ -591,15 +511,11 @@ export default function MatchCard({
                       }}
                     >
                       Reiniciar edición
-                    </button>
+                    </Button>
                   )}
-                  <button
-                    className="boton"
-                    onClick={e => undo()}
-                    disabled={disableUndo}
-                  >
+                  <Button onClick={e => undo()} disabled={disableUndo}>
                     Deshacer
-                  </button>
+                  </Button>
                   {loading ? (
                     <FontAwesomeIcon
                       icon={faSpinner}
@@ -612,23 +528,24 @@ export default function MatchCard({
               )}
             </td>
             <td>
-              <ul style={{ listStyleType: "none", paddingInlineStart: "0px" }}>
-                {data.matchevents.map((item: MatchEvent, index) => (
-                  <MatchEventComponent
-                    item={item}
-                    key={index}
-                    side="away"
-                    index={index}
-                    editable={editable}
-                    onRemoveEvent={onRemoveEvent}
-                    setEditing={setEditing}
-                  />
-                ))}
+              <ul>
+                {filterEvents(data.matchevents, "away").map(
+                  (item: MatchEvent, index) => (
+                    <MatchEventComponent
+                      item={item}
+                      key={index}
+                      index={index}
+                      editable={editable}
+                      onRemoveEvent={onRemoveEvent}
+                      setEditing={setEditing}
+                    />
+                  )
+                )}
                 {editable ? (
                   <li>
                     <FontAwesomeIcon
+                      className="cursor-pointer"
                       icon={faPlus}
-                      style={{ cursor: "pointer" }}
                       onClick={e => {
                         onAddEvent("away");
                       }}
@@ -640,6 +557,6 @@ export default function MatchCard({
           </tr>
         </tbody>
       </table>
-    </div>
+    </Card>
   );
 }

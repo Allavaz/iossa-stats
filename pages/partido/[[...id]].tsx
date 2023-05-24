@@ -16,6 +16,7 @@ import createJSON from "../../lib/createJSON";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
 import { Match, MatchEvent, MatchPlayer, Player } from "../../types";
 import Torneos from "../../utils/Torneos.json";
+import Title from "../../components/commons/title";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   let props: any = {};
@@ -992,50 +993,44 @@ export default function MatchPage({
             </>
           )}
         </Head>
-        <MatchCard
-          data={editable || create ? editableData.at(-1) : data}
-          editable={editable || create}
-          players={players}
-          changeTorneo={changeTorneo}
-          changeDate={changeDate}
-          changeTeam={changeTeam}
-          changeScore={changeScore}
-          changeEvents={changeEvents}
-          loading={loading}
-          exportMatch={exportMatch}
-          restartEditing={restartEditing}
-          updateMatch={updateMatch}
-          deleteMatch={deleteMatch}
-          editing={editing}
-          setEditing={setEditing}
-          undo={undo}
-          disableUndo={editableData.length < 2}
-          create={create}
-          dropFile={dropFile}
-        />
-        <div className="colCon">
-          <div
-            className="flexTableDiv"
-            style={{
-              flexBasis: challonge || !table ? "900px" : "410px",
-              flexGrow: 9999
-            }}
-          >
-            <MatchTeamStats
-              data={editable || create ? editableData.at(-1) : data}
-            />
+        <div className="flex flex-col gap-y-4">
+          <MatchCard
+            data={editable || create ? editableData.at(-1) : data}
+            editable={editable || create}
+            players={players}
+            changeTorneo={changeTorneo}
+            changeDate={changeDate}
+            changeTeam={changeTeam}
+            changeScore={changeScore}
+            changeEvents={changeEvents}
+            loading={loading}
+            exportMatch={exportMatch}
+            restartEditing={restartEditing}
+            updateMatch={updateMatch}
+            deleteMatch={deleteMatch}
+            editing={editing}
+            setEditing={setEditing}
+            undo={undo}
+            disableUndo={editableData.length < 2}
+            create={create}
+            dropFile={dropFile}
+          />
+          <div className="flex flex-wrap gap-4">
+            <div className="grow">
+              <MatchTeamStats
+                data={editable || create ? editableData.at(-1) : data}
+              />
+            </div>
             {(editableChallonge || (challonge && !(editable || create))) && (
               <>
-                <h3 style={{ marginBottom: 0 }}>
+                <Title>
                   {editableChallonge ? editableData.at(-1).torneo : data.torneo}
-                </h3>
+                </Title>
                 <Challonge id={editableChallonge || challonge} />
               </>
             )}
-          </div>
-          {editableTable || (table && !editable) ? (
-            <div style={{ flexGrow: 1 }}>
-              <div className="flexTableDiv">
+            {editableTable || (table && !editable) ? (
+              <div className="grow overflow-x-auto">
                 <PositionsComponent
                   teams={editable || create ? editableTable : table}
                   header={
@@ -1043,77 +1038,71 @@ export default function MatchPage({
                   }
                 />
                 {editable || create ? (
-                  <p
-                    style={{
-                      fontSize: "0.8em",
-                      textAlign: "center",
-                      color: "var(--header-color)"
-                    }}
-                  >
-                    <i>La tabla se actualizará luego de subir el partido.</i>
-                  </p>
+                  <div className="text-sm italic text-neutral-500 dark:text-neutral-400">
+                    La tabla se actualizará luego de subir el partido.
+                  </div>
                 ) : null}
               </div>
-            </div>
+            ) : null}
+          </div>
+          <MatchIndividualStats
+            players={
+              editable || create
+                ? editableData.at(-1).teams[0].playerStatistics
+                : data.teams[0].playerStatistics
+            }
+            teamName={
+              editable || create
+                ? editableData.at(-1).teams[0].teamname
+                : data.teams[0].teamname
+            }
+            editable={editable || create}
+            playersAutocomplete={players}
+            changeIndivStats={changeIndivStats}
+            removePlayer={removePlayer}
+            side="home"
+            editing={editing}
+            setEditing={setEditing}
+          />
+          <MatchIndividualStats
+            players={
+              editable || create
+                ? editableData.at(-1).teams[1].playerStatistics
+                : data.teams[1].playerStatistics
+            }
+            teamName={
+              editable || create
+                ? editableData.at(-1).teams[1].teamname
+                : data.teams[1].teamname
+            }
+            editable={editable || create}
+            playersAutocomplete={players}
+            changeIndivStats={changeIndivStats}
+            removePlayer={removePlayer}
+            side="away"
+            editing={editing}
+            setEditing={setEditing}
+          />
+          {(!(editable || create) && data.vod) ||
+          ((editable || create) &&
+            editableData.at(-1).vod &&
+            editing !== "vod") ? (
+            <Vod
+              vod={editable || create ? editableData.at(-1).vod : data.vod}
+              editable={editable || create}
+              setEditing={setEditing}
+              changeVod={changeVod}
+            />
+          ) : null}
+          {(editableData.at(-1).vod === null && (editable || create)) ||
+          editing === "vod" ? (
+            <VodEditor
+              vod={editableData.at(-1).vod}
+              changeVod={changeVod}
+              setEditing={setEditing}
+            />
           ) : null}
         </div>
-        <MatchIndividualStats
-          players={
-            editable || create
-              ? editableData.at(-1).teams[0].playerStatistics
-              : data.teams[0].playerStatistics
-          }
-          teamName={
-            editable || create
-              ? editableData.at(-1).teams[0].teamname
-              : data.teams[0].teamname
-          }
-          editable={editable || create}
-          playersAutocomplete={players}
-          changeIndivStats={changeIndivStats}
-          removePlayer={removePlayer}
-          side="home"
-          editing={editing}
-          setEditing={setEditing}
-        />
-        <MatchIndividualStats
-          players={
-            editable || create
-              ? editableData.at(-1).teams[1].playerStatistics
-              : data.teams[1].playerStatistics
-          }
-          teamName={
-            editable || create
-              ? editableData.at(-1).teams[1].teamname
-              : data.teams[1].teamname
-          }
-          editable={editable || create}
-          playersAutocomplete={players}
-          changeIndivStats={changeIndivStats}
-          removePlayer={removePlayer}
-          side="away"
-          editing={editing}
-          setEditing={setEditing}
-        />
-        {(!(editable || create) && data.vod) ||
-        ((editable || create) &&
-          editableData.at(-1).vod &&
-          editing !== "vod") ? (
-          <Vod
-            vod={editable || create ? editableData.at(-1).vod : data.vod}
-            editable={editable || create}
-            setEditing={setEditing}
-            changeVod={changeVod}
-          />
-        ) : null}
-        {(editableData.at(-1).vod === null && (editable || create)) ||
-        editing === "vod" ? (
-          <VodEditor
-            vod={editableData.at(-1).vod}
-            changeVod={changeVod}
-            setEditing={setEditing}
-          />
-        ) : null}
       </>
     );
   }

@@ -1,12 +1,13 @@
 export default function Challonge({ id }: { id: string }) {
   return (
-    <iframe
-      title="challonge"
-      className="whitespace"
-      style={{ padding: 0, maxWidth: 1100, marginBottom: 0 }}
-      src={"https://challonge.com/" + id + "/module"}
-      width="100%"
-      height="600"
-    ></iframe>
+    <div className="w-full overflow-hidden rounded-lg border border-neutral-200 shadow-lg dark:border-neutral-700">
+      <iframe
+        title="challonge"
+        className="m-0 max-w-6xl"
+        src={"https://challonge.com/" + id + "/module"}
+        width="100%"
+        height="600"
+      />
+    </div>
   );
 }

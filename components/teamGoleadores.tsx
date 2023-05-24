@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Player } from "../types";
+import Title from "./commons/title";
+import Table from "./commons/table";
 
 interface Props {
   players: Player[];
@@ -18,44 +20,41 @@ export default function TeamGoleadores(props: Props) {
     .slice(0, 10);
 
   return (
-    <div style={{ flexGrow: 1 }}>
-      <h3 style={{ marginTop: 0 }}>Goleadores Históricos</h3>
-      <div className="divDataTable">
-        <table className="dataTable">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Jugador</th>
-              <th>Goles</th>
-              <th>Partidos</th>
-            </tr>
-          </thead>
-          <tbody>
-            {top10Goleadores.length === 0 && (
-              <tr>
-                <td
-                  colSpan={4}
-                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
-                >
+    <div className="flex flex-col gap-y-4">
+      <Title>Goleadores Históricos</Title>
+      <Table>
+        <thead>
+          <Table.HeaderRow>
+            <Table.HeaderCell>#</Table.HeaderCell>
+            <Table.HeaderCell>Jugador</Table.HeaderCell>
+            <Table.HeaderCell>Goles</Table.HeaderCell>
+            <Table.HeaderCell>Partidos</Table.HeaderCell>
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {top10Goleadores.length === 0 && (
+            <Table.BodyRow>
+              <Table.BodyCell colSpan={4}>
+                <span className="italic text-neutral-500 dark:text-neutral-400">
                   Este equipo no tiene goleadores todavía.
-                </td>
-              </tr>
-            )}
-            {top10Goleadores.map((player, index) => (
-              <tr key={player._id}>
-                <td>{index + 1}</td>
-                <td>
-                  <Link href={`/jugador/${player._id}`}>
-                    <a>{player.name}</a>
-                  </Link>
-                </td>
-                <td>{player.goals}</td>
-                <td>{player.matches}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </span>
+              </Table.BodyCell>
+            </Table.BodyRow>
+          )}
+          {top10Goleadores.map((player, index) => (
+            <Table.BodyRow key={player._id}>
+              <Table.BodyCell>{index + 1}</Table.BodyCell>
+              <Table.BodyCell>
+                <Link href={`/jugador/${player._id}`}>
+                  <a>{player.name}</a>
+                </Link>
+              </Table.BodyCell>
+              <Table.BodyCell>{player.goals}</Table.BodyCell>
+              <Table.BodyCell>{player.matches}</Table.BodyCell>
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

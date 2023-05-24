@@ -81,22 +81,26 @@ export default function Top10({
         <meta property="og:image" content="/logo-solo.png" />
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
       </Head>
-      <Selector
-        selectTorneo={selectTorneo}
-        selectTemporada={selectTorneo}
-        temporada={temporada}
-      />
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly"
-        }}
-      >
-        <Top10Goleadores players={goleadores} category={category} />
-        <Top10Asistidores players={asistidores} category={category} />
-        <Top10Rusticos players={rusticos} category={category} />
-        <Top10Arqueros players={arqueros} category={category} />
+      <div className="flex flex-col gap-y-4">
+        <Selector
+          selectTorneo={selectTorneo}
+          selectTemporada={selectTorneo}
+          temporada={temporada}
+        />
+        <div className="flex flex-wrap justify-evenly gap-4">
+          <div className="grow overflow-x-auto">
+            <Top10Goleadores players={goleadores} category={category} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <Top10Asistidores players={asistidores} category={category} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <Top10Rusticos players={rusticos} category={category} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <Top10Arqueros players={arqueros} category={category} />
+          </div>
+        </div>
       </div>
     </>
   );

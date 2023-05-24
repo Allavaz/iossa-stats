@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import { getTeamLogo } from "../utils/Utils";
-import theme from "../styles/autocompletePlayers.module.css";
 
 export default function AutocompletePlayers(props) {
   let players = [];
@@ -30,36 +29,35 @@ export default function AutocompletePlayers(props) {
   const getSuggestionValue = suggestion => suggestion.name;
 
   const renderSuggestion = suggestion => (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "5px"
-        }}
-      >
-        <div>
-          <img
-            src={suggestion.teamlogo}
-            height="16pt"
-            style={{ marginRight: ".5ch" }}
-            alt={suggestion.team}
-          ></img>
+    <div className="flex cursor-pointer flex-col items-center gap-y-2 border-b border-neutral-300 bg-white p-2 text-sm transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
+      <div className="flex items-center justify-center gap-x-1">
+        <img src={suggestion.teamlogo} className="h-6" alt={suggestion.team} />
+        <div className="overflow-x-hidden text-ellipsis whitespace-nowrap">
+          {suggestion.name}
         </div>
-        <div style={{ textAlign: "center" }}>{suggestion.name}</div>
       </div>
-      <div
-        style={{
-          color: "var(--header-color)",
-          fontSize: "9pt",
-          padding: "5px",
-          paddingTop: "2px"
-        }}
-      >
-        <i>{suggestion.steamid}</i>
+      <div className="italic text-neutral-500 dark:text-neutral-400">
+        {suggestion.steamid}
       </div>
     </div>
+  );
+
+  const renderSuggestionsContainer = ({ containerProps, children, query }) => {
+    return (
+      <div
+        {...containerProps}
+        className="absolute z-50 w-48 overflow-hidden rounded-lg border-x border-neutral-300 dark:border-neutral-700"
+      >
+        {children}
+      </div>
+    );
+  };
+
+  const renderInputComponent = inputProps => (
+    <input
+      {...inputProps}
+      className="w-48 rounded border border-neutral-300 px-1 shadow-lg dark:border-neutral-700"
+    />
   );
 
   const [value, setValue] = useState(props.defaultValue);
@@ -100,9 +98,10 @@ export default function AutocompletePlayers(props) {
       onSuggestionsClearRequested={onSuggestionsClearRequested}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
+      renderSuggestionsContainer={renderSuggestionsContainer}
+      renderInputComponent={renderInputComponent}
       onSuggestionSelected={onSuggestionSelected}
       inputProps={inputProps}
-      theme={theme}
     />
   );
 }

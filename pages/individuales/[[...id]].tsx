@@ -61,12 +61,14 @@ export default function Individuales({ players, category, temporada, page }) {
         <meta property="og:image" content="/logo-solo.png" />
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
       </Head>
-      <Selector
-        selectTorneo={selectTorneo}
-        selectTemporada={selectTorneo}
-        temporada={temporada}
-      />
-      <IndividualStats players={players} category={category} pagina={page} />
+      <div className="flex flex-col gap-y-4">
+        <Selector
+          selectTorneo={selectTorneo}
+          selectTemporada={selectTorneo}
+          temporada={temporada}
+        />
+        <IndividualStats players={players} category={category} pagina={page} />
+      </div>
     </>
   );
 }

@@ -1,10 +1,11 @@
 import Torneos from "../utils/Torneos.json";
+import Button from "./commons/button";
+import Select from "./commons/select";
 
 export default function Selector({ selectTorneo, selectTemporada, temporada }) {
   return (
-    <div className="torSelect">
-      <select
-        className="selector"
+    <div className="flex flex-col gap-y-2">
+      <Select
         defaultValue={temporada}
         onChange={e => selectTemporada(e.target.value)}
       >
@@ -13,7 +14,7 @@ export default function Selector({ selectTorneo, selectTemporada, temporada }) {
             {item.titulo}
           </option>
         ))}
-      </select>
+      </Select>
       {Torneos.map((item, index) => (
         <div
           className={item.temporada}
@@ -21,23 +22,16 @@ export default function Selector({ selectTorneo, selectTemporada, temporada }) {
           style={{ display: temporada === item.temporada ? "block" : "none" }}
         >
           {item.torneos.length > 1 && (
-            <div className="botonera">
-              <button
-                className="boton"
-                onClick={() => selectTorneo(item.temporada)}
-              >
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={() => selectTorneo(item.temporada)}>
                 Totales
-              </button>
+              </Button>
               {item.torneos.map(
                 (e, i) =>
                   e.query && (
-                    <button
-                      className="boton"
-                      key={i}
-                      onClick={() => selectTorneo(e.query)}
-                    >
+                    <Button key={i} onClick={() => selectTorneo(e.query)}>
                       {e.torneo}
-                    </button>
+                    </Button>
                   )
               )}
             </div>

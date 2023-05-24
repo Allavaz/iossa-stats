@@ -1,445 +1,252 @@
-import { useTable, usePagination, useFilters, useSortBy } from "react-table";
-import { useMemo } from "react";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable
+} from "@tanstack/react-table";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getTeamLogo } from "../utils/Utils";
 import { secondsToMinutes } from "../lib/Utils";
+import Title from "./commons/title";
+import Button from "./commons/button";
+import { Player } from "../types";
+import Table from "./commons/table";
 
-export default function IndividualStats({ players, category, pagina }) {
+interface Props {
+  players: Player[];
+  category: string;
+  pagina: number;
+}
+
+export default function IndividualStats(props: Props) {
   const router = useRouter();
+  const columnHelper = createColumnHelper<Player>();
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Jugador",
-        accessor: "name",
-        fixed: "left",
-        Cell: row => {
-          return (
-            <Link href={"/jugador/" + row.row.original._id}>
-              <a>{row.row.original.name}</a>
-            </Link>
-          );
-        },
-        filter: (rows, cIds, fv) =>
-          rows.filter(
-            r =>
-              r.original.name.toLowerCase().includes(fv.toLowerCase()) ||
-              r.original._id.toLowerCase() === fv.toLowerCase()
-          )
-      },
-      {
-        Header: "Equipo",
-        accessor: "team",
-        Cell: row => {
-          return (
-            <Link href={`/equipo/${row.row.original.team}`}>
-              <a
-                className="teamlogo"
-                style={{
-                  justifyContent: "center"
-                }}
-              >
-                <img
-                  height="16px"
-                  width="16px"
-                  src={getTeamLogo(row.row.original.team)}
-                  alt={row.row.original.team}
-                />
-                <div style={{ marginLeft: "5px" }}>{row.row.original.team}</div>
-              </a>
-            </Link>
-          );
-        }
-      },
-      {
-        Header: "Partidos",
-        accessor: "matches"
-      },
-      {
-        Header: "Victorias",
-        accessor: "wins"
-      },
-      {
-        Header: "Derrotas",
-        accessor: "losses"
-      },
-      {
-        Header: "Empates",
-        accessor: "draws"
-      },
-      {
-        Header: "Goles",
-        accessor: "goals"
-      },
-      {
-        Header: "Asistencias",
-        accessor: "assists"
-      },
-      {
-        Header: "Segundas Asistencias",
-        accessor: "secondassists"
-      },
-      {
-        Header: "Tiros (al Arco)",
-        accessor: "shotsontarget",
-        Cell: row => {
-          return (
-            row.row.original.shots + " (" + row.row.original.shotsontarget + ")"
-          );
-        }
-      },
-      {
-        Header: "Pases (Completados)",
-        accessor: "passes",
-        Cell: row => {
-          return (
-            row.row.original.passes +
-            " (" +
-            row.row.original.passescompleted +
-            ")"
-          );
-        }
-      },
-      {
-        Header: "Pases Clave",
-        accessor: "keypasses"
-      },
-      {
-        Header: "Precisión de Pases",
-        accessor: "passescompleted",
-        Cell: row => {
-          return isNaN(
-            row.row.original.passescompleted / row.row.original.passes
-          )
-            ? "0%"
-            : Math.round(
-                (row.row.original.passescompleted / row.row.original.passes) *
-                  100
-              ) + "%";
-        }
-      },
-      {
-        Header: "Intercepciones",
-        accessor: "interceptions"
-      },
-      {
-        Header: "Atajadas (Sin Rebote)",
-        accessor: "savescaught",
-        Cell: row => {
-          return (
-            row.row.original.saves + " (" + row.row.original.savescaught + ")"
-          );
-        }
-      },
-      {
-        Header: "Faltas",
-        accessor: "fouls"
-      },
-      {
-        Header: "Tarjetas Amarillas",
-        accessor: "yellowcards"
-      },
-      {
-        Header: "Tarjetas Rojas",
-        accessor: "redcards"
-      },
-      {
-        Header: "Goles en Contra",
-        accessor: "owngoals"
-      },
-      {
-        Header: "Offsides",
-        accessor: "offsides"
-      },
-      {
-        Header: "Prom. Distancia Recorrida",
-        accessor: "distancecovered",
-        Cell: row => {
-          return Math.round(row.row.original.distancecovered) / 1000 + " km";
-        }
-      },
-      {
-        Header: "Prom. Posesión",
-        accessor: "possession",
-        Cell: row => {
-          return Math.round(row.row.original.possession) + "%";
-        }
-      },
-      {
-        Header: "Córners",
-        accessor: "corners"
-      },
-      {
-        Header: "Laterales",
-        accessor: "throwins"
-      },
-      {
-        Header: "Penales",
-        accessor: "penalties"
-      },
-      {
-        Header: "Tiros Libres",
-        accessor: "freekicks"
-      },
-      {
-        Header: "Tackles (Completados)",
-        accessor: "tacklescompleted",
-        Cell: row => {
-          return (
-            row.row.original.tackles +
-            " (" +
-            row.row.original.tacklescompleted +
-            ")"
-          );
-        }
-      },
-      {
-        Header: "Faltas Sufridas",
-        accessor: "foulssuffered"
-      },
-      {
-        Header: "Saques de Arco",
-        accessor: "goalkicks"
-      },
-      {
-        Header: "Goles Recibidos",
-        accessor: "goalsconceded"
-      },
-      {
-        Header: "Ocasiones Creadas",
-        accessor: "chancescreated"
-      },
-      {
-        Header: "Tiempo Jugado Total",
-        accessor: "secondsplayed",
-        Cell: row => secondsToMinutes(row.row.original.secondsplayed)
+  const columns = [
+    columnHelper.accessor("name", {
+      header: () => "Nombre",
+      cell: info => (
+        <Link href={"/jugador/" + info.row.original._id}>
+          <a>{info.getValue()}</a>
+        </Link>
+      )
+    }),
+    columnHelper.accessor("team", {
+      header: () => "Equipo",
+      cell: info => (
+        <Link href={"/equipo/" + info.getValue()}>
+          <a className="flex items-center justify-center gap-x-1">
+            <img
+              className="h-6"
+              src={getTeamLogo(info.getValue())}
+              alt={info.getValue()}
+            />
+            <div>{info.getValue()}</div>
+          </a>
+        </Link>
+      )
+    }),
+    columnHelper.accessor("matches", {
+      header: () => "Partidos"
+    }),
+    columnHelper.accessor("wins", {
+      header: () => "Victorias"
+    }),
+    columnHelper.accessor("losses", {
+      header: () => "Derrotas"
+    }),
+    columnHelper.accessor("draws", {
+      header: () => "Empates"
+    }),
+    columnHelper.accessor("goals", {
+      header: () => "Goles"
+    }),
+    columnHelper.accessor("assists", {
+      header: () => "Asistencias"
+    }),
+    columnHelper.accessor("secondassists", {
+      header: () => "Segundas asistencias"
+    }),
+    columnHelper.accessor("shots", {
+      header: () => "Tiros (al arco)",
+      cell: info => `${info.getValue()} (${info.row.original.shotsontarget})`
+    }),
+    columnHelper.accessor("passes", {
+      header: () => "Pases (completados)",
+      cell: info => `${info.getValue()} (${info.row.original.passescompleted})`
+    }),
+    columnHelper.accessor("keypasses", {
+      header: () => "Pases clave"
+    }),
+    columnHelper.accessor("passescompleted", {
+      header: () => "Precisión de pases",
+      cell: info =>
+        `${Math.round(
+          (info.row.original.passescompleted * 100) / info.row.original.passes
+        )}%`
+    }),
+    columnHelper.accessor("interceptions", {
+      header: () => "Intercepciones"
+    }),
+    columnHelper.accessor("saves", {
+      header: () => "Atajadas (sin rebote)",
+      cell: info => `${info.getValue()} (${info.row.original.savescaught})`
+    }),
+    columnHelper.accessor("fouls", {
+      header: () => "Faltas"
+    }),
+    columnHelper.accessor("yellowcards", {
+      header: () => "Tarjetas amarillas"
+    }),
+    columnHelper.accessor("redcards", {
+      header: () => "Tarjetas rojas"
+    }),
+    columnHelper.accessor("owngoals", {
+      header: () => "Goles en contra"
+    }),
+    columnHelper.accessor("offsides", {
+      header: () => "Offsides"
+    }),
+    columnHelper.accessor("distancecovered", {
+      header: () => "Prom. distancia recorrida",
+      cell: info => `${(info.getValue() / 1000).toPrecision(4)} km`
+    }),
+    columnHelper.accessor("possession", {
+      header: () => "Prom. posesión",
+      cell: info => `${Math.round(info.getValue())}%`
+    }),
+    columnHelper.accessor("corners", {
+      header: () => "Córners"
+    }),
+    columnHelper.accessor("throwins", {
+      header: () => "Laterales"
+    }),
+    columnHelper.accessor("penalties", {
+      header: () => "Penales"
+    }),
+    columnHelper.accessor("freekicks", {
+      header: () => "Tiros libres"
+    }),
+    columnHelper.accessor("tackles", {
+      header: () => "Tackles (completados)",
+      cell: info => `${info.getValue()} (${info.row.original.tacklescompleted})`
+    }),
+    columnHelper.accessor("foulssuffered", {
+      header: () => "Faltas recibidas"
+    }),
+    columnHelper.accessor("goalkicks", {
+      header: () => "Saques de arco"
+    }),
+    columnHelper.accessor("chancescreated", {
+      header: () => "Ocasiones creadas"
+    }),
+    columnHelper.accessor("secondsplayed", {
+      header: () => "Tiempo jugado total",
+      cell: info => `${Math.ceil(info.getValue() / 60)}'`
+    })
+  ];
+
+  const table = useReactTable({
+    data: props.players,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      pagination: {
+        pageIndex: props.pagina,
+        pageSize: 15
       }
-    ],
-    []
-  );
-
-  const data = useMemo(() => players, [players]);
-  const tableInstance = useTable(
-    { columns, data, initialState: { pageSize: 15, pageIndex: pagina } },
-    useFilters,
-    useSortBy,
-    usePagination
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    page,
-    headerGroups,
-    prepareRow,
-    canPreviousPage,
-    canNextPage,
-    pageCount,
-    nextPage,
-    previousPage,
-    setFilter,
-    rows,
-    state: { pageIndex, pageSize }
-  } = tableInstance;
+    }
+  });
 
   return (
     <>
-      <h3>Estadísticas Individuales - {category}</h3>
-      <div
-        className="divDataTable"
-        style={{
-          borderRight: "1px solid var(--table-border-color)",
-          borderLeft: "1px solid var(--table-border-color)",
-          borderTop: "1px solid var(--table-border-color)",
-          backgroundColor: "var(--table-odd-row-color)"
-        }}
-      >
-        <table
-          {...getTableProps()}
-          style={{ borderCollapse: "initial" }}
-          className="dataTable"
-        >
-          <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={
-                      column.Header === "Jugador"
-                        ? {
-                            position: "sticky",
-                            left: 0,
-                            border: "0px",
-                            borderBottom: "1px solid var(--table-border-color)",
-                            borderRight: "1px solid var(--table-border-color)",
-                            zIndex: 2,
-                            cursor: "pointer",
-                            userSelect: "none"
-                          }
-                        : {
-                            border: 0,
-                            borderBottom: "1px solid var(--table-border-color)",
-                            borderLeft:
-                              column.Header === "Equipo"
-                                ? 0
-                                : "1px solid var(--table-border-color)",
-                            cursor: "pointer",
-                            userSelect: "none"
-                          }
-                    }
-                    key={index}
-                  >
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <span>&#9660; </span>
-                      ) : (
-                        <span>&#9650; </span>
-                      )
-                    ) : null}
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            <tr>
-              <td
-                style={{
-                  borderTop: 0,
-                  borderLeft: 0,
-                  position: "sticky",
-                  left: 0,
-                  zIndex: 2
-                }}
-              >
-                <input
-                  type="text"
-                  placeholder="Buscar jugador…"
-                  style={{ textAlign: "center", width: "21ch" }}
-                  onChange={e => {
-                    setFilter("name", e.target.value);
-                    router.push(router.asPath.split("?")[0], undefined, {
-                      shallow: true
-                    });
-                  }}
-                />
-              </td>
-              <td style={{ borderTop: 0, borderLeft: 0, borderRight: 0 }}>
-                <input
-                  type="text"
-                  placeholder="Buscar equipo…"
-                  style={{ textAlign: "center", width: "23ch" }}
-                  onChange={e => {
-                    setFilter("team", e.target.value);
-                    router.push(router.asPath.split("?")[0], undefined, {
-                      shallow: true
-                    });
-                  }}
-                />
-              </td>
-              <td
-                colSpan={columns.length - 2}
-                style={{ borderTop: 0, borderRight: 0 }}
-              >
-                {rows.length === 0 ? (
-                  <div
-                    style={{ display: "flex", color: "var(--header-color)" }}
-                  >
-                    <i>No hay jugadores</i>
-                  </div>
-                ) : null}
-              </td>
-            </tr>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={i}>
-                  {row.cells.map((cell, index) => (
-                    <td
-                      {...cell.getCellProps()}
-                      style={
-                        cell.column.Header === "Jugador"
-                          ? {
-                              position: "sticky",
-                              left: 0,
-                              border: 0,
-                              borderBottom:
-                                "1px solid var(--table-border-color)",
-                              borderRight:
-                                "1px solid var(--table-border-color)",
-                              zIndex: 2
-                            }
-                          : {
-                              border: 0,
-                              borderLeft:
-                                cell.column.Header === "Equipo"
-                                  ? 0
-                                  : "1px solid var(--table-border-color)",
-                              borderBottom:
-                                "1px solid var(--table-border-color)"
-                            }
-                      }
-                      width={
-                        cell.column.Header === "Equipo" ? "300px" : undefined
-                      }
-                      key={index}
+      <Title>Estadísticas Individuales - {props.category}</Title>
+      <Table sticky>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <Table.HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <Table.HeaderCell
+                  key={header.id}
+                  sticky={header.column.id == "name"}
+                >
+                  {header.isPlaceholder ? null : (
+                    <div
+                      className="cursor-pointer select-none"
+                      onClick={header.column.getToggleSortingHandler()}
                     >
-                      {cell.value != null ? cell.render("Cell") : "N/A"}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-            {[...Array(pageSize - page.length)].map((e, i) => (
-              <tr key={i}>
-                <td
-                  style={{
-                    position: "sticky",
-                    left: 0,
-                    border: 0,
-                    borderBottom: "1px solid var(--table-border-color)",
-                    borderRight: "1px solid var(--table-border-color)",
-                    zIndex: 2
-                  }}
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {{ asc: " ↑", desc: " ↓" }[
+                        header.column.getIsSorted() as string
+                      ] ?? null}
+                    </div>
+                  )}
+                </Table.HeaderCell>
+              ))}
+            </Table.HeaderRow>
+          ))}
+          <Table.HeaderRow>
+            <Table.HeaderCell sticky>
+              <input
+                className="bg-neutral-100 p-1 text-center font-normal dark:bg-neutral-950"
+                placeholder="Buscar jugador…"
+                onChange={e =>
+                  table.getColumn("name").setFilterValue(e.target.value)
+                }
+              />
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              <input
+                className="bg-neutral-100 p-1 text-center font-normal dark:bg-neutral-950"
+                placeholder="Buscar equipo…"
+                onChange={e =>
+                  table.getColumn("team").setFilterValue(e.target.value)
+                }
+              />
+            </Table.HeaderCell>
+            <Table.HeaderCell colSpan={columns.length - 2}>
+              {table.getPrePaginationRowModel().rows.length === 0 && (
+                <div className="text-left font-normal italic text-neutral-500 dark:text-neutral-400">
+                  No hay jugadores
+                </div>
+              )}
+            </Table.HeaderCell>
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <Table.BodyRow sticky key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <Table.BodyCell
+                  sticky={cell.column.id === "name"}
+                  key={cell.id}
                 >
-                  &nbsp;
-                </td>
-                <td
-                  style={{
-                    border: 0,
-                    borderBottom: "1px solid var(--table-border-color)"
-                  }}
-                >
-                  &nbsp;
-                </td>
-                {[...Array(columns.length - 2)].map((e, i) => (
-                  <td
-                    key={i}
-                    style={{
-                      border: 0,
-                      borderBottom: "1px solid var(--table-border-color)",
-                      borderLeft: "1px solid var(--table-border-color)",
-                      padding: "5.54px"
-                    }}
-                  >
-                    &nbsp;
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="pagination">
-        <button
-          className="boton"
-          disabled={!canPreviousPage}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.BodyCell>
+              ))}
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
+      <div className="flex justify-center gap-x-4">
+        <Button
+          disabled={!table.getCanPreviousPage()}
           onClick={e => {
             const queryParams = new URLSearchParams(window.location.search);
-            queryParams.set("page", pageIndex);
+            queryParams.set(
+              "page",
+              table.getState().pagination.pageIndex.toString()
+            );
             router.push(
               router.asPath.split("?")[0] + "?" + queryParams.toString(),
               undefined,
@@ -447,26 +254,29 @@ export default function IndividualStats({ players, category, pagina }) {
                 shallow: true
               }
             );
-            previousPage();
+            table.previousPage();
           }}
-          style={{ margin: 0, marginRight: "10px" }}
         >
           Anterior
-        </button>
-        <div className="pageIndicator">
+        </Button>
+        <div className="flex flex-col items-center">
           <div>
-            Página {pageIndex + 1} de {Math.max(pageCount, 1)}
+            Página {table.getState().pagination.pageIndex + 1} de{" "}
+            {Math.max(table.getPageCount(), 1)}
           </div>
-          <div style={{ color: "var(--header-color)", fontSize: "0.75em" }}>
-            {rows.length} resultado{rows.length !== 1 ? "s" : ""}
+          <div className="text-sm text-neutral-500">
+            {table.getPrePaginationRowModel().rows.length} resultado
+            {table.getPrePaginationRowModel().rows.length !== 1 ? "s" : ""}
           </div>
         </div>
-        <button
-          className="boton"
-          disabled={!canNextPage}
+        <Button
+          disabled={!table.getCanNextPage()}
           onClick={e => {
             const queryParams = new URLSearchParams(window.location.search);
-            queryParams.set("page", pageIndex + 2);
+            queryParams.set(
+              "page",
+              (table.getState().pagination.pageIndex + 2).toString()
+            );
             router.push(
               router.asPath.split("?")[0] + "?" + queryParams.toString(),
               undefined,
@@ -474,12 +284,11 @@ export default function IndividualStats({ players, category, pagina }) {
                 shallow: true
               }
             );
-            nextPage();
+            table.nextPage();
           }}
-          style={{ margin: 0, marginLeft: "10px" }}
         >
           Siguiente
-        </button>
+        </Button>
       </div>
     </>
   );

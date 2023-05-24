@@ -171,7 +171,7 @@ export default function EquipoPage(props: Props) {
           content={`https://iosoccer-sa.bid/${props.logo}`}
         />
       </Head>
-      <div>
+      <div className="flex flex-col gap-y-4">
         <TeamCard
           teamname={props.teamname}
           logo={props.logo}
@@ -180,17 +180,9 @@ export default function EquipoPage(props: Props) {
           stats={props.stats}
         />
         {props.roster.length > 0 && <Roster roster={props.roster} />}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            columnGap: "20px",
-            justifyContent: "space-evenly",
-            rowGap: "20px"
-          }}
-        >
+        <div className="flex flex-wrap gap-4">
           {props.positions && (
-            <div style={{ marginTop: "-1em", flexGrow: 1 }}>
+            <div className="grow overflow-x-auto">
               <PositionsComponent
                 header={"Posiciones " + lastLiga._id}
                 teams={props.positions}
@@ -198,12 +190,26 @@ export default function EquipoPage(props: Props) {
               />
             </div>
           )}
-          <TeamLigas tournaments={props.tournaments.filter(t => t.position)} />
-          <TeamHistoricos players={props.allPlayers} />
-          <TeamGoleadores players={props.allPlayers} />
-          <TeamAsistidores players={props.allPlayers} />
-          <TeamArqueros players={props.allPlayers} />
-          <TeamRivals rivals={props.rivals.filter(r => r.matches > 2)} />
+          <div className="grow overflow-x-auto">
+            <TeamLigas
+              tournaments={props.tournaments.filter(t => t.position)}
+            />
+          </div>
+          <div className="grow overflow-x-auto">
+            <TeamHistoricos players={props.allPlayers} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <TeamGoleadores players={props.allPlayers} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <TeamAsistidores players={props.allPlayers} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <TeamArqueros players={props.allPlayers} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <TeamRivals rivals={props.rivals.filter(r => r.matches > 2)} />
+          </div>
         </div>
         <TeamMatches matches={props.matches} teamname={props.teamname} />
       </div>

@@ -1,4 +1,5 @@
 import { getTeamLogo, percentage } from "../utils/Utils";
+import Table from "./commons/table";
 
 export default function MatchTeamStats(props) {
   const baseObject = i => props.data.teams[i].statistics;
@@ -49,63 +50,48 @@ export default function MatchTeamStats(props) {
   ];
 
   return (
-    <div className="divDataTable" id="divStatsTable" style={props.style}>
-      <table
-        className="dataTable"
-        id="teamstatstable"
-        style={{ tableLayout: "auto" }}
-      >
-        <thead>
-          <tr>
-            <th>
+    <Table>
+      <thead>
+        <Table.HeaderRow>
+          <Table.HeaderCell>
+            <div className="flex justify-center">
               <img
-                height="16px"
+                className="h-6"
                 alt={props.data.teams[0].teamname}
                 src={getTeamLogo(props.data.teams[0].teamname)}
               />
-            </th>
-            <th>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                {props.editable ? <div style={{ flex: 1 }}></div> : null}
-                <div style={{ marginLeft: "5px", marginRight: "5px" }}>
-                  ESTADÍSTICAS DEL EQUIPO
-                </div>
-              </div>
-            </th>
-            <th>
+            </div>
+          </Table.HeaderCell>
+          <Table.HeaderCell>ESTADÍSTICAS DEL EQUIPO</Table.HeaderCell>
+          <Table.HeaderCell>
+            <div className="flex justify-center">
               <img
-                height="16px"
+                className="h-6"
                 alt={props.data.teams[1].teamname}
                 src={getTeamLogo(props.data.teams[1].teamname)}
               />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(
-            e =>
-              e.accessor(0) != null && (
-                <tr key={e.label}>
-                  <td>
-                    {e.accessor(0)}
-                    {1 && e.extra}
-                  </td>
-                  <td>{e.label}</td>
-                  <td>
-                    {e.accessor(1)}
-                    {1 && e.extra}
-                  </td>
-                </tr>
-              )
-          )}
-        </tbody>
-      </table>
-    </div>
+            </div>
+          </Table.HeaderCell>
+        </Table.HeaderRow>
+      </thead>
+      <tbody>
+        {rows.map(
+          e =>
+            e.accessor(0) != null && (
+              <Table.BodyRow>
+                <Table.BodyCell>
+                  {e.accessor(0)}
+                  {1 && e.extra}
+                </Table.BodyCell>
+                <Table.BodyCell>{e.label}</Table.BodyCell>
+                <Table.BodyCell>
+                  {e.accessor(1)}
+                  {1 && e.extra}
+                </Table.BodyCell>
+              </Table.BodyRow>
+            )
+        )}
+      </tbody>
+    </Table>
   );
 }

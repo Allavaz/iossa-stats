@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
+import Title from "./commons/title";
+import Table from "./commons/table";
 
 const ColoredBar = ({ color }) => {
   return (
     <div
       style={{
-        marginTop: "-5px",
-        marginBottom: "-5px",
         height: "26px",
         width: "4px",
-        marginLeft: "-5px",
-        marginRight: "5px",
         backgroundColor: color
       }}
     />
@@ -100,7 +98,7 @@ export default function PositionsComponent({
       header: "Equipo",
       render: (item, index) => (
         <Link href={`/equipo/${item._id}`}>
-          <a className="teamlogo">
+          <a className="flex items-center gap-x-1">
             {classification &&
               classification.colors.find(c => c.matchingIndexes(index)) && (
                 <ColoredBar
@@ -110,14 +108,11 @@ export default function PositionsComponent({
                   }
                 />
               )}
-            <img
-              height="16px"
-              src={getTeamLogo(item._id)}
-              alt={item._id}
-              style={{ marginRight: "5px" }}
-            />
-            <div id={mini ? "fullteamname" : "teamname"}>{item._id}</div>
-            {!mini && <div id="shortname">{getTeamShortname(item._id)}</div>}
+            <img className="h-6" src={getTeamLogo(item._id)} alt={item._id} />
+            <div className={`${!mini && "hidden"} sm:block`}>{item._id}</div>
+            {!mini && (
+              <div className="sm:hidden">{getTeamShortname(item._id)}</div>
+            )}
           </a>
         </Link>
       )
@@ -161,46 +156,45 @@ export default function PositionsComponent({
   ];
 
   return (
-    <div>
-      <h3>{header}</h3>
-      <div className="divDataTable">
-        <table className="dataTable">
-          <thead>
-            <tr>
+    <div className="flex flex-col gap-y-4">
+      <Title>{header}</Title>
+      <Table>
+        <thead>
+          <Table.HeaderRow>
+            {columns.map(e => (
+              <Table.HeaderCell key={e.header}>{e.header}</Table.HeaderCell>
+            ))}
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {teams.map((item, index) => (
+            <Table.BodyRow key={item._id}>
               {columns.map(e => (
-                <th key={e.header}>{e.header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {teams.map((item, index) => (
-              <tr key={item._id}>
-                {columns.map(e => (
-                  <td
-                    key={e.header}
-                    style={{
-                      fontWeight: highlight === item._id ? "bold" : "unset"
-                    }}
+                <Table.BodyCell key={e.header}>
+                  <span
+                    className={`${
+                      highlight === item._id ? "bold" : "font-normal"
+                    }`}
                   >
                     {e.render ? e.render(item, index) : item[e.accessor]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-            {classification &&
-              classification.colors.map(c => (
-                <tr key={c.label}>
-                  <td colSpan={columns.length}>
-                    <div className="teamlogo">
-                      <ColoredBar color={c.color} />
-                      {c.label}
-                    </div>
-                  </td>
-                </tr>
+                  </span>
+                </Table.BodyCell>
               ))}
-          </tbody>
-        </table>
-      </div>
+            </Table.BodyRow>
+          ))}
+          {classification &&
+            classification.colors.map(c => (
+              <Table.BodyRow key={c.label}>
+                <Table.BodyCell colSpan={columns.length}>
+                  <div className="flex items-center gap-x-2">
+                    <ColoredBar color={c.color} />
+                    {c.label}
+                  </div>
+                </Table.BodyCell>
+              </Table.BodyRow>
+            ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

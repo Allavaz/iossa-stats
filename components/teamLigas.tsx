@@ -1,4 +1,6 @@
 import { getTournamentIcon } from "../utils/Utils";
+import Table from "./commons/table";
+import Title from "./commons/title";
 
 interface Props {
   tournaments: {
@@ -12,51 +14,42 @@ interface Props {
 
 export default function TeamLigas(props: Props) {
   return (
-    <div style={{ flexGrow: 1, minWidth: "300px" }}>
-      <h3 style={{ marginTop: 0 }}>Ligas</h3>
-      <div className="divDataTable">
-        <table className="dataTable">
-          <thead>
-            <tr>
-              <th>Torneo</th>
-              <th>Posición</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.tournaments.length === 0 && (
-              <tr>
-                <td
-                  colSpan={2}
-                  style={{ color: "var(--header-color)", fontStyle: "italic" }}
-                >
+    <div className="flex flex-col gap-y-4">
+      <Title>Ligas</Title>
+      <Table>
+        <thead>
+          <Table.HeaderRow>
+            <Table.HeaderCell>Torneo</Table.HeaderCell>
+            <Table.HeaderCell>Posición</Table.HeaderCell>
+          </Table.HeaderRow>
+        </thead>
+        <tbody>
+          {props.tournaments.length === 0 && (
+            <Table.BodyRow>
+              <Table.BodyCell colSpan={2}>
+                <span className="italic text-neutral-500 dark:text-neutral-400">
                   Este equipo no ha participado en ninguna liga todavía.
-                </td>
-              </tr>
-            )}
-            {props.tournaments.map(tournament => (
-              <tr key={tournament._id}>
-                <td>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <img
-                      src={getTournamentIcon(tournament._id)}
-                      alt={tournament._id}
-                      height="16px"
-                    />
-                    <div style={{ marginLeft: "5px" }}>{tournament._id}</div>
-                  </div>
-                </td>
-                <td>{tournament.position}º</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                </span>
+              </Table.BodyCell>
+            </Table.BodyRow>
+          )}
+          {props.tournaments.map(tournament => (
+            <Table.BodyRow key={tournament._id}>
+              <Table.BodyCell>
+                <div className="flex items-center justify-center gap-x-1">
+                  <img
+                    src={getTournamentIcon(tournament._id)}
+                    alt={tournament._id}
+                    className="h-6"
+                  />
+                  <div>{tournament._id}</div>
+                </div>
+              </Table.BodyCell>
+              <Table.BodyCell>{tournament.position}º</Table.BodyCell>
+            </Table.BodyRow>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

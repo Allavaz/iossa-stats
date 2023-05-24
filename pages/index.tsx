@@ -51,9 +51,11 @@ export default function Home({ matches, tablas }: Props) {
         <meta property="og:image" content="/logo-solo.png" />
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
       </Head>
-      <div className="colCon">
-        <Matches matches={matches} />
-        <div className="flexTableDiv" style={{ flexGrow: 1 }}>
+      <div className="flex flex-wrap justify-center gap-4 sm:flex-nowrap">
+        <div className="grow">
+          <Matches matches={matches} />
+        </div>
+        <div className="flex grow flex-col gap-y-4 sm:grow-0">
           {tablas.map(
             (item, index) =>
               item.teams.length > 0 && (
