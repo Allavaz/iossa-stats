@@ -172,9 +172,7 @@ export default function PositionsComponent({
               {columns.map(e => (
                 <Table.BodyCell key={e.header}>
                   <span
-                    className={`${
-                      highlight === item._id ? "bold" : "font-normal"
-                    }`}
+                    className={`${highlight === item._id ? "font-bold" : ""}`}
                   >
                     {e.render ? e.render(item, index) : item[e.accessor]}
                   </span>
