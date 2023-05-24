@@ -198,7 +198,7 @@ export default function IndividualStats(props: Props) {
           <Table.HeaderRow>
             <Table.HeaderCell sticky>
               <input
-                className="bg-neutral-100 p-1 text-center font-normal dark:bg-neutral-950"
+                className="w-32 bg-neutral-100 p-1 text-center font-normal dark:bg-neutral-950 sm:w-max"
                 placeholder="Buscar jugador…"
                 onChange={e =>
                   table.getColumn("name").setFilterValue(e.target.value)
