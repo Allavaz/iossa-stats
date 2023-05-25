@@ -28,7 +28,6 @@
     "puppeteer-cluster": "^0.23.0",
     "react": "17.0.2",
     "react-autosuggest": "^10.1.0",
-    "react-chartjs-2": "^4.3.1",
     "react-dom": "17.0.2",
     "steamid": "^1.1.3"
   },
