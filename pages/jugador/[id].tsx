@@ -1,23 +1,30 @@
 import PlayerCard from "../../components/playerCard";
-import { getPlayerMatches, getPlayerScoredTeams } from "../../lib/getFromDB";
+import {
+  getPlayer,
+  getPlayerMatches,
+  getPlayerPositions,
+  getPlayerScoredTeams
+} from "../../lib/getFromDB";
 import { getSteamInfo } from "../../lib/getFromSteam";
-import PlayerStats from "../../utils/PlayerStats";
 import Head from "next/head";
 import PlayerTeamsTable from "../../components/playerTeams";
 import PlayerMatches from "../../components/playerMatches";
 import PlayerTeams from "../../utils/PlayerTeams";
 import { GetServerSideProps } from "next";
 import PlayerMostScoredTeams from "../../components/playerMostScoredTeams";
+import { temporadaActual } from "../../utils/Utils";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const [playerMatches, steamInfo, teamsMostScored] = await Promise.all([
-    getPlayerMatches(context.params.id as string),
-    getSteamInfo([context.params.id as string]),
-    getPlayerScoredTeams(context.params.id as string)
-  ]);
+  const [playerMatches, steamInfo, teamsMostScored, player, playerPositions] =
+    await Promise.all([
+      getPlayerMatches(context.params.id as string),
+      getSteamInfo([context.params.id as string]),
+      getPlayerScoredTeams(context.params.id as string),
+      getPlayer(context.params.id as string, "all"),
+      getPlayerPositions(context.params.id as string, temporadaActual())
+    ]);
   if (playerMatches.length === 0) return { notFound: true };
   if (!steamInfo) return { notFound: true };
-  const statsAll = PlayerStats(playerMatches, context.params.id);
   const playerMatchesReversed = [...playerMatches].reverse();
   const playerTeams = PlayerTeams(
     context.params.id as string,
@@ -26,38 +33,44 @@ export const getServerSideProps: GetServerSideProps = async context => {
   return {
     props: {
       playerMatches,
-      statsAll,
+      player,
       teamsMostScored,
       steamInfo: steamInfo[0],
-      playerTeams
+      playerTeams,
+      playerPositions
     }
   };
 };
 
 export default function Player({
   playerMatches,
-  statsAll,
+  player,
   teamsMostScored,
   steamInfo,
-  playerTeams
+  playerTeams,
+  playerPositions
 }) {
   return (
     <>
       <Head>
-        <title>{statsAll.name} | IOSoccer Sudamérica</title>
-        <meta name="title" content={`${statsAll.name} | IOSoccer Sudamérica`} />
-        <meta name="description" content={statsAll.team} />
+        <title>{player.name} | IOSoccer Sudamérica</title>
+        <meta name="title" content={`${player.name} | IOSoccer Sudamérica`} />
+        <meta name="description" content={player.team} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="IOSoccer Sudamérica" />
         <meta
           property="og:title"
-          content={`${statsAll.name} | IOSoccer Sudamérica`}
+          content={`${player.name} | IOSoccer Sudamérica`}
         />
-        <meta property="og:description" content={statsAll.team} />
+        <meta property="og:description" content={player.team} />
         <meta property="og:image" content={steamInfo.avatarfull} />
       </Head>
       <div className="flex flex-col gap-y-4">
-        <PlayerCard statsAll={statsAll} steamInfo={steamInfo} />
+        <PlayerCard
+          player={player}
+          steamInfo={steamInfo}
+          playerPositions={playerPositions}
+        />
         <div className="flex flex-wrap gap-4">
           <div className="grow overflow-x-auto">
             <PlayerTeamsTable teams={playerTeams} />
@@ -66,7 +79,7 @@ export default function Player({
             <PlayerMostScoredTeams teams={teamsMostScored} />
           </div>
         </div>
-        <PlayerMatches matches={playerMatches} id={statsAll.steamid} />
+        <PlayerMatches matches={playerMatches} id={player.steamid} />
       </div>
     </>
   );
