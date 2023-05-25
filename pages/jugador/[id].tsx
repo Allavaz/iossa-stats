@@ -63,8 +63,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   }
 
-  console.log(playerTournaments);
-
   return {
     props: {
       playerMatches,
