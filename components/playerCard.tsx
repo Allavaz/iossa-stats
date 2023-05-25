@@ -29,6 +29,55 @@ function getPosColor(pos: string) {
   }
 }
 
+const commonStats = [
+  {
+    label: "Victorias",
+    value: stats => (
+      <>{Math.round((stats.wins / (stats.wins + stats.losses)) * 100)}%</>
+    )
+  },
+  {
+    label: "Asistencias",
+    value: stats => stats.assists
+  },
+  {
+    label: "Precisión de pases",
+    value: stats => (
+      <>{Math.round((stats.passescompleted / stats.passes) * 100)}%</>
+    )
+  },
+  {
+    label: "Posesión",
+    value: stats => <>{Math.round(stats.possession)}%</>
+  }
+];
+
+const goalkeeperStats = [
+  {
+    label: "Atajadas",
+    value: stats => stats.saves
+  },
+  {
+    label: "Atajadas (s/rebote)",
+    value: stats => stats.savescaught
+  },
+  {
+    label: "Goles recibidos",
+    value: stats => stats.goalsconceded
+  }
+];
+
+const fieldPlayerStats = [
+  {
+    label: "Goles",
+    value: stats => stats.goals
+  },
+  {
+    label: "Tiros al arco",
+    value: stats => stats.shotsontarget
+  }
+];
+
 export default function PlayerCard({ statsAll, steamInfo }) {
   let positions = [];
 
@@ -38,9 +87,14 @@ export default function PlayerCard({ statsAll, steamInfo }) {
     }
   }
 
+  const posSpecificStats =
+    statsAll.saves > statsAll.shotsontarget
+      ? goalkeeperStats
+      : fieldPlayerStats;
+
   return (
     <Card>
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between">
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap sm:justify-between">
         <div className="flex gap-x-4">
           <div className="flex flex-col gap-y-2">
             <img
@@ -106,73 +160,17 @@ export default function PlayerCard({ statsAll, steamInfo }) {
           </div>
         </div>
         <div className="flex flex-wrap justify-center gap-4">
-          <div className="flex flex-col items-center gap-y-1">
-            <div className="text-2xl">
-              {Math.round(
-                (statsAll.wins / (statsAll.wins + statsAll.losses)) * 100
-              )}
-              %
-            </div>
-            <div className="text-sm text-neutral-500 dark:text-neutral-400">
-              Victorias
-            </div>
-          </div>
-          {statsAll.saves > statsAll.shotsontarget ? (
-            <div className="flex flex-col items-center gap-y-1">
-              <div className="text-2xl">{statsAll.savescaught}</div>
+          {[...commonStats, ...posSpecificStats].map(item => (
+            <div
+              key={item.label}
+              className="flex flex-col items-center gap-y-1"
+            >
+              <div className="text-2xl">{item.value(statsAll)}</div>
               <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                Atajadas (S/Rebote)
+                {item.label}
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col items-center gap-y-1">
-              <div className="text-2xl">{statsAll.goals}</div>
-              <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                Goles
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col items-center gap-y-1">
-            <div className="text-2xl">{statsAll.assists}</div>
-            <div className="text-sm text-neutral-500 dark:text-neutral-400">
-              Asistencias
-            </div>
-          </div>
-          <div className="flex flex-col items-center gap-y-1">
-            <div className="text-2xl">
-              {Math.round((statsAll.passescompleted / statsAll.passes) * 100)}%
-            </div>
-            <div className="text-sm text-neutral-500 dark:text-neutral-400">
-              Precisión de Pases
-            </div>
-          </div>
-          {statsAll.saves > statsAll.shotsontarget ? (
-            <div className="flex flex-col items-center gap-y-1">
-              <div className="text-2xl">
-                {Math.round(
-                  (statsAll.saves / (statsAll.saves + statsAll.goalsconceded)) *
-                    100
-                )}
-                %
-              </div>
-              <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                Atajadas
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-y-1">
-              <div className="text-2xl">{statsAll.shotsontarget}</div>
-              <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                Tiros al arco
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col items-center gap-y-1">
-            <div className="text-2xl">{Math.round(statsAll.possession)}%</div>
-            <div className="text-sm text-neutral-500 dark:text-neutral-400">
-              Posesión
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </Card>
