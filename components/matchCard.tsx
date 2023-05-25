@@ -430,18 +430,11 @@ export default function MatchCard({
                 <div className="flex flex-col items-center gap-y-3">
                   {create && (
                     <div
-                      style={{
-                        padding: "20px",
-                        width: "100px",
-                        border: dragging
-                          ? "2px dashed var(--header-color)"
-                          : "2px dashed var(--button-border)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: "relative",
-                        zIndex: "3"
-                      }}
+                      className={`relative z-10 flex flex-col items-center justify-center gap-y-4 border-2 border-dashed p-9 ${
+                        dragging
+                          ? "border-neutral-400 dark:border-neutral-500"
+                          : "border-neutral-300 dark:border-neutral-600"
+                      }`}
                       onDragEnter={_ => setDragging(true)}
                       onDragLeave={_ => setDragging(false)}
                       onDrop={e => {
@@ -454,12 +447,21 @@ export default function MatchCard({
                     >
                       <FontAwesomeIcon
                         icon={faUpload}
-                        style={{
-                          color: "var(--header-color)",
-                          fontSize: "3em",
-                          pointerEvents: "none"
-                        }}
+                        className={`pointer-events-none text-3xl ${
+                          dragging
+                            ? "text-neutral-400 dark:text-neutral-500"
+                            : "text-neutral-300 dark:text-neutral-600"
+                        }`}
                       />
+                      <div
+                        className={`pointer-events-none ${
+                          dragging
+                            ? "text-neutral-400 dark:text-neutral-500"
+                            : "text-neutral-300 dark:text-neutral-600"
+                        }`}
+                      >
+                        Subir JSON del partido…
+                      </div>
                     </div>
                   )}
                   <input
