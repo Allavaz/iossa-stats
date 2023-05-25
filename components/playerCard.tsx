@@ -86,13 +86,13 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
     <Card>
       <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap sm:justify-between">
         <div className="flex gap-x-4">
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col items-center gap-y-2">
             <img
               src={steamInfo.profilePicture}
               alt={player.name}
               className="h-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-x-2">
               {playerPositions.map(item => (
                 <div
                   className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
