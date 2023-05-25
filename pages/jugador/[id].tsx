@@ -3,7 +3,9 @@ import {
   getPlayer,
   getPlayerMatches,
   getPlayerPositions,
-  getPlayerScoredTeams
+  getPlayerScoredTeams,
+  getPlayerTournaments,
+  getTournamentPosition
 } from "../../lib/getFromDB";
 import { getSteamInfo } from "../../lib/getFromSteam";
 import Head from "next/head";
@@ -13,23 +15,56 @@ import PlayerTeams from "../../utils/PlayerTeams";
 import { GetServerSideProps } from "next";
 import PlayerMostScoredTeams from "../../components/playerMostScoredTeams";
 import { temporadaActual } from "../../utils/Utils";
+import PlayerLigas from "../../components/playerLigas";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const [playerMatches, steamInfo, teamsMostScored, player, playerPositions] =
-    await Promise.all([
-      getPlayerMatches(context.params.id as string),
-      getSteamInfo([context.params.id as string]),
-      getPlayerScoredTeams(context.params.id as string),
-      getPlayer(context.params.id as string, "all"),
-      getPlayerPositions(context.params.id as string, temporadaActual())
-    ]);
+  const [
+    playerMatches,
+    steamInfo,
+    teamsMostScored,
+    player,
+    playerPositions,
+    playerTournaments
+  ] = await Promise.all([
+    getPlayerMatches(context.params.id as string),
+    getSteamInfo([context.params.id as string]),
+    getPlayerScoredTeams(context.params.id as string),
+    getPlayer(context.params.id as string, "all"),
+    getPlayerPositions(context.params.id as string, temporadaActual()),
+    getPlayerTournaments(context.params.id as string)
+  ]);
+
   if (playerMatches.length === 0) return { notFound: true };
+
   if (!steamInfo) return { notFound: true };
+
   const playerMatchesReversed = [...playerMatches].reverse();
   const playerTeams = PlayerTeams(
     context.params.id as string,
     playerMatchesReversed
   );
+
+  if (!playerTournaments || playerTournaments.length === 0)
+    return { notFound: true };
+
+  for (const tournament of playerTournaments) {
+    if (
+      /liga|division/i.test(tournament._id) &&
+      !/playoff/i.test(tournament._id) &&
+      !/grupo/i.test(tournament._id) &&
+      !/desempate/i.test(tournament._id) &&
+      !/promoción/i.test(tournament._id)
+    ) {
+      const position = await getTournamentPosition(
+        tournament.team,
+        tournament._id
+      );
+      tournament.position = position;
+    }
+  }
+
+  console.log(playerTournaments);
+
   return {
     props: {
       playerMatches,
@@ -37,7 +72,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
       teamsMostScored,
       steamInfo: steamInfo[0],
       playerTeams,
-      playerPositions
+      playerPositions,
+      playerTournaments
     }
   };
 };
@@ -48,7 +84,8 @@ export default function Player({
   teamsMostScored,
   steamInfo,
   playerTeams,
-  playerPositions
+  playerPositions,
+  playerTournaments
 }) {
   return (
     <>
@@ -74,6 +111,11 @@ export default function Player({
         <div className="flex flex-wrap gap-4">
           <div className="grow overflow-x-auto">
             <PlayerTeamsTable teams={playerTeams} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <PlayerLigas
+              tournaments={playerTournaments.filter(t => t.position)}
+            />
           </div>
           <div className="grow overflow-x-auto">
             <PlayerMostScoredTeams teams={teamsMostScored} />

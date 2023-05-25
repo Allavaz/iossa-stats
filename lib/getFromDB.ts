@@ -15,6 +15,7 @@ import top10Saves from "./aggregations/top10Saves";
 import clientPromise from "./mongodb";
 import teamPlayers from "./aggregations/teamPlayers";
 import playerScoredTeams from "./aggregations/playerScoredTeams";
+import playerTournaments from "./aggregations/playerTournaments";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -305,6 +306,24 @@ export async function getTournamentPosition(
       .aggregate(positions({ torneo: tournament }))
       .toArray();
     return docs.findIndex(doc => doc._id === teamname) + 1;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getPlayerTournaments(steamid: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(playerTournaments(steamid))
+      .toArray();
+    return docs.map(doc => ({
+      ...doc,
+      firstmatch: doc.firstmatch.toISOString(),
+      lastmatch: doc.lastmatch.toISOString()
+    }));
   } catch (error) {
     console.error(error);
   }
