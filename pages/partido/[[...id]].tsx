@@ -1030,7 +1030,7 @@ export default function MatchPage({
               </>
             )}
             {editableTable || (table && !editable) ? (
-              <div className="grow overflow-x-auto">
+              <div className="flex grow flex-col gap-y-2 overflow-x-auto">
                 <PositionsComponent
                   teams={editable || create ? editableTable : table}
                   header={
