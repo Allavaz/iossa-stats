@@ -3,7 +3,13 @@ import Card from "./commons/card";
 import Title from "./commons/title";
 import { useState } from "react";
 
-export default function VodEditor(props) {
+interface Props {
+  vod: string | null;
+  changeVod: (id: string) => void;
+  setEditing: (editing: string) => void;
+}
+
+export default function VodEditor(props: Props) {
   const [id, setId] = useState(props.vod === null ? "" : props.vod);
 
   return (
@@ -29,7 +35,9 @@ export default function VodEditor(props) {
           >
             Guardar
           </Button>
-          <Button onClick={_ => props.setEditing(null)}>Cancelar</Button>
+          {props.vod && (
+            <Button onClick={_ => props.setEditing(null)}>Cancelar</Button>
+          )}
         </div>
       </Card>
     </div>
