@@ -129,7 +129,7 @@ export default function Posiciones({
           {tablas.map(
             item =>
               item.teams.length > 0 && (
-                <div className="grow overflow-x-auto">
+                <div className="max-w-xl grow overflow-x-auto">
                   <PositionsComponent
                     key={item.name}
                     teams={item.teams}

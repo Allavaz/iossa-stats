@@ -1015,8 +1015,8 @@ export default function MatchPage({
             create={create}
             dropFile={dropFile}
           />
-          <div className="flex flex-wrap gap-4">
-            <div className="grow">
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="max-w-xl grow">
               <MatchTeamStats
                 data={editable || create ? editableData.at(-1) : data}
               />

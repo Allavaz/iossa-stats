@@ -180,9 +180,9 @@ export default function EquipoPage(props: Props) {
           stats={props.stats}
         />
         {props.roster.length > 0 && <Roster roster={props.roster} />}
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           {props.positions && (
-            <div className="grow overflow-x-auto">
+            <div className="max-w-xl grow overflow-x-auto">
               <PositionsComponent
                 header={"Posiciones " + lastLiga._id}
                 teams={props.positions}
@@ -190,24 +190,24 @@ export default function EquipoPage(props: Props) {
               />
             </div>
           )}
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <TeamLigas
               tournaments={props.tournaments.filter(t => t.position)}
             />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <TeamHistoricos players={props.allPlayers} />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <TeamGoleadores players={props.allPlayers} />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <TeamAsistidores players={props.allPlayers} />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <TeamArqueros players={props.allPlayers} />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <TeamRivals rivals={props.rivals.filter(r => r.matches > 2)} />
           </div>
         </div>

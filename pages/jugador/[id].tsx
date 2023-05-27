@@ -106,16 +106,16 @@ export default function Player({
           steamInfo={steamInfo}
           playerPositions={playerPositions}
         />
-        <div className="flex flex-wrap gap-4">
-          <div className="grow overflow-x-auto">
+        <div className="flex flex-wrap justify-center gap-4">
+          <div className="max-w-xl grow overflow-x-auto">
             <PlayerTeamsTable teams={playerTeams} />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <PlayerLigas
               tournaments={playerTournaments.filter(t => t.position)}
             />
           </div>
-          <div className="grow overflow-x-auto">
+          <div className="max-w-xl grow overflow-x-auto">
             <PlayerMostScoredTeams teams={teamsMostScored} />
           </div>
         </div>
