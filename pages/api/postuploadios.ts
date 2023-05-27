@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         try {
           let doc = createJSON(req.body, strArr[1], null);
           let data = await uploadMatch(doc);
-          res.json({ status: "Success!", id: data._id.toString() });
+          res.end("Success!");
           try {
             let image = await createMatchCard({
               ...data,
@@ -23,10 +23,10 @@ export default async function handler(req, res) {
           }
         } catch (e) {
           console.error(e);
-          res.json({ status: "Error" });
+          res.end("Error");
         }
       } else {
-        res.end(" -> Wrong IP");
+        res.end("Wrong password");
       }
     }
   } else {
