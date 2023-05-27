@@ -9,11 +9,11 @@ export default async function handler(req, res) {
         let data = await uploadMatch(req.body.data);
         res.json({ status: "Success!", id: data._id.toString() });
         try {
-          let image = await createMatchCard({
+          await createMatchCard({
             ...data,
             fecha: data.fecha.toISOString()
           });
-          discordPostMatch(data, image);
+          discordPostMatch(data);
         } catch (error) {
           console.error(error);
         }
