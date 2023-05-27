@@ -17,6 +17,8 @@ import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
 import { Match, MatchEvent, MatchPlayer, Player } from "../../types";
 import Torneos from "../../utils/Torneos.json";
 import Title from "../../components/commons/title";
+import Card from "../../components/commons/card";
+import Button from "../../components/commons/button";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   let props: any = {};
@@ -889,73 +891,43 @@ export default function MatchPage({
 
   if (success === "updating") {
     return (
-      <div className="content">
-        <div
-          className="whitespace"
-          style={{
-            padding: "0",
-            width: "310px",
-            textAlign: "center",
-            minHeight: "355px"
-          }}
-        >
-          <div className="cartel">
+      <div className="m-auto w-fit">
+        <Card>
+          <div className="flex flex-col items-center gap-y-4 p-10">
             <FontAwesomeIcon
               icon={faCheckCircle}
               color="--var(header-color)"
               size="5x"
             />
-            <div style={{ color: "--var(header-color)" }}>
-              Partido {create ? "subido" : "modificado"} correctamente.
-            </div>
+            <div>Partido {create ? "subido" : "modificado"} correctamente.</div>
             <div>
-              <button
-                style={{ margin: 0 }}
-                className="boton"
+              <Button
                 onClick={_ => {
                   router.push("/partido/" + editableData.at(-1)._id);
                   setSuccess(null);
                 }}
               >
                 Ir al partido
-              </button>
+              </Button>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     );
   } else if (success === "deleting") {
     return (
-      <div className="content">
-        <div
-          className="whitespace"
-          style={{
-            padding: "0",
-            width: "310px",
-            textAlign: "center",
-            minHeight: "355px"
-          }}
-        >
-          <div className="cartel">
+      <div className="m-auto w-fit">
+        <Card>
+          <div className="flex flex-col items-center gap-y-4 p-10">
             <FontAwesomeIcon
               icon={faCheckCircle}
               color="--var(header-color)"
               size="5x"
             />
-            <div style={{ color: "--var(header-color)" }}>
-              Partido eliminado correctamente.
-            </div>
-            <div>
-              <button
-                style={{ margin: 0 }}
-                className="boton"
-                onClick={_ => router.push("/")}
-              >
-                Volver al inicio
-              </button>
-            </div>
+            <div>Partido eliminado correctamente.</div>
+            <Button onClick={_ => router.push("/")}>Volver al inicio</Button>
           </div>
-        </div>
+        </Card>
       </div>
     );
   } else {
