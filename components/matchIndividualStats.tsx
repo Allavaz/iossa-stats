@@ -95,7 +95,7 @@ export default function MatchIndividualStats(props) {
             <>
               <FontAwesomeIcon
                 icon={faEdit}
-                style={{ cursor: "pointer" }}
+                className="cursor-pointer"
                 onClick={() =>
                   props.setEditing({
                     player: info.row.index,
@@ -105,7 +105,7 @@ export default function MatchIndividualStats(props) {
               />
               <FontAwesomeIcon
                 icon={faTrashAlt}
-                style={{ cursor: "pointer" }}
+                className="cursor-pointer"
                 onClick={() => onRemovePlayer(info.row.index)}
               />
             </>
