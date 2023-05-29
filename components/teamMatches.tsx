@@ -57,14 +57,14 @@ export default function TeamMatches(props: Props) {
       header: "Local",
       cell: info => (
         <Link href={`/equipo/${info.getValue()}`}>
-          <a className="flex items-center justify-center gap-x-1">
+          <a className="flex items-center justify-end gap-x-1">
+            <div className="hidden sm:block">{info.getValue()}</div>
+            <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
             <img
               src={getTeamLogo(info.getValue())}
               alt={info.getValue()}
               className="h-6"
             />
-            <div className="hidden sm:block">{info.getValue()}</div>
-            <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
           </a>
         </Link>
       )
@@ -91,7 +91,7 @@ export default function TeamMatches(props: Props) {
       header: "Visitante",
       cell: info => (
         <Link href={`/equipo/${info.getValue()}`}>
-          <a className="flex items-center justify-center gap-x-1">
+          <a className="flex items-center justify-start gap-x-1">
             <img
               src={getTeamLogo(info.getValue())}
               alt={info.getValue()}
