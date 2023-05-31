@@ -38,11 +38,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   if (!steamInfo) return { notFound: true };
 
-  const playerMatchesReversed = [...playerMatches].reverse();
-  const playerTeams = PlayerTeams(
-    context.params.id as string,
-    playerMatchesReversed
-  );
+  const playerTeams = PlayerTeams(context.params.id as string, playerMatches);
 
   if (!playerTournaments || playerTournaments.length === 0)
     return { notFound: true };
