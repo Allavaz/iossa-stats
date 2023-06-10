@@ -247,6 +247,10 @@ export default function MatchIndividualStats(props) {
       id: "goalsconceded",
       header: "Goles recibidos"
     }),
+    columnHelper.accessor(row => row.statistics.chancescreated, {
+      id: "chancescreated",
+      header: "Ocasiones creadas"
+    }),
     columnHelper.accessor(row => row.statistics.secondsplayed, {
       id: "secondsplayed",
       header: "Tiempo jugado",
