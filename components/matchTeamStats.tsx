@@ -78,7 +78,7 @@ export default function MatchTeamStats(props) {
         {rows.map(
           e =>
             e.accessor(0) != null && (
-              <Table.BodyRow>
+              <Table.BodyRow key={e.label}>
                 <Table.BodyCell>
                   {e.accessor(0)}
                   {1 && e.extra}
