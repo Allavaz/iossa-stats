@@ -1,6 +1,6 @@
 interface Props {
   children: any;
-  onClick: (...args: any) => any;
+  onClick?: (...args: any) => any;
   style?: any;
   disabled?: boolean;
 }

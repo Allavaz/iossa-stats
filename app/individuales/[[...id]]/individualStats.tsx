@@ -1,3 +1,5 @@
+"use client";
+
 import {
   createColumnHelper,
   flexRender,
@@ -7,14 +9,14 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { useRouter } from "next/router";
 import Link from "next/link";
-import { getTeamLogo } from "../utils/Utils";
-import { secondsToMinutes } from "../lib/Utils";
-import Title from "./commons/title";
-import Button from "./commons/button";
-import { Player } from "../types";
-import Table from "./commons/table";
+import { usePathname } from "next/navigation";
+import { secondsToMinutes } from "../../../lib/Utils";
+import { Player } from "../../../types";
+import { getTeamLogo } from "../../../utils/Utils";
+import Button from "../../../components/commons/button";
+import Table from "../../../components/commons/table";
+import Title from "../../../components/commons/title";
 
 interface Props {
   players: Player[];
@@ -23,7 +25,7 @@ interface Props {
 }
 
 export default function IndividualStats(props: Props) {
-  const router = useRouter();
+  const pathname = usePathname();
   const columnHelper = createColumnHelper<Player>();
 
   const columns = [
@@ -38,18 +40,17 @@ export default function IndividualStats(props: Props) {
     columnHelper.accessor("team", {
       header: () => "Equipo",
       cell: info => (
-        (<Link
+        <Link
           href={"/equipo/" + info.getValue()}
-          className="flex items-center justify-center gap-x-1">
-
+          className="flex items-center justify-center gap-x-1"
+        >
           <img
             className="h-6"
             src={getTeamLogo(info.getValue())}
             alt={info.getValue()}
           />
           <div>{info.getValue()}</div>
-
-        </Link>)
+        </Link>
       )
     }),
     columnHelper.accessor("matches", {
@@ -148,7 +149,7 @@ export default function IndividualStats(props: Props) {
     }),
     columnHelper.accessor("secondsplayed", {
       header: () => "Tiempo jugado total",
-      cell: info => `${Math.ceil(info.getValue() / 60)}'`
+      cell: info => secondsToMinutes(info.getValue())
     })
   ];
 
@@ -243,18 +244,16 @@ export default function IndividualStats(props: Props) {
       <div className="flex justify-center gap-x-4">
         <Button
           disabled={!table.getCanPreviousPage()}
-          onClick={e => {
+          onClick={_ => {
             const queryParams = new URLSearchParams(window.location.search);
             queryParams.set(
               "page",
               table.getState().pagination.pageIndex.toString()
             );
-            router.push(
-              router.asPath.split("?")[0] + "?" + queryParams.toString(),
-              undefined,
-              {
-                shallow: true
-              }
+            history.replaceState(
+              null,
+              "",
+              pathname.split("?")[0] + "?" + queryParams.toString()
             );
             table.previousPage();
           }}
@@ -273,18 +272,16 @@ export default function IndividualStats(props: Props) {
         </div>
         <Button
           disabled={!table.getCanNextPage()}
-          onClick={e => {
+          onClick={_ => {
             const queryParams = new URLSearchParams(window.location.search);
             queryParams.set(
               "page",
               (table.getState().pagination.pageIndex + 2).toString()
             );
-            router.push(
-              router.asPath.split("?")[0] + "?" + queryParams.toString(),
-              undefined,
-              {
-                shallow: true
-              }
+            history.replaceState(
+              null,
+              "",
+              pathname.split("?")[0] + "?" + queryParams.toString()
             );
             table.nextPage();
           }}

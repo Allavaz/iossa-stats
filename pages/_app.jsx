@@ -1,7 +1,7 @@
 import Layout from "../components/layout";
 import "../styles/globals.css";
-import NextNProgress from "nextjs-progressbar";
 import Head from "next/head";
+import NextTopLoader from "nextjs-toploader";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta name="theme-color" content="#e28800" />
       </Head>
-      <NextNProgress color="#ff9800" height={2} showOnShallow={false} />
+      <NextTopLoader color="#ff9800" height={2} />
       <Layout>
         <Component {...pageProps} />
       </Layout>

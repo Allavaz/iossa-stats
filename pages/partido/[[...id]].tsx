@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import router from "next/router";
+import router from "next/navigation";
 import { useEffect, useState } from "react";
 import Challonge from "../../components/challonge";
 import MatchCard from "../../components/matchCard";

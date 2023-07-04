@@ -1,14 +1,12 @@
-import { useRouter } from "next/router";
 import { Match } from "../types";
 import { fecha } from "../utils/Utils";
 import MatchRow from "./matchRow";
 import Title from "./commons/title";
 import React from "react";
 import Button from "./commons/button";
+import Link from "next/link";
 
 export default function Matches({ matches }: { matches: Match[] }) {
-  const router = useRouter();
-
   return (
     <div className="flex grow flex-col items-center gap-y-4">
       {matches.map((match, id, array) => (
@@ -27,7 +25,9 @@ export default function Matches({ matches }: { matches: Match[] }) {
           <MatchRow match={match} />
         </React.Fragment>
       ))}
-      <Button onClick={_ => router.push("/resultados")}>Ver más...</Button>
+      <Link href="/resultados">
+        <Button>Ver más...</Button>
+      </Link>
     </div>
   );
 }

@@ -1,13 +1,15 @@
+"use client";
+
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import {
   fecha,
   getTeamLogo,
   getTeamShortname,
   getTournamentIcon
-} from "../utils/Utils";
-import Title from "./commons/title";
-import Button from "./commons/button";
+} from "../../../utils/Utils";
+import Title from "../../../components/commons/title";
+import Button from "../../../components/commons/button";
 import {
   createColumnHelper,
   flexRender,
@@ -16,8 +18,8 @@ import {
   getPaginationRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { Match } from "../types";
-import Table from "./commons/table";
+import { Match } from "../../../types";
+import Table from "../../../components/commons/table";
 
 interface Props {
   matches: Match[];
@@ -26,7 +28,7 @@ interface Props {
 }
 
 export default function Results(props: Props) {
-  const router = useRouter();
+  const pathname = usePathname();
   const columnHelper = createColumnHelper<Match>();
 
   const columns = [
@@ -43,10 +45,10 @@ export default function Results(props: Props) {
       id: "home",
       header: "Local",
       cell: info => (
-        (<Link
+        <Link
           href={`/equipo/${info.getValue()}`}
-          className="flex items-center justify-end gap-x-1">
-
+          className="flex items-center justify-end gap-x-1"
+        >
           <div className="hidden sm:block">{info.getValue()}</div>
           <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
           <img
@@ -54,8 +56,7 @@ export default function Results(props: Props) {
             alt={info.getValue()}
             className="h-6"
           />
-
-        </Link>)
+        </Link>
       )
     }),
     columnHelper.accessor(
@@ -79,10 +80,10 @@ export default function Results(props: Props) {
       id: "away",
       header: "Visitante",
       cell: info => (
-        (<Link
+        <Link
           href={`/equipo/${info.getValue()}`}
-          className="flex items-center justify-start gap-x-1">
-
+          className="flex items-center justify-start gap-x-1"
+        >
           <img
             src={getTeamLogo(info.getValue())}
             alt={info.getValue()}
@@ -90,25 +91,23 @@ export default function Results(props: Props) {
           />
           <div className="hidden sm:block">{info.getValue()}</div>
           <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
-
-        </Link>)
+        </Link>
       )
     }),
     columnHelper.accessor("torneo", {
       header: "Torneo",
       cell: info => (
-        (<Link
+        <Link
           href={"/partido/" + info.row.original._id}
-          className="flex items-center justify-center gap-x-1">
-
+          className="flex items-center justify-center gap-x-1"
+        >
           <img
             src={getTournamentIcon(info.getValue())}
             alt={info.getValue()}
             className="h-6"
           />
           <div className="hidden sm:block">{info.getValue()}</div>
-
-        </Link>)
+        </Link>
       )
     })
   ];
@@ -138,9 +137,7 @@ export default function Results(props: Props) {
           placeholder="Buscar equipo/torneo…"
           onChange={e => {
             table.setGlobalFilter(e.target.value);
-            router.push(router.asPath.split("?")[0], undefined, {
-              shallow: true
-            });
+            history.replaceState(null, "", pathname.split("?")[0]);
           }}
           className="rounded-lg border border-neutral-200 bg-white p-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
         />
@@ -166,18 +163,16 @@ export default function Results(props: Props) {
       <div className="flex justify-center gap-x-4">
         <Button
           disabled={!table.getCanPreviousPage()}
-          onClick={e => {
+          onClick={_ => {
             const queryParams = new URLSearchParams(window.location.search);
             queryParams.set(
               "page",
               table.getState().pagination.pageIndex.toString()
             );
-            router.push(
-              router.asPath.split("?")[0] + "?" + queryParams.toString(),
-              undefined,
-              {
-                shallow: true
-              }
+            history.replaceState(
+              null,
+              "",
+              pathname.split("?")[0] + "?" + queryParams.toString()
             );
             table.previousPage();
           }}
@@ -196,18 +191,16 @@ export default function Results(props: Props) {
         </div>
         <Button
           disabled={!table.getCanNextPage()}
-          onClick={e => {
+          onClick={_ => {
             const queryParams = new URLSearchParams(window.location.search);
             queryParams.set(
               "page",
               (table.getState().pagination.pageIndex + 2).toString()
             );
-            router.push(
-              router.asPath.split("?")[0] + "?" + queryParams.toString(),
-              undefined,
-              {
-                shallow: true
-              }
+            history.replaceState(
+              null,
+              "",
+              pathname.split("?")[0] + "?" + queryParams.toString()
             );
             table.nextPage();
           }}

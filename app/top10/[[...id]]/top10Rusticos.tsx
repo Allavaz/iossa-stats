@@ -1,7 +1,7 @@
-import { getTeamLogo } from "../utils/Utils";
+import { getTeamLogo } from "../../../utils/Utils";
 import Link from "next/link";
-import Title from "./commons/title";
-import Table from "./commons/table";
+import Title from "../../../components/commons/title";
+import Table from "../../../components/commons/table";
 
 export default function Top10Rusticos({ players, category }) {
   return (
@@ -25,15 +25,14 @@ export default function Top10Rusticos({ players, category }) {
               <Table.BodyCell>
                 <Link
                   href={`/jugador/${item._id}`}
-                  className="flex items-center justify-center gap-x-1">
-
+                  className="flex items-center justify-center gap-x-1"
+                >
                   <img
                     className="h-6"
                     src={getTeamLogo(item.team)}
                     alt={item.team}
                   />
                   <div>{item.name}</div>
-
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>{item.matches}</Table.BodyCell>

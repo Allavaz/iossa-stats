@@ -2,7 +2,7 @@ import Head from "next/head";
 import Title from "../components/commons/title";
 import Card from "../components/commons/card";
 import Button from "../components/commons/button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Error404() {
   const router = useRouter();

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,55 +51,49 @@ export default function Navigation() {
               style={{
                 width: logoShown ? "50px" : "0px",
                 transition: "width .2s ease-in"
-              }}>
-
+              }}
+            >
               <img
                 className="min-h-[50px] min-w-[50px] p-1"
                 alt="IOSoccer Sudamérica"
                 src="/logo-solo.png"
                 width="50px"
               />
-
             </Link>
             <Link
               href="/"
-              className="flex items-center bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:hidden">
-
+              className="flex items-center bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:hidden"
+            >
               <img
                 className="min-h-[50px] min-w-[50px] p-1"
                 alt="IOSoccer Sudamérica"
                 src="/logo-solo.png"
                 width="50px"
               />
-
             </Link>
             <Link
               href="/individuales"
-              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
-              
-                Estadísticas
-              
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
+              Estadísticas
             </Link>
             <Link
               href="/resultados"
-              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
-              
-                Resultados
-              
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
+              Resultados
             </Link>
             <Link
               href="/torneos"
-              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
-              
-                Torneos
-              
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
+              Torneos
             </Link>
             <Link
               href="/top10"
-              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
-              
-                Rankings
-              
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
+              Rankings
             </Link>
             <a
               className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
