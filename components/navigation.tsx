@@ -43,51 +43,61 @@ export default function Navigation() {
       <div className="fixed top-0 z-50 w-full border-b border-neutral-300 bg-white shadow-md dark:border-neutral-700 dark:bg-neutral-900">
         <div className="m-auto max-w-6xl overflow-x-scroll sm:overflow-x-hidden">
           <div className="flex">
-            <Link href="/">
-              <a
-                className="hidden items-center overflow-hidden bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:flex"
-                style={{
-                  width: logoShown ? "50px" : "0px",
-                  transition: "width .2s ease-in"
-                }}
-              >
-                <img
-                  className="min-h-[50px] min-w-[50px] p-1"
-                  alt="IOSoccer Sudamérica"
-                  src="/logo-solo.png"
-                  width="50px"
-                />
-              </a>
+            <Link
+              href="/"
+              className="hidden items-center overflow-hidden bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:flex"
+              style={{
+                width: logoShown ? "50px" : "0px",
+                transition: "width .2s ease-in"
+              }}>
+
+              <img
+                className="min-h-[50px] min-w-[50px] p-1"
+                alt="IOSoccer Sudamérica"
+                src="/logo-solo.png"
+                width="50px"
+              />
+
             </Link>
-            <Link href="/">
-              <a className="flex items-center bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:hidden">
-                <img
-                  className="min-h-[50px] min-w-[50px] p-1"
-                  alt="IOSoccer Sudamérica"
-                  src="/logo-solo.png"
-                  width="50px"
-                />
-              </a>
+            <Link
+              href="/"
+              className="flex items-center bg-[#e28800] dark:border-neutral-700 dark:bg-[#a56200] sm:hidden">
+
+              <img
+                className="min-h-[50px] min-w-[50px] p-1"
+                alt="IOSoccer Sudamérica"
+                src="/logo-solo.png"
+                width="50px"
+              />
+
             </Link>
-            <Link href="/individuales">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+            <Link
+              href="/individuales"
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+              
                 Estadísticas
-              </a>
+              
             </Link>
-            <Link href="/resultados">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+            <Link
+              href="/resultados"
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+              
                 Resultados
-              </a>
+              
             </Link>
-            <Link href="/torneos">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+            <Link
+              href="/torneos"
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+              
                 Torneos
-              </a>
+              
             </Link>
-            <Link href="/top10">
-              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+            <Link
+              href="/top10"
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+              
                 Rankings
-              </a>
+              
             </Link>
             <a
               className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"

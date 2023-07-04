@@ -89,7 +89,7 @@ export default function MatchIndividualStats(props) {
       cell: info => (
         <div className="flex items-center justify-center gap-x-1">
           <Link href={"/jugador/" + info.row.original.info.steam_id}>
-            <a>{info.getValue()}</a>
+            {info.getValue()}
           </Link>
           {props.editable && (
             <>

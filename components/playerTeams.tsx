@@ -25,15 +25,17 @@ export default function PlayerTeamsTable({ teams }) {
                   {firstMatch + " - " + lastMatch}
                 </Table.BodyCell>
                 <Table.BodyCell>
-                  <Link href={`/equipo/${item.team}`}>
-                    <a className="flex items-center justify-center gap-x-1">
-                      <img
-                        className="h-6"
-                        src={getTeamLogo(item.team)}
-                        alt={item._id}
-                      />
-                      {item.team}
-                    </a>
+                  <Link
+                    href={`/equipo/${item.team}`}
+                    className="flex items-center justify-center gap-x-1">
+
+                    <img
+                      className="h-6"
+                      src={getTeamLogo(item.team)}
+                      alt={item._id}
+                    />
+                    {item.team}
+
                   </Link>
                 </Table.BodyCell>
               </Table.BodyRow>

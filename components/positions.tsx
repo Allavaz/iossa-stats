@@ -97,24 +97,24 @@ export default function PositionsComponent({
     {
       header: "Equipo",
       render: (item, index) => (
-        <Link href={`/equipo/${item._id}`}>
-          <a className="flex items-center gap-x-1">
-            {classification &&
-              classification.colors.find(c => c.matchingIndexes(index)) && (
-                <ColoredBar
-                  color={
-                    classification.colors.find(c => c.matchingIndexes(index))
-                      .color
-                  }
-                />
-              )}
-            <img className="h-6" src={getTeamLogo(item._id)} alt={item._id} />
-            <div className={`${!mini && "hidden"} sm:block`}>{item._id}</div>
-            {!mini && (
-              <div className="sm:hidden">{getTeamShortname(item._id)}</div>
+        (<Link href={`/equipo/${item._id}`} className="flex items-center gap-x-1">
+
+          {classification &&
+            classification.colors.find(c => c.matchingIndexes(index)) && (
+              <ColoredBar
+                color={
+                  classification.colors.find(c => c.matchingIndexes(index))
+                    .color
+                }
+              />
             )}
-          </a>
-        </Link>
+          <img className="h-6" src={getTeamLogo(item._id)} alt={item._id} />
+          <div className={`${!mini && "hidden"} sm:block`}>{item._id}</div>
+          {!mini && (
+            <div className="sm:hidden">{getTeamShortname(item._id)}</div>
+          )}
+
+        </Link>)
       )
     },
     {

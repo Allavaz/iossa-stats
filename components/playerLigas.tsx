@@ -39,15 +39,17 @@ export default function TeamLigas(props: Props) {
           {props.tournaments.map(tournament => (
             <Table.BodyRow key={tournament._id}>
               <Table.BodyCell>
-                <Link href={"/equipo/" + tournament.team}>
-                  <a className="flex items-center justify-center gap-x-1">
-                    <img
-                      src={getTeamLogo(tournament.team)}
-                      alt={tournament.team}
-                      className="h-6"
-                    />
-                    <div>{tournament.team}</div>
-                  </a>
+                <Link
+                  href={"/equipo/" + tournament.team}
+                  className="flex items-center justify-center gap-x-1">
+
+                  <img
+                    src={getTeamLogo(tournament.team)}
+                    alt={tournament.team}
+                    className="h-6"
+                  />
+                  <div>{tournament.team}</div>
+
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>

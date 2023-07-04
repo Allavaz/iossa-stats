@@ -46,7 +46,7 @@ export default function TeamAsistidores(props: Props) {
               <Table.BodyCell>{index + 1}</Table.BodyCell>
               <Table.BodyCell>
                 <Link href={`/jugador/${player._id}`}>
-                  <a>{player.name}</a>
+                  {player.name}
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>{player.assists}</Table.BodyCell>

@@ -41,27 +41,30 @@ export default function Roster(props: Props) {
         <Title>Plantel actual</Title>
         <div className="flex flex-wrap justify-evenly gap-4">
           {props.roster.map(player => (
-            <Link href={`/jugador/${player._id}`} key={player._id}>
-              <a className="flex flex-col items-center gap-y-2">
-                <img
-                  className="h-28 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
-                  src={player.profilePicture}
-                  alt={player.name}
-                />
-                <div className="flex items-center gap-x-2">
-                  <div
-                    className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
-                    key={player.positions[0].position}
-                    style={{
-                      backgroundColor: getPosColor(player.positions[0].position)
-                    }}
-                  >
-                    {player.positions[0].position}
-                  </div>
-                  <div className="text-sm">{player.name}</div>
+            (<Link
+              href={`/jugador/${player._id}`}
+              key={player._id}
+              className="flex flex-col items-center gap-y-2">
+
+              <img
+                className="h-28 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
+                src={player.profilePicture}
+                alt={player.name}
+              />
+              <div className="flex items-center gap-x-2">
+                <div
+                  className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
+                  key={player.positions[0].position}
+                  style={{
+                    backgroundColor: getPosColor(player.positions[0].position)
+                  }}
+                >
+                  {player.positions[0].position}
                 </div>
-              </a>
-            </Link>
+                <div className="text-sm">{player.name}</div>
+              </div>
+
+            </Link>)
           ))}
         </div>
       </div>

@@ -22,15 +22,17 @@ export default function Top10Arqueros({ players, category }) {
             <Table.BodyRow key={item._id}>
               <Table.BodyCell>{index + 1}</Table.BodyCell>
               <Table.BodyCell>
-                <Link href={`/jugador/${item._id}`}>
-                  <a className="flex items-center justify-center gap-x-1">
-                    <img
-                      className="h-6"
-                      src={getTeamLogo(item.team)}
-                      alt={item.team}
-                    />
-                    <div>{item.name}</div>
-                  </a>
+                <Link
+                  href={`/jugador/${item._id}`}
+                  className="flex items-center justify-center gap-x-1">
+
+                  <img
+                    className="h-6"
+                    src={getTeamLogo(item.team)}
+                    alt={item.team}
+                  />
+                  <div>{item.name}</div>
+
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>{item.matches}</Table.BodyCell>

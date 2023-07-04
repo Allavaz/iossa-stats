@@ -41,15 +41,17 @@ export default function TeamRivals(props: Props) {
           {props.rivals.map(rival => (
             <Table.BodyRow key={rival._id}>
               <Table.BodyCell>
-                <Link href={`/equipo/${rival._id}`}>
-                  <a className="flex items-center justify-center gap-x-1">
-                    <img
-                      className="h-6"
-                      src={getTeamLogo(rival._id)}
-                      alt={rival._id}
-                    />
-                    {rival._id}
-                  </a>
+                <Link
+                  href={`/equipo/${rival._id}`}
+                  className="flex items-center justify-center gap-x-1">
+
+                  <img
+                    className="h-6"
+                    src={getTeamLogo(rival._id)}
+                    alt={rival._id}
+                  />
+                  {rival._id}
+
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>{rival.matches}</Table.BodyCell>

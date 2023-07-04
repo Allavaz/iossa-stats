@@ -23,16 +23,16 @@ export default function MatchEventComponent({
       <div className="flex items-center justify-center gap-x-1 p-1 text-sm">
         <MatchIcon event={item.event} />
         <Link href={`/jugador/${item.player1SteamId}`}>
-          <a>
-            <span>{item.name}</span>
-          </a>
+
+          <span>{item.name}</span>
+
         </Link>
         {item.name2 && item.event === "GOAL" && (
           <div className="hidden sm:block">
             <Link href={`/jugador/${item.player2SteamId}`}>
-              <a>
-                <span className="text-xs italic text-neutral-500 dark:text-neutral-400">{`(${item.name2})`}</span>
-              </a>
+
+              <span className="text-xs italic text-neutral-500 dark:text-neutral-400">{`(${item.name2})`}</span>
+
             </Link>
           </div>
         )}

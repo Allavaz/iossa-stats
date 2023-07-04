@@ -36,15 +36,17 @@ export default function PlayerMostScoredTeams(props: Props) {
             <Table.BodyRow key={team.teamname}>
               <Table.BodyCell>{index + 1}</Table.BodyCell>
               <Table.BodyCell>
-                <Link href={`/equipo/${team.teamname}`}>
-                  <a className="flex items-center justify-center gap-x-1">
-                    <img
-                      className="h-6"
-                      src={getTeamLogo(team.teamname)}
-                      alt={team.teamname}
-                    />
-                    <div>{team.teamname}</div>
-                  </a>
+                <Link
+                  href={`/equipo/${team.teamname}`}
+                  className="flex items-center justify-center gap-x-1">
+
+                  <img
+                    className="h-6"
+                    src={getTeamLogo(team.teamname)}
+                    alt={team.teamname}
+                  />
+                  <div>{team.teamname}</div>
+
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>{team.goalsscored}</Table.BodyCell>

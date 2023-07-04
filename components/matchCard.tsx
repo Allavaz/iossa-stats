@@ -269,15 +269,17 @@ export default function MatchCard({
                 />
               ) : (
                 <div className="flex items-center justify-center gap-x-2">
-                  <Link href={`/equipo/${data.teams[0].teamname}`}>
-                    <a className="font-heading text-2xl">
-                      <div className="hidden sm:block">
-                        {data.teams[0].teamname}
-                      </div>
-                      <div className="sm:hidden">
-                        {getTeamShortname(data.teams[0].teamname)}
-                      </div>
-                    </a>
+                  <Link
+                    href={`/equipo/${data.teams[0].teamname}`}
+                    className="font-heading text-2xl">
+
+                    <div className="hidden sm:block">
+                      {data.teams[0].teamname}
+                    </div>
+                    <div className="sm:hidden">
+                      {getTeamShortname(data.teams[0].teamname)}
+                    </div>
+
                   </Link>
                   {editable && (
                     <FontAwesomeIcon
@@ -325,15 +327,17 @@ export default function MatchCard({
                 />
               ) : (
                 <div className="flex items-center justify-center gap-x-2">
-                  <Link href={`/equipo/${data.teams[1].teamname}`}>
-                    <a className="font-heading text-2xl">
-                      <div className="hidden sm:block">
-                        {data.teams[1].teamname}
-                      </div>
-                      <div className="sm:hidden">
-                        {getTeamShortname(data.teams[1].teamname)}
-                      </div>
-                    </a>
+                  <Link
+                    href={`/equipo/${data.teams[1].teamname}`}
+                    className="font-heading text-2xl">
+
+                    <div className="hidden sm:block">
+                      {data.teams[1].teamname}
+                    </div>
+                    <div className="sm:hidden">
+                      {getTeamShortname(data.teams[1].teamname)}
+                    </div>
+
                   </Link>
                   {editable ? (
                     <FontAwesomeIcon
@@ -352,12 +356,12 @@ export default function MatchCard({
             <td className="p-4">
               <div className="flex justify-center">
                 <Link href={`/equipo/${data.teams[0].teamname}`}>
-                  <a>
-                    <img
-                      alt={data.teams[0].teamname}
-                      src={getTeamLogo(data.teams[0].teamname)}
-                    />
-                  </a>
+
+                  <img
+                    alt={data.teams[0].teamname}
+                    src={getTeamLogo(data.teams[0].teamname)}
+                  />
+
                 </Link>
               </div>
             </td>
@@ -389,12 +393,12 @@ export default function MatchCard({
             <td className="p-4">
               <div className="flex justify-center">
                 <Link href={`/equipo/${data.teams[1].teamname}`}>
-                  <a>
-                    <img
-                      alt={data.teams[1].teamname}
-                      src={getTeamLogo(data.teams[1].teamname)}
-                    />
-                  </a>
+
+                  <img
+                    alt={data.teams[1].teamname}
+                    src={getTeamLogo(data.teams[1].teamname)}
+                  />
+
                 </Link>
               </div>
             </td>

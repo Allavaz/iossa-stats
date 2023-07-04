@@ -31,23 +31,25 @@ export default function IndividualStats(props: Props) {
       header: () => "Nombre",
       cell: info => (
         <Link href={"/jugador/" + info.row.original._id}>
-          <a>{info.getValue()}</a>
+          {info.getValue()}
         </Link>
       )
     }),
     columnHelper.accessor("team", {
       header: () => "Equipo",
       cell: info => (
-        <Link href={"/equipo/" + info.getValue()}>
-          <a className="flex items-center justify-center gap-x-1">
-            <img
-              className="h-6"
-              src={getTeamLogo(info.getValue())}
-              alt={info.getValue()}
-            />
-            <div>{info.getValue()}</div>
-          </a>
-        </Link>
+        (<Link
+          href={"/equipo/" + info.getValue()}
+          className="flex items-center justify-center gap-x-1">
+
+          <img
+            className="h-6"
+            src={getTeamLogo(info.getValue())}
+            alt={info.getValue()}
+          />
+          <div>{info.getValue()}</div>
+
+        </Link>)
       )
     }),
     columnHelper.accessor("matches", {

@@ -42,7 +42,7 @@ export default function TeamMatches(props: Props) {
       header: "Fecha",
       cell: info => (
         <Link href={"/partido/" + info.row.original._id}>
-          <a>{fecha(info.getValue())}</a>
+          {fecha(info.getValue())}
         </Link>
       ),
       enableGlobalFilter: false
@@ -56,17 +56,19 @@ export default function TeamMatches(props: Props) {
       id: "home",
       header: "Local",
       cell: info => (
-        <Link href={`/equipo/${info.getValue()}`}>
-          <a className="flex items-center justify-end gap-x-1">
-            <div className="hidden sm:block">{info.getValue()}</div>
-            <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
-            <img
-              src={getTeamLogo(info.getValue())}
-              alt={info.getValue()}
-              className="h-6"
-            />
-          </a>
-        </Link>
+        (<Link
+          href={`/equipo/${info.getValue()}`}
+          className="flex items-center justify-end gap-x-1">
+
+          <div className="hidden sm:block">{info.getValue()}</div>
+          <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
+          <img
+            src={getTeamLogo(info.getValue())}
+            alt={info.getValue()}
+            className="h-6"
+          />
+
+        </Link>)
       )
     }),
     columnHelper.accessor(
@@ -81,7 +83,7 @@ export default function TeamMatches(props: Props) {
         enableGlobalFilter: false,
         cell: info => (
           <Link href={"/partido/" + info.row.original._id}>
-            <a>{info.getValue()}</a>
+            {info.getValue()}
           </Link>
         )
       }
@@ -90,32 +92,36 @@ export default function TeamMatches(props: Props) {
       id: "away",
       header: "Visitante",
       cell: info => (
-        <Link href={`/equipo/${info.getValue()}`}>
-          <a className="flex items-center justify-start gap-x-1">
-            <img
-              src={getTeamLogo(info.getValue())}
-              alt={info.getValue()}
-              className="h-6"
-            />
-            <div className="hidden sm:block">{info.getValue()}</div>
-            <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
-          </a>
-        </Link>
+        (<Link
+          href={`/equipo/${info.getValue()}`}
+          className="flex items-center justify-start gap-x-1">
+
+          <img
+            src={getTeamLogo(info.getValue())}
+            alt={info.getValue()}
+            className="h-6"
+          />
+          <div className="hidden sm:block">{info.getValue()}</div>
+          <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
+
+        </Link>)
       )
     }),
     columnHelper.accessor("torneo", {
       header: "Torneo",
       cell: info => (
-        <Link href={"/partido/" + info.row.original._id}>
-          <a className="flex items-center justify-center gap-x-1">
-            <img
-              src={getTournamentIcon(info.getValue())}
-              alt={info.getValue()}
-              className="h-6"
-            />
-            <div className="hidden sm:block">{info.getValue()}</div>
-          </a>
-        </Link>
+        (<Link
+          href={"/partido/" + info.row.original._id}
+          className="flex items-center justify-center gap-x-1">
+
+          <img
+            src={getTournamentIcon(info.getValue())}
+            alt={info.getValue()}
+            className="h-6"
+          />
+          <div className="hidden sm:block">{info.getValue()}</div>
+
+        </Link>)
       )
     })
   ];
