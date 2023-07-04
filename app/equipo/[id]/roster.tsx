@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Player } from "../types";
-import Card from "./commons/card";
-import Title from "./commons/title";
+import { Player } from "../../../types";
+import Card from "../../../components/commons/card";
+import Title from "../../../components/commons/title";
 
 function getPosColor(pos: string) {
   switch (pos) {
@@ -41,11 +41,11 @@ export default function Roster(props: Props) {
         <Title>Plantel actual</Title>
         <div className="flex flex-wrap justify-evenly gap-4">
           {props.roster.map(player => (
-            (<Link
+            <Link
               href={`/jugador/${player._id}`}
               key={player._id}
-              className="flex flex-col items-center gap-y-2">
-
+              className="flex flex-col items-center gap-y-2"
+            >
               <img
                 className="h-28 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
                 src={player.profilePicture}
@@ -63,8 +63,7 @@ export default function Roster(props: Props) {
                 </div>
                 <div className="text-sm">{player.name}</div>
               </div>
-
-            </Link>)
+            </Link>
           ))}
         </div>
       </div>

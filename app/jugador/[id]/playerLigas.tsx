@@ -1,10 +1,12 @@
-import { getTournamentIcon } from "../utils/Utils";
-import Table from "./commons/table";
-import Title from "./commons/title";
+import Link from "next/link";
+import { getTeamLogo, getTournamentIcon } from "../../../utils/Utils";
+import Table from "../../../components/commons/table";
+import Title from "../../../components/commons/title";
 
 interface Props {
   tournaments: {
     _id: string;
+    team: string;
     matches: number;
     firstmatch: string;
     lastmatch: string;
@@ -19,6 +21,7 @@ export default function TeamLigas(props: Props) {
       <Table>
         <thead>
           <Table.HeaderRow>
+            <Table.HeaderCell>Equipo</Table.HeaderCell>
             <Table.HeaderCell>Torneo</Table.HeaderCell>
             <Table.HeaderCell>Posición</Table.HeaderCell>
           </Table.HeaderRow>
@@ -28,13 +31,26 @@ export default function TeamLigas(props: Props) {
             <Table.BodyRow>
               <Table.BodyCell colSpan={2}>
                 <span className="italic text-neutral-500 dark:text-neutral-400">
-                  Este equipo no ha participado en ninguna liga todavía.
+                  Este jugador no ha participado en ninguna liga todavía.
                 </span>
               </Table.BodyCell>
             </Table.BodyRow>
           )}
           {props.tournaments.map(tournament => (
             <Table.BodyRow key={tournament._id}>
+              <Table.BodyCell>
+                <Link
+                  href={"/equipo/" + tournament.team}
+                  className="flex items-center justify-center gap-x-1"
+                >
+                  <img
+                    src={getTeamLogo(tournament.team)}
+                    alt={tournament.team}
+                    className="h-6"
+                  />
+                  <div>{tournament.team}</div>
+                </Link>
+              </Table.BodyCell>
               <Table.BodyCell>
                 <div className="flex items-center justify-center gap-x-1">
                   <img

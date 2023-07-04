@@ -1,59 +1,53 @@
 import Link from "next/link";
-import { Player } from "../types";
-import Title from "./commons/title";
-import Table from "./commons/table";
+import { Player } from "../../../types";
+import Title from "../../../components/commons/title";
+import Table from "../../../components/commons/table";
 
 interface Props {
   players: Player[];
 }
 
-export default function TeamArqueros(props: Props) {
-  const top10Arqueros = props.players
-    .filter(p => p.saves > 0)
+export default function TeamAsistidores(props: Props) {
+  const top10Asistidores = props.players
+    .filter(p => p.assists > 0)
     .sort((a, b) => {
-      if (a.saves === b.saves) {
-        return b.savescaught - a.savescaught;
-      } else if (a.savescaught === b.savescaught) {
+      if (a.assists === b.assists) {
         return a.matches - b.matches;
       } else {
-        return b.saves - a.saves;
+        return b.assists - a.assists;
       }
     })
     .slice(0, 10);
 
   return (
     <div className="flex flex-col gap-y-4">
-      <Title>Arqueros Históricos</Title>
+      <Title>Asistidores Históricos</Title>
       <Table>
         <thead>
           <Table.HeaderRow>
             <Table.HeaderCell>#</Table.HeaderCell>
             <Table.HeaderCell>Jugador</Table.HeaderCell>
-            <Table.HeaderCell>Atajadas (sin rebote)</Table.HeaderCell>
+            <Table.HeaderCell>Asistencias</Table.HeaderCell>
             <Table.HeaderCell>Partidos</Table.HeaderCell>
           </Table.HeaderRow>
         </thead>
         <tbody>
-          {top10Arqueros.length === 0 && (
+          {top10Asistidores.length === 0 && (
             <Table.BodyRow>
               <Table.BodyCell colSpan={4}>
                 <span className="italic text-neutral-500 dark:text-neutral-400">
-                  Este equipo no tiene atajadas todavía.
+                  Este equipo no tiene asistidores todavía.
                 </span>
               </Table.BodyCell>
             </Table.BodyRow>
           )}
-          {top10Arqueros.map((player, index) => (
+          {top10Asistidores.map((player, index) => (
             <Table.BodyRow key={player._id}>
               <Table.BodyCell>{index + 1}</Table.BodyCell>
               <Table.BodyCell>
-                <Link href={`/jugador/${player._id}`}>
-                  {player.name}
-                </Link>
+                <Link href={`/jugador/${player._id}`}>{player.name}</Link>
               </Table.BodyCell>
-              <Table.BodyCell>
-                {player.saves} ({player.savescaught})
-              </Table.BodyCell>
+              <Table.BodyCell>{player.assists}</Table.BodyCell>
               <Table.BodyCell>{player.matches}</Table.BodyCell>
             </Table.BodyRow>
           ))}

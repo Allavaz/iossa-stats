@@ -17,6 +17,16 @@ import {
   temporadaActual
 } from "../../../utils/Utils";
 
+export async function generateMetadata({ params, searchParams }) {
+  const id = params.id?.[0] || temporadaActual();
+
+  if (getAllQueries().includes(id)) {
+    return {
+      title: `Top 10 ${getCategory(id)}`
+    };
+  }
+}
+
 export default async function Top10({ params, searchParams }) {
   const id = params.id?.[0] || temporadaActual();
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getTeamLogo } from "../utils/Utils";
-import Card from "./commons/card";
+import { getTeamLogo } from "../../../utils/Utils";
+import Card from "../../../components/commons/card";
 
 function getPosColor(pos: string) {
   switch (pos) {
@@ -120,15 +120,14 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
             </div>
             <Link
               href={`/equipo/${player.team}`}
-              className="flex items-center gap-x-1 text-neutral-500 dark:text-neutral-400">
-
+              className="flex items-center gap-x-1 text-neutral-500 dark:text-neutral-400"
+            >
               <img
                 className="h-6"
                 src={getTeamLogo(player.team)}
                 alt={player.team}
               />
               <div>{player.team}</div>
-
             </Link>
             <div className="flex flex-col gap-y-1">
               <div className="text-xs text-neutral-500 dark:text-neutral-400">{`${

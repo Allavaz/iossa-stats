@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
-import { getTeamLogo } from "../utils/Utils";
+import { getTeamLogo } from "../../../utils/Utils";
 import Link from "next/link";
-import Title from "./commons/title";
-import Table from "./commons/table";
+import Title from "../../../components/commons/title";
+import Table from "../../../components/commons/table";
 
 const dateFormat = "dd/LL/yyyy";
 
@@ -27,15 +27,14 @@ export default function PlayerTeamsTable({ teams }) {
                 <Table.BodyCell>
                   <Link
                     href={`/equipo/${item.team}`}
-                    className="flex items-center justify-center gap-x-1">
-
+                    className="flex items-center justify-center gap-x-1"
+                  >
                     <img
                       className="h-6"
                       src={getTeamLogo(item.team)}
                       alt={item._id}
                     />
                     {item.team}
-
                   </Link>
                 </Table.BodyCell>
               </Table.BodyRow>

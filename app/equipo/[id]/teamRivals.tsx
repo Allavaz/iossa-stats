@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { getTeamLogo } from "../utils/Utils";
-import Title from "./commons/title";
-import Table from "./commons/table";
+import { getTeamLogo } from "../../../utils/Utils";
+import Title from "../../../components/commons/title";
+import Table from "../../../components/commons/table";
 
 interface Props {
   rivals: {
@@ -43,15 +43,14 @@ export default function TeamRivals(props: Props) {
               <Table.BodyCell>
                 <Link
                   href={`/equipo/${rival._id}`}
-                  className="flex items-center justify-center gap-x-1">
-
+                  className="flex items-center justify-center gap-x-1"
+                >
                   <img
                     className="h-6"
                     src={getTeamLogo(rival._id)}
                     alt={rival._id}
                   />
                   {rival._id}
-
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>{rival.matches}</Table.BodyCell>

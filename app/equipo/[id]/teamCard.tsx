@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
-import { Match, TeamStats } from "../types";
-import Torneos from "../utils/Torneos.json";
-import { temporadaActual } from "../utils/Utils";
-import Card from "./commons/card";
+import { Match, TeamStats } from "../../../types";
+import Torneos from "../../../utils/Torneos.json";
+import { temporadaActual } from "../../../utils/Utils";
+import Card from "../../../components/commons/card";
 
 interface Props {
   teamname: string;
