@@ -14,7 +14,7 @@ import Vod from "../../components/vod";
 import VodEditor from "../../components/vodEditor";
 import createJSON from "../../lib/createJSON";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
-import { Match, MatchEvent, MatchPlayer, Player } from "../../types";
+import { Match, MatchEvent, MatchPlayer } from "../../types";
 import Torneos from "../../utils/Torneos.json";
 import Title from "../../components/commons/title";
 import Card from "../../components/commons/card";
@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     props.data = match;
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
-        let t = Torneos[i].torneos[j];
+        let t: any = Torneos[i].torneos[j];
         if (t.torneo === match.torneo) {
           if (t.challonge) {
             props.challonge = t.challonge;
@@ -190,7 +190,7 @@ export default function MatchPage({
   function updateTableOrChallonge(torneo: string) {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
-        let t = Torneos[i].torneos[j];
+        let t: any = Torneos[i].torneos[j];
         if (t.torneo === torneo) {
           if (t.challonge) {
             setEditableChallonge(t.challonge);
