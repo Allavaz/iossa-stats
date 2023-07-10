@@ -16,11 +16,6 @@ export default function teamPlayers(teamname: string, arg: any) {
       }
     },
     {
-      $match: {
-        "players.info.team": teamname
-      }
-    },
-    {
       $addFields: {
         result: {
           $cond: [
@@ -174,9 +169,9 @@ export default function teamPlayers(teamname: string, arg: any) {
         }
       }
     },
+    { $match: { team: teamname } },
     {
       $sort: {
-        team: 1,
         name: 1
       }
     }
