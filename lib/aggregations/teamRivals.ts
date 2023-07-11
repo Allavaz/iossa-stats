@@ -60,8 +60,6 @@ export default function teamRivals(teamname: string) {
     },
     {
       $sort: {
-        wins: -1,
-        losses: 1,
         matches: -1
       }
     }

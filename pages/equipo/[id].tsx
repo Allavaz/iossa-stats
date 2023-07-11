@@ -208,7 +208,7 @@ export default function EquipoPage(props: Props) {
             <TeamArqueros players={props.allPlayers} />
           </div>
           <div className="max-w-xl grow overflow-x-auto">
-            <TeamRivals rivals={props.rivals.filter(r => r.matches > 2)} />
+            <TeamRivals rivals={props.rivals} />
           </div>
         </div>
         <TeamMatches matches={props.matches} teamname={props.teamname} />
