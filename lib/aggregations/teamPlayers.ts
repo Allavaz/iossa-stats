@@ -16,11 +16,21 @@ export default function teamPlayers(teamname: string, arg: any) {
       }
     },
     {
+      $match: {
+        "players.info.team": teamname
+      }
+    },
+    {
       $addFields: {
         result: {
           $cond: [
             {
-              $eq: ["$teams.0.teamname", "$team"]
+              $eq: [
+                {
+                  $arrayElemAt: ["$teams.teamname", 0]
+                },
+                "$players.info.team"
+              ]
             },
             {
               $arrayElemAt: ["$teams.result", 0]
@@ -169,7 +179,6 @@ export default function teamPlayers(teamname: string, arg: any) {
         }
       }
     },
-    { $match: { team: teamname } },
     {
       $sort: {
         name: 1
