@@ -94,7 +94,7 @@ export default function Player({
           content={`${player.name} | IOSoccer Sudamérica`}
         />
         <meta property="og:description" content={player.team} />
-        <meta property="og:image" content={steamInfo.avatarfull} />
+        <meta property="og:image" content={steamInfo.profilePicture} />
       </Head>
       <div className="flex flex-col gap-y-4">
         <PlayerCard
