@@ -38,7 +38,7 @@ export default function MatchRow({ match }) {
             {getTeamShortname(match.teams[1].teamname)}
           </div>
         </div>
-        <div className="flex w-[20%] items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[30%]">
+        <div className="flex w-[20%] min-w-0 items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[30%]">
           <img
             className="h-6"
             src={getTournamentIcon(match.torneo)}
