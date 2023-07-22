@@ -16,11 +16,6 @@ export default function teamPlayers(teamname: string, arg: any) {
       }
     },
     {
-      $match: {
-        "players.info.team": teamname
-      }
-    },
-    {
       $addFields: {
         result: {
           $cond: [
@@ -177,6 +172,11 @@ export default function teamPlayers(teamname: string, arg: any) {
         secondassists: {
           $sum: "$players.statistics.secondassists"
         }
+      }
+    },
+    {
+      $match: {
+        team: teamname
       }
     },
     {
