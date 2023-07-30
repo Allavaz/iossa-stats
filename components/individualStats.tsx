@@ -56,11 +56,11 @@ export default function IndividualStats(props: Props) {
     columnHelper.accessor("wins", {
       header: () => "Victorias"
     }),
-    columnHelper.accessor("losses", {
-      header: () => "Derrotas"
-    }),
     columnHelper.accessor("draws", {
       header: () => "Empates"
+    }),
+    columnHelper.accessor("losses", {
+      header: () => "Derrotas"
     }),
     columnHelper.accessor("goals", {
       header: () => "Goles"
