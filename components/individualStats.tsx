@@ -141,6 +141,9 @@ export default function IndividualStats(props: Props) {
     columnHelper.accessor("goalkicks", {
       header: () => "Saques de arco"
     }),
+    columnHelper.accessor("goalsconceded", {
+      header: () => "Goles recibidos"
+    }),
     columnHelper.accessor("chancescreated", {
       header: () => "Ocasiones creadas"
     }),
