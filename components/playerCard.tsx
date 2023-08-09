@@ -85,7 +85,7 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
   return (
     <Card>
       <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap sm:justify-between">
-        <div className="flex gap-x-4">
+        <div className="flex min-w-0 gap-x-4">
           <div className="flex flex-col items-center gap-y-2">
             <img
               src={steamInfo.profilePicture}
@@ -109,8 +109,10 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-y-2">
-            <div className="font-heading text-2xl">{player.name}</div>
+          <div className="flex min-w-0 flex-col gap-y-2">
+            <div className="overflow-hidden overflow-ellipsis whitespace-nowrap font-heading text-2xl">
+              {player.name}
+            </div>
             <div
               className={`text-neutral-500 dark:text-neutral-400 ${
                 player.name === steamInfo.personaname ? "hidden" : ""
