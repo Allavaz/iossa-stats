@@ -12,6 +12,7 @@ import {
   getTeamMatches,
   getTeamPlayers,
   getTeamRivals,
+  getTeamRoster,
   getTeamStats,
   getTeamTournaments,
   getTournamentPosition
@@ -38,10 +39,10 @@ export const getServerSideProps: GetServerSideProps = async context => {
     ] = await Promise.all([
       getTeamMatches(context.params.id as string, "all"),
       getTeamPlayers(context.params.id as string, "all"),
-      getTeamPlayers(context.params.id as string, temporadaActual()),
+      getTeamRoster(context.params.id as string),
       getSteamInfo(
         (
-          await getTeamPlayers(context.params.id as string, temporadaActual())
+          await getTeamRoster(context.params.id as string)
         ).map(player => player._id)
       ),
       getTeamTournaments(context.params.id as string),

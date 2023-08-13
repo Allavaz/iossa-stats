@@ -16,6 +16,7 @@ import clientPromise from "./mongodb";
 import teamPlayers from "./aggregations/teamPlayers";
 import playerScoredTeams from "./aggregations/playerScoredTeams";
 import playerTournaments from "./aggregations/playerTournaments";
+import { temporadaActual } from "../utils/Utils";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -386,6 +387,23 @@ export async function getPlayerScoredTeams(steamid: string) {
       teamname: doc._id,
       goalsscored: doc.goalsscored
     }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamRoster(teamname: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate([
+        ...players(temporadaActual()),
+        { $match: { team: teamname } }
+      ])
+      .toArray();
+    return docs;
   } catch (error) {
     console.error(error);
   }
