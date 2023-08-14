@@ -175,18 +175,6 @@ export default function MatchPage({
     updateTableOrChallonge(torneo);
   }
 
-  useEffect(() => {
-    window.onbeforeunload = (e: BeforeUnloadEvent) => {
-      if (editableData && editableData.length > 1) {
-        e = e || window.event;
-        if (e) {
-          e.returnValue = "Sure?";
-        }
-        return "Sure?";
-      }
-    };
-  }, [editableData]);
-
   function updateTableOrChallonge(torneo: string) {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
