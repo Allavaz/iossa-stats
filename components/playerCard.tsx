@@ -146,7 +146,7 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-6">
           {[...commonStats, ...posSpecificStats].map(item => (
             <div
               key={item.label}

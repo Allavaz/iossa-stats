@@ -97,30 +97,30 @@ export default function TeamCard(props: Props) {
             )}
           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-6">
           {isActive && (
             <div className="flex flex-col items-center justify-center gap-y-1">
               {forma(props.matches.slice(0, 5), props.teamname)}
-              <div className="text-xs text-neutral-500 dark:text-neutral-400">
+              <div className="text-sm text-neutral-500 dark:text-neutral-400">
                 Forma
               </div>
             </div>
           )}
           <div className="flex flex-col items-center justify-center gap-y-1">
             <div className="text-2xl">{props.stats.matches}</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Partidos
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-1">
             <div className="text-2xl">{props.stats.wins}</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Victorias
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-1">
             <div className="text-2xl">{props.stats.losses}</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">
+            <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Derrotas
             </div>
           </div>
