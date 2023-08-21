@@ -20,7 +20,7 @@ interface Props {
 
 function forma(matches: Match[], teamname: string) {
   return (
-    <div className="flex gap-x-1 whitespace-nowrap text-2xl">
+    <div className="flex gap-x-1 whitespace-nowrap font-heading text-2xl">
       {matches.map(match => {
         const result = match.teams.find(t => t.teamname === teamname).result;
         switch (result) {
@@ -107,19 +107,19 @@ export default function TeamCard(props: Props) {
             </div>
           )}
           <div className="flex flex-col items-center justify-center gap-y-1">
-            <div className="text-2xl">{props.stats.matches}</div>
+            <div className="font-heading text-2xl">{props.stats.matches}</div>
             <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Partidos
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-1">
-            <div className="text-2xl">{props.stats.wins}</div>
+            <div className="font-heading text-2xl">{props.stats.wins}</div>
             <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Victorias
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-1">
-            <div className="text-2xl">{props.stats.losses}</div>
+            <div className="font-heading text-2xl">{props.stats.losses}</div>
             <div className="text-sm text-neutral-500 dark:text-neutral-400">
               Derrotas
             </div>

@@ -152,7 +152,7 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
               key={item.label}
               className="flex flex-col items-center gap-y-1"
             >
-              <div className="text-2xl">{item.value(player)}</div>
+              <div className="font-heading text-2xl">{item.value(player)}</div>
               <div className="text-sm text-neutral-500 dark:text-neutral-400">
                 {item.label}
               </div>
