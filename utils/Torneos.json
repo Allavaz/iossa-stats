@@ -16,6 +16,10 @@
         "query": "d3"
       },
       {
+        "torneo": "Liga D4",
+        "query": "d4"
+      },
+      {
         "torneo": "Copa Master",
         "query": "master"
       },
@@ -128,6 +132,41 @@
       },
       {
         "torneo": "Copa America '21 - Playoff"
+      }
+    ]
+  },
+  {
+    "temporada": "t12",
+    "titulo": "Temporada 12",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T12",
+        "query": "d1t12",
+        "tabla": "d1t12"
+      },
+      {
+        "torneo": "Liga D2 T12",
+        "query": "d2t12",
+        "tabla": "d2t12"
+      },
+      {
+        "torneo": "Liga D3 T12",
+        "query": "d3t12",
+        "tabla": "d3t12"
+      },
+      {
+        "torneo": "Liga D4 T12",
+        "query": "d4t12",
+        "tabla": "d4t12"
+      },
+      {
+        "torneo": "Promoción D1/D2 T12"
+      },
+      {
+        "torneo": "Promoción D2/D3 T12"
+      },
+      {
+        "torneo": "Promoción D3/D4 T12"
       }
     ]
   },
