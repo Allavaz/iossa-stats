@@ -167,6 +167,10 @@
       },
       {
         "torneo": "Promoción D3/D4 T12"
+      },
+      {
+        "torneo": "Copa D3 T12",
+        "query": "cd3t12"
       }
     ]
   },
