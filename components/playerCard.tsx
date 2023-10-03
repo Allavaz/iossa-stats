@@ -90,7 +90,7 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
             <img
               src={steamInfo.profilePicture}
               alt={player.name}
-              className="h-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
+              className="w-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
             />
             <div className="flex justify-center gap-x-2">
               {playerPositions.map(item => (
