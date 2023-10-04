@@ -4,8 +4,10 @@ import {
   getTournamentIcon
 } from "../utils/Utils";
 import Link from "next/link";
+import DefaultIndicator from "./defaultIndicator";
+import { Match } from "../types";
 
-export default function MatchRow({ match }) {
+export default function MatchRow({ match }: { match: Match }) {
   return (
     <Link href={"/partido/" + match._id}>
       <a className="flex w-full rounded-l-lg rounded-r-lg bg-white text-sm shadow-lg transition-colors hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-800">
@@ -22,8 +24,13 @@ export default function MatchRow({ match }) {
             alt={match.teams[0].teamname}
           />
         </div>
-        <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-3 dark:border-neutral-700">
-          {match.teams[0].score} - {match.teams[1].score}
+        <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-2 dark:border-neutral-700">
+          <div className="flex flex-col items-center gap-y-1">
+            <div>
+              {match.teams[0].score} - {match.teams[1].score}
+            </div>
+            {match.isdefault && <DefaultIndicator />}
+          </div>
         </div>
         <div className="flex w-[40%] items-center gap-x-1 border-y border-r p-3 dark:border-neutral-700">
           <img

@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 import { Match } from "../types";
 import Table from "./commons/table";
+import DefaultIndicator from "./defaultIndicator";
 
 function WonOrLost(match, playerID) {
   for (let i in match.teams[0].playerStatistics) {
@@ -95,7 +96,10 @@ export default function PlayerMatches(props: Props) {
         enableGlobalFilter: false,
         cell: info => (
           <Link href={"/partido/" + info.row.original._id}>
-            <a>{info.getValue()}</a>
+            <div className="flex flex-col gap-1">
+              <a>{info.getValue()}</a>
+              {info.row.original.isdefault && <DefaultIndicator />}
+            </div>
           </Link>
         )
       }

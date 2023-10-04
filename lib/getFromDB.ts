@@ -41,6 +41,7 @@ export async function getMatches(id) {
         .project({
           fecha: 1,
           torneo: 1,
+          isdefault: 1,
           "teams.teamname": 1,
           "teams.side": 1,
           "teams.score": 1
@@ -52,7 +53,7 @@ export async function getMatches(id) {
         .collection(process.env.DB_COLLECTION)
         .find(queries(id))
         .sort({ fecha: -1 })
-        .project({ fecha: 1, torneo: 1, teams: 1 })
+        .project({ fecha: 1, torneo: 1, teams: 1, isdefault: 1 })
         .toArray();
     }
     return docs.map(doc => serializableMatch(doc));

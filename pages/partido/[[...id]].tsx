@@ -59,6 +59,7 @@ const blankMatch: Match = {
   fecha: new Date().toISOString(),
   torneo: "Torneo",
   vod: null,
+  isdefault: false,
   teams: [
     {
       teamname: "Local",
@@ -221,13 +222,14 @@ export default function MatchPage({
     });
   }
 
-  function changeScore(home: number, away: number) {
+  function changeScore(home: number, away: number, isDefault: boolean) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.teams[0].score = home;
       data.teams[1].score = away;
       data.teams[0].scorereceived = away;
       data.teams[1].scorereceived = home;
+      data.isdefault = isDefault;
       if (data.teams[0].score > data.teams[1].score) {
         data.teams[0].result = 1;
         data.teams[1].result = -1;
