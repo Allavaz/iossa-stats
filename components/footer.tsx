@@ -14,20 +14,12 @@ export default function Footer() {
       icon: faDiscord
     },
     {
-      link: "https://instagram.com/iosoccersa",
-      icon: faInstagram
-    },
-    {
-      link: "https://www.youtube.com/channel/UCvr34La6BdN5wg4XHOR5nzg",
+      link: "https://www.youtube.com/@IOSoccerSudamerica",
       icon: faYoutube
     },
     {
       link: "https://www.twitch.tv/IOSSuda",
       icon: faTwitch
-    },
-    {
-      link: "https://www.tiktok.com/@iosoccer_sudamerica",
-      icon: faTiktok
     }
   ];
 
