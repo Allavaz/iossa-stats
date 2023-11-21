@@ -36,6 +36,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            cd ${{ secrets.PATH }}
             git pull
             systemctl stop iossa-stats
             npm ci
@@ -50,6 +51,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            cd ${{ secrets.PATH }}
             git pull
             systemctl stop iossa-stats
             npm run build
