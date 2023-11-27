@@ -113,7 +113,7 @@ export default function MatchIndividualStats(props) {
         </div>
       )
     }),
-    columnHelper.accessor(row => row.statistics.positions[0].position, {
+    columnHelper.accessor(row => row.statistics.positions[0]?.position, {
       id: "position",
       header: "Posición"
     }),
