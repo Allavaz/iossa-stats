@@ -31,7 +31,7 @@ export default function RulesPreview({ rules, lastEdit }) {
 
   marked.use({ renderer });
 
-  const parsedMD = marked.parse(rules) as string;
+  const parsedMD = rules ? (marked.parse(rules) as string) : "";
 
   return (
     <div>
