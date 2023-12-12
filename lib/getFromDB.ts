@@ -16,6 +16,7 @@ import clientPromise from "./mongodb";
 import teamPlayers from "./aggregations/teamPlayers";
 import playerScoredTeams from "./aggregations/playerScoredTeams";
 import playerTournaments from "./aggregations/playerTournaments";
+import { temporadaActual } from "../utils/Utils";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -40,6 +41,7 @@ export async function getMatches(id) {
         .project({
           fecha: 1,
           torneo: 1,
+          isdefault: 1,
           "teams.teamname": 1,
           "teams.side": 1,
           "teams.score": 1
@@ -51,7 +53,7 @@ export async function getMatches(id) {
         .collection(process.env.DB_COLLECTION)
         .find(queries(id))
         .sort({ fecha: -1 })
-        .project({ fecha: 1, torneo: 1, teams: 1 })
+        .project({ fecha: 1, torneo: 1, teams: 1, isdefault: 1 })
         .toArray();
     }
     return docs.map(doc => serializableMatch(doc));
@@ -386,6 +388,38 @@ export async function getPlayerScoredTeams(steamid: string) {
       teamname: doc._id,
       goalsscored: doc.goalsscored
     }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamRoster(teamname: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate([
+        ...players(temporadaActual()),
+        { $match: { team: teamname } }
+      ])
+      .toArray();
+    return docs;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getRules() {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection("rules")
+      .find({})
+      .project({ _id: 0 })
+      .toArray();
+    return docs[0];
   } catch (error) {
     console.error(error);
   }

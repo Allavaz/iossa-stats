@@ -16,13 +16,14 @@ const primerOrden = [
   "Copa Intrazonal de Oro"
 ];
 const segundoOrden = ["Liga D2", "Copa D2", "Copa Intrazonal de Plata"];
-const tercerOrden = ["Liga D3", "Copa D3", "Liga Zero"];
+const tercerOrden = ["Liga D3", "Copa D3", "Liga Zero", "Liga D4"];
 
 function getRegex(arg: string) {
   const tempregex = /^t([0-9]+)/i;
   const d1regex = /^d1t([0-9]+)/i;
   const d2regex = /^d2t([0-9]+)/i;
   const d3regex = /^d3t([0-9]+)/i;
+  const d4regex = /^d4t([0-9]+)/i;
   const cd1regex = /^cd1t([0-9]+)/i;
   const cd2regex = /^cd2t([0-9]+)/i;
   const cd3regex = /^cd3t([0-9]+)/i;
@@ -62,7 +63,9 @@ function getRegex(arg: string) {
   } else if (arg === "d2") {
     return { $regex: "(Liga D2|Promoción D1/D2|Promoción D2/D3)" };
   } else if (arg === "d3") {
-    return { $regex: "(Liga D3|Promoción D2/D3)" };
+    return { $regex: "(Liga D3|Promoción D2/D3|Promoción D3/D4)" };
+  } else if (arg === "d4") {
+    return { $regex: "(Liga D4|Promoción D3/D4)" };
   } else if (arg === "master") {
     return { $regex: "Copa Master" };
   } else if (arg === "cv") {
@@ -110,7 +113,12 @@ function getRegex(arg: string) {
     };
   } else if (d3regex.test(arg)) {
     const match = arg.match(d3regex);
-    return { $regex: "(Liga D3|Promoción D2/D3) T" + match[1] + "$" };
+    return {
+      $regex: "(Liga D3|Promoción D2/D3|Promoción D3/D4) T" + match[1] + "$"
+    };
+  } else if (d4regex.test(arg)) {
+    const match = arg.match(d4regex);
+    return { $regex: "(Liga D4|Promoción D3/D4) T" + match[1] + "$" };
   } else if (sd1regex.test(arg)) {
     const match = arg.match(sd1regex);
     return { $regex: "Superliga D1 T" + match[1] + "$" };
@@ -173,6 +181,7 @@ function getPositionRegex(arg) {
   const d1regex = /^d1t([0-9]+)/i;
   const d2regex = /^d2t([0-9]+)/i;
   const d3regex = /^d3t([0-9]+)/i;
+  const d4regex = /^d4t([0-9]+)/i;
   const maradeiregex = /^maradeit([0-9]+)([a-z])/i;
   const americaregex = /^americat([0-9]+)/i;
   const sd1regex = /^sd1t([0-9]+)/i;
@@ -188,6 +197,9 @@ function getPositionRegex(arg) {
   } else if (d3regex.test(arg)) {
     const match = arg.match(d3regex);
     return "Liga D3 T" + match[1];
+  } else if (d4regex.test(arg)) {
+    const match = arg.match(d4regex);
+    return "Liga D4 T" + match[1];
   } else if (maradeiregex.test(arg)) {
     const match = arg.match(maradeiregex);
     return `Copa Maradei T${match[1]} - Grupo ${match[2].toUpperCase()}`;

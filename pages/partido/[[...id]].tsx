@@ -14,7 +14,7 @@ import Vod from "../../components/vod";
 import VodEditor from "../../components/vodEditor";
 import createJSON from "../../lib/createJSON";
 import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
-import { Match, MatchEvent, MatchPlayer, Player } from "../../types";
+import { Match, MatchEvent, MatchPlayer } from "../../types";
 import Torneos from "../../utils/Torneos.json";
 import Title from "../../components/commons/title";
 import Card from "../../components/commons/card";
@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     props.data = match;
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
-        let t = Torneos[i].torneos[j];
+        let t: any = Torneos[i].torneos[j];
         if (t.torneo === match.torneo) {
           if (t.challonge) {
             props.challonge = t.challonge;
@@ -59,6 +59,7 @@ const blankMatch: Match = {
   fecha: new Date().toISOString(),
   torneo: "Torneo",
   vod: null,
+  isdefault: false,
   teams: [
     {
       teamname: "Local",
@@ -175,22 +176,10 @@ export default function MatchPage({
     updateTableOrChallonge(torneo);
   }
 
-  useEffect(() => {
-    window.onbeforeunload = (e: BeforeUnloadEvent) => {
-      if (editableData && editableData.length > 1) {
-        e = e || window.event;
-        if (e) {
-          e.returnValue = "Sure?";
-        }
-        return "Sure?";
-      }
-    };
-  }, [editableData]);
-
   function updateTableOrChallonge(torneo: string) {
     for (let i in Torneos) {
       for (let j in Torneos[i].torneos) {
-        let t = Torneos[i].torneos[j];
+        let t: any = Torneos[i].torneos[j];
         if (t.torneo === torneo) {
           if (t.challonge) {
             setEditableChallonge(t.challonge);
@@ -233,13 +222,14 @@ export default function MatchPage({
     });
   }
 
-  function changeScore(home: number, away: number) {
+  function changeScore(home: number, away: number, isDefault: boolean) {
     setEditableData(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.teams[0].score = home;
       data.teams[1].score = away;
       data.teams[0].scorereceived = away;
       data.teams[1].scorereceived = home;
+      data.isdefault = isDefault;
       if (data.teams[0].score > data.teams[1].score) {
         data.teams[0].result = 1;
         data.teams[1].result = -1;

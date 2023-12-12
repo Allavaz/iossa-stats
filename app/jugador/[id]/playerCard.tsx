@@ -85,12 +85,12 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
   return (
     <Card>
       <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap sm:justify-between">
-        <div className="flex gap-x-4">
+        <div className="flex min-w-0 gap-x-4">
           <div className="flex flex-col items-center gap-y-2">
             <img
               src={steamInfo.profilePicture}
               alt={player.name}
-              className="h-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
+              className="w-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
             />
             <div className="flex justify-center gap-x-2">
               {playerPositions.map(item => (
@@ -109,8 +109,10 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-y-2">
-            <div className="font-heading text-2xl">{player.name}</div>
+          <div className="flex min-w-0 flex-col gap-y-2">
+            <div className="overflow-hidden overflow-ellipsis whitespace-nowrap font-heading text-2xl">
+              {player.name}
+            </div>
             <div
               className={`text-neutral-500 dark:text-neutral-400 ${
                 player.name === steamInfo.personaname ? "hidden" : ""
@@ -145,13 +147,13 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-6">
           {[...commonStats, ...posSpecificStats].map(item => (
             <div
               key={item.label}
               className="flex flex-col items-center gap-y-1"
             >
-              <div className="text-2xl">{item.value(player)}</div>
+              <div className="font-heading text-2xl">{item.value(player)}</div>
               <div className="text-sm text-neutral-500 dark:text-neutral-400">
                 {item.label}
               </div>

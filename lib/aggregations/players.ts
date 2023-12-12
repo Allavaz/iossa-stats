@@ -20,7 +20,10 @@ export default function players(arg) {
         result: {
           $cond: [
             {
-              $eq: ["$teams.0.teamname", "$team"]
+              $eq: [
+                { $arrayElemAt: ["$teams.teamname", 0] },
+                "$players.info.team"
+              ]
             },
             {
               $arrayElemAt: ["$teams.result", 0]

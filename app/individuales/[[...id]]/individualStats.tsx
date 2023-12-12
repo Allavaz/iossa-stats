@@ -59,11 +59,11 @@ export default function IndividualStats(props: Props) {
     columnHelper.accessor("wins", {
       header: () => "Victorias"
     }),
-    columnHelper.accessor("losses", {
-      header: () => "Derrotas"
-    }),
     columnHelper.accessor("draws", {
       header: () => "Empates"
+    }),
+    columnHelper.accessor("losses", {
+      header: () => "Derrotas"
     }),
     columnHelper.accessor("goals", {
       header: () => "Goles"
@@ -143,6 +143,9 @@ export default function IndividualStats(props: Props) {
     }),
     columnHelper.accessor("goalkicks", {
       header: () => "Saques de arco"
+    }),
+    columnHelper.accessor("goalsconceded", {
+      header: () => "Goles recibidos"
     }),
     columnHelper.accessor("chancescreated", {
       header: () => "Ocasiones creadas"

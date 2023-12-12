@@ -96,6 +96,7 @@ export interface Match {
   filename: string;
   fecha: string;
   torneo: string;
+  isdefault: boolean;
   vod: string | null;
   teams: MatchTeam[];
   players: MatchPlayer[];

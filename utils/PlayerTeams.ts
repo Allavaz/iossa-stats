@@ -8,7 +8,9 @@ export default function PlayerTeams(steam_id: string, matches: Match[]) {
 
   let teams = [];
 
-  matches.forEach(match => {
+  const matchesReversed = [...matches].reverse();
+
+  matchesReversed.forEach(match => {
     if (torneosSelecciones.includes(match.torneo)) return;
     const player = match.players.find(
       player => player.info.steam_id === steam_id
@@ -25,5 +27,5 @@ export default function PlayerTeams(steam_id: string, matches: Match[]) {
     }
   });
 
-  return teams;
+  return teams.reverse();
 }

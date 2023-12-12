@@ -1,5 +1,6 @@
 import Teams from "./Teams.json";
 import Torneos from "./Torneos.json";
+import { DateTime } from "luxon";
 
 const temporadaRegex = /^t(\d+)/;
 
@@ -25,6 +26,8 @@ export function getTournamentIcon(tournament) {
     return "/tournaments/ligad2.png";
   } else if (tournament.includes("Liga D3")) {
     return "/tournaments/ligad3.png";
+  } else if (tournament.includes("Liga D4")) {
+    return "/tournaments/ligad4.png";
   } else if (tournament.includes("Copa Master")) {
     return "/tournaments/copamaster.png";
   } else if (tournament.includes("Recopa Master")) {
@@ -64,12 +67,8 @@ export function plus(n) {
   }
 }
 
-export function fecha(str) {
-  var year = str.slice(0, 4);
-  var month = str.slice(5, 7);
-  var day = str.slice(8, 10);
-
-  return day + "/" + month + "/" + year;
+export function fecha(ISODate: string) {
+  return DateTime.fromISO(ISODate).toLocal().toFormat("dd/LL/yyyy");
 }
 
 export function percentage(x, y) {

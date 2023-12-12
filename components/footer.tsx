@@ -14,26 +14,18 @@ export default function Footer() {
       icon: faDiscord
     },
     {
-      link: "https://instagram.com/iosoccersa",
-      icon: faInstagram
-    },
-    {
-      link: "https://www.youtube.com/channel/UCvr34La6BdN5wg4XHOR5nzg",
+      link: "https://www.youtube.com/@IOSoccerSudamerica",
       icon: faYoutube
     },
     {
       link: "https://www.twitch.tv/IOSSuda",
       icon: faTwitch
-    },
-    {
-      link: "https://www.tiktok.com/@iosoccer_sudamerica",
-      icon: faTiktok
     }
   ];
 
   return (
     <div className="w-full">
-      <div className="m-auto my-5 flex w-full max-w-6xl flex-col items-center justify-center gap-y-3">
+      <div className="m-auto my-5 flex w-full max-w-6xl flex-col items-center justify-center gap-y-3 px-2 sm:p-0">
         <div className="my-6 w-full border-t border-dashed border-neutral-300 dark:border-neutral-600" />
         <div className="flex gap-x-3">
           {socials.map((item, index) => (

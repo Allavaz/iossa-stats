@@ -18,6 +18,7 @@ import Link from "next/link";
 import Card from "./commons/card";
 import Button from "./commons/button";
 import Modal from "./commons/modal";
+import DefaultIndicator from "./defaultIndicator";
 
 export default function MatchCard({
   data,
@@ -49,7 +50,7 @@ export default function MatchCard({
   changeTorneo: (newTorneo: string) => void;
   changeDate: (newDate: string) => void;
   changeTeam: (newTeam: string, side: "home" | "away") => void;
-  changeScore: (home: number, away: number) => void;
+  changeScore: (home: number, away: number, isDefault: boolean) => void;
   changeEvents: (matchEvents: MatchEvent[]) => void;
   create: boolean;
   disableUndo: boolean;
@@ -92,8 +93,8 @@ export default function MatchCard({
     setEditing(null);
   }
 
-  function onChangeScore(home: number, away: number) {
-    changeScore(home, away);
+  function onChangeScore(home: number, away: number, isDefault: boolean) {
+    changeScore(home, away, isDefault);
   }
 
   function onAddEvent(side) {
@@ -370,23 +371,27 @@ export default function MatchCard({
                 <ScoreEditor
                   home={data.teams[0].score}
                   away={data.teams[1].score}
+                  isDefault={data.isdefault}
                   onChangeScore={onChangeScore}
                   setEditing={setEditing}
                 />
               ) : (
-                <div className="flex items-center justify-center gap-x-2">
-                  <div className="whitespace-nowrap font-heading text-3xl">
-                    {data.teams[0].score} - {data.teams[1].score}
+                <div className="flex flex-col gap-y-2">
+                  <div className="flex items-center justify-center gap-x-2">
+                    <div className="whitespace-nowrap font-heading text-3xl">
+                      {data.teams[0].score} - {data.teams[1].score}
+                    </div>
+                    {editable ? (
+                      <FontAwesomeIcon
+                        className="cursor-pointer"
+                        icon={faEdit}
+                        onClick={e => {
+                          setEditing("score");
+                        }}
+                      />
+                    ) : null}
                   </div>
-                  {editable ? (
-                    <FontAwesomeIcon
-                      className="cursor-pointer"
-                      icon={faEdit}
-                      onClick={e => {
-                        setEditing("score");
-                      }}
-                    />
-                  ) : null}
+                  {data.isdefault && <DefaultIndicator />}
                 </div>
               )}
             </td>

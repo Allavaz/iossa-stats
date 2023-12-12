@@ -25,7 +25,12 @@ export default function teamPlayers(teamname: string, arg: any) {
         result: {
           $cond: [
             {
-              $eq: ["$teams.0.teamname", "$team"]
+              $eq: [
+                {
+                  $arrayElemAt: ["$teams.teamname", 0]
+                },
+                "$players.info.team"
+              ]
             },
             {
               $arrayElemAt: ["$teams.result", 0]
@@ -176,7 +181,6 @@ export default function teamPlayers(teamname: string, arg: any) {
     },
     {
       $sort: {
-        team: 1,
         name: 1
       }
     }
