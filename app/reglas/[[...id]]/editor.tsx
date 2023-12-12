@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Button from "../../../components/commons/button";
-import Title from "../../../components/commons/title";
+import Button from "../../../components/ui/button";
+import Title from "../../../components/ui/title";
 import RulesPreview from "./preview";
 import axios from "axios";
 import SuccessRules from "./success";

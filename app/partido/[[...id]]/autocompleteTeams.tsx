@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Autosuggest from "react-autosuggest";
-import Teams from "../utils/Teams.json";
-import { getTeamLogo } from "../utils/Utils";
+import Teams from "../../../utils/Teams.json";
+import { getTeamLogo } from "../../../utils/Utils";
 
 export default function AutocompleteTeams(props) {
   const [value, setValue] = useState(props.defaultValue);

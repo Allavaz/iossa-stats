@@ -8,8 +8,8 @@ import {
   getTeamShortname,
   getTournamentIcon
 } from "../../../utils/Utils";
-import Title from "../../../components/commons/title";
-import Button from "../../../components/commons/button";
+import Title from "../../../components/ui/title";
+import Button from "../../../components/ui/button";
 import {
   createColumnHelper,
   flexRender,
@@ -19,7 +19,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 import { Match } from "../../../types";
-import Table from "../../../components/commons/table";
+import Table from "../../../components/ui/table";
 import DefaultIndicator from "../../../components/defaultIndicator";
 
 interface Props {

@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Title from "../components/commons/title";
-import Card from "../components/commons/card";
-import Button from "../components/commons/button";
+import Title from "../components/ui/title";
+import Card from "../components/ui/card";
+import Button from "../components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function Error404() {

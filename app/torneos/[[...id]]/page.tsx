@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Challonge from "../../../components/challonge";
-import Title from "../../../components/commons/title";
+import Title from "../../../components/ui/title";
 import PositionsComponent from "../../../components/positions";
 import { getManyPositions } from "../../../lib/getFromDB";
 import {

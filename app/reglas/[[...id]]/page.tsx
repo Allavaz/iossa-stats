@@ -1,4 +1,4 @@
-import Card from "../../../components/commons/card";
+import Card from "../../../components/ui/card";
 import { getRules } from "../../../lib/getFromDB";
 import RulesEditor from "./editor";
 import RulesPreview from "./preview";

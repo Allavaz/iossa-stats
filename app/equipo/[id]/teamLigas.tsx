@@ -1,6 +1,6 @@
 import { getTournamentIcon } from "../../../utils/Utils";
-import Table from "../../../components/commons/table";
-import Title from "../../../components/commons/title";
+import Table from "../../../components/ui/table";
+import Title from "../../../components/ui/title";
 
 interface Props {
   tournaments: {

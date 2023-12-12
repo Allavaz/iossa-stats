@@ -1,6 +1,6 @@
-import Button from "./commons/button";
-import Card from "./commons/card";
-import Title from "./commons/title";
+import Button from "../../../components/ui/button";
+import Card from "../../../components/ui/card";
+import Title from "../../../components/ui/title";
 import { useState } from "react";
 
 interface Props {

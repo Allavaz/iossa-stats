@@ -1,4 +1,4 @@
-import { getTeamLogo, getTeamShortname, fecha } from "../utils/Utils";
+import { getTeamLogo, getTeamShortname, fecha } from "../../../utils/Utils";
 import MatchEventComponent from "./matchEvent";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,12 +13,12 @@ import DateTimeEditor from "./dateTimeEditor";
 import TeamNameEditor from "./teamNameEditor";
 import ScoreEditor from "./scoreEditor";
 import MatchEventEditor from "./matchEventEditor";
-import { Event, Match, MatchEvent, Player } from "../types";
+import { Event, Match, MatchEvent, Player } from "../../../types";
 import Link from "next/link";
-import Card from "./commons/card";
-import Button from "./commons/button";
-import Modal from "./commons/modal";
-import DefaultIndicator from "./defaultIndicator";
+import Card from "../../../components/ui/card";
+import Button from "../../../components/ui/button";
+import Modal from "../../../components/ui/modal";
+import DefaultIndicator from "../../../components/defaultIndicator";
 
 export default function MatchCard({
   data,
@@ -272,15 +272,14 @@ export default function MatchCard({
                 <div className="flex items-center justify-center gap-x-2">
                   <Link
                     href={`/equipo/${data.teams[0].teamname}`}
-                    className="font-heading text-2xl">
-
+                    className="font-heading text-2xl"
+                  >
                     <div className="hidden sm:block">
                       {data.teams[0].teamname}
                     </div>
                     <div className="sm:hidden">
                       {getTeamShortname(data.teams[0].teamname)}
                     </div>
-
                   </Link>
                   {editable && (
                     <FontAwesomeIcon
@@ -330,15 +329,14 @@ export default function MatchCard({
                 <div className="flex items-center justify-center gap-x-2">
                   <Link
                     href={`/equipo/${data.teams[1].teamname}`}
-                    className="font-heading text-2xl">
-
+                    className="font-heading text-2xl"
+                  >
                     <div className="hidden sm:block">
                       {data.teams[1].teamname}
                     </div>
                     <div className="sm:hidden">
                       {getTeamShortname(data.teams[1].teamname)}
                     </div>
-
                   </Link>
                   {editable ? (
                     <FontAwesomeIcon
@@ -357,12 +355,10 @@ export default function MatchCard({
             <td className="p-4">
               <div className="flex justify-center">
                 <Link href={`/equipo/${data.teams[0].teamname}`}>
-
                   <img
                     alt={data.teams[0].teamname}
                     src={getTeamLogo(data.teams[0].teamname)}
                   />
-
                 </Link>
               </div>
             </td>
@@ -398,12 +394,10 @@ export default function MatchCard({
             <td className="p-4">
               <div className="flex justify-center">
                 <Link href={`/equipo/${data.teams[1].teamname}`}>
-
                   <img
                     alt={data.teams[1].teamname}
                     src={getTeamLogo(data.teams[1].teamname)}
                   />
-
                 </Link>
               </div>
             </td>

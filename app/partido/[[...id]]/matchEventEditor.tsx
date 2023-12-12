@@ -1,8 +1,8 @@
 import { useState } from "react";
 import AutocompletePlayers from "./autocompletePlayers";
 import AutocompleteSteamIDs from "./autocompleteSteamIDs";
-import Button from "./commons/button";
-import Title from "./commons/title";
+import Button from "../../../components/ui/button";
+import Title from "../../../components/ui/title";
 
 export default function MatchEventEditor(props) {
   const [playerName, setPlayerName] = useState(props.item.name);

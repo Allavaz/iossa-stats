@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getTeamLogo } from "../../../utils/Utils";
-import Card from "../../../components/commons/card";
+import Card from "../../../components/ui/card";
 
 function getPosColor(pos: string) {
   switch (pos) {

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import AutocompletePlayers from "./autocompletePlayers";
-import { percentage, invPercentage } from "../utils/Utils";
+import { percentage, invPercentage } from "../../../utils/Utils";
 import AutocompleteSteamIDs from "./autocompleteSteamIDs";
-import Button from "./commons/button";
-import Title from "./commons/title";
+import Button from "../../../components/ui/button";
+import Title from "../../../components/ui/title";
 
 function parseValue(id, target) {
   let v = (document.getElementById(id) as HTMLInputElement).value;

@@ -1,9 +1,9 @@
 import { Match } from "../types";
 import { fecha } from "../utils/Utils";
 import MatchRow from "./matchRow";
-import Title from "./commons/title";
+import Title from "./ui/title";
 import React from "react";
-import Button from "./commons/button";
+import Button from "./ui/button";
 import Link from "next/link";
 
 export default function Matches({ matches }: { matches: Match[] }) {

@@ -1,5 +1,5 @@
-import { getTeamLogo, percentage } from "../utils/Utils";
-import Table from "./commons/table";
+import { getTeamLogo, percentage } from "../../../utils/Utils";
+import Table from "../../../components/ui/table";
 
 export default function MatchTeamStats(props) {
   const baseObject = i => props.data.teams[i].statistics;

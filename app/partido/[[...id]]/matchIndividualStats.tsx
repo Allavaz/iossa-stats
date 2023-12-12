@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import MatchIndivStatsEditor from "./matchIndivStatsEditor";
-import { secondsToMinutes } from "../lib/Utils";
+import { secondsToMinutes } from "../../../lib/Utils";
 import {
   createColumnHelper,
   flexRender,
@@ -11,10 +11,10 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { MatchPlayer } from "../types";
-import Title from "./commons/title";
-import Table from "./commons/table";
-import Modal from "./commons/modal";
+import { MatchPlayer } from "../../../types";
+import Title from "../../../components/ui/title";
+import Table from "../../../components/ui/table";
+import Modal from "../../../components/ui/modal";
 
 export default function MatchIndividualStats(props) {
   function onChangeIndivStats(player) {

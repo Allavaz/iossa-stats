@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Torneos from "../../../utils/Torneos.json";
-import Select from "../../../components/commons/select";
+import Select from "../../../components/ui/select";
 
 function getCategory(arg: string) {
   if (arg === "all") {

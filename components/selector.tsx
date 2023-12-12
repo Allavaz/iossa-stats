@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import Torneos from "../utils/Torneos.json";
-import Button from "./commons/button";
-import Select from "./commons/select";
+import Button from "./ui/button";
+import Select from "./ui/select";
 
 export default function Selector({ context, temporada }) {
   const router = useRouter();

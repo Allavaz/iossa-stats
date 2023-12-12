@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
-import { getTeamLogo } from "../utils/Utils";
+import { getTeamLogo } from "../../../utils/Utils";
 
 export default function AutocompleteSteamIDs(props) {
   const [value, setValue] = useState(props.defaultValue);

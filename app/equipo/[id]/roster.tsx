@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Player } from "../../../types";
-import Card from "../../../components/commons/card";
-import Title from "../../../components/commons/title";
+import Card from "../../../components/ui/card";
+import Title from "../../../components/ui/title";
 
 function getPosColor(pos: string) {
   switch (pos) {

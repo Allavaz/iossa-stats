@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import Title from "./commons/title";
+import Title from "../../../components/ui/title";
 
 export default function Vod(props) {
   return (

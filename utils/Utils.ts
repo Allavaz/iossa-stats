@@ -1,3 +1,4 @@
+import { Match } from "../types";
 import Teams from "./Teams.json";
 import Torneos from "./Torneos.json";
 import { DateTime } from "luxon";
@@ -223,4 +224,92 @@ export function temporadaActual() {
       return Torneos[i].temporada;
     }
   }
+}
+
+export function buildBlankMatch(): Match {
+  return {
+    filename: "",
+    fecha: new Date().toISOString(),
+    torneo: "Torneo",
+    vod: null,
+    isdefault: false,
+    teams: [
+      {
+        teamname: "Local",
+        side: "home",
+        score: 0,
+        scorereceived: 0,
+        result: 0,
+        statistics: {
+          shots: 0,
+          shotsontarget: 0,
+          possession: 50,
+          passes: 0,
+          passescompleted: 0,
+          fouls: 0,
+          yellowcards: 0,
+          redcards: 0,
+          offsides: 0,
+          corners: 0,
+          throwins: 0,
+          penalties: 0,
+          freekicks: 0,
+          foulssuffered: 0,
+          goalsconceded: 0,
+          interceptions: 0,
+          owngoals: 0,
+          tackles: 0,
+          tacklescompleted: 0,
+          saves: 0,
+          savescaught: 0,
+          distancecovered: 0,
+          assists: 0,
+          goalkicks: 0,
+          keypasses: 0,
+          chancescreated: 0,
+          secondassists: 0
+        },
+        playerStatistics: []
+      },
+      {
+        teamname: "Visitante",
+        side: "away",
+        score: 0,
+        scorereceived: 0,
+        result: 0,
+        statistics: {
+          shots: 0,
+          shotsontarget: 0,
+          possession: 50,
+          passes: 0,
+          passescompleted: 0,
+          fouls: 0,
+          yellowcards: 0,
+          redcards: 0,
+          offsides: 0,
+          corners: 0,
+          throwins: 0,
+          penalties: 0,
+          freekicks: 0,
+          foulssuffered: 0,
+          goalsconceded: 0,
+          interceptions: 0,
+          owngoals: 0,
+          tackles: 0,
+          tacklescompleted: 0,
+          saves: 0,
+          savescaught: 0,
+          distancecovered: 0,
+          assists: 0,
+          goalkicks: 0,
+          keypasses: 0,
+          chancescreated: 0,
+          secondassists: 0
+        },
+        playerStatistics: []
+      }
+    ],
+    players: [],
+    matchevents: []
+  };
 }

@@ -14,9 +14,9 @@ import { usePathname } from "next/navigation";
 import { secondsToMinutes } from "../../../lib/Utils";
 import { Player } from "../../../types";
 import { getTeamLogo } from "../../../utils/Utils";
-import Button from "../../../components/commons/button";
-import Table from "../../../components/commons/table";
-import Title from "../../../components/commons/title";
+import Button from "../../../components/ui/button";
+import Table from "../../../components/ui/table";
+import Title from "../../../components/ui/title";
 
 interface Props {
   players: Player[];

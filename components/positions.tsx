@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
-import Title from "./commons/title";
-import Table from "./commons/table";
+import Title from "./ui/title";
+import Table from "./ui/table";
 
 const ColoredBar = ({ color }) => {
   return (
@@ -97,8 +97,10 @@ export default function PositionsComponent({
     {
       header: "Equipo",
       render: (item, index) => (
-        (<Link href={`/equipo/${item._id}`} className="flex items-center gap-x-1">
-
+        <Link
+          href={`/equipo/${item._id}`}
+          className="flex items-center gap-x-1"
+        >
           {classification &&
             classification.colors.find(c => c.matchingIndexes(index)) && (
               <ColoredBar
@@ -113,8 +115,7 @@ export default function PositionsComponent({
           {!mini && (
             <div className="sm:hidden">{getTeamShortname(item._id)}</div>
           )}
-
-        </Link>)
+        </Link>
       )
     },
     {

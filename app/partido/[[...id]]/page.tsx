@@ -1,154 +1,64 @@
+"use client";
+
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import Challonge from "../../components/challonge";
-import MatchCard from "../../components/matchCard";
-import MatchIndividualStats from "../../components/matchIndividualStats";
-import MatchTeamStats from "../../components/matchTeamStats";
-import PositionsComponent from "../../components/positions";
-import Vod from "../../components/vod";
-import VodEditor from "../../components/vodEditor";
-import createJSON from "../../lib/createJSON";
-import { getMatch, getPlayers, getPositions } from "../../lib/getFromDB";
-import { Match, MatchEvent, MatchPlayer } from "../../types";
-import Torneos from "../../utils/Torneos.json";
-import Title from "../../components/commons/title";
-import Card from "../../components/commons/card";
-import Button from "../../components/commons/button";
+import Challonge from "../../../components/challonge";
+import MatchCard from "./matchCard";
+import MatchIndividualStats from "./matchIndividualStats";
+import MatchTeamStats from "./matchTeamStats";
+import PositionsComponent from "../../../components/positions";
+import Vod from "./vod";
+import VodEditor from "./vodEditor";
+import createJSON from "../../../lib/createJSON";
+import { getMatch, getPlayers, getPositions } from "../../../lib/getFromDB";
+import { Match, MatchEvent, MatchPlayer } from "../../../types";
+import Torneos from "../../../utils/Torneos.json";
+import Title from "../../../components/ui/title";
+import Card from "../../../components/ui/card";
+import Button from "../../../components/ui/button";
 import { useRouter } from "next/router";
+import { notFound } from "next/navigation";
+import { buildBlankMatch } from "../../../utils/Utils";
 
-export const getServerSideProps: GetServerSideProps = async context => {
+const blankMatch = buildBlankMatch();
+
+async function getData(matchId: string) {
+  const match = await getMatch(matchId);
+  if (!match) {
+    return notFound();
+  }
   let props: any = {};
-  let match = await getMatch(context.params.id[0]);
-  if (match) {
-    props.data = match;
-    for (let i in Torneos) {
-      for (let j in Torneos[i].torneos) {
-        let t: any = Torneos[i].torneos[j];
-        if (t.torneo === match.torneo) {
-          if (t.challonge) {
-            props.challonge = t.challonge;
-          } else if (t.tabla) {
-            props.table = await getPositions(t.tabla);
-            props.tablaTorneo = t.tablaLabel || t.torneo;
-          }
+  props.data = match;
+  for (let i in Torneos) {
+    for (let j in Torneos[i].torneos) {
+      let t: any = Torneos[i].torneos[j];
+      if (t.torneo === match.torneo) {
+        if (t.challonge) {
+          props.challonge = t.challonge;
+        } else if (t.tabla) {
+          props.table = await getPositions(t.tabla);
+          props.tablaTorneo = t.tablaLabel || t.torneo;
         }
       }
     }
-    if (context.params.id.length === 2) {
-      if (context.params.id[1] === process.env.ENDPOINT) {
-        props.players = await getPlayers("mini");
-        props.editable = true;
-      } else {
-        return { notFound: true };
-      }
-    } else if (context.params.id.length > 2) {
-      return { notFound: true };
-    }
-    return { props };
-  } else {
-    return { notFound: true };
   }
-};
+  return props;
+}
 
-const blankMatch: Match = {
-  filename: "",
-  fecha: new Date().toISOString(),
-  torneo: "Torneo",
-  vod: null,
-  isdefault: false,
-  teams: [
-    {
-      teamname: "Local",
-      side: "home",
-      score: 0,
-      scorereceived: 0,
-      result: 0,
-      statistics: {
-        shots: 0,
-        shotsontarget: 0,
-        possession: 50,
-        passes: 0,
-        passescompleted: 0,
-        fouls: 0,
-        yellowcards: 0,
-        redcards: 0,
-        offsides: 0,
-        corners: 0,
-        throwins: 0,
-        penalties: 0,
-        freekicks: 0,
-        foulssuffered: 0,
-        goalsconceded: 0,
-        interceptions: 0,
-        owngoals: 0,
-        tackles: 0,
-        tacklescompleted: 0,
-        saves: 0,
-        savescaught: 0,
-        distancecovered: 0,
-        assists: 0,
-        goalkicks: 0,
-        keypasses: 0,
-        chancescreated: 0,
-        secondassists: 0
-      },
-      playerStatistics: []
-    },
-    {
-      teamname: "Visitante",
-      side: "away",
-      score: 0,
-      scorereceived: 0,
-      result: 0,
-      statistics: {
-        shots: 0,
-        shotsontarget: 0,
-        possession: 50,
-        passes: 0,
-        passescompleted: 0,
-        fouls: 0,
-        yellowcards: 0,
-        redcards: 0,
-        offsides: 0,
-        corners: 0,
-        throwins: 0,
-        penalties: 0,
-        freekicks: 0,
-        foulssuffered: 0,
-        goalsconceded: 0,
-        interceptions: 0,
-        owngoals: 0,
-        tackles: 0,
-        tacklescompleted: 0,
-        saves: 0,
-        savescaught: 0,
-        distancecovered: 0,
-        assists: 0,
-        goalkicks: 0,
-        keypasses: 0,
-        chancescreated: 0,
-        secondassists: 0
-      },
-      playerStatistics: []
-    }
-  ],
-  players: [],
-  matchevents: []
-};
+export default async function MatchPage(params, { players }) {
+  const { data, table, challonge, tablaTorneo } = await getData(params.id?.[0]);
 
-export default function MatchPage({
-  data,
-  table,
-  tablaTorneo,
-  challonge,
-  editable,
-  players,
-  create
-}) {
+  if (params.id?.[0] === process.env.ENDPOINT) {
+    players = await getPlayers("mini");
+    var create = true;
+  } else if (params.id?.[1] === process.env.ENDPOINT) {
+    players = await getPlayers("mini");
+    var editable = true;
+  }
+
   const router = useRouter();
   const [editableData, setEditableData] = useState(
     create

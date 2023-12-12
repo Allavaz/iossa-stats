@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Player } from "../../../types";
-import Title from "../../../components/commons/title";
-import Table from "../../../components/commons/table";
+import Title from "../../../components/ui/title";
+import Table from "../../../components/ui/table";
 
 interface Props {
   players: Player[];

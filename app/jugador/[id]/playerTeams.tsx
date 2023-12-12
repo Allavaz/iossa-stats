@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
 import { getTeamLogo } from "../../../utils/Utils";
 import Link from "next/link";
-import Title from "../../../components/commons/title";
-import Table from "../../../components/commons/table";
+import Title from "../../../components/ui/title";
+import Table from "../../../components/ui/table";
 
 const dateFormat = "dd/LL/yyyy";
 

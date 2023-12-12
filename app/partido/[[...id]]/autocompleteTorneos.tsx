@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Autosuggest from "react-autosuggest";
-import Torneos from "../utils/Torneos.json";
-import { getTournamentIcon } from "../utils/Utils";
+import Torneos from "../../../utils/Torneos.json";
+import { getTournamentIcon } from "../../../utils/Utils";
 
 export default function AutocompleteTorneos(props) {
   let torneos = [];
