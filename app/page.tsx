@@ -2,7 +2,7 @@ import { getMatches, getManyPositions } from "../lib/getFromDB";
 import Matches from "../components/matches";
 import PositionsComponent from "../components/positions";
 import { getTablas, temporadaActual } from "../utils/Utils";
-import { Match, Positions } from "../types";
+import { Match } from "../types";
 
 async function getPosiciones() {
   const listaTablas = getTablas(temporadaActual());
