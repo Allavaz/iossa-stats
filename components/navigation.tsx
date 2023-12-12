@@ -89,6 +89,11 @@ export default function Navigation() {
                 Rankings
               </a>
             </Link>
+            <Link href="/reglas">
+              <a className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800">
+                Reglas
+              </a>
+            </Link>
             <a
               className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
               onClick={_ => toggleNight()}
