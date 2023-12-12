@@ -15,7 +15,7 @@ export default function RulesEditor({ defaultValue }) {
     setLoading(true);
     axios
       .post("/api/reglas", { rules, password })
-      .then(res => setSuccess(true))
+      .then(() => setSuccess(true))
       .catch(err => {
         if (err.response.status === 401) {
           alert("Contraseña incorrecta");
