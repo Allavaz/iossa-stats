@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import Title from "../../components/commons/title";
-import Button from "../../components/commons/button";
+import Title from "../../../components/commons/title";
+import Button from "../../../components/commons/button";
 import { useRouter } from "next/router";
 
 export default function SuccessRules() {

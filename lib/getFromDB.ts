@@ -414,12 +414,15 @@ export async function getRules() {
   try {
     const client = await clientPromise;
     const db = client.db();
-    let docs = await db
+    const docs = await db
       .collection("rules")
       .find({})
       .project({ _id: 0 })
       .toArray();
-    return docs[0];
+    return docs.map(doc => ({
+      ...doc,
+      lastEdit: doc.lastEdit.toISOString()
+    }))[0];
   } catch (error) {
     console.error(error);
   }

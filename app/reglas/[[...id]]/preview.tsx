@@ -1,5 +1,5 @@
 import { marked } from "marked";
-import { fecha } from "../../utils/Utils";
+import { fecha } from "../../../utils/Utils";
 
 export default function RulesPreview({ rules, lastEdit }) {
   const renderer = {
