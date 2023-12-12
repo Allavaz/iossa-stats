@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import router from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Challonge from "../../components/challonge";
 import MatchCard from "../../components/matchCard";
 import MatchIndividualStats from "../../components/matchIndividualStats";
@@ -19,6 +18,7 @@ import Torneos from "../../utils/Torneos.json";
 import Title from "../../components/commons/title";
 import Card from "../../components/commons/card";
 import Button from "../../components/commons/button";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   let props: any = {};
@@ -149,6 +149,7 @@ export default function MatchPage({
   players,
   create
 }) {
+  const router = useRouter();
   const [editableData, setEditableData] = useState(
     create
       ? [JSON.parse(JSON.stringify(blankMatch))]

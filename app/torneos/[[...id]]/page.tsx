@@ -45,7 +45,7 @@ export default async function Torneos({ params, searchParams }) {
         {tablas.map(
           item =>
             item.teams.length > 0 && (
-              <div className="max-w-xl grow overflow-x-auto">
+              <div key={item.name} className="max-w-xl grow overflow-x-auto">
                 <PositionsComponent
                   key={item.name}
                   teams={item.teams}
