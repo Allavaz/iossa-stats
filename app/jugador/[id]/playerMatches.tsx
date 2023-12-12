@@ -100,7 +100,7 @@ export default function PlayerMatches(props: Props) {
         cell: info => (
           <Link href={"/partido/" + info.row.original._id}>
             <div className="flex flex-col gap-1">
-              <a>{info.getValue()}</a>
+              {info.getValue()}
               {info.row.original.isdefault && <DefaultIndicator />}
             </div>
           </Link>

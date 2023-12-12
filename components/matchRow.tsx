@@ -17,14 +17,6 @@ export default function MatchRow({ match }: { match: Match }) {
         <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
           {match.teams[0].teamname}
         </div>
-        <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-2 dark:border-neutral-700">
-          <div className="flex flex-col items-center gap-y-1">
-            <div>
-              {match.teams[0].score} - {match.teams[1].score}
-            </div>
-            {match.isdefault && <DefaultIndicator />}
-          </div>
-        </div>
         <img
           className="h-6"
           src={getTeamLogo(match.teams[0].teamname)}
@@ -32,7 +24,12 @@ export default function MatchRow({ match }: { match: Match }) {
         />
       </div>
       <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-3 dark:border-neutral-700">
-        {match.teams[0].score} - {match.teams[1].score}
+        <div className="flex flex-col items-center gap-y-1">
+          <div>
+            {match.teams[0].score} - {match.teams[1].score}
+          </div>
+          {match.isdefault && <DefaultIndicator />}
+        </div>
       </div>
       <div className="flex w-[40%] items-center gap-x-1 border-y border-r p-3 dark:border-neutral-700">
         <img
@@ -42,16 +39,6 @@ export default function MatchRow({ match }: { match: Match }) {
         />
         <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
           {match.teams[1].teamname}
-        </div>
-        <div className="flex w-[20%] min-w-0 items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[30%]">
-          <img
-            className="h-6"
-            src={getTournamentIcon(match.torneo)}
-            alt={match.torneo}
-          />
-          <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
-            {match.torneo}
-          </div>
         </div>
       </div>
       <div className="flex w-[20%] items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[30%]">
