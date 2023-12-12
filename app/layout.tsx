@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import "../styles/globals.css";
 import Navigation from "../components/navigation";
 import Header from "../components/header";
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   },
   description:
     "Comunidad sudamericana de IOSoccer. Resultados, estadísticas, rankings y más.",
-  themeColor: "#e28800",
   openGraph: {
     siteName: "IOSoccer Sudamérica",
     type: "website",
@@ -21,7 +20,12 @@ export const metadata: Metadata = {
         url: "/logo-solo.png"
       }
     ]
-  }
+  },
+  metadataBase: new URL("https://iosoccer-sa.bid")
+};
+
+export const viewport: Viewport = {
+  themeColor: "#e28800"
 };
 
 export default function RootLayout({
