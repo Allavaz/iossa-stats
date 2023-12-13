@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     if (req.body.password === process.env.KEY) {
       try {
         const ip = req.headers["x-forwarded-for"] || "127.0.0.1";
-        const data = { rules: req.body.rules, ip };
+        const data = { rules: req.body.rules, ip, date: new Date() };
         await updateRules(data);
         return res.status(200).json({ message: "Reglas actualizadas" });
       } catch (error) {
