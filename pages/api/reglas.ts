@@ -4,7 +4,9 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     if (req.body.password === process.env.KEY) {
       try {
-        await updateRules(req.body.rules);
+        const ip = req.headers["x-forwarded-for"] || "127.0.0.1";
+        const data = { ...req.body.rules, ip };
+        await updateRules(data);
         return res.status(200).json({ message: "Reglas actualizadas" });
       } catch (error) {
         console.error(error);

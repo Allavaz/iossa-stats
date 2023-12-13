@@ -417,9 +417,26 @@ export async function getRules() {
     let docs = await db
       .collection("rules")
       .find({})
+      .sort({ date: -1 })
       .project({ _id: 0 })
       .toArray();
     return docs[0];
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getRulesHistory() {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection("rules")
+      .find({})
+      .sort({ date: -1 })
+      .project({ _id: 0 })
+      .toArray();
+    return docs;
   } catch (error) {
     console.error(error);
   }

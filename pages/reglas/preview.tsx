@@ -1,7 +1,7 @@
 import { marked } from "marked";
 import { fecha } from "../../utils/Utils";
 
-export default function RulesPreview({ rules, lastEdit }) {
+export default function RulesPreview({ rules, date }) {
   const renderer = {
     heading(text, level) {
       const classes = {
@@ -38,7 +38,7 @@ export default function RulesPreview({ rules, lastEdit }) {
       <div dangerouslySetInnerHTML={{ __html: parsedMD }} />
       <div className="my-6 w-full border-t border-dashed border-neutral-300 dark:border-neutral-600" />
       <div className="flex justify-end text-sm italic text-neutral-500 dark:text-neutral-400">
-        Última edición: {fecha(lastEdit)}
+        Última edición: {fecha(date)}
       </div>
     </div>
   );

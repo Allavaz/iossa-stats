@@ -63,7 +63,7 @@ export default function RulesEditor({ defaultValue }) {
         </div>
       </div>
       <Title>Vista previa</Title>
-      <RulesPreview rules={rules} lastEdit={new Date().toISOString()} />
+      <RulesPreview rules={rules} date={new Date().toISOString()} />
     </div>
   );
 }
