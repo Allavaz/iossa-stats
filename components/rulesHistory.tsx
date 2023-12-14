@@ -3,7 +3,7 @@ import Title from "./commons/title";
 import { fechaHora } from "../utils/Utils";
 import { marked } from "marked";
 import { renderer } from "../utils/marked-renderer";
-const Diff = require("diff");
+import { diffLines } from "diff";
 
 function DiffElement({ part }) {
   const parsedMD = marked.parse(part.value) as string;
@@ -47,7 +47,7 @@ export default function RulesHistory({ rules }) {
     );
   }
 
-  const diff = Diff.diffLines(rules[selectedRule].rules, currentRule.rules);
+  const diff = diffLines(rules[selectedRule].rules, currentRule.rules);
 
   return (
     <div className="flex flex-col gap-y-4">
