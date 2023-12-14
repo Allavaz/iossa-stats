@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Button from "../../components/commons/button";
-import Title from "../../components/commons/title";
-import RulesPreview from "./preview";
+import Button from "./commons/button";
+import Title from "./commons/title";
+import RulesPreview from "./rulesPreview";
 import axios from "axios";
-import SuccessRules from "./success";
+import SuccessRules from "./rulesSuccess";
 import { useRouter } from "next/router";
 
 export default function RulesEditor({ defaultValue }) {

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Title from "../../components/commons/title";
-import { fechaHora } from "../../utils/Utils";
+import Title from "./commons/title";
+import { fechaHora } from "../utils/Utils";
 import { marked } from "marked";
-import { renderer } from "./renderer";
+import { renderer } from "../utils/marked-renderer";
 const Diff = require("diff");
 
 function DiffElement({ part }) {

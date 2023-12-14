@@ -1,6 +1,6 @@
 import { marked } from "marked";
-import { fechaHora } from "../../utils/Utils";
-import { renderer } from "./renderer";
+import { fechaHora } from "../utils/Utils";
+import { renderer } from "../utils/marked-renderer";
 
 export default function RulesPreview({ rules, date }) {
   marked.use({ renderer });

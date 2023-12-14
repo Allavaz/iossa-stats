@@ -1,9 +1,9 @@
 import Card from "../../components/commons/card";
 import { GetServerSideProps } from "next";
 import { getRules, getRulesHistory } from "../../lib/getFromDB";
-import RulesEditor from "./editor";
-import RulesPreview from "./preview";
-import RulesHistory from "./history";
+import RulesEditor from "../../components/rulesEditor";
+import RulesPreview from "../../components/rulesPreview";
+import RulesHistory from "../../components/rulesHistory";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   let editable = false;
