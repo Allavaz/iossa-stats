@@ -1,35 +1,32 @@
 import Card from "../../components/commons/card";
 import { GetServerSideProps } from "next";
-import { getRules, getRulesHistory } from "../../lib/getFromDB";
+import { getRules } from "../../lib/getFromDB";
 import RulesEditor from "../../components/rulesEditor";
 import RulesPreview from "../../components/rulesPreview";
 import RulesHistory from "../../components/rulesHistory";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async context => {
   let editable = false;
   let history = false;
   if (context.params.id?.[0] === process.env.ENDPOINT) {
-    const allRules = await getRulesHistory();
-    const rulesSerialized = allRules.map(rule => ({
-      ...rule,
-      date: rule.date.toISOString()
-    }));
+    const allRules = await getRules();
     if (context.params.id?.[1] === "history") {
       history = true;
     }
     editable = true;
     return {
-      props: { allRules: rulesSerialized, editable, history }
+      props: { allRules, editable, history }
     };
   } else {
-    const { rules, date } = await getRules();
+    const { rules, date } = await getRules(true);
     return {
-      props: { rules, date: date.toISOString(), editable, history }
+      props: { rules, date, editable, history }
     };
   }
 };
 
-export default function Rules({ rules, date, editable, history, allRules }) {
+function ComponentSwitch({ rules, date, editable, history, allRules }) {
   if (editable) {
     if (history) {
       return <RulesHistory rules={allRules} />;
@@ -51,4 +48,31 @@ export default function Rules({ rules, date, editable, history, allRules }) {
       </Card>
     );
   }
+}
+
+export default function Rules({ rules, date, editable, history, allRules }) {
+  return (
+    <>
+      <Head>
+        <title>Reglas | IOSoccer Sudamérica</title>
+        <meta name="title" content={`Reglas | IOSoccer Sudamérica`} />
+        <meta name="description" content={`Reglas IOSoccer Sudamérica`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`Reglas | IOSoccer Sudamérica`} />
+        <meta
+          property="og:description"
+          content={`Reglas IOSoccer Sudamérica`}
+        />
+        <meta property="og:image" content="/logo-solo.png" />
+        <meta property="og:site_name" content="IOSoccer Sudamérica" />
+      </Head>
+      <ComponentSwitch
+        rules={rules}
+        date={date}
+        editable={editable}
+        history={history}
+        allRules={allRules}
+      />
+    </>
+  );
 }
