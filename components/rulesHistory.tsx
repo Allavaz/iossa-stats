@@ -52,16 +52,19 @@ export default function RulesHistory({ rules }) {
   return (
     <div className="flex flex-col gap-y-4">
       <Title>Historial de ediciones</Title>
-      <div className="flex h-[58vh] gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-900">
+      <div className="flex flex-wrap-reverse gap-4 rounded-lg border border-neutral-200 bg-white p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-900 sm:flex-nowrap">
         <div className="w-full overflow-y-auto pr-2">
           {diff.map((part, i) => (
             <DiffElement key={i} part={part} />
           ))}
         </div>
-        <div className="w-60 overflow-y-auto rounded-md border border-neutral-200 dark:border-neutral-700">
-          {rules.map((rule, i) => (
-            <RuleItem key={rule.date} rule={rule} index={i} />
-          ))}
+        <div className="flex w-full flex-col gap-y-2 sm:w-52">
+          <Title>Versiones</Title>
+          <div className="h-fit w-full overflow-y-auto rounded-md border border-neutral-200 dark:border-neutral-700">
+            {rules.map((rule, i) => (
+              <RuleItem key={rule.date} rule={rule} index={i} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
