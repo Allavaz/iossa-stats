@@ -4,12 +4,14 @@ import Title from "../../components/commons/title";
 import RulesPreview from "./preview";
 import axios from "axios";
 import SuccessRules from "./success";
+import { useRouter } from "next/router";
 
 export default function RulesEditor({ defaultValue }) {
   const [rules, setRules] = useState(defaultValue);
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   function updateRules(rules: string, password: string) {
     setLoading(true);
@@ -48,6 +50,9 @@ export default function RulesEditor({ defaultValue }) {
           </a>
         </div>
         <div className="flex gap-x-2">
+          <Button onClick={() => router.push(router.asPath + "/history")}>
+            Historial de ediciones
+          </Button>
           <input
             className="w-36 rounded-lg border border-neutral-200 bg-white p-2 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
             type="password"

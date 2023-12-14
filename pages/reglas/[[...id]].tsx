@@ -1,30 +1,54 @@
 import Card from "../../components/commons/card";
 import { GetServerSideProps } from "next";
-import { getRules } from "../../lib/getFromDB";
+import { getRules, getRulesHistory } from "../../lib/getFromDB";
 import RulesEditor from "./editor";
 import RulesPreview from "./preview";
+import RulesHistory from "./history";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { rules, date } = await getRules();
   let editable = false;
+  let history = false;
   if (context.params.id?.[0] === process.env.ENDPOINT) {
+    const allRules = await getRulesHistory();
+    const rulesSerialized = allRules.map(rule => ({
+      ...rule,
+      date: rule.date.toISOString()
+    }));
+    if (context.params.id?.[1] === "history") {
+      history = true;
+    }
     editable = true;
+    return {
+      props: { allRules: rulesSerialized, editable, history }
+    };
+  } else {
+    const { rules, date } = await getRules();
+    return {
+      props: { rules, date: date.toISOString(), editable, history }
+    };
   }
-  return {
-    props: { rules, date: date.toISOString(), editable }
-  };
 };
 
-export default function Rules({ rules, date, editable }) {
-  return (
-    <Card>
-      <div className="flex flex-col gap-y-4">
-        {editable ? (
-          <RulesEditor defaultValue={rules} />
-        ) : (
+export default function Rules({ rules, date, editable, history, allRules }) {
+  if (editable) {
+    if (history) {
+      return <RulesHistory rules={allRules} />;
+    } else {
+      return (
+        <Card>
+          <div className="flex flex-col gap-y-4">
+            <RulesEditor defaultValue={allRules[0].rules} />
+          </div>
+        </Card>
+      );
+    }
+  } else {
+    return (
+      <Card>
+        <div className="flex flex-col gap-y-4">
           <RulesPreview rules={rules} date={date} />
-        )}
-      </div>
-    </Card>
-  );
+        </div>
+      </Card>
+    );
+  }
 }
