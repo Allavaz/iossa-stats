@@ -5,6 +5,7 @@ import RulesPreview from "./rulesPreview";
 import axios from "axios";
 import SuccessRules from "./rulesSuccess";
 import { useRouter } from "next/router";
+import { diffLines } from "diff";
 
 export default function RulesEditor({ defaultValue }) {
   const [rules, setRules] = useState(defaultValue);
@@ -15,6 +16,12 @@ export default function RulesEditor({ defaultValue }) {
 
   function updateRules(rules: string, password: string) {
     setLoading(true);
+    const diff = diffLines(defaultValue, rules);
+    if (diff.length === 1) {
+      alert("No se detectaron cambios");
+      setLoading(false);
+      return;
+    }
     axios
       .post("/api/reglas", { rules, password })
       .then(() => setSuccess(true))
