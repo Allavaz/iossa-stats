@@ -7,23 +7,22 @@ import RulesHistory from "../../components/rulesHistory";
 import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  let editable = false;
-  let history = false;
+  const props: any = {};
   if (context.params.id?.[0] === process.env.ENDPOINT) {
-    const allRules = await getRules();
+    props.editable = true;
     if (context.params.id?.[1] === "history") {
-      history = true;
+      props.history = true;
+      props.allRules = await getRules();
+    } else {
+      const { rules } = await getRules(true);
+      props.rules = rules;
     }
-    editable = true;
-    return {
-      props: { allRules, editable, history }
-    };
   } else {
     const { rules, date } = await getRules(true);
-    return {
-      props: { rules, date, editable, history }
-    };
+    props.rules = rules;
+    props.date = date;
   }
+  return { props };
 };
 
 function ComponentSwitch({ rules, date, editable, history, allRules }) {
@@ -34,7 +33,7 @@ function ComponentSwitch({ rules, date, editable, history, allRules }) {
       return (
         <Card>
           <div className="flex flex-col gap-y-4">
-            <RulesEditor defaultValue={allRules[0].rules} />
+            <RulesEditor defaultValue={rules} />
           </div>
         </Card>
       );
