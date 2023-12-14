@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     if (req.body.password === process.env.KEY) {
       try {
-        console.log(req.headers);
         const ip =
           req.headers["x-real-ip"] ||
           req.headers["x-forwarded-for"] ||
