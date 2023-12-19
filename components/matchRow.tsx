@@ -6,6 +6,7 @@ import {
 import Link from "next/link";
 import DefaultIndicator from "./defaultIndicator";
 import { Match } from "../types";
+import ResultWithDefault from "./resultWithDefault";
 
 export default function MatchRow({ match }: { match: Match }) {
   return (
@@ -26,10 +27,11 @@ export default function MatchRow({ match }: { match: Match }) {
         </div>
         <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-2 dark:border-neutral-700">
           <div className="flex flex-col items-center gap-y-1">
-            <div>
-              {match.teams[0].score} - {match.teams[1].score}
-            </div>
-            {match.isdefault && <DefaultIndicator />}
+            <ResultWithDefault
+              home={match.teams[0].score}
+              away={match.teams[1].score}
+              isDefault={match.isdefault}
+            />
           </div>
         </div>
         <div className="flex w-[40%] items-center gap-x-1 border-y border-r p-3 dark:border-neutral-700">
