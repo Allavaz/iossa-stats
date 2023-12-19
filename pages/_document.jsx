@@ -5,7 +5,10 @@ export default function Document() {
     <Html>
       <Head />
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
-        <script src="/theme.js" />
+        {
+          // eslint-disable-next-line @next/next/no-sync-scripts
+          <script src="/theme.js" />
+        }
         <Main />
         <NextScript />
       </body>
