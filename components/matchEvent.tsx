@@ -3,7 +3,6 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { MatchEvent } from "../types";
-import MatchEventEditor from "./matchEventEditor";
 
 export default function MatchEventComponent({
   item,
@@ -37,7 +36,7 @@ export default function MatchEventComponent({
           </div>
         )}
         <span>{`(${Math.round(item.second / 60)}')`}</span>
-        {editable ? (
+        {editable && (
           <div className="flex gap-x-1">
             <FontAwesomeIcon
               className="cursor-pointer"
@@ -54,7 +53,7 @@ export default function MatchEventComponent({
               }}
             />
           </div>
-        ) : null}
+        )}
       </div>
     </li>
   );

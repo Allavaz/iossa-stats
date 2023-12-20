@@ -63,20 +63,18 @@ export default function MatchCard({
 }) {
   const [dragging, setDragging] = useState(false);
 
-  function filterEvents(events: MatchEvent[], side: "home" | "away") {
-    if (side === "home") {
-      return events.filter(
-        event =>
-          (event.team === "home" && event.event !== "OWN GOAL") ||
-          (event.team === "away" && event.event === "OWN GOAL")
-      );
-    } else if (side === "away") {
-      return events.filter(
-        event =>
-          (event.team === "away" && event.event !== "OWN GOAL") ||
-          (event.team === "home" && event.event === "OWN GOAL")
-      );
-    } else return [];
+  function getEventSide(event: MatchEvent): "home" | "away" {
+    if (
+      (event.team === "home" && event.event !== "OWN GOAL") ||
+      (event.team === "away" && event.event === "OWN GOAL")
+    ) {
+      return "home";
+    } else if (
+      (event.team === "away" && event.event !== "OWN GOAL") ||
+      (event.team === "home" && event.event === "OWN GOAL")
+    ) {
+      return "away";
+    }
   }
 
   function onChangeTorneo(value: string) {
@@ -407,16 +405,19 @@ export default function MatchCard({
           <tr className="align-top">
             <td className="p-1">
               <ul>
-                {filterEvents(data.matchevents, "home").map((item, index) => (
-                  <MatchEventComponent
-                    item={item}
-                    key={index}
-                    index={index}
-                    editable={editable}
-                    onRemoveEvent={onRemoveEvent}
-                    setEditing={setEditing}
-                  />
-                ))}
+                {data.matchevents.map(
+                  (item, index) =>
+                    getEventSide(item) === "home" && (
+                      <MatchEventComponent
+                        item={item}
+                        key={index}
+                        index={index}
+                        editable={editable}
+                        onRemoveEvent={onRemoveEvent}
+                        setEditing={setEditing}
+                      />
+                    )
+                )}
                 {editable ? (
                   <li>
                     <FontAwesomeIcon
@@ -536,17 +537,18 @@ export default function MatchCard({
             </td>
             <td>
               <ul>
-                {filterEvents(data.matchevents, "away").map(
-                  (item: MatchEvent, index) => (
-                    <MatchEventComponent
-                      item={item}
-                      key={index}
-                      index={index}
-                      editable={editable}
-                      onRemoveEvent={onRemoveEvent}
-                      setEditing={setEditing}
-                    />
-                  )
+                {data.matchevents.map(
+                  (item, index) =>
+                    getEventSide(item) === "away" && (
+                      <MatchEventComponent
+                        item={item}
+                        key={index}
+                        index={index}
+                        editable={editable}
+                        onRemoveEvent={onRemoveEvent}
+                        setEditing={setEditing}
+                      />
+                    )
                 )}
                 {editable ? (
                   <li>
