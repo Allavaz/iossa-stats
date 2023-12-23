@@ -21,7 +21,7 @@
     "formidable": "^1.2.2",
     "luxon": "^2.5.2",
     "mongodb": "^4.17.0",
-    "next": "^12.1.0",
+    "next": "^13.5.1",
     "nextjs-progressbar": "^0.0.16",
     "puppeteer": "^14.1.0",
     "puppeteer-cluster": "^0.23.0",
