@@ -409,25 +409,3 @@ export async function getTeamRoster(teamname: string) {
     console.error(error);
   }
 }
-
-export async function getRules(latestOnly = false) {
-  try {
-    const client = await clientPromise;
-    const db = client.db();
-    const query = await db
-      .collection("rules")
-      .find({})
-      .sort({ date: -1 })
-      .project({ _id: 0 });
-    const docs = latestOnly
-      ? await query.limit(1).toArray()
-      : await query.toArray();
-    const serializedDocs = docs.map(doc => ({
-      ...doc,
-      date: doc.date.toISOString()
-    }));
-    return latestOnly ? serializedDocs[0] : serializedDocs;
-  } catch (error) {
-    console.error(error);
-  }
-}
