@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Match } from "../types";
 import { getTeamLogo, getTournamentIcon } from "../utils/Utils";
-import DefaultIndicator from "./defaultIndicator";
 import ResultWithDefault from "./resultWithDefault";
 
 export default function MatchRow({ match }: { match: Match }) {
@@ -14,15 +13,14 @@ export default function MatchRow({ match }: { match: Match }) {
         <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
           {match.teams[0].teamname}
         </div>
-        <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-2 dark:border-neutral-700">
-          <div className="flex flex-col items-center gap-y-1">
-            <ResultWithDefault
-              home={match.teams[0].score}
-              away={match.teams[1].score}
-              isDefault={match.isdefault}
-            />
-          </div>
-          {match.isdefault && <DefaultIndicator />}
+      </div>
+      <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-2 dark:border-neutral-700">
+        <div className="flex flex-col items-center gap-y-1">
+          <ResultWithDefault
+            home={match.teams[0].score}
+            away={match.teams[1].score}
+            isDefault={match.isdefault}
+          />
         </div>
       </div>
       <div className="flex w-[40%] items-center gap-x-1 border-y border-r p-3 dark:border-neutral-700">
