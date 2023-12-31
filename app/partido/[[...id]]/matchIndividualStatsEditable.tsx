@@ -1,5 +1,9 @@
-"use client";
-
+import { useMemo } from "react";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import MatchIndivStatsEditor from "./matchIndivStatsEditor";
+import { secondsToMinutes } from "../../../lib/Utils";
 import {
   createColumnHelper,
   flexRender,
@@ -7,13 +11,75 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import Link from "next/link";
-import Table from "../../../components/ui/table";
-import Title from "../../../components/ui/title";
-import { secondsToMinutes } from "../../../lib/Utils";
 import { MatchPlayer } from "../../../types";
+import Title from "../../../components/ui/title";
+import Table from "../../../components/ui/table";
+import Modal from "../../../components/ui/modal";
 
-export default function MatchIndividualStats(props) {
+export default function MatchIndividualStatsEditable(props) {
+  function onChangeIndivStats(player) {
+    let oldsteamid;
+    if (
+      !props.editing.new &&
+      player.info.steam_id !== props.players[props.editing.player].info.steam_id
+    ) {
+      oldsteamid = props.players[props.editing.player].info.steam_id;
+    }
+    props.changeIndivStats(
+      player,
+      props.side,
+      props.editing.player,
+      oldsteamid
+    );
+    props.setEditing(null);
+  }
+
+  function onRemovePlayer(index) {
+    props.removePlayer(props.players[index], props.side, index);
+  }
+
+  const newItem = () => {
+    return {
+      info: {
+        name: "",
+        steam_id: "",
+        team: props.teamName
+      },
+      statistics: {
+        assists: 0,
+        corners: 0,
+        distancecovered: 0,
+        fouls: 0,
+        foulssuffered: 0,
+        freekicks: 0,
+        goalkicks: 0,
+        goals: 0,
+        goalsconceded: 0,
+        interceptions: 0,
+        offsides: 0,
+        owngoals: 0,
+        passes: 0,
+        passescompleted: 0,
+        penalties: 0,
+        positions: [],
+        possession: 0,
+        redcards: 0,
+        saves: 0,
+        savescaught: 0,
+        secondsplayed: 0,
+        shots: 0,
+        shotsontarget: 0,
+        tackles: 0,
+        tacklescompleted: 0,
+        throwins: 0,
+        yellowcards: 0,
+        keypasses: 0,
+        chancescreated: 0,
+        secondassists: 0
+      }
+    };
+  };
+
   const columnHelper = createColumnHelper<MatchPlayer>();
 
   const columns = [
@@ -25,6 +91,23 @@ export default function MatchIndividualStats(props) {
           <Link href={"/jugador/" + info.row.original.info.steam_id}>
             {info.getValue()}
           </Link>
+          <>
+            <FontAwesomeIcon
+              icon={faEdit}
+              className="cursor-pointer"
+              onClick={() =>
+                props.setEditing({
+                  player: info.row.index,
+                  side: props.side
+                })
+              }
+            />
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              className="cursor-pointer"
+              onClick={() => onRemovePlayer(info.row.index)}
+            />
+          </>
         </div>
       )
     }),
@@ -183,10 +266,39 @@ export default function MatchIndividualStats(props) {
   return (
     <>
       <div>
+        {props.editing &&
+        typeof props.editing.player !== "undefined" &&
+        props.editing.side === props.side ? (
+          <Modal>
+            <MatchIndivStatsEditor
+              player={
+                props.editing.new
+                  ? newItem()
+                  : props.players[props.editing.player]
+              }
+              team={props.teamName}
+              players={props.playersAutocomplete}
+              onChangeIndivStats={onChangeIndivStats}
+              setEditing={props.setEditing}
+              editing={props.editing}
+            />
+          </Modal>
+        ) : null}
         <div className="flex items-center gap-x-2">
           <Title style={{ display: "inline", width: "fit-content" }}>
             Estadísticas Individuales - {props.teamName}
           </Title>
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            icon={faPlus}
+            onClick={_ => {
+              props.setEditing({
+                player: props.players.length,
+                side: props.side,
+                new: true
+              });
+            }}
+          />
         </div>
       </div>
       <Table sticky>

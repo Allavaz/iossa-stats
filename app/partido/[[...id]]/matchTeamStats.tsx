@@ -1,8 +1,8 @@
 import { getTeamLogo, percentage } from "../../../utils/Utils";
 import Table from "../../../components/ui/table";
 
-export default function MatchTeamStats(props) {
-  const baseObject = i => props.data.teams[i].statistics;
+export default function MatchTeamStats({ match }) {
+  const baseObject = i => match.teams[i].statistics;
   const rows = [
     {
       label: "Tiros",
@@ -57,8 +57,8 @@ export default function MatchTeamStats(props) {
             <div className="flex justify-center">
               <img
                 className="h-6"
-                alt={props.data.teams[0].teamname}
-                src={getTeamLogo(props.data.teams[0].teamname)}
+                alt={match.teams[0].teamname}
+                src={getTeamLogo(match.teams[0].teamname)}
               />
             </div>
           </Table.HeaderCell>
@@ -67,8 +67,8 @@ export default function MatchTeamStats(props) {
             <div className="flex justify-center">
               <img
                 className="h-6"
-                alt={props.data.teams[1].teamname}
-                src={getTeamLogo(props.data.teams[1].teamname)}
+                alt={match.teams[1].teamname}
+                src={getTeamLogo(match.teams[1].teamname)}
               />
             </div>
           </Table.HeaderCell>

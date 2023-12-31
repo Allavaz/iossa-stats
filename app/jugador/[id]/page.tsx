@@ -16,7 +16,18 @@ import PlayerMatches from "./playerMatches";
 import PlayerMostScoredTeams from "./playerMostScoredTeams";
 import PlayerTeamsTable from "./playerTeams";
 
-export default async function Jugador({ params, searchParams }) {
+export async function generateMetadata({ params }) {
+  const steamid = decodeURIComponent(params.id);
+  const player = await getPlayer(steamid, "all");
+
+  if (!player) notFound();
+
+  return {
+    title: `${player.name}`
+  };
+}
+
+export default async function Jugador({ params }) {
   const steamid = decodeURIComponent(params.id);
 
   const [

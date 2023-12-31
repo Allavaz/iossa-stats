@@ -1,13 +1,19 @@
 import MatchIcon from "../../../components/matchIcon";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { MatchEvent } from "../../../types";
 
-export default function MatchEventComponent({
+export default function MatchEventEditable({
   item,
-  index
+  index,
+  onRemoveEvent,
+  setEditing
 }: {
   item: MatchEvent;
   index: number;
+  onRemoveEvent: (index: number) => void;
+  setEditing: (editing: any) => void;
 }) {
   return (
     <li key={index}>
@@ -24,6 +30,22 @@ export default function MatchEventComponent({
           </div>
         )}
         <span>{`(${Math.round(item.second / 60)}')`}</span>
+        <div className="flex gap-x-1">
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            icon={faEdit}
+            onClick={_ => {
+              setEditing({ event: index });
+            }}
+          />
+          <FontAwesomeIcon
+            className="cursor-pointer"
+            icon={faTrashAlt}
+            onClick={_ => {
+              onRemoveEvent(index);
+            }}
+          />
+        </div>
       </div>
     </li>
   );

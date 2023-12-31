@@ -9,7 +9,7 @@ import {
 } from "../../../utils/Utils";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata({ params }) {
   let id = "";
 
   if (params.id) {
