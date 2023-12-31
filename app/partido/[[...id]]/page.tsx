@@ -4,7 +4,7 @@ import Torneos from "../../../utils/Torneos.json";
 import MatchComponent from "./match";
 import MatchEditor from "./matchEditor";
 
-export async function getMetadata({ params }) {
+export async function generateMetadata({ params }) {
   const match = await getMatch(params.id?.[0]);
   if (!match) {
     return notFound();
