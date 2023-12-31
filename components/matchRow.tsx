@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { Match } from "../types";
-import { getTeamLogo, getTournamentIcon } from "../utils/Utils";
+import {
+  getTeamLogo,
+  getTeamShortname,
+  getTournamentIcon
+} from "../utils/Utils";
 import ResultWithDefault from "./resultWithDefault";
 
 export default function MatchRow({ match }: { match: Match }) {
@@ -12,6 +16,9 @@ export default function MatchRow({ match }: { match: Match }) {
       <div className="flex w-[40%] items-center justify-end gap-x-1 rounded-l-lg border border-neutral-200 p-3 dark:border-neutral-700">
         <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
           {match.teams[0].teamname}
+        </div>
+        <div className="sm:hidden">
+          {getTeamShortname(match.teams[0].teamname)}
         </div>
         <img
           className="h-6"
@@ -36,6 +43,9 @@ export default function MatchRow({ match }: { match: Match }) {
         />
         <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
           {match.teams[1].teamname}
+        </div>
+        <div className="sm:hidden">
+          {getTeamShortname(match.teams[0].teamname)}
         </div>
       </div>
       <div className="flex w-[20%] items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[30%]">
