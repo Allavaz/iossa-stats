@@ -13,6 +13,11 @@ export default function MatchRow({ match }: { match: Match }) {
         <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
           {match.teams[0].teamname}
         </div>
+        <img
+          className="h-6"
+          src={getTeamLogo(match.teams[0].teamname)}
+          alt={match.teams[0].teamname}
+        />
       </div>
       <div className="flex min-w-[60px] shrink-0 items-center justify-center border-y border-r p-2 dark:border-neutral-700">
         <div className="flex flex-col items-center gap-y-1">
