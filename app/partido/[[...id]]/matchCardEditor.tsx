@@ -1,25 +1,24 @@
-import { getTeamLogo, getTeamShortname, fecha } from "../../../utils/Utils";
-import MatchEventComponent from "./matchEvent";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlus,
   faEdit,
+  faPlus,
   faSpinner,
   faUpload
 } from "@fortawesome/free-solid-svg-icons";
-import TorneoEditor from "./torneoEditor";
-import DateTimeEditor from "./dateTimeEditor";
-import TeamNameEditor from "./teamNameEditor";
-import ScoreEditor from "./scoreEditor";
-import MatchEventEditor from "./matchEventEditor";
-import { Event, Match, MatchEvent, Player } from "../../../types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import Card from "../../../components/ui/card";
-import Button from "../../../components/ui/button";
-import Modal from "../../../components/ui/modal";
+import { useState } from "react";
 import DefaultIndicator from "../../../components/defaultIndicator";
+import Button from "../../../components/ui/button";
+import Card from "../../../components/ui/card";
+import Modal from "../../../components/ui/modal";
+import { Event, Match, MatchEvent, Player } from "../../../types";
+import { fecha, getTeamLogo, getTeamShortname } from "../../../utils/Utils";
+import DateTimeEditor from "./dateTimeEditor";
 import MatchEventEditable from "./matchEventEditable";
+import MatchEventEditor from "./matchEventEditor";
+import ScoreEditor from "./scoreEditor";
+import TeamNameEditor from "./teamNameEditor";
+import TorneoEditor from "./torneoEditor";
 
 export default function MatchCardEditor({
   data,

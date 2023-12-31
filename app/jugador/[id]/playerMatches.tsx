@@ -1,14 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import {
-  fecha,
-  getTeamLogo,
-  getTeamShortname,
-  getTournamentIcon
-} from "../../../utils/Utils";
-import Title from "../../../components/ui/title";
-import Button from "../../../components/ui/button";
 import {
   createColumnHelper,
   flexRender,
@@ -17,10 +8,18 @@ import {
   getPaginationRowModel,
   useReactTable
 } from "@tanstack/react-table";
-import { Match } from "../../../types";
-import Table from "../../../components/ui/table";
-import DefaultIndicator from "../../../components/defaultIndicator";
+import Link from "next/link";
 import ResultWithDefault from "../../../components/resultWithDefault";
+import Button from "../../../components/ui/button";
+import Table from "../../../components/ui/table";
+import Title from "../../../components/ui/title";
+import { Match } from "../../../types";
+import {
+  fecha,
+  getTeamLogo,
+  getTeamShortname,
+  getTournamentIcon
+} from "../../../utils/Utils";
 
 function WonOrLost(match, playerID) {
   for (let i in match.teams[0].playerStatistics) {
