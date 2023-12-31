@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Challonge from "../../../components/challonge";
 import PositionsComponent from "../../../components/positions";
 import Title from "../../../components/ui/title";
@@ -35,7 +34,7 @@ export default function MatchComponent({ match, table, challonge }) {
         players={match.teams[1].playerStatistics}
         teamName={match.teams[1].teamname}
       />
-      <Vod vod={match.vod} />
+      {match.vod && <Vod vod={match.vod} />}
     </div>
   );
 }
