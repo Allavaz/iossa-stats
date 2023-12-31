@@ -21,6 +21,7 @@ import {
 import { Match } from "../../../types";
 import Table from "../../../components/ui/table";
 import DefaultIndicator from "../../../components/defaultIndicator";
+import ResultWithDefault from "../../../components/resultWithDefault";
 
 interface Props {
   matches: Match[];
@@ -64,7 +65,8 @@ export default function Results(props: Props) {
       row => {
         const scoreHome = row.teams[0].score;
         const scoreAway = row.teams[1].score;
-        return `${scoreHome} - ${scoreAway}`;
+        const isDefault = row.isdefault;
+        return { scoreHome, scoreAway, isDefault };
       },
       {
         id: "score",
@@ -72,10 +74,11 @@ export default function Results(props: Props) {
         enableGlobalFilter: false,
         cell: info => (
           <Link href={"/partido/" + info.row.original._id}>
-            <div className="flex flex-col gap-1">
-              {info.getValue()}
-              {info.row.original.isdefault && <DefaultIndicator />}
-            </div>
+            <ResultWithDefault
+              home={info.getValue().scoreHome}
+              away={info.getValue().scoreAway}
+              isDefault={info.getValue().isDefault}
+            />
           </Link>
         )
       }

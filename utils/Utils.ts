@@ -72,6 +72,12 @@ export function fecha(ISODate: string) {
   return DateTime.fromISO(ISODate).toLocal().toFormat("dd/LL/yyyy");
 }
 
+export function fechaHora(ISODate: string) {
+  const fecha = DateTime.fromISO(ISODate).toLocal().toFormat("dd/LL/yyyy");
+  const hora = DateTime.fromISO(ISODate).toLocal().toFormat("HH:mm");
+  return `${fecha} a las ${hora}`;
+}
+
 export function percentage(x, y) {
   if (y === 0) {
     return 0;

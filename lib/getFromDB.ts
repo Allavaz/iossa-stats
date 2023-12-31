@@ -409,21 +409,3 @@ export async function getTeamRoster(teamname: string) {
     console.error(error);
   }
 }
-
-export async function getRules() {
-  try {
-    const client = await clientPromise;
-    const db = client.db();
-    const docs = await db
-      .collection("rules")
-      .find({})
-      .project({ _id: 0 })
-      .toArray();
-    return docs.map(doc => ({
-      ...doc,
-      lastEdit: doc.lastEdit.toISOString()
-    }))[0];
-  } catch (error) {
-    console.error(error);
-  }
-}
