@@ -4,7 +4,7 @@ export async function GET(request: Request, { params }) {
   const args = params.args;
   if (args.length > 0) {
     try {
-      let player = await getPlayer(args[0], args[1] || "all");
+      const player = await getPlayer(args[0], args[1] || "all");
       if (player) {
         return Response.json(player);
       } else {
