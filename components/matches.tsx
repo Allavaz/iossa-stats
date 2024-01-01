@@ -4,7 +4,6 @@ import MatchRow from "./matchRow";
 import Title from "./ui/title";
 import React from "react";
 import Button from "./ui/button";
-import Link from "next/link";
 
 export default function Matches({ matches }: { matches: Match[] }) {
   return (
@@ -25,9 +24,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
           <MatchRow match={match} />
         </React.Fragment>
       ))}
-      <Link href="/resultados">
-        <Button>Ver más...</Button>
-      </Link>
+      <Button href="/resultados">Ver más...</Button>
     </div>
   );
 }

@@ -10,9 +10,7 @@ export default function NotFound() {
         <div className="flex flex-col items-center gap-y-4">
           <Title>Error 404 - Página No Encontrada</Title>
           <img src="/404.jpg" alt="Error 404" />
-          <Link href="/">
-            <Button>Volver al inicio</Button>
-          </Link>
+          <Button href="/">Volver al inicio</Button>
         </div>
       </Card>
     </div>
