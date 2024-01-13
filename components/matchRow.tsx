@@ -45,7 +45,7 @@ export default function MatchRow({ match }: { match: Match }) {
           {match.teams[1].teamname}
         </div>
         <div className="sm:hidden">
-          {getTeamShortname(match.teams[0].teamname)}
+          {getTeamShortname(match.teams[1].teamname)}
         </div>
       </div>
       <div className="flex w-[20%] items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[30%]">
