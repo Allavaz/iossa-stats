@@ -132,6 +132,22 @@
       },
       {
         "torneo": "Copa America '21 - Playoff"
+      },
+      {
+        "torneo": "Copa del Sur T12",
+        "query": "copadelsurt12"
+      },
+      {
+        "torneo": "Copa del Sur T12 - Grupo A",
+        "tabla": "copadelsurt12a"
+      },
+      {
+        "torneo": "Copa del Sur T12 - Grupo B",
+        "tabla": "copadelsurt12b"
+      },
+      {
+        "torneo": "Copa del Sur T12 - Eliminatorias",
+        "challonge": "yqq2icg9"
       }
     ]
   },
@@ -172,6 +188,22 @@
         "torneo": "Copa D3 T12",
         "query": "cd3t12",
         "challonge": "oy1d017f"
+      },
+      {
+        "torneo": "Copa del Sur T12",
+        "query": "copadelsurt12"
+      },
+      {
+        "torneo": "Copa del Sur T12 - Grupo A",
+        "tabla": "copadelsurt12a"
+      },
+      {
+        "torneo": "Copa del Sur T12 - Grupo B",
+        "tabla": "copadelsurt12b"
+      },
+      {
+        "torneo": "Copa del Sur T12 - Eliminatorias",
+        "challonge": "yqq2icg9"
       }
     ]
   },

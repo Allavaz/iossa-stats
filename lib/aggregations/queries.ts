@@ -163,7 +163,7 @@ function getRegex(arg: string) {
     return { $regex: "Copa America T" + match[1] + "$" };
   } else if (copadelsurregex.test(arg)) {
     const match = arg.match(copadelsurregex);
-    return { $regex: "Copa del Sur T" + match[1] + "$" };
+    return { $regex: "Copa del Sur T" + match[1] };
   } else if (izororegex.test(arg)) {
     const match = arg.match(izororegex);
     return { $regex: "Copa Intrazonal de Oro T" + match[1] + "$" };
@@ -187,6 +187,7 @@ function getPositionRegex(arg) {
   const sd1regex = /^sd1t([0-9]+)/i;
   const lmregex = /^lmt([0-9]+)/i;
   const ddhregex = /^ddht([0-9]+)/i;
+  const delsurregex = /^copadelsurt([0-9]+)([a-z])/i;
 
   if (d1regex.test(arg)) {
     const match = arg.match(d1regex);
@@ -221,6 +222,9 @@ function getPositionRegex(arg) {
     return "Liga Zero T8 - Grupo B";
   } else if (arg === "america21r") {
     return "Copa America '21 - Regular";
+  } else if (delsurregex.test(arg)) {
+    const match = arg.match(delsurregex);
+    return `Copa del Sur T${match[1]} - Grupo ${match[2].toUpperCase()}`;
   }
 }
 
