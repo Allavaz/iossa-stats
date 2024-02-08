@@ -5,12 +5,20 @@ import MatchComponent from "./match";
 import MatchEditor from "./matchEditor";
 
 export async function generateMetadata({ params }) {
-  const match = await getMatch(params.id?.[0]);
+  const matchId = params.id?.[0];
+  const match = await getMatch(matchId);
   if (!match) {
     return notFound();
   }
   return {
-    title: `${match.teams[0].teamname} ${match.teams[0].score} - ${match.teams[1].score} ${match.teams[1].teamname}`
+    title: `${match.teams[0].teamname} ${match.teams[0].score} - ${match.teams[1].score} ${match.teams[1].teamname}`,
+    openGraph: {
+      images: [{ url: `/api/matchcard/${matchId}` }]
+    },
+    twitter: {
+      cardType: "summary_large_image",
+      images: [`/api/matchcard/${matchId}`]
+    }
   };
 }
 
