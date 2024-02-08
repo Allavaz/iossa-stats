@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
       images: [{ url: `/api/matchcard/${matchId}` }]
     },
     twitter: {
-      cardType: "summary_large_image",
+      card: "summary_large_image",
       images: [`/api/matchcard/${matchId}`]
     }
   };
