@@ -12,6 +12,7 @@ export async function generateMetadata({ params }) {
   }
   return {
     title: `${match.teams[0].teamname} ${match.teams[0].score} - ${match.teams[1].score} ${match.teams[1].teamname}`,
+    description: null,
     openGraph: {
       images: [{ url: `/api/matchcard/${matchId}` }]
     },
