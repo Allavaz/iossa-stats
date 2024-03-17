@@ -44,7 +44,7 @@ jobs:
             systemctl start iossa-stats
           debug: true
       - if: steps.changes-package-json.outputs.any_changed == 'false'
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
