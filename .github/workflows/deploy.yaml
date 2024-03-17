@@ -29,7 +29,7 @@ jobs:
           since_last_remote_commit: true
           files: package.json
       - if: steps.changes-package-json.outputs.any_changed == 'true'
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
