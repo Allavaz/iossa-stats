@@ -36,6 +36,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            eval `ssh-agent -s`
+            ssh-add ~/.ssh/git_id_rsa
             cd ${{ secrets.PATH }}
             git pull
             systemctl stop iossa-stats
@@ -51,6 +53,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            eval `ssh-agent -s`
+            ssh-add ~/.ssh/git_id_rsa
             cd ${{ secrets.PATH }}
             git pull
             systemctl stop iossa-stats
