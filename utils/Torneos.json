@@ -152,6 +152,31 @@
     ]
   },
   {
+    "temporada": "t13",
+    "titulo": "Temporada 13",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T13",
+        "query": "d1t13",
+        "tabla": "d1t13"
+      },
+      {
+        "torneo": "Liga D2 T13",
+        "query": "d2t13",
+        "tabla": "d2t13"
+      },
+      {
+        "torneo": "Liga D3 T13",
+        "query": "d3t13",
+        "tabla": "d3t13"
+      },
+      {
+        "torneo": "Copa D3 T13",
+        "query": "cd3t13"
+      }
+    ]
+  },
+  {
     "temporada": "t12",
     "titulo": "Temporada 12",
     "torneos": [
