@@ -55,7 +55,7 @@ export default function MatchRow({ match }: { match: Match }) {
         </div>
       </div>
       <div
-        className="flex w-[20%] items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[28%]"
+        className="flex w-[20%] items-center justify-center gap-x-1 rounded-r-lg border-y border-r p-3 dark:border-neutral-700 sm:w-[32%]"
         title={match.torneo}
       >
         <img
