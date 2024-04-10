@@ -173,6 +173,11 @@
       {
         "torneo": "Copa D3 T13",
         "query": "cd3t13"
+      },
+      {
+        "torneo": "Copa valencARc T13",
+        "query": "cvt13",
+        "challonge": "cvt13"
       }
     ]
   },
