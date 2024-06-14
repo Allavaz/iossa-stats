@@ -78,9 +78,33 @@ const fieldPlayerStats = [
   }
 ];
 
-export default function PlayerCard({ player, steamInfo, playerPositions }) {
+function playedTwoSeasons(playerMatches) {
+  if (playerMatches.length < 2) {
+    return false;
+  }
+  const temporadaRegex = /^.*T(\d+)/;
+  const lastTemporada = playerMatches[0].torneo.match(temporadaRegex)[1];
+  for (let i = 1; i < playerMatches.length; i++) {
+    const temporada = playerMatches[i].torneo.match(temporadaRegex)[1];
+    if (temporada !== lastTemporada) {
+      return true;
+    }
+  }
+}
+
+export default function PlayerCard({
+  player,
+  steamInfo,
+  playerPositions,
+  playerMatches
+}) {
   const posSpecificStats =
     player.saves > player.shotsontarget ? goalkeeperStats : fieldPlayerStats;
+
+  const isInactive = playerPositions.length === 0;
+  const isNew =
+    !(playerMatches.length > 10 || playedTwoSeasons(playerMatches)) &&
+    !isInactive;
 
   return (
     <Card>
@@ -102,7 +126,7 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
                   {item.position}
                 </div>
               ))}
-              {playerPositions.length === 0 && (
+              {isInactive && (
                 <div className="rounded bg-neutral-400 px-2 py-0.5 text-sm text-white shadow-lg">
                   INACTIVO
                 </div>
@@ -111,7 +135,7 @@ export default function PlayerCard({ player, steamInfo, playerPositions }) {
           </div>
           <div className="flex min-w-0 flex-col gap-y-2">
             <div className="overflow-hidden overflow-ellipsis whitespace-nowrap font-heading text-2xl">
-              {player.name}
+              {player.name} {isNew && <span title="Nuevo">👶</span>}
             </div>
             <div
               className={`text-neutral-500 dark:text-neutral-400 ${

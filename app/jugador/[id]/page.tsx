@@ -76,6 +76,7 @@ export default async function Jugador({ params }) {
         player={player}
         steamInfo={steamInfo[0]}
         playerPositions={playerPositions}
+        playerMatches={playerMatches}
       />
       <div className="flex flex-wrap justify-center gap-4">
         <div className="max-w-xl grow overflow-x-auto">
