@@ -178,6 +178,33 @@
         "torneo": "Copa valencARc T13",
         "query": "cvt13",
         "challonge": "cvt13"
+      },
+      {
+        "torneo": "Copa Maradei T13",
+        "query": "maradeit13"
+      },
+      {
+        "torneo": "Copa Maradei T13 - Grupo A",
+        "tabla": "maradeit13a"
+      },
+      {
+        "torneo": "Copa Maradei T13 - Grupo B",
+        "tabla": "maradeit13b"
+      },
+      {
+        "torneo": "Copa Maradei T13 - Grupo C",
+        "tabla": "maradeit13c"
+      },
+      {
+        "torneo": "Copa Maradei T13 - Grupo D",
+        "tabla": "maradeit13d"
+      },
+      {
+        "torneo": "Copa Maradei T13 - Grupo E",
+        "tabla": "maradeit13e"
+      },
+      {
+        "torneo": "Copa Maradei T13 - Eliminatorias"
       }
     ]
   },
