@@ -47,8 +47,8 @@ jobs:
           debug: true
           envs: SENTRY_AUTH_TOKEN
       - if: steps.changes-package-json.outputs.any_changed == 'false'
-          env:
-            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
