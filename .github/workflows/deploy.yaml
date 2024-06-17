@@ -7,8 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -31,6 +29,8 @@ jobs:
           since_last_remote_commit: true
           files: package.json
       - if: steps.changes-package-json.outputs.any_changed == 'true'
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -45,7 +45,10 @@ jobs:
             npm run build
             systemctl start iossa-stats
           debug: true
+          envs: SENTRY_AUTH_TOKEN
       - if: steps.changes-package-json.outputs.any_changed == 'false'
+          env:
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -59,3 +62,4 @@ jobs:
             npm run build
             systemctl start iossa-stats
           debug: true
+          envs: SENTRY_AUTH_TOKEN
