@@ -307,7 +307,8 @@ export default function MatchIndivStatsEditor(props) {
     "LW",
     "RW"
   ];
-  const statFields = [
+
+  const editableFields = [
     {
       label: "Tiros",
       id: "shots",
@@ -439,9 +440,59 @@ export default function MatchIndivStatsEditor(props) {
     }
   ];
 
+  const staticFields = [
+    {
+      id: "positions",
+      value: () =>
+        props.player.statistics.positions.length === 0
+          ? [
+              {
+                position: (document.getElementById("pos") as HTMLInputElement)
+                  .value,
+                seconds: 0
+              }
+            ]
+          : props.player.statistics.positions
+    },
+    {
+      id: "redcards",
+      value: () => props.player.statistics.redcards
+    },
+    {
+      id: "yellowcards",
+      value: () => props.player.statistics.yellowcards
+    },
+    {
+      id: "owngoals",
+      value: () => props.player.statistics.owngoals
+    },
+    {
+      id: "goals",
+      value: () => props.player.statistics.goals
+    },
+    {
+      id: "assists",
+      value: () => props.player.statistics.assists
+    },
+    {
+      id: "secondassists",
+      value: () => props.player.statistics.secondassists
+    },
+    {
+      id: "chancescreated",
+      value: () =>
+        props.player.statistics.assists +
+        parseValue("keypasses", props.player.statistics.keypasses)
+    },
+    {
+      id: "secondsplayed",
+      value: () => props.player.statistics.secondsplayed
+    }
+  ];
+
   const inputSane = () => {
     let a = [];
-    statFields.forEach(e => a.push(parseValue(e.id, e.defaultValue)));
+    editableFields.forEach(e => a.push(parseValue(e.id, e.defaultValue)));
     for (let i in a) {
       if (isNaN(a[i])) {
         return false;
@@ -471,30 +522,10 @@ export default function MatchIndivStatsEditor(props) {
             steam_id: playerSteamId,
             team: props.player.info.team
           },
-          statistics: {
-            positions:
-              props.player.statistics.positions.length === 0
-                ? [
-                    {
-                      position: (
-                        document.getElementById("pos") as HTMLInputElement
-                      ).value,
-                      seconds: 0
-                    }
-                  ]
-                : props.player.statistics.positions,
-            redcards: props.player.statistics.redcards,
-            yellowcards: props.player.statistics.yellowcards,
-            owngoals: props.player.statistics.owngoals,
-            goals: props.player.statistics.goals,
-            assists: props.player.statistics.assists,
-            secondassists: props.player.statistics.secondassists,
-            chancescreated:
-              props.player.statistics.assists +
-              parseValue("keypasses", props.player.statistics.keypasses)
-          }
+          statistics: {}
         };
-        statFields.forEach(
+        staticFields.forEach(e => (player.statistics[e.id] = e.value()));
+        editableFields.forEach(
           e => (player.statistics[e.id] = parseValue(e.id, e.defaultValue))
         );
         props.onChangeIndivStats(player);
@@ -570,7 +601,7 @@ export default function MatchIndivStatsEditor(props) {
       </div>
       <Title>ESTADÍSTICAS</Title>
       <div className="flex flex-wrap gap-4">
-        {statFields.map((e, i) => (
+        {editableFields.map((e, i) => (
           <div className="flex items-center gap-x-2" key={i}>
             <div>{e.label + ":"}</div>
             <div>
