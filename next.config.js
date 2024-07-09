@@ -11,7 +11,7 @@ module.exports = withSentryConfig(module.exports, {
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   org: "iosoccer-sudamerica",
-  project: "javascript-nextjs",
+  project: "iosoccer-sudamerica",
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
