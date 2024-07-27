@@ -60,7 +60,17 @@ export default async function EquipoPage({ params, searchParams }) {
       getTeamStats(teamName, "all")
     ]);
 
-  if (!tournaments || tournaments.length === 0) notFound();
+  for (const data of [
+    matches,
+    allPlayers,
+    roster,
+    rosterInfo,
+    tournaments,
+    rivals,
+    stats
+  ]) {
+    if (!data) return notFound();
+  }
 
   const teamLogo = getTeamLogo(teamName);
 
