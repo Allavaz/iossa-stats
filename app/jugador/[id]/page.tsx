@@ -48,7 +48,7 @@ export default async function Jugador({ params }) {
 
   if (playerMatches.length === 0) notFound();
 
-  if (!steamInfo) notFound();
+  if (!steamInfo || steamInfo.length === 0) notFound();
 
   const playerTeams = PlayerTeams(steamid, playerMatches);
 
