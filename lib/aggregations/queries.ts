@@ -138,8 +138,8 @@ function getRegex(arg: string) {
     const match = arg.match(recopamasterregex);
     return { $regex: "Recopa Master T" + match[1] };
   } else if (supercopamasterregex.test(arg)) {
-    const match = arg.match(recopamasterregex);
-    return { $regex: "Recopa Master T" + match[1] };
+    const match = arg.match(supercopamasterregex);
+    return { $regex: "Supercopa Master T" + match[1] };
   } else if (maradeiregex.test(arg)) {
     const match = arg.match(maradeiregex);
     return { $regex: "Copa Maradei T" + match[1] + " - " };
