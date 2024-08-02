@@ -409,3 +409,17 @@ export async function getTeamRoster(teamname: string) {
     console.error(error);
   }
 }
+
+export async function getTournamentWinners(torneo: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const doc = await db
+      .collection(process.env.DB_COLLECTION_TOURNAMENTS)
+      .findOne({ torneo: torneo });
+    delete doc._id;
+    return doc;
+  } catch (error) {
+    return null;
+  }
+}

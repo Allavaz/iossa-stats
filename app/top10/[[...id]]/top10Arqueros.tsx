@@ -5,8 +5,11 @@ import Table from "../../../components/ui/table";
 
 export default function Top10Arqueros({ players, category }) {
   return (
-    <div className="flex flex-col gap-y-4">
-      <Title>Top 10 Arqueros - {category}</Title>
+    <div className="flex w-full flex-col gap-y-4">
+      <Title>
+        Top 10 Arqueros{category ? " - " : ""}
+        {category}
+      </Title>
       <Table>
         <thead>
           <Table.HeaderRow>

@@ -4,6 +4,7 @@ import TorneosJSON from "./Torneos.json";
 import { DateTime } from "luxon";
 
 const temporadaRegex = /^t(\d+)/;
+const ordenes = ["primerorden", "segundoorden", "tercerorden"];
 
 export function getAllQueries() {
   let queries = [];
@@ -137,6 +138,27 @@ export function getTablas(temp) {
   return tablas;
 }
 
+export function getTablasTorneo(torneo: string, temporada: string) {
+  const fullid = torneo + temporada;
+  let tablas = [];
+  for (let i in TorneosJSON) {
+    if (TorneosJSON[i].temporada === temporada) {
+      for (let j in TorneosJSON[i].torneos) {
+        if (
+          TorneosJSON[i].torneos[j].tabla &&
+          TorneosJSON[i].torneos[j].tabla.includes(fullid)
+        ) {
+          tablas.push({
+            table: TorneosJSON[i].torneos[j].tabla,
+            name: TorneosJSON[i].torneos[j].torneo
+          });
+        }
+      }
+    }
+  }
+  return tablas;
+}
+
 export function getChallonges(temp) {
   let challonges = [];
   for (let i in TorneosJSON) {
@@ -159,8 +181,25 @@ export function getChallonges(temp) {
   return challonges;
 }
 
+export function getChallongeTorneo(header: string, temporada: string) {
+  for (let i in TorneosJSON) {
+    if (TorneosJSON[i].temporada === temporada) {
+      for (let j in TorneosJSON[i].torneos) {
+        if (
+          TorneosJSON[i].torneos[j].challonge &&
+          TorneosJSON[i].torneos[j].torneo.includes(header)
+        ) {
+          return {
+            challonge: TorneosJSON[i].torneos[j].challonge,
+            name: TorneosJSON[i].torneos[j].torneo
+          };
+        }
+      }
+    }
+  }
+}
+
 export function getAllTemporadas() {
-  const ordenes = ["primerorden", "segundoorden", "tercerorden"];
   let temps = [];
   for (let i in TorneosJSON) {
     if (!ordenes.includes(TorneosJSON[i].temporada)) {
@@ -168,6 +207,32 @@ export function getAllTemporadas() {
     }
   }
   return temps;
+}
+
+export function getTemporadas(torneo: string) {
+  let temps = [];
+  for (let i in TorneosJSON) {
+    if ([...ordenes, "all", "selecciones"].includes(TorneosJSON[i].temporada)) {
+      continue;
+    }
+    for (let j in TorneosJSON[i].torneos) {
+      if (
+        TorneosJSON[i].torneos[j].torneo.includes(torneo) &&
+        !temps.includes(TorneosJSON[i].temporada)
+      ) {
+        temps.push(TorneosJSON[i].temporada);
+      }
+    }
+  }
+  return temps;
+}
+
+export function getTorneoLabel(query: string) {
+  for (let i in TorneosJSON[0].torneos) {
+    if (query === TorneosJSON[0].torneos[i].query) {
+      return TorneosJSON[0].torneos[i].torneo;
+    }
+  }
 }
 
 export function getCategory(arg) {
