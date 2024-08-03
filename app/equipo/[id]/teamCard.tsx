@@ -1,6 +1,5 @@
 import { DateTime } from "luxon";
 import { Match, TeamStats } from "../../../types";
-import Torneos from "../../../utils/Torneos.json";
 import { temporadaActual } from "../../../utils/Utils";
 import Card from "../../../components/ui/card";
 
@@ -8,13 +7,6 @@ interface Props {
   teamname: string;
   logo: string;
   matches: Match[];
-  lastLiga: {
-    _id: string;
-    position?: number;
-    matches: number;
-    firstmatch: string;
-    lastmatch: string;
-  };
   stats: TeamStats;
 }
 
@@ -48,19 +40,10 @@ function forma(matches: Match[], teamname: string) {
   );
 }
 
-function isTeamActive(lastTournament) {
-  try {
-    const temporada = Torneos.find(t => t.temporada === temporadaActual()) as {
-      torneos: { torneo: string }[];
-    };
-    if (temporada.torneos.find(t => t.torneo === lastTournament._id)) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (_) {
-    return false;
-  }
+function isTeamActive(matches: Match[]) {
+  const temporada = "t" + matches[0].torneo.match(/.* T(\d+)/)[1];
+  const currentSeason = temporadaActual();
+  return currentSeason === temporada;
 }
 
 export default function TeamCard(props: Props) {
@@ -70,7 +53,7 @@ export default function TeamCard(props: Props) {
   const lastActivity = DateTime.fromISO(props.matches[0].fecha).toFormat(
     "yyyy"
   );
-  const isActive = isTeamActive(props.lastLiga);
+  const isActive = isTeamActive(props.matches);
 
   return (
     <Card>
@@ -83,9 +66,6 @@ export default function TeamCard(props: Props) {
             </div>
             {isActive ? (
               <>
-                {props.lastLiga && (
-                  <div className="text-neutral-500 dark:text-neutral-400">{`${props.lastLiga.position}º en ${props.lastLiga._id}`}</div>
-                )}
                 <div className="text-neutral-500 dark:text-neutral-400">
                   Activo desde {activeSince}
                 </div>

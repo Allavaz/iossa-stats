@@ -237,6 +237,14 @@ export function getTorneoLabel(query: string) {
   }
 }
 
+export function getTorneoQuery(torneo: string) {
+  for (let i in TorneosJSON[0].torneos) {
+    if (TorneosJSON[0].torneos[i].torneo === torneo) {
+      return TorneosJSON[0].torneos[i].query;
+    }
+  }
+}
+
 export function getCategory(arg) {
   if (arg === "all") {
     return "Totales";

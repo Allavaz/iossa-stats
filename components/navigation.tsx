@@ -90,6 +90,12 @@ export default function Navigation() {
               Torneos
             </Link>
             <Link
+              href="/palmares"
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
+              Palmarés
+            </Link>
+            <Link
               href="/top10"
               className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
             >

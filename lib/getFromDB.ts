@@ -1,3 +1,4 @@
+import clientPromise from "./mongodb";
 import { ObjectId } from "mongodb";
 import { Match, Player } from "../types";
 import { temporadaActual } from "../utils/Utils";
@@ -16,7 +17,7 @@ import top10assists from "./aggregations/top10Assists";
 import top10goals from "./aggregations/top10Goals";
 import top10rusticos from "./aggregations/top10Rusticos";
 import top10Saves from "./aggregations/top10Saves";
-import clientPromise from "./mongodb";
+import palmares from "./aggregations/palmares";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -421,5 +422,22 @@ export async function getTournamentWinners(torneo: string) {
     return doc;
   } catch (error) {
     return null;
+  }
+}
+
+export async function getPalmares(teamname?: string) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION_TOURNAMENTS)
+      .aggregate(palmares(teamname))
+      .toArray();
+    if (teamname && docs.length) {
+      return docs[0].torneos;
+    }
+    return docs;
+  } catch (error) {
+    console.error(error);
   }
 }
