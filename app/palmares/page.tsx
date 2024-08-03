@@ -8,6 +8,8 @@ import {
 } from "../../utils/Utils";
 import Card from "../../components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 const torneoWeights = {
   "Liga D1": 5,
   "Liga D2": 3,
