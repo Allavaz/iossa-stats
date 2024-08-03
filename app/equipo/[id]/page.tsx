@@ -45,7 +45,7 @@ export default async function EquipoPage({ params, searchParams }) {
       getPalmares(teamName)
     ]);
 
-  if (matches.length === 0) return { notFound: true };
+  if (matches.length === 0) return notFound();
 
   for (const data of [matches, allPlayers, roster, rosterInfo, rivals, stats]) {
     if (!data) return notFound();
