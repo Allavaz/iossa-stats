@@ -2,7 +2,12 @@ import Link from "next/link";
 import DefaultIndicator from "../../../components/defaultIndicator";
 import Card from "../../../components/ui/card";
 import { Match, MatchEvent } from "../../../types";
-import { fecha, getTeamLogo, getTeamShortname } from "../../../utils/Utils";
+import {
+  fecha,
+  getTeamLogo,
+  getTeamShortname,
+  getTorneoLink
+} from "../../../utils/Utils";
 import MatchEventComponent from "./matchEvent";
 
 export default function MatchCard({ match }: { match: Match }) {
@@ -29,9 +34,12 @@ export default function MatchCard({ match }: { match: Match }) {
           <tr>
             <td className="p-1" colSpan={3}>
               <div className="flex justify-center gap-x-2">
-                <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                <Link
+                  href={getTorneoLink(match.torneo)}
+                  className="text-sm text-neutral-500 dark:text-neutral-400"
+                >
                   {match.torneo}
-                </div>
+                </Link>
               </div>
             </td>
           </tr>

@@ -18,6 +18,7 @@ import top10goals from "./aggregations/top10Goals";
 import top10rusticos from "./aggregations/top10Rusticos";
 import top10Saves from "./aggregations/top10Saves";
 import palmares from "./aggregations/palmares";
+import top10Interceptions from "./aggregations/top10Interceptions";
 
 const OBJECT_ID_LENGTH = 24;
 
@@ -197,6 +198,22 @@ export async function getTop10Saves(id) {
       .collection(process.env.DB_COLLECTION)
       .aggregate(top10Saves(id))
       .sort({ savescaught: -1, saves: -1, goalsconceded: 1, matches: 1 })
+      .limit(10)
+      .toArray();
+    return docs;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTop10Interceptions(id) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    let docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .aggregate(top10Interceptions(id))
+      .sort({ interceptions: -1, matches: 1 })
       .limit(10)
       .toArray();
     return docs;

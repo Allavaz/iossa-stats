@@ -7,6 +7,8 @@ import {
   getMatches,
   getTop10Assists,
   getTop10Goals,
+  getTop10Interceptions,
+  getTop10Saves,
   getTournamentWinners
 } from "../../../lib/getFromDB";
 import {
@@ -22,6 +24,8 @@ import TemporadaSelect from "./temporadaSelect";
 import TorneoCard from "./torneoCard";
 import TorneoSelect from "./torneoSelect";
 import TorneoCardEditable from "./torneoCardEditable";
+import Top10Arqueros from "../../top10/[[...id]]/top10Arqueros";
+import Top10Intercepciones from "../../top10/[[...id]]/top10Intercepciones";
 
 export async function generateMetadata({ params, searchParams }) {
   const editable = params.id?.includes(process.env.ENDPOINT);
@@ -61,13 +65,15 @@ export default async function Torneos({ params, searchParams }) {
   const isMultiStage = listaTablas.length > 1;
   const top10Goleadores = await getTop10Goals(torneo + temporada);
   const top10Asistidores = await getTop10Assists(torneo + temporada);
+  const top10Arqueros = await getTop10Saves(torneo + temporada);
+  const top10Intercepciones = await getTop10Interceptions(torneo + temporada);
   const resultados = await getMatches(torneo + temporada);
   const winners = await getTournamentWinners(
     torneoLabel + " " + temporada.toUpperCase()
   );
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row">
+    <div className="flex max-w-6xl flex-col gap-4 sm:flex-row">
       <div className="hidden sm:contents">
         <TorneoSelect mobile={false} torneo={torneo} />
       </div>
@@ -95,42 +101,49 @@ export default async function Torneos({ params, searchParams }) {
             winners={winners}
           />
         )}
-        <div className="flex flex-col gap-4 sm:flex-row">
-          {tablas.length > 0 && (
-            <div className="flex flex-col gap-4">
-              {tablas.map(
-                item =>
-                  item.teams.length > 0 && (
-                    <div key={item.name} className="w-full">
-                      <PositionsComponent
-                        key={item.name}
-                        teams={item.teams}
-                        header={
-                          isMultiStage
-                            ? item.name.split(" - ")[1]
-                            : "Posiciones"
-                        }
-                      />
-                    </div>
-                  )
-              )}
-            </div>
-          )}
-          <div
-            className={`flex ${
-              tablas.length > 0 && "flex-col"
-            } w-full flex-wrap gap-4 sm:flex-nowrap`}
-          >
-            <Top10Goleadores players={top10Goleadores} category={null} />
-            <Top10Asistidores players={top10Asistidores} category={null} />
-          </div>
-        </div>
         {challonge && (
           <div className="flex flex-col gap-y-4">
             <Title>Eliminatorias</Title>
             <Challonge id={challonge.challonge} />
           </div>
         )}
+        <div className="flex flex-wrap justify-evenly gap-4">
+          {tablas.length > 0 &&
+            tablas.map(
+              item =>
+                item.teams.length > 0 && (
+                  <div
+                    className={`${
+                      tablas.length > 1 ? "grow" : "w-full"
+                    } overflow-x-auto`}
+                    key={item.name}
+                  >
+                    <PositionsComponent
+                      key={item.name}
+                      teams={item.teams}
+                      header={
+                        isMultiStage ? item.name.split(" - ")[1] : "Posiciones"
+                      }
+                    />
+                  </div>
+                )
+            )}
+          <div className="grow overflow-x-auto">
+            <Top10Goleadores players={top10Goleadores} category={null} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <Top10Intercepciones
+              players={top10Intercepciones}
+              category={null}
+            />
+          </div>
+          <div className="grow overflow-x-auto">
+            <Top10Asistidores players={top10Asistidores} category={null} />
+          </div>
+          <div className="grow overflow-x-auto">
+            <Top10Arqueros players={top10Arqueros} category={null} />
+          </div>
+        </div>
         <Results matches={resultados} isMultiStage={isMultiStage} />
       </div>
     </div>

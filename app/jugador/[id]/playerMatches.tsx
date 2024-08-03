@@ -18,6 +18,7 @@ import {
   fecha,
   getTeamLogo,
   getTeamShortname,
+  getTorneoLink,
   getTournamentIcon
 } from "../../../utils/Utils";
 
@@ -131,7 +132,7 @@ export default function PlayerMatches(props: Props) {
       header: "Torneo",
       cell: info => (
         <Link
-          href={"/partido/" + info.row.original._id}
+          href={getTorneoLink(info.getValue())}
           className="flex items-center justify-center gap-x-1"
         >
           <img

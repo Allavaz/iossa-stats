@@ -245,6 +245,15 @@ export function getTorneoQuery(torneo: string) {
   }
 }
 
+export function getTorneoLink(torneo: string) {
+  const match = torneo.match(/(.*) T(\d+)/);
+  if (match.length === 3) {
+    return `/torneos/${getTorneoQuery(match[1])}/t${match[2]}`;
+  } else {
+    throw new Error("Invalid torneo name");
+  }
+}
+
 export function getCategory(arg) {
   if (arg === "all") {
     return "Totales";

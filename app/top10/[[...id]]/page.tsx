@@ -7,6 +7,7 @@ import Top10Rusticos from "./top10Rusticos";
 import {
   getTop10Assists,
   getTop10Goals,
+  getTop10Interceptions,
   getTop10Rusticos,
   getTop10Saves
 } from "../../../lib/getFromDB";
@@ -16,6 +17,7 @@ import {
   getTemporada,
   temporadaActual
 } from "../../../utils/Utils";
+import Top10Intercepciones from "./top10Intercepciones";
 
 export async function generateMetadata({ params, searchParams }) {
   const id = params.id?.[0] || temporadaActual();
@@ -38,6 +40,7 @@ export default async function Top10({ params, searchParams }) {
   const asistidores = await getTop10Assists(id);
   const rusticos = await getTop10Rusticos(id);
   const arqueros = await getTop10Saves(id);
+  const intercepciones = await getTop10Interceptions(id);
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -50,10 +53,13 @@ export default async function Top10({ params, searchParams }) {
           <Top10Asistidores players={asistidores} category={category} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Rusticos players={rusticos} category={category} />
+          <Top10Arqueros players={arqueros} category={category} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Arqueros players={arqueros} category={category} />
+          <Top10Intercepciones players={intercepciones} category={category} />
+        </div>
+        <div className="grow overflow-x-auto">
+          <Top10Rusticos players={rusticos} category={category} />
         </div>
       </div>
     </div>

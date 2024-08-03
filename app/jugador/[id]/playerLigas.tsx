@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { getTeamLogo, getTournamentIcon } from "../../../utils/Utils";
+import {
+  getTeamLogo,
+  getTorneoLink,
+  getTournamentIcon
+} from "../../../utils/Utils";
 import Table from "../../../components/ui/table";
 import Title from "../../../components/ui/title";
 
@@ -52,14 +56,17 @@ export default function TeamLigas(props: Props) {
                 </Link>
               </Table.BodyCell>
               <Table.BodyCell>
-                <div className="flex items-center justify-center gap-x-1">
+                <Link
+                  href={getTorneoLink(tournament._id)}
+                  className="flex items-center justify-center gap-x-1"
+                >
                   <img
                     src={getTournamentIcon(tournament._id)}
                     alt={tournament._id}
                     className="h-6"
                   />
                   <div>{tournament._id}</div>
-                </div>
+                </Link>
               </Table.BodyCell>
               <Table.BodyCell>{tournament.position}º</Table.BodyCell>
             </Table.BodyRow>
