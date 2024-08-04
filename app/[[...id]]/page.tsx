@@ -3,6 +3,7 @@ import { Match } from "../../types";
 import { getTablas, temporadaActual } from "../../utils/Utils";
 import Home from "./home";
 import MatchEditor from "../partido/[[...id]]/matchEditor";
+import { notFound } from "next/navigation";
 
 async function getPosiciones() {
   const listaTablas = getTablas(temporadaActual());
@@ -27,6 +28,8 @@ export default async function IndexPage({ params }) {
         challonge={null}
       />
     );
+  } else if (params.id?.length > 0) {
+    notFound();
   } else {
     const matches: Match[] = await getMatches("20");
     const tablas = await getPosiciones();
