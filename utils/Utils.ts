@@ -247,7 +247,7 @@ export function getTorneoQuery(torneo: string) {
 
 export function getTorneoLink(torneo: string) {
   const match = torneo.match(/(.*) T(\d+)/);
-  if (match?.length === 3) {
+  if (match?.[1] && match?.[2]) {
     return `/torneos/${getTorneoQuery(match[1])}/t${match[2]}`;
   } else {
     return "";
