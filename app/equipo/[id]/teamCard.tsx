@@ -41,7 +41,7 @@ function forma(matches: Match[], teamname: string) {
 }
 
 function isTeamActive(matches: Match[]) {
-  const temporada = "t" + matches[0].torneo.match(/.* T(\d+)/)[1];
+  const temporada = "t" + matches[0].torneo.match(/.* T(\d+)/)?.[1];
   const currentSeason = temporadaActual();
   return currentSeason === temporada;
 }
