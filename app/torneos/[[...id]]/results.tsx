@@ -138,7 +138,7 @@ export default function TournamentResults(props: Props) {
     <div className="flex flex-col gap-y-4">
       <div className="flex flex-wrap items-center gap-4">
         <Title style={{ display: "inline", width: "fit-content" }}>
-          Últimos Resultados
+          Resultados
         </Title>
         <input
           type="text"
