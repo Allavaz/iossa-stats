@@ -26,7 +26,7 @@ export default function TorneoCard({ torneoLabel, temporada, winners }) {
               src={getTeamLogo(winners.firstPlace)}
               alt={winners.firstPlace}
             />
-            <div className="flex items-center gap-2 font-heading text-xl">
+            <div className="flex items-center gap-2 text-center font-heading text-xl">
               <span>{winners.firstPlace}</span>
             </div>
             <div className="text-neutral-500 dark:text-neutral-400">

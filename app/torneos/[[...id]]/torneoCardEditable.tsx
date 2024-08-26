@@ -123,7 +123,7 @@ export default function TorneoCardEditable({
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-2 font-heading text-xl">
+            <div className="flex items-center gap-2 text-center font-heading text-xl">
               <FontAwesomeIcon
                 className="cursor-pointer"
                 icon={faEdit}
