@@ -146,7 +146,7 @@ export function getTablasTorneo(torneo: string, temporada: string) {
       for (let j in TorneosJSON[i].torneos) {
         if (
           TorneosJSON[i].torneos[j].tabla &&
-          TorneosJSON[i].torneos[j].tabla.includes(fullid) &&
+          TorneosJSON[i].torneos[j].tabla.startsWith(fullid) &&
           tablas.findIndex(e => e.table === TorneosJSON[i].torneos[j].tabla) ===
             -1
         ) {
