@@ -45,7 +45,7 @@ function getRegex(arg: string) {
 
   if (tempregex.test(arg)) {
     const match = arg.match(tempregex);
-    return { $regex: "T" + match[1] + "\\s|T" + match[1] };
+    return { $regex: "T" + match[1] + "\\s|T" + match[1] + "$" };
   } else if (arg === "primerorden") {
     return { $regex: primerOrden.join("|") };
   } else if (arg === "segundoorden") {
@@ -105,53 +105,53 @@ function getRegex(arg: string) {
     return { $regex: "Copa D3 T" + match[1] };
   } else if (d1regex.test(arg)) {
     const match = arg.match(d1regex);
-    return { $regex: "(Liga D1|Promoción D1/D2) T" + match[1] };
+    return { $regex: "(Liga D1|Promoción D1/D2) T" + match[1] + "$" };
   } else if (d2regex.test(arg)) {
     const match = arg.match(d2regex);
     return {
-      $regex: "(Liga D2|Promoción D1/D2|Promoción D2/D3) T" + match[1]
+      $regex: "(Liga D2|Promoción D1/D2|Promoción D2/D3) T" + match[1] + "$"
     };
   } else if (d3regex.test(arg)) {
     const match = arg.match(d3regex);
     return {
-      $regex: "(Liga D3|Promoción D2/D3|Promoción D3/D4) T" + match[1]
+      $regex: "(Liga D3|Promoción D2/D3|Promoción D3/D4) T" + match[1] + "$"
     };
   } else if (d4regex.test(arg)) {
     const match = arg.match(d4regex);
-    return { $regex: "(Liga D4|Promoción D3/D4) T" + match[1] };
+    return { $regex: "(Liga D4|Promoción D3/D4) T" + match[1] + "$" };
   } else if (sd1regex.test(arg)) {
     const match = arg.match(sd1regex);
-    return { $regex: "Superliga D1 T" + match[1] };
+    return { $regex: "Superliga D1 T" + match[1] + "$" };
   } else if (lzregex.test(arg)) {
     const match = arg.match(lzregex);
-    return { $regex: "Liga Zero T" + match[1] };
+    return { $regex: "Liga Zero T" + match[1] + "$" };
   } else if (cgregex.test(arg)) {
     const match = arg.match(cgregex);
-    return { $regex: "Copa Gubero T" + match[1] };
+    return { $regex: "Copa Gubero T" + match[1] + "$" };
   } else if (masterregex.test(arg)) {
     const match = arg.match(masterregex);
-    return { $regex: "Copa Master T" + match[1] };
+    return { $regex: "Copa Master T" + match[1] + "$" };
   } else if (cvregex.test(arg)) {
     const match = arg.match(cvregex);
-    return { $regex: "Copa valencARc T" + match[1] };
+    return { $regex: "Copa valencARc T" + match[1] + "$" };
   } else if (recopamasterregex.test(arg)) {
     const match = arg.match(recopamasterregex);
-    return { $regex: "Recopa Master T" + match[1] };
+    return { $regex: "Recopa Master T" + match[1] + "$" };
   } else if (supercopamasterregex.test(arg)) {
     const match = arg.match(supercopamasterregex);
-    return { $regex: "Supercopa Master T" + match[1] };
+    return { $regex: "Supercopa Master T" + match[1] + "$" };
   } else if (maradeiregex.test(arg)) {
     const match = arg.match(maradeiregex);
     return { $regex: "Copa Maradei T" + match[1] + " - " };
   } else if (recopamaradeiregex.test(arg)) {
     const match = arg.match(recopamaradeiregex);
-    return { $regex: "Recopa Maradei T" + match[1] };
+    return { $regex: "Recopa Maradei T" + match[1] + "$" };
   } else if (lmregex.test(arg)) {
     const match = arg.match(lmregex);
-    return { $regex: "Liga Master T" + match[1] };
+    return { $regex: "Liga Master T" + match[1] + "$" };
   } else if (ddhregex.test(arg)) {
     const match = arg.match(ddhregex);
-    return { $regex: "Division de Honor T" + match[1] };
+    return { $regex: "Division de Honor T" + match[1] + "$" };
   } else if (arg === "america21") {
     return { $regex: "Copa America '21" };
   } else if (arg === "america21r") {
@@ -160,16 +160,16 @@ function getRegex(arg: string) {
     return "Copa America '21 - Playoff";
   } else if (americaregex.test(arg)) {
     const match = arg.match(americaregex);
-    return { $regex: "Copa America T" + match[1] };
+    return { $regex: "Copa America T" + match[1] + "$" };
   } else if (copadelsurregex.test(arg)) {
     const match = arg.match(copadelsurregex);
-    return { $regex: "Copa del Sur T" + match[1] };
+    return { $regex: "Copa del Sur T" + match[1] + "$" };
   } else if (izororegex.test(arg)) {
     const match = arg.match(izororegex);
-    return { $regex: "Copa Intrazonal de Oro T" + match[1] };
+    return { $regex: "Copa Intrazonal de Oro T" + match[1] + "$" };
   } else if (izplataregex.test(arg)) {
     const match = arg.match(izplataregex);
-    return { $regex: "Copa Intrazonal de Plata T" + match[1] };
+    return { $regex: "Copa Intrazonal de Plata T" + match[1] + "$" };
   } else if (arg === "izoro") {
     return { $regex: "Copa Intrazonal de Oro" };
   } else if (arg === "izplata") {
