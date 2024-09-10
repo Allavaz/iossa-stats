@@ -70,6 +70,41 @@ const classifications = [
         label: "Clasifica a Intrazonal de Plata"
       }
     ]
+  },
+  {
+    matchingTournaments: header => header === "Liga D1 T14",
+    colors: [
+      {
+        color: "#FFD700",
+        matchingIndexes: () => true,
+        label: "Clasifica a Intrazonal de Oro"
+      }
+    ]
+  },
+  {
+    matchingTournaments: header => header === "Liga D2 T14",
+    colors: [
+      {
+        color: "#FFD700",
+        matchingIndexes: index => index < 2,
+        label: "Clasifica a Intrazonal de Oro"
+      },
+      {
+        color: "#C0C0C0",
+        matchingIndexes: index => index >= 2,
+        label: "Clasifica a Intrazonal de Plata"
+      }
+    ]
+  },
+  {
+    matchingTournaments: header => header === "Liga D3 T14",
+    colors: [
+      {
+        color: "#C0C0C0",
+        matchingIndexes: () => true,
+        label: "Clasifica a Intrazonal de Plata"
+      }
+    ]
   }
 ];
 

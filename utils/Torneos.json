@@ -152,6 +152,35 @@
     ]
   },
   {
+    "temporada": "t14",
+    "titulo": "Temporada 14",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T14",
+        "query": "d1t14",
+        "tabla": "d1t14"
+      },
+      {
+        "torneo": "Liga D2 T14",
+        "query": "d2t14",
+        "tabla": "d2t14"
+      },
+      {
+        "torneo": "Liga D3 T14",
+        "query": "d3t14",
+        "tabla": "d3t14"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro T14",
+        "query": "izorot14"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata T14",
+        "query": "izplatat14"
+      }
+    ]
+  },
+  {
     "temporada": "t13",
     "titulo": "Temporada 13",
     "torneos": [
