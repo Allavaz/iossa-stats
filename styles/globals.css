@@ -10,6 +10,7 @@
 @font-face {
   font-family: "Poppins";
   src: url("../public/fonts/Poppins-Bold.ttf");
+  font-weight: bold;
 }
 
 .dark {
