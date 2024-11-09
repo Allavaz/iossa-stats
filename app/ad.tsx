@@ -18,7 +18,7 @@ export function SquareAd() {
       />
       <Script
         strategy="afterInteractive"
-        id="google-adsense"
+        id="google-adsense-square"
         dangerouslySetInnerHTML={{
           __html: `
           (adsbygoogle = window.adsbygoogle || []).push({});
@@ -47,7 +47,7 @@ export function RectangleAd() {
       />
       <Script
         strategy="afterInteractive"
-        id="google-adsense"
+        id="google-adsense-rectangle"
         dangerouslySetInnerHTML={{
           __html: `
           (adsbygoogle = window.adsbygoogle || []).push({});
