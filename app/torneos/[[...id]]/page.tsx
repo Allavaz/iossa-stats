@@ -73,13 +73,13 @@ export default async function Torneos({ params, searchParams }) {
   );
 
   return (
-    <div className="flex max-w-6xl flex-col gap-4 sm:flex-row">
-      <div className="hidden sm:contents">
+    <div className="flex max-w-6xl flex-col gap-4 lg:flex-row">
+      <div className="hidden lg:contents">
         <TorneoSelect mobile={false} torneo={torneo} />
       </div>
       <div className="flex w-full flex-col gap-4">
         <div className="flex gap-2">
-          <div className="contents sm:hidden">
+          <div className="contents lg:hidden">
             <TorneoSelect mobile={true} torneo={torneo} />
           </div>
           <TemporadaSelect
