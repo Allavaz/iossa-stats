@@ -5,6 +5,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import NextTopLoader from "nextjs-toploader";
 import GoogleAdSense from "./adsense";
+import { RectangleAd } from "./ad";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
@@ -51,6 +52,10 @@ export default function RootLayout({
         <Header />
         <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
           <main>{children}</main>
+          <br></br>
+          <div className="w-full">
+            <RectangleAd />
+          </div>
         </div>
         <Footer />
       </body>

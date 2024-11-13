@@ -27,9 +27,6 @@ export default function Footer() {
   return (
     <div className="w-full">
       <div className="m-auto my-5 flex w-full max-w-6xl flex-col items-center justify-center gap-y-3 px-2 sm:p-0">
-        <div className="w-full">
-          <RectangleAd />
-        </div>
         <div className="my-6 w-full border-t border-dashed border-neutral-300 dark:border-neutral-600" />
         <div className="flex gap-x-3">
           {socials.map((item, index) => (
