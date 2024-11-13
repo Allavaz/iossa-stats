@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitch,
-  faInstagram,
   faYoutube,
-  faDiscord,
-  faTiktok
+  faDiscord
 } from "@fortawesome/free-brands-svg-icons";
-import { RectangleAd } from "../app/ad";
 
 export default function Footer() {
   const socials = [
