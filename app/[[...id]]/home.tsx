@@ -1,6 +1,5 @@
 import Matches from "../../components/matches";
 import PositionsComponent from "../../components/positions";
-import { SquareAd } from "../ad";
 
 export default function Home({ matches, tablas }) {
   return (
@@ -21,7 +20,6 @@ export default function Home({ matches, tablas }) {
                 />
               )
           )}
-          <SquareAd />
         </div>
       )}
     </div>
