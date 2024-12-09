@@ -4,7 +4,6 @@ import Navigation from "../components/navigation";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import NextTopLoader from "nextjs-toploader";
-import GoogleAdSense from "./adsense";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
@@ -54,7 +53,6 @@ export default function RootLayout({
         </div>
         <Footer />
       </body>
-      <GoogleAdSense pId="9388182741516536" />
     </html>
   );
 }
