@@ -172,11 +172,13 @@
       },
       {
         "torneo": "Copa Intrazonal de Oro T14",
-        "query": "izorot14"
+        "query": "izorot14",
+        "challonge": "l46ad69x"
       },
       {
         "torneo": "Copa Intrazonal de Plata T14",
-        "query": "izplatat14"
+        "query": "izplatat14",
+        "challonge": "h687bq5p"
       }
     ]
   },
