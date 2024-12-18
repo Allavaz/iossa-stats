@@ -40,31 +40,37 @@ export default function Roster(props: Props) {
       <div className="flex flex-col gap-y-4">
         <Title>Plantel actual</Title>
         <div className="flex flex-wrap justify-evenly gap-4">
-          {props.roster.map(player => (
-            <Link
-              href={`/jugador/${player._id}`}
-              key={player._id}
-              className="flex flex-col items-center gap-y-2"
-            >
-              <img
-                className="h-28 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
-                src={player.profilePicture}
-                alt={player.name}
-              />
-              <div className="flex items-center gap-x-2">
-                <div
-                  className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
-                  key={player.positions[0].position}
-                  style={{
-                    backgroundColor: getPosColor(player.positions[0].position)
-                  }}
-                >
-                  {player.positions[0].position}
+          {props.roster.map(player => {
+            const position =
+              player.positions.length > 0 ? player.positions[0].position : null;
+            return (
+              <Link
+                href={`/jugador/${player._id}`}
+                key={player._id}
+                className="flex flex-col items-center gap-y-2"
+              >
+                <img
+                  className="h-28 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
+                  src={player.profilePicture}
+                  alt={player.name}
+                />
+                <div className="flex items-center gap-x-2">
+                  {position && (
+                    <div
+                      className="rounded px-2 py-0.5 text-sm text-white shadow-lg"
+                      key={position}
+                      style={{
+                        backgroundColor: getPosColor(position)
+                      }}
+                    >
+                      {position}
+                    </div>
+                  )}
+                  <div className="text-sm">{player.name}</div>
                 </div>
-                <div className="text-sm">{player.name}</div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </Card>
