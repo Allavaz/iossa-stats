@@ -10,23 +10,23 @@ import {
 } from "../../../utils/Utils";
 import MatchEventComponent from "./matchEvent";
 
-export default function MatchCard({ match }: { match: Match }) {
-  function filterEvents(events: MatchEvent[], side: "home" | "away") {
-    if (side === "home") {
-      return events.filter(
-        event =>
-          (event.team === "home" && event.event !== "OWN GOAL") ||
-          (event.team === "away" && event.event === "OWN GOAL")
-      );
-    } else if (side === "away") {
-      return events.filter(
-        event =>
-          (event.team === "away" && event.event !== "OWN GOAL") ||
-          (event.team === "home" && event.event === "OWN GOAL")
-      );
-    } else return [];
-  }
+export function filterEvents(events: MatchEvent[], side: "home" | "away") {
+  if (side === "home") {
+    return events.filter(
+      event =>
+        (event.team === "home" && event.event !== "OWN GOAL") ||
+        (event.team === "away" && event.event === "OWN GOAL")
+    );
+  } else if (side === "away") {
+    return events.filter(
+      event =>
+        (event.team === "away" && event.event !== "OWN GOAL") ||
+        (event.team === "home" && event.event === "OWN GOAL")
+    );
+  } else return [];
+}
 
+export default function MatchCard({ match }: { match: Match }) {
   return (
     <Card>
       <table className="w-full table-fixed text-center align-middle">
