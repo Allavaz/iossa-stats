@@ -8,6 +8,10 @@ import Button from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import Vote from "./vote";
 
+export const metadata = {
+  title: "Foro"
+};
+
 export default async function Foro({ searchParams }) {
   const session = await auth();
   const pageCount = await getPageCount();
