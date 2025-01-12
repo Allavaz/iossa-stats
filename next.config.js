@@ -1,3 +1,6 @@
 module.exports = {
-  reactStrictMode: true
+  reactStrictMode: true,
+  experimental: {
+    serverActions: { allowedOrigins: ["iosoccer-sa.bid", "localhost:3000"] }
+  }
 };
