@@ -2,13 +2,10 @@ import { auth } from "@/auth";
 import Card from "@/components/ui/card";
 import { getMessages, getPageCount } from "@/lib/forum";
 import { getTeamLogo } from "@/utils/Utils";
-import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Form from "./form";
 import Title from "@/components/ui/title";
 import Button from "@/components/ui/button";
 import { redirect } from "next/navigation";
-import { voteComment } from "./actions";
 import Vote from "./vote";
 
 export default async function Foro({ searchParams }) {
@@ -17,7 +14,11 @@ export default async function Foro({ searchParams }) {
   const currentPage = parseInt(searchParams.page || 1);
   const messages = await getMessages(currentPage);
 
-  if (currentPage > pageCount || currentPage < 1 || isNaN(currentPage)) {
+  if (
+    (pageCount && currentPage > pageCount) ||
+    currentPage < 1 ||
+    isNaN(currentPage)
+  ) {
     return redirect("/foro");
   }
 
@@ -52,6 +53,11 @@ export default async function Foro({ searchParams }) {
               email={session?.user?.email}
             />
           ))}
+          {!messages.length && (
+            <div className="text-center font-bold">
+              Este foro no tiene comentarios. Soyez le premier!
+            </div>
+          )}
         </div>
       </Card>
     </div>
