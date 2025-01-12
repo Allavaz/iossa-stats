@@ -3,11 +3,15 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 export default function Navigation() {
   const [night, setNight] = useState(false);
   const [logoShown, setLogoShown] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const header = document.querySelector("#header")!;
@@ -107,12 +111,38 @@ export default function Navigation() {
             >
               Reglas
             </Link>
-            <a
+            <Link
+              href="/foro"
+              className="border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
+              Foro
+            </Link>
+            <button
+              className="cursor-pointer border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              onClick={_ => (session ? signOut() : signIn("discord"))}
+            >
+              {session ? (
+                <div className="flex items-center gap-2">
+                  <img
+                    className="h-6 w-6 rounded-full"
+                    src={session.user.image}
+                  />
+                  <div>{session.user.name || session.user.email}</div>
+                  <FontAwesomeIcon icon={faSignOutAlt} />
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faDiscord} />
+                  <div>Iniciar sesión</div>
+                </div>
+              )}
+            </button>
+            <button
               className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
               onClick={_ => toggleNight()}
             >
               <FontAwesomeIcon icon={night ? faSun : faMoon} />
-            </a>
+            </button>
           </div>
         </div>
       </div>

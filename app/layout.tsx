@@ -10,6 +10,7 @@ import NextTopLoader from "nextjs-toploader";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { SessionProvider } from "next-auth/react";
 config.autoAddCss = false; /* eslint-disable import/first */
 
 export const metadata: Metadata = {
@@ -43,15 +44,17 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
-        <NextTopLoader color="#ff9800" height={2} />
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="/theme.js" />
-        <Navigation />
-        <Header />
-        <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
-          <main>{children}</main>
-        </div>
-        <Footer />
+        <SessionProvider>
+          <NextTopLoader color="#ff9800" height={2} />
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+          <script src="/theme.js" />
+          <Navigation />
+          <Header />
+          <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
+            <main>{children}</main>
+          </div>
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

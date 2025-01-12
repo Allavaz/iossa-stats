@@ -6,6 +6,7 @@ interface Props {
   style?: any;
   disabled?: boolean;
   href?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export default function Button(props: Props) {
@@ -30,6 +31,7 @@ export default function Button(props: Props) {
         style={props.style}
         disabled={props.disabled}
         onClick={props.onClick}
+        type={props.type}
       >
         {props.children}
       </button>
