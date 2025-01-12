@@ -118,7 +118,7 @@ export default function Navigation() {
               Foro
             </Link>
             <button
-              className="cursor-pointer border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              className="min-w-fit cursor-pointer border-l border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
               onClick={_ => (session ? signOut() : signIn("discord"))}
             >
               {session ? (
@@ -133,7 +133,7 @@ export default function Navigation() {
               ) : (
                 <div className="flex items-center gap-2">
                   <FontAwesomeIcon icon={faDiscord} />
-                  <div>Iniciar sesión</div>
+                  <div className="whitespace-nowrap">Iniciar sesión</div>
                 </div>
               )}
             </button>
