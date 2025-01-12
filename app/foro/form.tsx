@@ -20,7 +20,7 @@ export default function Form() {
       }
     >
       <div className="flex flex-col gap-2">
-        <div className="flex w-full justify-between gap-2">
+        <div className="flex w-full flex-wrap justify-between gap-2">
           <input
             className="rounded-md border border-neutral-300 p-2 dark:border-neutral-700"
             placeholder="Nombre"
