@@ -51,11 +51,7 @@ export default async function Foro({ searchParams }) {
       <Card>
         <div className="flex flex-col gap-4">
           {messages.map(message => (
-            <Message
-              key={message._id.toString()}
-              message={message}
-              email={session?.user?.email}
-            />
+            <Message key={message._id.toString()} message={message} />
           ))}
           {!messages.length && (
             <div className="text-center font-bold">
@@ -68,15 +64,16 @@ export default async function Foro({ searchParams }) {
   );
 }
 
-function Message({ message, email }) {
+function Message({ message }) {
   return (
-    <div className="flex gap-8">
+    <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
       <div className="flex shrink-0 flex-col items-center gap-2">
         <div className="font-bold">{message.user}</div>
         <img
           className="h-[64px]"
           src={getTeamLogo(message.team)}
           alt={message.team}
+          title={message.team}
         />
         <div className="text-sm">{new Date(message.date).toLocaleString()}</div>
         <div className="flex w-full justify-evenly">
