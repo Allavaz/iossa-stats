@@ -80,7 +80,7 @@ function Message({ message, email }) {
           />
         </div>
       </div>
-      <div>{message.content}</div>
+      <div className="overflow-auto break-words">{message.content}</div>
     </div>
   );
 }
