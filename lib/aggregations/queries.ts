@@ -163,7 +163,7 @@ function getRegex(arg: string) {
     return { $regex: "Copa America T" + match[1] + "$" };
   } else if (copadelsurregex.test(arg)) {
     const match = arg.match(copadelsurregex);
-    return { $regex: "Copa del Sur T" + match[1] + "$" };
+    return { $regex: "Copa del Sur T" + match[1] + " - " };
   } else if (izororegex.test(arg)) {
     const match = arg.match(izororegex);
     return { $regex: "Copa Intrazonal de Oro T" + match[1] + "$" };

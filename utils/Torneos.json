@@ -179,6 +179,25 @@
         "torneo": "Copa Intrazonal de Plata T14",
         "query": "izplatat14",
         "challonge": "h687bq5p"
+      },
+      {
+        "torneo": "Copa del Sur T14",
+        "query": "copadelsurt14"
+      },
+      {
+        "torneo": "Copa del Sur T14 - Grupo A",
+        "tabla": "copadelsurt14a"
+      },
+      {
+        "torneo": "Copa del Sur T14 - Grupo B",
+        "tabla": "copadelsurt14b"
+      },
+      {
+        "torneo": "Copa del Sur T14 - Grupo C",
+        "tabla": "copadelsurt14c"
+      },
+      {
+        "torneo": "Copa del Sur T14 - Eliminatorias"
       }
     ]
   },
