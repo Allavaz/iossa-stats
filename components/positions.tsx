@@ -126,7 +126,7 @@ export default function PositionsComponent({
   const columns = [
     {
       header: "#",
-      width: "15px",
+      className: "w-[15px]",
       render: (_, index) => index + 1
     },
     {
@@ -155,11 +155,13 @@ export default function PositionsComponent({
     },
     {
       header: "PJ",
-      accessor: "PJ"
+      accessor: "PJ",
+      className: "w-[15px]"
     },
     {
       header: "Pts",
-      accessor: "Pts"
+      accessor: "Pts",
+      className: "w-[15px]"
     },
     ...(!mini
       ? [
@@ -206,7 +208,7 @@ export default function PositionsComponent({
           {teams.map((item, index) => (
             <Table.BodyRow key={item._id}>
               {columns.map(e => (
-                <Table.BodyCell key={e.header}>
+                <Table.BodyCell key={e.header} className={e.className}>
                   <span
                     className={`${highlight === item._id ? "font-bold" : ""}`}
                   >

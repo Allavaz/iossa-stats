@@ -68,19 +68,23 @@ Table.BodyRow = ({ children, sticky }: { children: any; sticky?: boolean }) => {
 Table.BodyCell = ({
   children,
   colSpan,
-  sticky
+  sticky,
+  className
 }: {
   children: any;
   colSpan?: number;
   sticky?: boolean;
+  className?: string;
 }) => {
   return (
     <td
-      className={`px-2 py-1 ${
-        sticky
-          ? "sticky left-0 border-r border-neutral-200 shadow-lg group-odd:bg-neutral-100 group-even:bg-white dark:border-neutral-700 dark:group-odd:bg-neutral-950 dark:group-even:bg-neutral-900"
-          : ""
-      }`}
+      className={
+        `px-2 py-1 ${
+          sticky
+            ? "sticky left-0 border-r border-neutral-200 shadow-lg group-odd:bg-neutral-100 group-even:bg-white dark:border-neutral-700 dark:group-odd:bg-neutral-950 dark:group-even:bg-neutral-900"
+            : ""
+        }` + (className ? ` ${className}` : "")
+      }
       colSpan={colSpan}
     >
       {children}
