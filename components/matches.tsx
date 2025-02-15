@@ -23,7 +23,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
         </colgroup>
         <tbody>
           {matches.map((match, id, array) => (
-            <>
+            <React.Fragment key={match._id.toString()}>
               {id === 0 ||
               fecha(array[id].fecha) !== fecha(array[id - 1].fecha) ? (
                 <tr>
@@ -97,7 +97,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
                   </Link>
                 </td>
               </tr>
-            </>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
