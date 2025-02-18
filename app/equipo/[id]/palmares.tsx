@@ -20,7 +20,7 @@ export default function Palmares({ palmares }) {
             const torneoName = torneo.match(/(.*) T\d+/)[1];
             const temporada = torneo.match(/.* T(\d+)/)[1];
             return (
-              <div key={torneo} className="flex flex-col items-center gap-4">
+              <div key={torneo} className="flex flex-col items-center gap-2">
                 <img
                   className="h-20"
                   src={getTournamentIcon(torneo)}
