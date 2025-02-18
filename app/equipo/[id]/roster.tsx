@@ -36,9 +36,9 @@ interface Props {
 
 export default function Roster(props: Props) {
   return (
-    <Card>
-      <div className="flex flex-col gap-y-4">
-        <Title>Plantel actual</Title>
+    <div className="flex flex-col gap-y-4">
+      <Title>Plantel actual</Title>
+      <Card>
         <div className="flex flex-wrap justify-evenly gap-4">
           {props.roster.map(player => {
             const position =
@@ -72,7 +72,7 @@ export default function Roster(props: Props) {
             );
           })}
         </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }
