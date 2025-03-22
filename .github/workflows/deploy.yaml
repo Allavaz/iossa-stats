@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
       - name: Get package.json changes
         id: changes-package-json
-        uses: tj-actions/changed-files@v41
+        uses: tj-actions/changed-files@v46
         with:
           since_last_remote_commit: true
           files: package.json
