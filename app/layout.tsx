@@ -29,7 +29,7 @@ export const metadata: Metadata = {
       }
     ]
   },
-  metadataBase: new URL("https://iosoccer-sa.bid")
+  metadataBase: new URL("https://iosoccer-sa.com")
 };
 
 export const viewport: Viewport = {
