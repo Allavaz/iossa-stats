@@ -152,6 +152,50 @@
     ]
   },
   {
+    "temporada": "t15",
+    "titulo": "Temporada 15",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T15",
+        "query": "d1t15",
+        "tabla": "d1t15"
+      },
+      {
+        "torneo": "Liga D2 T15",
+        "query": "d2t15",
+        "tabla": "d2t15"
+      },
+      {
+        "torneo": "Copa D2 T15",
+        "query": "cd2t15",
+        "challonge": "cd2t15"
+      },
+      {
+        "torneo": "Copa Maradei T15",
+        "query": "maradeit15"
+      },
+      {
+        "torneo": "Copa Maradei T15 - Grupo A",
+        "tabla": "maradeit15a"
+      },
+      {
+        "torneo": "Copa Maradei T15 - Grupo B",
+        "tabla": "maradeit15b"
+      },
+      {
+        "torneo": "Copa Maradei T15 - Grupo C",
+        "tabla": "maradeit15c"
+      },
+      {
+        "torneo": "Copa Maradei T15 - Eliminatorias"
+      },
+      {
+        "torneo": "Copa valencARc T15",
+        "query": "cvt15"
+      }
+    ]
+  },
+  {
     "temporada": "t14",
     "titulo": "Temporada 14",
     "torneos": [
