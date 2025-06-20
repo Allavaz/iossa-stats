@@ -35,3 +35,8 @@ yarn-error.log*
 
 # cache
 .cache
+
+# SQLite database
+steam_cache.db
+steam_cache.db-wal
+steam_cache.db-shm

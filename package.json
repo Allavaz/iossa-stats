@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "cache-manager": "npx tsx scripts/cache-manager.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -15,9 +16,11 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@tanstack/react-table": "^8.8.5",
+    "@types/better-sqlite3": "^7.6.13",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
     "axios": "^1.8.2",
+    "better-sqlite3": "^11.10.0",
     "chardet": "^1.3.0",
     "dotenv": "^10.0.0",
     "luxon": "^2.5.2",
@@ -45,6 +48,7 @@
     "postcss": "^8.4.31",
     "prettier": "2.4.1",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "tailwindcss": "^3.3.6"
+    "tailwindcss": "^3.3.6",
+    "tsx": "^4.20.3"
   }
 }
