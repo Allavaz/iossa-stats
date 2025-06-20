@@ -29,11 +29,30 @@ export async function getSteamInfo(ids: string[]) {
         return sid.getSteamID64();
       });
 
-      const info = await axios.get(
-        `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${
-          process.env.STEAM_API
-        }&steamids=${missingSid64s.join(",")}`
-      );
+      let info;
+      let retries = 0;
+      const maxRetries = 5;
+
+      while (retries <= maxRetries) {
+        try {
+          info = await axios.get(
+            `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${
+              process.env.STEAM_API
+            }&steamids=${missingSid64s.join(",")}`
+          );
+          break; // Success, exit retry loop
+        } catch (error) {
+          retries++;
+          if (retries > maxRetries) {
+            throw error; // Re-throw error after max retries exceeded
+          }
+          console.log(
+            `Steam API request failed, retry ${retries}/${maxRetries}...`
+          );
+          // Optional: Add exponential backoff delay
+          await new Promise(resolve => setTimeout(resolve, 1000 * retries));
+        }
+      }
 
       // Transform API response to our format
       apiUsers = info.data.response.players.map(player => ({
