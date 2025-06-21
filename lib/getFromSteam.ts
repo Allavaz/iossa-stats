@@ -42,15 +42,19 @@ export async function getSteamInfo(ids: string[]) {
           );
           break; // Success, exit retry loop
         } catch (error) {
-          retries++;
-          if (retries > maxRetries) {
-            throw error; // Re-throw error after max retries exceeded
+          if (error.response?.status === 429) {
+            retries++;
+            if (retries > maxRetries) {
+              throw error; // Re-throw error after max retries exceeded
+            }
+            console.log(
+              `Steam API rate limited (429), retry ${retries}/${maxRetries}...`
+            );
+            // Optional: Add exponential backoff delay
+            await new Promise(resolve => setTimeout(resolve, 1000 * retries));
+          } else {
+            throw error; // Re-throw non-429 errors immediately
           }
-          console.log(
-            `Steam API request failed, retry ${retries}/${maxRetries}...`
-          );
-          // Optional: Add exponential backoff delay
-          await new Promise(resolve => setTimeout(resolve, 1000 * retries));
         }
       }
 
