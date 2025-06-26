@@ -8,7 +8,11 @@ export default function Header() {
     >
       <div className="m-auto w-full max-w-6xl">
         <Link href="/" className="flex w-fit py-5">
-          <img src="/logo-iossa.png" alt="IOSoccer Sudamérica"></img>
+          <img
+            className="h-20"
+            src="/Logotipo_IOSSA.png"
+            alt="IOSoccer Sudamérica"
+          />
         </Link>
       </div>
     </div>
