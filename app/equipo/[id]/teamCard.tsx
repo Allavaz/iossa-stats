@@ -2,42 +2,13 @@ import { DateTime } from "luxon";
 import { Match, TeamStats } from "../../../types";
 import { temporadaActual } from "../../../utils/Utils";
 import Card from "../../../components/ui/card";
+import Form from "../../../components/form";
 
 interface Props {
   teamname: string;
   logo: string;
   matches: Match[];
   stats: TeamStats;
-}
-
-function forma(matches: Match[], teamname: string) {
-  return (
-    <div className="flex gap-x-1 whitespace-nowrap font-heading text-2xl">
-      {matches.map(match => {
-        const result = match.teams.find(t => t.teamname === teamname).result;
-        switch (result) {
-          case 1:
-            return (
-              <div key={match.fecha} style={{ color: "green" }}>
-                W
-              </div>
-            );
-          case 0:
-            return (
-              <div key={match.fecha} style={{ color: "gold" }}>
-                D
-              </div>
-            );
-          case -1:
-            return (
-              <div key={match.fecha} style={{ color: "red" }}>
-                L
-              </div>
-            );
-        }
-      })}
-    </div>
-  );
 }
 
 function isTeamActive(matches: Match[]) {
@@ -54,6 +25,10 @@ export default function TeamCard(props: Props) {
     "yyyy"
   );
   const isActive = isTeamActive(props.matches);
+  const last5Results = props.matches.slice(0, 5).map(match => {
+    const result = match.teams.find(t => t.teamname === props.teamname).result;
+    return result;
+  });
 
   return (
     <Card>
@@ -78,14 +53,6 @@ export default function TeamCard(props: Props) {
           </div>
         </div>
         <div className="flex flex-wrap justify-center gap-6">
-          {isActive && (
-            <div className="flex flex-col items-center justify-center gap-y-1">
-              {forma(props.matches.slice(0, 5), props.teamname)}
-              <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                Forma
-              </div>
-            </div>
-          )}
           <div className="flex flex-col items-center justify-center gap-y-1">
             <div className="font-heading text-2xl">{props.stats.matches}</div>
             <div className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -104,6 +71,16 @@ export default function TeamCard(props: Props) {
               Derrotas
             </div>
           </div>
+          {isActive && (
+            <div className="flex flex-col items-center justify-center gap-y-1">
+              <div className="font-heading text-2xl">
+                <Form results={last5Results} />
+              </div>
+              <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                Últimos 5
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Card>

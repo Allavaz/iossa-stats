@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
 import Title from "./ui/title";
 import Table from "./ui/table";
+import Form from "./form";
 
 const ColoredBar = ({ color }) => {
   return (
@@ -188,6 +189,14 @@ export default function PositionsComponent({
           {
             header: "DF",
             render: item => plus(item.DF)
+          },
+          {
+            header: "Últimos 5",
+            render: item => (
+              <div className="font-bold">
+                <Form results={item.last5} />
+              </div>
+            )
           }
         ]
       : [])

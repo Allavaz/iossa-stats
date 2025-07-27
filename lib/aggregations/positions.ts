@@ -4,6 +4,11 @@ export default function positions(arg: any) {
       $match: arg
     },
     {
+      $sort: {
+        fecha: -1
+      }
+    },
+    {
       $project: {
         teams: 1
       }
@@ -121,6 +126,9 @@ export default function positions(arg: any) {
               $sum: "$conceded"
             }
           ]
+        },
+        last5: {
+          $slice: ["$results", 5]
         }
       }
     },
