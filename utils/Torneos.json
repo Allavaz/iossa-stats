@@ -152,6 +152,35 @@
     ]
   },
   {
+    "temporada": "t16",
+    "titulo": "Temporada 16",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T16",
+        "query": "d1t16",
+        "tabla": "d1t16"
+      },
+      {
+        "torneo": "Liga D2 T16",
+        "query": "d2t16",
+        "tabla": "d2t16"
+      },
+      {
+        "torneo": "Liga D3 T16",
+        "query": "d3t16",
+        "tabla": "d3t16"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro T16",
+        "query": "izorot16"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata T16",
+        "query": "izplatat16"
+      }
+    ]
+  },
+  {
     "temporada": "t15",
     "titulo": "Temporada 15",
     "torneos": [
