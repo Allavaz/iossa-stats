@@ -17,7 +17,8 @@ export async function middleware(request: NextRequest) {
       pathname.endsWith(".png") ||
       pathname.endsWith(".jpg") ||
       pathname.endsWith(".webp") ||
-      pathname.endsWith(".svg")
+      pathname.endsWith(".svg") ||
+      pathname.endsWith(".ttf")
     ) {
       response.headers.set(
         "Cache-Control",
