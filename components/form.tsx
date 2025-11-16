@@ -1,36 +1,33 @@
 export default function Form({ results }) {
   return (
-    <div className="flex justify-center whitespace-nowrap">
+    <div className="flex justify-center gap-1 whitespace-nowrap">
       {results.map((result, index) => {
         switch (result) {
           case 1:
             return (
               <div
-                className="text-center"
+                className="rounded-sm bg-green-500 px-1 text-center text-white dark:bg-green-700"
                 key={index}
-                style={{ color: "green", width: "1.8ch" }}
               >
-                W
+                V
               </div>
             );
           case 0:
             return (
               <div
-                className="text-center"
+                className="rounded-sm bg-yellow-500 px-1 text-center text-white dark:bg-yellow-700"
                 key={index}
-                style={{ color: "gold", width: "1.8ch" }}
               >
-                D
+                E
               </div>
             );
           case -1:
             return (
               <div
-                className="text-center"
+                className="rounded-sm bg-red-500 px-1 text-center text-white dark:bg-red-700"
                 key={index}
-                style={{ color: "red", width: "1.8ch" }}
               >
-                L
+                D
               </div>
             );
         }

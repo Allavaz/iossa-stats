@@ -77,7 +77,7 @@ export default function TeamCard(props: Props) {
                 <Form results={last5Results} />
               </div>
               <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                Últimos 5
+                Últimos 5 resultados
               </div>
             </div>
           )}
