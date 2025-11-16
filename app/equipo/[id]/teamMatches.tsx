@@ -25,11 +25,11 @@ import {
 function WonOrLost(match: Match, teamname: string) {
   const team = match.teams.find(team => team.teamname === teamname);
   if (team.result === 1) {
-    return <div style={{ color: "green" }}>W</div>;
+    return <div style={{ color: "green" }}>V</div>;
   } else if (team.result === -1) {
-    return <div style={{ color: "red" }}>L</div>;
+    return <div style={{ color: "red" }}>D</div>;
   } else if (team.result === 0) {
-    return <div style={{ color: "orange" }}>D</div>;
+    return <div style={{ color: "orange" }}>E</div>;
   }
 }
 

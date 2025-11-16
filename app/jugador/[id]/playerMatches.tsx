@@ -26,22 +26,22 @@ function WonOrLost(match, playerID) {
   for (let i in match.teams[0].playerStatistics) {
     if (match.teams[0].playerStatistics[i].info.steam_id === playerID) {
       if (match.teams[0].result === 1) {
-        return <div style={{ color: "green" }}>W</div>;
+        return <div style={{ color: "green" }}>V</div>;
       } else if (match.teams[0].result === -1) {
-        return <div style={{ color: "red" }}>L</div>;
+        return <div style={{ color: "red" }}>D</div>;
       } else if (match.teams[0].result === 0) {
-        return <div style={{ color: "orange" }}>D</div>;
+        return <div style={{ color: "orange" }}>E</div>;
       }
     }
   }
   for (let i in match.teams[1].playerStatistics) {
     if (match.teams[1].playerStatistics[i].info.steam_id === playerID) {
       if (match.teams[1].result === 1) {
-        return <div style={{ color: "green" }}>W</div>;
+        return <div style={{ color: "green" }}>V</div>;
       } else if (match.teams[1].result === -1) {
-        return <div style={{ color: "red" }}>L</div>;
+        return <div style={{ color: "red" }}>D</div>;
       } else if (match.teams[1].result === 0) {
-        return <div style={{ color: "orange" }}>D</div>;
+        return <div style={{ color: "orange" }}>E</div>;
       }
     }
   }
