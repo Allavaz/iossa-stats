@@ -3,25 +3,51 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSun,
+  faMoon,
+  faSignOutAlt,
+  faDesktop
+} from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
+function getThemeLabel(theme) {
+  if (theme === "auto") {
+    return "Tema automático";
+  } else if (theme === "dark") {
+    return "Tema oscuro";
+  } else {
+    return "Tema claro";
+  }
+}
+
 export default function Navigation() {
-  const [night, setNight] = useState(false);
+  const [theme, setTheme] = useState("auto");
   const [logoShown, setLogoShown] = useState(false);
   const { data: session } = useSession();
+  const themeStates = ["light", "dark", "auto"];
 
   useEffect(() => {
     const header = document.querySelector("#header")!;
     const observer = new IntersectionObserver(hideLogo);
     observer.observe(header);
-    if (localStorage.getItem("theme")) {
-      setNight(localStorage.getItem("theme") === "dark");
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setNight(true);
+    if (localStorage.getItem("theme") === "dark") {
+      setTheme("dark");
     }
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", event => {
+        if (!("theme" in localStorage)) {
+          // Only update if the user hasn't set an explicit preference
+          if (event.matches) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        }
+      });
   }, []);
 
   function hideLogo(entries) {
@@ -32,16 +58,22 @@ export default function Navigation() {
     }
   }
 
-  function toggleNight() {
-    if (localStorage.getItem("theme") === "light" || !night) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setNight(true);
+  function toggleTheme() {
+    let currentIndex = themeStates.indexOf(theme);
+    let nextIndex = (currentIndex + 1) % themeStates.length;
+    let nextTheme = themeStates[nextIndex];
+    setTheme(nextTheme);
+    if (nextTheme === "auto") {
+      localStorage.removeItem("theme");
     } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setNight(false);
+      localStorage.setItem("theme", nextTheme);
     }
+    document.documentElement.classList.toggle(
+      "dark",
+      localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+    );
   }
 
   return (
@@ -138,10 +170,17 @@ export default function Navigation() {
               )}
             </button>
             <button
-              className="cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
-              onClick={_ => toggleNight()}
+              className="w-12 cursor-pointer border-x border-neutral-300 p-3 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              onClick={_ => toggleTheme()}
+              title={getThemeLabel(theme)}
             >
-              <FontAwesomeIcon icon={night ? faSun : faMoon} />
+              {theme === "auto" ? (
+                <FontAwesomeIcon icon={faDesktop} />
+              ) : theme === "dark" ? (
+                <FontAwesomeIcon icon={faMoon} />
+              ) : (
+                <FontAwesomeIcon icon={faSun} />
+              )}
             </button>
           </div>
         </div>
