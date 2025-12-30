@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
         <SessionProvider>
           <NextTopLoader color="#ff9800" height={2} />

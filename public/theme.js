@@ -6,5 +6,4 @@
       (!("theme" in localStorage) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
   );
-  console.log("Theme initialized");
 })();
