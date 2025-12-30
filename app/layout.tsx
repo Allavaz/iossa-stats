@@ -43,12 +43,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
-        <SessionProvider>
-          <NextTopLoader color="#ff9800" height={2} />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
               (function() {
                 document.documentElement.classList.toggle(
                   'dark',
@@ -58,8 +56,12 @@ export default function RootLayout({
                 );
               })();
             `
-            }}
-          />
+          }}
+        />
+      </head>
+      <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
+        <SessionProvider>
+          <NextTopLoader color="#ff9800" height={2} />
           <Navigation />
           <Header />
           <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
