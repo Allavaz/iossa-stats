@@ -30,12 +30,7 @@ export default function Navigation() {
   const themeStates = ["light", "dark", "auto"];
 
   useEffect(() => {
-    const header = document.querySelector("#header")!;
-    const observer = new IntersectionObserver(hideLogo);
-    observer.observe(header);
-    if (localStorage.getItem("theme") === "dark") {
-      setTheme("dark");
-    }
+    setTheme(localStorage.getItem("theme") || "auto");
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", event => {
@@ -48,6 +43,9 @@ export default function Navigation() {
           }
         }
       });
+    const header = document.querySelector("#header")!;
+    const observer = new IntersectionObserver(hideLogo);
+    observer.observe(header);
   }, []);
 
   function hideLogo(entries) {
