@@ -18,6 +18,7 @@ import TeamGoleadores from "./teamGoleadores";
 import TeamHistoricos from "./teamHistoricos";
 import TeamMatches from "./teamMatches";
 import TeamRivals from "./teamRivals";
+import TeamDefensores from "./teamDefensores";
 
 export async function generateMetadata({ params, searchParams }) {
   const teamName = decodeURIComponent(params.id);
@@ -84,6 +85,9 @@ export default async function EquipoPage({ params, searchParams }) {
         </div>
         <div className="max-w-xl grow overflow-x-auto">
           <TeamAsistidores players={allPlayers} />
+        </div>
+        <div className="max-w-xl grow overflow-x-auto">
+          <TeamDefensores players={allPlayers} />
         </div>
         <div className="max-w-xl grow overflow-x-auto">
           <TeamArqueros players={allPlayers} />
