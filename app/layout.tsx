@@ -46,8 +46,20 @@ export default function RootLayout({
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
         <SessionProvider>
           <NextTopLoader color="#ff9800" height={2} />
-          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script src="/theme.js" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              (function() {
+                document.documentElement.classList.toggle(
+                  'dark',
+                  localStorage.theme === 'dark' ||
+                    (!('theme' in localStorage) &&
+                      window.matchMedia('(prefers-color-scheme: dark)').matches)
+                );
+              })();
+            `
+            }}
+          />
           <Navigation />
           <Header />
           <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
