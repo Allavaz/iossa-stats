@@ -42,23 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                document.documentElement.classList.toggle(
-                  'dark',
-                  localStorage.theme === 'dark' ||
-                    (!('theme' in localStorage) &&
-                      window.matchMedia('(prefers-color-scheme: dark)').matches)
-                );
-              })();
-            `
-          }}
-        />
-      </head>
+    <html lang="es">
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
         <SessionProvider>
           <NextTopLoader color="#ff9800" height={2} />
