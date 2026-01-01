@@ -379,18 +379,24 @@ export default function MatchEditor({
         homePlayerStatistics[i].statistics.owngoals = 0;
         homePlayerStatistics[i].statistics.yellowcards = 0;
         homePlayerStatistics[i].statistics.redcards = 0;
+        homePlayerStatistics[i].statistics.assists = 0;
+        homePlayerStatistics[i].statistics.secondassists = 0;
       }
       for (let i in awayPlayerStatistics) {
         awayPlayerStatistics[i].statistics.goals = 0;
         awayPlayerStatistics[i].statistics.owngoals = 0;
         awayPlayerStatistics[i].statistics.yellowcards = 0;
         awayPlayerStatistics[i].statistics.redcards = 0;
+        awayPlayerStatistics[i].statistics.assists = 0;
+        awayPlayerStatistics[i].statistics.secondassists = 0;
       }
       for (let i in playerStatistics) {
         playerStatistics[i].statistics.goals = 0;
         playerStatistics[i].statistics.owngoals = 0;
         playerStatistics[i].statistics.yellowcards = 0;
         playerStatistics[i].statistics.redcards = 0;
+        playerStatistics[i].statistics.assists = 0;
+        playerStatistics[i].statistics.secondassists = 0;
       }
       for (let i in events) {
         if (!steamids.includes(events[i].player1SteamId)) {
