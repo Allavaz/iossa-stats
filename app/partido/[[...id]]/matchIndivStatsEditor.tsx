@@ -569,7 +569,7 @@ export default function MatchIndivStatsEditor(props) {
           <div>
             <input
               type="text"
-              className="rounded-lg border border-neutral-300 px-1 dark:border-neutral-700"
+              className="rounded-lg border border-neutral-300 px-1 dark:border-neutral-700 dark:bg-neutral-900"
               disabled
               defaultValue={props.team}
             />
@@ -579,7 +579,7 @@ export default function MatchIndivStatsEditor(props) {
           <div>Posición:</div>
           <div>
             <select
-              className="rounded-lg border border-neutral-300 px-1 shadow-lg disabled:text-neutral-500 disabled:shadow-none dark:border-neutral-700 dark:disabled:text-neutral-400"
+              className="rounded-lg border border-neutral-300 px-1 shadow-lg disabled:text-neutral-500 disabled:shadow-none dark:border-neutral-700 dark:bg-neutral-900 dark:disabled:text-neutral-400"
               id="pos"
               disabled={
                 props.player.statistics.positions.length === 0 ? false : true
@@ -607,7 +607,7 @@ export default function MatchIndivStatsEditor(props) {
             <div>
               <input
                 id={e.id}
-                className="rounded-lg border border-neutral-300 px-1 shadow-lg dark:border-neutral-700"
+                className="rounded-lg border border-neutral-300 px-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
                 type="text"
                 defaultValue={e.defaultValue}
                 style={{ width: e.width ? e.width : "4ch" }}

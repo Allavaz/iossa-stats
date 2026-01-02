@@ -30,7 +30,7 @@ export default function DateTimeEditor({
       <input
         id="inputDate"
         type="datetime-local"
-        className="w-48 rounded-lg border border-neutral-200 text-center text-sm shadow-lg dark:border-neutral-700"
+        className="w-48 rounded-lg border border-neutral-200 text-center text-sm shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
         defaultValue={dt.toFormat("y-LL-dd'T'HH:mm")}
       />
       <FontAwesomeIcon

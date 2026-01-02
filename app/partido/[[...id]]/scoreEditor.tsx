@@ -21,7 +21,7 @@ export default function ScoreEditor(props) {
       <div className="flex items-center justify-center gap-x-1">
         <div>
           <input
-            className="w-16 rounded-lg border border-neutral-300 px-1 text-right text-2xl font-bold shadow-lg dark:border-neutral-700"
+            className="w-16 rounded-lg border border-neutral-300 px-1 text-right text-2xl font-bold shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
             type="number"
             id="homeScore"
             defaultValue={props.home}
@@ -30,7 +30,7 @@ export default function ScoreEditor(props) {
           />
           <span className="text-2xl font-bold"> - </span>
           <input
-            className="w-16 rounded-lg border border-neutral-300 px-1 text-left text-2xl font-bold shadow-lg dark:border-neutral-700"
+            className="w-16 rounded-lg border border-neutral-300 px-1 text-left text-2xl font-bold shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
             type="number"
             id="awayScore"
             defaultValue={props.away}

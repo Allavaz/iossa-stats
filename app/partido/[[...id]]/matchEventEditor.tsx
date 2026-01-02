@@ -75,7 +75,7 @@ export default function MatchEventEditor(props) {
       <Title>{props.editing.new ? "Crear" : "Editar"} Evento</Title>
       <div className="flex items-center gap-x-4">
         <select
-          className="w-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700"
+          className="w-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
           id={"selectEvent" + props.index}
           defaultValue={props.item.event}
           onChange={e => setEventType(e.target.value)}
@@ -106,7 +106,7 @@ export default function MatchEventEditor(props) {
         <div>
           {"("}
           <input
-            className="w-14 rounded border border-neutral-300 shadow-lg dark:border-neutral-700"
+            className="w-14 rounded border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
             id={"selectMinute" + props.index}
             type="number"
             defaultValue={Math.round(props.item.second / 60)}
@@ -118,7 +118,7 @@ export default function MatchEventEditor(props) {
       {eventType === "GOAL" && (
         <>
           <div className="flex items-center gap-x-4">
-            <div className="w-32 text-center text-sm italic text-neutral-500 dark:text-neutral-400">
+            <div className="w-32 text-center text-sm italic text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400">
               Asistencia
             </div>
             <AutocompletePlayers

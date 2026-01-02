@@ -22,7 +22,7 @@ export default function VodEditor(props: Props) {
             id="inputVod"
             placeholder="ID del VOD (Ej: lQMMnMvnMLk)"
             defaultValue={id}
-            className="w-72 rounded-lg border border-neutral-300 p-2 dark:border-neutral-700"
+            className="w-72 rounded-lg border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900"
             autoComplete="off"
             onChange={e => setId(e.target.value)}
           />

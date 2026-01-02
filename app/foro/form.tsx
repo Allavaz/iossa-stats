@@ -22,7 +22,7 @@ export default function Form() {
       <div className="flex flex-col gap-2">
         <div className="flex w-full flex-wrap justify-between gap-2">
           <input
-            className="rounded-md border border-neutral-300 p-2 dark:border-neutral-700"
+            className="rounded-md border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900"
             placeholder="Nombre"
             maxLength={20}
             minLength={3}
@@ -30,7 +30,7 @@ export default function Form() {
             name="name"
           />
           <select
-            className="rounded-md border border-neutral-300 p-2 dark:border-neutral-700"
+            className="rounded-md border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900"
             placeholder="Equipo"
             name="team"
             required={true}
@@ -44,7 +44,7 @@ export default function Form() {
         </div>
         <div className="flex gap-2">
           <textarea
-            className="h-36 w-full rounded-md border border-neutral-300 p-2 dark:border-neutral-700"
+            className="h-36 w-full rounded-md border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900"
             placeholder="Mensaje"
             maxLength={1000}
             minLength={10}

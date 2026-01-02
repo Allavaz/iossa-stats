@@ -40,7 +40,7 @@ export default function AutocompleteTorneos(props) {
     return (
       <div
         {...containerProps}
-        className="absolute z-50 w-64 overflow-hidden rounded-lg border-x border-neutral-300 dark:border-neutral-700"
+        className="absolute z-50 w-64 overflow-hidden rounded-lg border-x border-neutral-300 dark:border-neutral-700 dark:bg-neutral-900"
       >
         {children}
       </div>
@@ -50,7 +50,7 @@ export default function AutocompleteTorneos(props) {
   const renderInputComponent = inputProps => (
     <input
       {...inputProps}
-      className="w-64 rounded border border-neutral-300 p-1 text-center shadow-lg dark:border-neutral-700"
+      className="w-64 rounded border border-neutral-300 p-1 text-center shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
     />
   );
 
