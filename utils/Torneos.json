@@ -152,6 +152,27 @@
     ]
   },
   {
+    "temporada": "t17",
+    "titulo": "Temporada 17",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T17",
+        "query": "d1t17",
+        "tabla": "d1t17"
+      },
+      {
+        "torneo": "Liga D2 T17",
+        "query": "d2t17",
+        "tabla": "d2t17"
+      },
+      {
+        "torneo": "Copa D2 T17",
+        "query": "cd2t17",
+        "challonge": "copad2t17"
+      }
+    ]
+  },
+  {
     "temporada": "t16",
     "titulo": "Temporada 16",
     "torneos": [
