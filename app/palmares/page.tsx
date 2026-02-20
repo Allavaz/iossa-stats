@@ -106,11 +106,14 @@ export default async function Palmares() {
                 src={getTeamLogo(item._id)}
                 alt={item._id}
               />
-              <div>{item._id}</div>
+              <div className="whitespace-nowrap">{item._id}</div>
             </Link>
             <div className="flex flex-wrap justify-center gap-4">
               {groupTorneos(item.torneos).map(torneo => (
-                <div key={torneo} className="flex flex-col items-center gap-2">
+                <div
+                  key={torneo.torneo}
+                  className="flex flex-col items-center gap-2"
+                >
                   <img
                     className="h-20"
                     src={getTournamentIcon(torneo.torneo)}
