@@ -31,10 +31,12 @@ export default function Form() {
           />
           <select
             className="rounded-md border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900"
-            placeholder="Equipo"
             name="team"
             required={true}
           >
+            <option value="" hidden>
+              Equipo
+            </option>
             {Object.keys(Teams).map(team => (
               <option key={team} value={team}>
                 {team}
