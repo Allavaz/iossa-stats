@@ -40,3 +40,7 @@ yarn-error.log*
 steam_cache.db
 steam_cache.db-wal
 steam_cache.db-shm
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
