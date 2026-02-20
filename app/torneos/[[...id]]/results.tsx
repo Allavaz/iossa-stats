@@ -150,21 +150,24 @@ export default function TournamentResults(props: Props) {
         />
       </div>
       <Table>
-        {table.getPrePaginationRowModel().rows.length === 0 ? (
-          <div className="border-b border-l border-neutral-200 bg-neutral-100 p-1 text-left italic text-neutral-500 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-400">
-            No hay partidos
-          </div>
-        ) : null}
         <tbody>
-          {table.getRowModel().rows.map(row => (
-            <Table.BodyRow key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <Table.BodyCell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Table.BodyCell>
-              ))}
-            </Table.BodyRow>
-          ))}
+          {table.getPrePaginationRowModel().rows.length === 0 ? (
+            <tr>
+              <td className="border-b border-l border-neutral-200 bg-neutral-100 p-1 text-left italic text-neutral-500 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-400">
+                No hay partidos
+              </td>
+            </tr>
+          ) : (
+            table.getRowModel().rows.map(row => (
+              <Table.BodyRow key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <Table.BodyCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Table.BodyCell>
+                ))}
+              </Table.BodyRow>
+            ))
+          )}
         </tbody>
       </Table>
       <div className="flex justify-center gap-x-4">
