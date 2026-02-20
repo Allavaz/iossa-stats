@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   await auth();
 
   // Create response
