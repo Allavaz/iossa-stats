@@ -9,7 +9,8 @@ import {
 } from "../../../utils/Utils";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   let id = "";
 
   if (params.id) {
@@ -23,7 +24,9 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function Individuales({ params, searchParams }) {
+export default async function Individuales(props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   let id = "";
 
   if (params.id) {

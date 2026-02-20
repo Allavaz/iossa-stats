@@ -16,7 +16,8 @@ async function getPosiciones() {
   }));
 }
 
-export default async function IndexPage({ params }) {
+export default async function IndexPage(props) {
+  const params = await props.params;
   if (params.id?.[0] === process.env.ENDPOINT) {
     const players = await getPlayers("mini");
     return (

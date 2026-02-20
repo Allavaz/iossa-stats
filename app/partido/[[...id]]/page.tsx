@@ -4,7 +4,8 @@ import Torneos from "../../../utils/Torneos.json";
 import MatchComponent from "./match";
 import MatchEditor from "./matchEditor";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const matchId = params.id?.[0];
   const match = await getMatch(matchId);
   if (!match) {
@@ -48,7 +49,8 @@ async function getData(matchId: string) {
   return props;
 }
 
-export default async function MatchPage({ params }) {
+export default async function MatchPage(props) {
+  const params = await props.params;
   const { match, table, challonge } = await getData(params.id?.[0]);
 
   if (params.id?.[1] === process.env.ENDPOINT) {

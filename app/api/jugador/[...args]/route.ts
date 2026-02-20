@@ -1,6 +1,7 @@
 import { getPlayer } from "../../../../lib/getFromDB";
 
-export async function GET(request: Request, { params }) {
+export async function GET(request: Request, props) {
+  const params = await props.params;
   const args = params.args;
   if (args.length > 0) {
     try {

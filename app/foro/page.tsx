@@ -12,7 +12,8 @@ export const metadata = {
   title: "Foro"
 };
 
-export default async function Foro({ searchParams }) {
+export default async function Foro(props) {
+  const searchParams = await props.searchParams;
   const session = await auth();
   const pageCount = await getPageCount();
   const currentPage = parseInt(searchParams.page || 1);

@@ -27,7 +27,8 @@ import TorneoCardEditable from "./torneoCardEditable";
 import Top10Arqueros from "../../top10/[[...id]]/top10Arqueros";
 import Top10Intercepciones from "../../top10/[[...id]]/top10Intercepciones";
 
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const editable = params.id?.includes(process.env.ENDPOINT);
   if (editable) {
     params.id = params.id.filter(item => item !== process.env.ENDPOINT);
@@ -43,7 +44,8 @@ export async function generateMetadata({ params, searchParams }) {
   };
 }
 
-export default async function Torneos({ params, searchParams }) {
+export default async function Torneos(props) {
+  const params = await props.params;
   const editable = params.id?.includes(process.env.ENDPOINT);
   if (editable) {
     params.id = params.id.filter(item => item !== process.env.ENDPOINT);

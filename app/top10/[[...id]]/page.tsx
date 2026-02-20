@@ -19,7 +19,8 @@ import {
 } from "../../../utils/Utils";
 import Top10Intercepciones from "./top10Intercepciones";
 
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const id = params.id?.[0] || temporadaActual();
 
   if (getAllQueries().includes(id)) {
@@ -29,7 +30,8 @@ export async function generateMetadata({ params, searchParams }) {
   }
 }
 
-export default async function Top10({ params, searchParams }) {
+export default async function Top10(props) {
+  const params = await props.params;
   const id = params.id?.[0] || temporadaActual();
 
   if (!getAllQueries().includes(id)) notFound();

@@ -16,7 +16,8 @@ import PlayerMatches from "./playerMatches";
 import PlayerMostScoredTeams from "./playerMostScoredTeams";
 import PlayerTeamsTable from "./playerTeams";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const steamid = decodeURIComponent(params.id);
   const player = await getPlayer(steamid, "all");
 
@@ -27,7 +28,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function Jugador({ params }) {
+export default async function Jugador(props) {
+  const params = await props.params;
   const steamid = decodeURIComponent(params.id);
 
   const [

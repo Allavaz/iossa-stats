@@ -20,7 +20,8 @@ import TeamMatches from "./teamMatches";
 import TeamRivals from "./teamRivals";
 import TeamDefensores from "./teamDefensores";
 
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const teamName = decodeURIComponent(params.id);
 
   return {
@@ -28,7 +29,8 @@ export async function generateMetadata({ params, searchParams }) {
   };
 }
 
-export default async function EquipoPage({ params, searchParams }) {
+export default async function EquipoPage(props) {
+  const params = await props.params;
   const teamName = decodeURIComponent(params.id);
 
   const [matches, allPlayers, roster, rosterInfo, rivals, stats, palmares] =

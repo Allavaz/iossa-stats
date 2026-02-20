@@ -2,7 +2,8 @@ import fs from "fs";
 import createMatchCard from "../../../../lib/createMatchCard";
 import { getMatch } from "../../../../lib/getFromDB";
 
-export async function GET(request: Request, { params }) {
+export async function GET(request: Request, props) {
+  const params = await props.params;
   const id = params.id;
   let dir = `./.cache/matchcards/${process.env.DB_COLLECTION}/${id}.png`;
   let image;

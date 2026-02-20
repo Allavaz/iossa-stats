@@ -1,6 +1,7 @@
 import { getPlayers } from "../../../../lib/getFromDB";
 
-export async function GET(request: Request, { params }) {
+export async function GET(request: Request, props) {
+  const params = await props.params;
   const args = params.args;
   try {
     const players = await getPlayers(args?.[0] || "all");

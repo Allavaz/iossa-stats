@@ -1,6 +1,7 @@
 import { getMatch } from "../../../../lib/getFromDB";
 
-export async function GET(request: Request, { params }) {
+export async function GET(request: Request, props) {
+  const params = await props.params;
   const id = params.id;
   try {
     const matches = await getMatch(id);
