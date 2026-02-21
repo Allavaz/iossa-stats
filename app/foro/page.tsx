@@ -50,12 +50,12 @@ export default async function Foro(props) {
         ))}
       </div>
       <Card>
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[auto_1fr] sm:gap-8">
           {messages.map(message => (
             <Message key={message._id.toString()} message={message} />
           ))}
           {!messages.length && (
-            <div className="text-center font-bold">
+            <div className="col-span-1 text-center font-bold sm:col-span-2">
               Este foro no tiene comentarios. Soyez le premier!
             </div>
           )}
@@ -67,8 +67,8 @@ export default async function Foro(props) {
 
 function Message({ message }) {
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:gap-8">
-      <div className="flex shrink-0 flex-col items-center gap-2">
+    <>
+      <div className="flex flex-col items-center gap-2">
         <div className="font-bold">{message.user}</div>
         <img
           className="h-[64px]"
@@ -89,6 +89,6 @@ function Message({ message }) {
         </div>
       </div>
       <div className="overflow-auto break-words">{message.content}</div>
-    </div>
+    </>
   );
 }
