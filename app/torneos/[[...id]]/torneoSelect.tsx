@@ -35,7 +35,7 @@ export default function TorneoSelect({ mobile, torneo }) {
       <div className="flex h-fit flex-col rounded-lg border border-neutral-300 bg-white shadow-md dark:border-neutral-700 dark:bg-neutral-950">
         {getTorneos().map(torneo => (
           <Link
-            className="whitespace-nowrap border-b border-neutral-300 p-3 transition-colors last:border-none hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
+            className="whitespace-nowrap border-b border-neutral-300 p-3 transition-colors first:rounded-t-lg last:rounded-b-lg last:border-none hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
             key={torneo.value}
             href={`/torneos/${torneo.value}`}
           >
