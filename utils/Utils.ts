@@ -56,6 +56,8 @@ export function getTournamentIcon(tournament) {
     return "/tournaments/copavalencarc.png";
   } else if (tournament.includes("Liga Zero")) {
     return "/tournaments/ligazero.png";
+  } else if (tournament.includes("Supercopa Casana")) {
+    return "/tournaments/supercopacasana.png";
   } else {
     return "/logo-solo.png";
   }

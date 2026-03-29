@@ -6,6 +6,7 @@ const primerOrden = [
   "Recopa Master",
   "Recopa Maradei",
   "Supercopa Master",
+  "Supercopa Casana",
   "Copa America",
   "Copa del Sur",
   "Copa Gubero",
@@ -33,6 +34,7 @@ function getRegex(arg: string) {
   const masterregex = /^mastert([0-9]+)/i;
   const recopamasterregex = /^recopamastert([0-9]+)/i;
   const supercopamasterregex = /^supercopamastert([0-9]+)/i;
+  const supercopacasanaregex = /^supercopacasanat([0-9]+)/i;
   const cvregex = /^cvt([0-9]+)/i;
   const maradeiregex = /^maradeit([0-9]+)/i;
   const recopamaradeiregex = /^recopamaradeit([0-9]+)/i;
@@ -76,6 +78,8 @@ function getRegex(arg: string) {
     return { $regex: "Division de Honor" };
   } else if (arg === "supercopamaster") {
     return { $regex: "Supercopa Master" };
+  } else if (arg === "supercopacasana") {
+    return { $regex: "Supercopa Casana" };
   } else if (arg === "recopamaster") {
     return { $regex: "Recopa Master" };
   } else if (arg === "recopamaradei") {
@@ -140,6 +144,9 @@ function getRegex(arg: string) {
   } else if (supercopamasterregex.test(arg)) {
     const match = arg.match(supercopamasterregex);
     return { $regex: "Supercopa Master T" + match[1] + "$" };
+  } else if (supercopacasanaregex.test(arg)) {
+    const match = arg.match(supercopacasanaregex);
+    return { $regex: "Supercopa Casana T" + match[1] + "$" };
   } else if (maradeiregex.test(arg)) {
     const match = arg.match(maradeiregex);
     return { $regex: "Copa Maradei T" + match[1] + " - " };

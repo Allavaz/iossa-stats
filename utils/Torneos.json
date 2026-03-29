@@ -44,6 +44,10 @@
         "query": "supercopamaster"
       },
       {
+        "torneo": "Supercopa Casana",
+        "query": "supercopacasana"
+      },
+      {
         "torneo": "Copa America",
         "query": "america"
       },
@@ -169,6 +173,15 @@
         "torneo": "Copa D2 T17",
         "query": "cd2t17",
         "challonge": "copad2t17"
+      },
+      {
+        "torneo": "Supercopa Casana T17",
+        "query": "supercopacasanat17"
+      },
+      {
+        "torneo": "Copa valencARc T17",
+        "query": "cvt17",
+        "challonge": "xmorono3"
       }
     ]
   },
@@ -247,6 +260,10 @@
         "torneo": "Copa valencARc T15",
         "query": "cvt15",
         "challonge": "fvvkwqpp"
+      },
+      {
+        "torneo": "Supercopa Casana T15",
+        "query": "supercopacasanat15"
       }
     ]
   },
