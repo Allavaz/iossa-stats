@@ -21,7 +21,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
             fecha(array[id].fecha) !== fecha(array[id - 1].fecha) ? (
               <Title>Resultados del {fecha(match.fecha)}</Title>
             ) : null}
-            <div className="grid grid-cols-[1fr_60px_1fr_1fr] gap-0 rounded-lg border border-neutral-200 bg-white shadow-lg transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
+            <div className="grid grid-cols-[minmax(0,1fr)_60px_minmax(0,1fr)_minmax(0,0.8fr)] gap-0 rounded-lg border border-neutral-200 bg-white shadow-lg transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
               <Link
                 href={"/partido/" + match._id}
                 className="flex items-center justify-end gap-2 border-r border-neutral-200 p-3 dark:border-neutral-700"
