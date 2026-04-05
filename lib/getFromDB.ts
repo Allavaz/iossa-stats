@@ -64,6 +64,21 @@ export async function getMatches(id) {
   }
 }
 
+export async function getMatchesAPI(id) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    const docs = await db
+      .collection(process.env.DB_COLLECTION)
+      .find(queries(id))
+      .sort({ fecha: -1 })
+      .toArray();
+    return docs.map(doc => serializableMatch(doc));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function getPositions(arg: string) {
   try {
     const client = await clientPromise;

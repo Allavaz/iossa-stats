@@ -1,10 +1,10 @@
-import { getMatches } from "../../../../lib/getFromDB";
+import { getMatchesAPI } from "../../../../lib/getFromDB";
 
 export async function GET(request: Request, props) {
   const params = await props.params;
   const args = params.args;
   try {
-    const matches = await getMatches(args?.[0] || "all");
+    const matches = await getMatchesAPI(args?.[0] || "all");
     if (matches) {
       return Response.json(matches);
     } else {
