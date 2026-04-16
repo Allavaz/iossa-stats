@@ -62,9 +62,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.PATH }}
-            systemctl stop iossa-stats
             npm ci --omit=dev
-            systemctl start iossa-stats
+            systemctl restart iossa-stats
           debug: true
 
       - if: steps.changes-package-json.outputs.any_changed == 'false'
@@ -75,7 +74,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ${{ secrets.PATH }}
-            systemctl stop iossa-stats
-            systemctl start iossa-stats
+            systemctl restart iossa-stats
           debug: true
