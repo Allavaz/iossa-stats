@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ForumMessage {
+  id      String   @id @default(cuid())
+  date    DateTime @default(now())
+  email   String
+  user    String
+  team    String
+  content String
+  votes   Json     @default("{}")
+}
+
+model Match {
+  id             String          @id @default(cuid())
+  filename       String          @unique
+  fecha          DateTime
+  torneo         String
+  tournamentId   String
+  isDefault      Boolean         @default(false)
+  vod            String?
+  serverName     String?
+  mapName        String?
+  format         Int?
+  startTime      DateTime?
+  endTime        DateTime?
+  periods        Int?
+  sourceJson     Json
+  mongoId        String?         @unique
+  MatchEvent     MatchEvent[]
+  MatchPlayer    MatchPlayer[]
+  MatchTeam      MatchTeam[]
+  Tournament     Tournament      @relation(fields: [tournamentId], references: [id])
+}
+
+model MatchEvent {
+  id             String  @id @default(cuid())
+  matchId        String
+  second         Int
+  event          String
+  period         String?
+  team           String
+  player1SteamId String
+  player2SteamId String?
+  player3SteamId String?
+  bodyPart       Int?
+  posX           Float?
+  posY           Float?
+  Match          Match   @relation(fields: [matchId], references: [id], onDelete: Cascade)
+}
+
+model MatchPlayer {
+  id               String    @id @default(cuid())
+  matchId          String
+  matchTeamId      String
+  playerId         String
+  goals            Int
+  assists          Int
+  shots            Int
+  shotsOnTarget    Int
+  passes           Int
+  passesCompleted  Int
+  interceptions    Int
+  saves            Int
+  fouls            Int
+  yellowCards      Int
+  redCards         Int
+  ownGoals         Int
+  offsides         Int
+  distanceCovered  Int
+  possession       Float
+  corners          Int
+  throwIns         Int
+  penalties        Int
+  freeKicks        Int
+  tackles          Int
+  tacklesCompleted Int
+  foulsSuffered    Int
+  savesCaught      Int
+  goalKicks        Int
+  goalsConceded    Int
+  secondsPlayed    Int
+  keyPasses        Int
+  chancesCreated   Int
+  secondAssists    Int
+  positions        Json
+  periodData       Json
+  Match            Match     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  MatchTeam        MatchTeam @relation(fields: [matchTeamId], references: [id])
+  Player           Player    @relation(fields: [playerId], references: [id])
+
+  @@unique([matchId, playerId])
+}
+
+model MatchTeam {
+  id               String        @id @default(cuid())
+  matchId          String
+  teamId           String
+  side             String
+  score            Int
+  scoreReceived    Int
+  result           Int
+  shots            Int
+  shotsOnTarget    Int
+  possession       Float
+  passes           Int
+  passesCompleted  Int
+  fouls            Int
+  yellowCards      Int
+  redCards         Int
+  offsides         Int
+  corners          Int
+  throwIns         Int
+  penalties        Int
+  freeKicks        Int
+  foulsSuffered    Int
+  goalsConceded    Int
+  interceptions    Int
+  ownGoals         Int
+  tackles          Int
+  tacklesCompleted Int
+  saves            Int
+  savesCaught      Int
+  distanceCovered  Int
+  assists          Int
+  goalKicks        Int
+  keyPasses        Int
+  chancesCreated   Int
+  secondAssists    Int
+  periodStats      Json?
+  MatchPlayer      MatchPlayer[]
+  Match            Match         @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  Team             Team          @relation(fields: [teamId], references: [id])
+
+  @@unique([matchId, teamId])
+}
+
+model Player {
+  id          String        @id @default(cuid())
+  steamId     String        @unique
+  name        String
+  MatchPlayer MatchPlayer[]
+}
+
+model Team {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  MatchTeam MatchTeam[]
+}
+
+model TournamentType {
+  id         String       @id @default(cuid())
+  name       String       @unique
+  slug       String       @unique
+  order      Int          @default(0)
+  category   String
+  Tournament Tournament[]
+}
+
+model Tournament {
+  id               String         @id @default(cuid())
+  tournamentTypeId String
+  season           Int?
+  torneo           String         @unique
+  slug             String?        @unique
+  tabla            String?
+  tablaLabel       String?
+  challonge        String?
+  winners          Json?
+  isSubEntry       Boolean        @default(false)
+  parentId         String?
+  TournamentType   TournamentType @relation(fields: [tournamentTypeId], references: [id])
+  Parent           Tournament?    @relation("SubEntries", fields: [parentId], references: [id])
+  SubEntries       Tournament[]   @relation("SubEntries")
+  Match            Match[]
+
+  @@index([tournamentTypeId])
+  @@index([season])
+}

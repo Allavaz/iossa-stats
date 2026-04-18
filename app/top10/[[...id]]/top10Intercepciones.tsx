@@ -3,8 +3,9 @@ import Link from "next/link";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 import { secondsToMinutes } from "../../../lib/Utils";
+import type { Top10InterceptionsRow } from "../../../lib/getFromDB";
 
-export default function Top10Intercepciones({ players, category }) {
+export default function Top10Intercepciones({ players, category }: { players: Top10InterceptionsRow[]; category: string }) {
   return (
     <div className="flex w-full flex-col gap-y-4">
       <Title>

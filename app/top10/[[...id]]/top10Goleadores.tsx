@@ -2,8 +2,15 @@ import { getTeamLogo } from "../../../utils/Utils";
 import Link from "next/link";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
+import type { Top10GoalsRow } from "../../../lib/getFromDB";
 
-export default function Top10Goleadores({ players, category }) {
+export default function Top10Goleadores({
+  players,
+  category
+}: {
+  players: Top10GoalsRow[];
+  category: string;
+}) {
   return (
     <div className="flex w-full flex-col gap-y-4">
       <Title>
@@ -21,11 +28,11 @@ export default function Top10Goleadores({ players, category }) {
         </thead>
         <tbody>
           {players.map((item, index) => (
-            <Table.BodyRow key={item._id}>
+            <Table.BodyRow key={item.steamID}>
               <Table.BodyCell>{index + 1}</Table.BodyCell>
               <Table.BodyCell>
                 <Link
-                  href={`/jugador/${item._id}`}
+                  href={`/jugador/${item.steamID}`}
                   className="flex items-center justify-center gap-x-1"
                 >
                   <img

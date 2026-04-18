@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 export interface PlayerStatistics {
   goals: number;
   assists: number;
@@ -30,10 +28,7 @@ export interface PlayerStatistics {
   keypasses: number;
   chancescreated: number;
   secondassists: number;
-  positions: {
-    position: string;
-    seconds: number;
-  }[];
+  positions?: { position: string; seconds: number }[];
 }
 
 export interface MatchTeamStats {
@@ -76,58 +71,47 @@ export interface Player extends PlayerStatistics {
   draws: number;
   losses: number;
   profilePicture?: string;
-  positions: {
-    position: string;
-    seconds: number;
-  }[];
+  positions?: { position: string; seconds: number }[];
 }
 
 export interface MatchPlayer {
-  info: {
-    name: string;
-    steam_id: string;
-    team: string;
-  };
+  info: { name: string; steam_id: string; team: string };
   statistics: PlayerStatistics;
 }
 
 export interface Match {
-  _id?: ObjectId;
-  filename: string;
+  _id: string;
   fecha: string;
   torneo: string;
   isdefault: boolean;
-  vod: string | null;
+  vod?: string | null;
   teams: MatchTeam[];
-  players: MatchPlayer[];
-  matchevents: MatchEvent[];
+  matchevents?: MatchEvent[];
 }
 
 export interface MatchTeam {
   teamname: string;
-  side: "home" | "away";
+  side: string;
   score: number;
-  scorereceived: number;
-  result: -1 | 0 | 1;
-  statistics: MatchTeamStats;
-  playerStatistics: PlayerStatistics[];
+  scorereceived?: number;
+  result?: number;
+  statistics?: MatchTeamStats;
+  playerStatistics?: MatchPlayer[];
 }
 
 export interface MatchEvent {
   second: number;
-  event: Event;
+  event: string;
   period?: string;
-  team: "home" | "away";
+  team: string;
   player1SteamId: string;
-  player2SteamId: string;
-  player3SteamId: string;
+  player2SteamId?: string;
+  player3SteamId?: string;
   bodyPart?: number;
-  startPosition?: {
-    x: number;
-    y: number;
-  };
+  startPosition?: { x: number; y: number };
   name: string;
   name2?: string;
+  name3?: string;
 }
 
 export type Event =
@@ -148,6 +132,7 @@ export interface Positions {
   PE: number;
   PP: number;
   DF: number;
+  last5?: number[];
 }
 
 export interface TeamStats {

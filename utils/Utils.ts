@@ -327,7 +327,7 @@ export function temporadaActual() {
 
 export function buildBlankMatch(): Match {
   return {
-    filename: "",
+    _id: "",
     fecha: new Date().toISOString(),
     torneo: "Torneo",
     vod: null,
@@ -408,7 +408,6 @@ export function buildBlankMatch(): Match {
         playerStatistics: []
       }
     ],
-    players: [],
     matchevents: []
   };
 }

@@ -2,8 +2,9 @@ import { getTeamLogo } from "../../../utils/Utils";
 import Link from "next/link";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
+import type { Top10AssistsRow } from "../../../lib/getFromDB";
 
-export default function Top10Asistidores({ players, category }) {
+export default function Top10Asistidores({ players, category }: { players: Top10AssistsRow[]; category: string }) {
   return (
     <div className="flex w-full flex-col gap-y-4">
       <Title>

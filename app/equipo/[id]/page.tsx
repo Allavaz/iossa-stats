@@ -5,8 +5,11 @@ import {
   getTeamMatches,
   getTeamPlayers,
   getTeamRivals,
-  getTeamStats
+  getTeamStats,
+  type PlayerRow,
 } from "../../../lib/getFromDB";
+
+type RosterPlayer = PlayerRow & { profilePicture?: string; positions?: { position: string; seconds: number }[] };
 import { getSteamInfo } from "../../../lib/getFromSteam";
 import { getTeamLogo, temporadaActual } from "../../../utils/Utils";
 import Palmares from "./palmares";
@@ -33,7 +36,7 @@ export default async function EquipoPage(props) {
   const params = await props.params;
   const teamName = decodeURIComponent(params.id);
 
-  const [matches, allPlayers, roster, rosterInfo, rivals, stats, palmares] =
+  const [matches, allPlayers, rosterBase, rosterInfo, rivals, stats, palmares] =
     await Promise.all([
       getTeamMatches(teamName, "all"),
       getTeamPlayers(teamName, "all"),
@@ -47,6 +50,8 @@ export default async function EquipoPage(props) {
       getTeamStats(teamName, "all"),
       getPalmares(teamName)
     ]);
+
+  const roster: RosterPlayer[] = rosterBase;
 
   if (matches.length === 0) return notFound();
 

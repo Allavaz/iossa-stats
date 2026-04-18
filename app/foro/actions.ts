@@ -4,8 +4,6 @@ import { getMessage, pushMessage, pushVote } from "@/lib/forum";
 import Teams from "../../utils/Teams.json";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { ObjectId } from "mongodb";
-
 export async function sendComment(formData: FormData) {
   const session = await auth();
 
@@ -65,9 +63,7 @@ export async function voteComment(id: string, vote: "like" | "dislike") {
     return "No puedes votar tu propio mensaje";
   }
 
-  const objId = new ObjectId(id);
-
-  await pushVote(objId, vote, session.user.email);
+  await pushVote(id, vote, session.user.email);
 
   revalidatePath("/foro");
 }

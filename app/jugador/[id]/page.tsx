@@ -4,11 +4,11 @@ import {
   getPlayerMatches,
   getPlayerPositions,
   getPlayerScoredTeams,
+  getPlayerTeamHistory,
   getPlayerTournaments,
   getTournamentPosition
 } from "../../../lib/getFromDB";
 import { getSteamInfo } from "../../../lib/getFromSteam";
-import PlayerTeams from "../../../utils/PlayerTeams";
 import { temporadaActual } from "../../../utils/Utils";
 import PlayerCard from "./playerCard";
 import PlayerLigas from "./playerLigas";
@@ -38,21 +38,21 @@ export default async function Jugador(props) {
     teamsMostScored,
     player,
     playerPositions,
-    playerTournaments
+    playerTournaments,
+    playerTeams
   ] = await Promise.all([
     getPlayerMatches(steamid),
     getSteamInfo([steamid]),
     getPlayerScoredTeams(steamid),
     getPlayer(steamid, "all"),
     getPlayerPositions(steamid, temporadaActual()),
-    getPlayerTournaments(steamid)
+    getPlayerTournaments(steamid),
+    getPlayerTeamHistory(steamid),
   ]);
 
   if (playerMatches.length === 0) notFound();
 
   if (!steamInfo || steamInfo.length === 0) notFound();
-
-  const playerTeams = PlayerTeams(steamid, playerMatches);
 
   if (!playerTournaments || playerTournaments.length === 0) notFound();
 
@@ -93,7 +93,7 @@ export default async function Jugador(props) {
           <PlayerMostScoredTeams teams={teamsMostScored} />
         </div>
       </div>
-      <PlayerMatches matches={playerMatches} id={player.steamid} />
+      <PlayerMatches matches={playerMatches} id={player.steamID} />
     </div>
   );
 }
