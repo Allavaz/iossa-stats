@@ -203,14 +203,6 @@
         "torneo": "Liga D3 T16",
         "query": "d3t16",
         "tabla": "d3t16"
-      },
-      {
-        "torneo": "Copa Intrazonal de Oro T16",
-        "query": "izorot16"
-      },
-      {
-        "torneo": "Copa Intrazonal de Plata T16",
-        "query": "izplatat16"
       }
     ]
   },
