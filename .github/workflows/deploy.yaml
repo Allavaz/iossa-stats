@@ -52,6 +52,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: ".next/,public/,package.json,package-lock.json"
           target: ${{ secrets.PATH }}
+          hidden: true
 
       - if: steps.changes-package-json.outputs.any_changed == 'true'
         uses: appleboy/ssh-action@v1.0.3
