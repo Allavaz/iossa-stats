@@ -17,6 +17,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: build-output
+          include-hidden-files: true
           path: |
             .next/
             public/
@@ -42,9 +43,6 @@ jobs:
         with:
           since_last_remote_commit: true
           files: package.json
-
-      - name: Debug workspace
-        run: ls -la .next/
 
       - name: Copy build to VPS
         uses: appleboy/scp-action@v0.1.7
