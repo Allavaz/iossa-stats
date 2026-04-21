@@ -53,8 +53,9 @@ export default function AutocompletePlayers(props) {
     );
   };
 
-  const renderInputComponent = inputProps => (
+  const renderInputComponent = ({ key, ...inputProps }) => (
     <input
+      key={key}
       {...inputProps}
       className="w-48 rounded border border-neutral-300 px-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
     />

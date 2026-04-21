@@ -46,8 +46,9 @@ export default function AutocompleteTeams(props) {
     );
   };
 
-  const renderInputComponent = inputProps => (
+  const renderInputComponent = ({ key, ...inputProps }) => (
     <input
+      key={key}
       {...inputProps}
       className="w-64 rounded border border-neutral-300 p-1 text-center shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
     />
