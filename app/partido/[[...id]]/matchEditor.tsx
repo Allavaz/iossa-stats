@@ -40,6 +40,23 @@ export default function MatchEditor({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
 
+  function applyScoreResult(data: Match, homeScore: number, awayScore: number) {
+    data.teams[0].score = homeScore;
+    data.teams[0].scorereceived = awayScore;
+    data.teams[1].score = awayScore;
+    data.teams[1].scorereceived = homeScore;
+    if (homeScore > awayScore) {
+      data.teams[0].result = 1;
+      data.teams[1].result = -1;
+    } else if (awayScore > homeScore) {
+      data.teams[1].result = 1;
+      data.teams[0].result = -1;
+    } else {
+      data.teams[0].result = 0;
+      data.teams[1].result = 0;
+    }
+  }
+
   function changeTorneo(torneo: string) {
     setEditableTable({ positions: null, header: "" });
     setEditableChallonge(null);
@@ -102,21 +119,8 @@ export default function MatchEditor({
   function changeScore(home: number, away: number, isDefault: boolean) {
     setEditableMatch(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
-      data.teams[0].score = home;
-      data.teams[1].score = away;
-      data.teams[0].scorereceived = away;
-      data.teams[1].scorereceived = home;
       data.isdefault = isDefault;
-      if (data.teams[0].score > data.teams[1].score) {
-        data.teams[0].result = 1;
-        data.teams[1].result = -1;
-      } else if (data.teams[1].score > data.teams[0].score) {
-        data.teams[1].result = 1;
-        data.teams[0].result = -1;
-      } else {
-        data.teams[0].result = 0;
-        data.teams[1].result = 0;
-      }
+      applyScoreResult(data, home, away);
       return [...prevState, data];
     });
   }
@@ -125,444 +129,217 @@ export default function MatchEditor({
     setEditableMatch(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.matchevents = matchEvents;
+      data = runPredictIndivStats(data);
+      data = runPredictTeamStats(data);
       return [...prevState, data];
     });
-    predictIndivStats();
-    predictTeamStats();
   }
 
-  function predictTeamStats() {
-    setEditableMatch(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
-      let events = data.matchevents;
-      let homeScore = 0;
-      let awayScore = 0;
-      let homeGoals = 0;
-      let awayGoals = 0;
-      let homeAssists = 0;
-      let awayAssists = 0;
-      let homeSecondAssists = 0;
-      let awaySecondAssists = 0;
-      let homeYellowCards = 0;
-      let homeRedCards = 0;
-      let homeSecondYellows = 0;
-      let awaySecondYellows = 0;
-      let awayYellowCards = 0;
-      let awayRedCards = 0;
-      let homeFouls = 0;
-      let awayFouls = 0;
-      let homePasses = 0;
-      let awayPasses = 0;
-      let homePassesCompleted = 0;
-      let awayPassesCompleted = 0;
-      let homeKeyPasses = 0;
-      let awayKeyPasses = 0;
-      let homeOffsides = 0;
-      let awayOffsides = 0;
-      let homeCorners = 0;
-      let awayCorners = 0;
-      let homeShots = 0;
-      let awayShots = 0;
-      let homeShotsOnTarget = 0;
-      let awayShotsOnTarget = 0;
-      let homeChancesCreated = 0;
-      let awayChancesCreated = 0;
-      for (let i in events) {
-        if (events[i].team === "home") {
-          switch (events[i].event) {
-            case "GOAL":
-              homeScore++;
-              homeGoals++;
-              break;
-            case "YELLOW CARD":
-              homeYellowCards++;
-              break;
-            case "RED CARD":
-              homeRedCards++;
-              break;
-            case "SECOND YELLOW":
-              homeSecondYellows++;
-              break;
-            case "OWN GOAL":
-              awayScore++;
-              break;
-            default:
-          }
-        } else if (events[i].team === "away") {
-          switch (events[i].event) {
-            case "GOAL":
-              awayScore++;
-              awayGoals++;
-              break;
-            case "YELLOW CARD":
-              awayYellowCards++;
-              break;
-            case "RED CARD":
-              awayRedCards++;
-              break;
-            case "SECOND YELLOW":
-              awaySecondYellows++;
-              break;
-            case "OWN GOAL":
-              homeScore++;
-              break;
-            default:
-          }
-        }
+  function runPredictTeamStats(data: Match): Match {
+    const events = data.matchevents;
+
+    const home = {
+      score: 0, goals: 0, assists: 0, secondassists: 0,
+      yellowcards: 0, redcards: 0, secondyellows: 0,
+      fouls: 0, passes: 0, passescompleted: 0, keypasses: 0,
+      offsides: 0, corners: 0, shots: 0, shotsontarget: 0, chancescreated: 0
+    };
+    const away = {
+      score: 0, goals: 0, assists: 0, secondassists: 0,
+      yellowcards: 0, redcards: 0, secondyellows: 0,
+      fouls: 0, passes: 0, passescompleted: 0, keypasses: 0,
+      offsides: 0, corners: 0, shots: 0, shotsontarget: 0, chancescreated: 0
+    };
+
+    for (const ev of events) {
+      const s = ev.team === "home" ? home : away;
+      const opp = ev.team === "home" ? away : home;
+      switch (ev.event) {
+        case "GOAL":        s.score++; s.goals++; break;
+        case "YELLOW CARD": s.yellowcards++; break;
+        case "RED CARD":    s.redcards++; break;
+        case "SECOND YELLOW": s.secondyellows++; break;
+        case "OWN GOAL":    opp.score++; break;
       }
-      for (let i in data.teams[0].playerStatistics) {
-        homeAssists =
-          homeAssists +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.assists) || 0);
-        homeSecondAssists =
-          homeSecondAssists +
-          (parseInt(
-            data.teams[0].playerStatistics[i].statistics.secondassists
-          ) || 0);
-        homeShots =
-          homeShots +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.shots) || 0);
-        homeShotsOnTarget =
-          homeShotsOnTarget +
-          (parseInt(
-            data.teams[0].playerStatistics[i].statistics.shotsontarget
-          ) || 0);
-        homeFouls =
-          homeFouls +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.fouls) || 0);
-        homePasses =
-          homePasses +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.passes) || 0);
-        homePassesCompleted =
-          homePassesCompleted +
-          (parseInt(
-            data.teams[0].playerStatistics[i].statistics.passescompleted
-          ) || 0);
-        homeKeyPasses =
-          homeKeyPasses +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.keypasses) ||
-            0);
-        homeOffsides =
-          homeOffsides +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.offsides) ||
-            0);
-        homeCorners =
-          homeCorners +
-          (parseInt(data.teams[0].playerStatistics[i].statistics.corners) || 0);
-        homeChancesCreated =
-          homeChancesCreated +
-          (parseInt(
-            data.teams[0].playerStatistics[i].statistics.chancescreated
-          ) || 0);
+    }
+
+    const statFields = [
+      "assists", "secondassists", "shots", "shotsontarget",
+      "fouls", "passes", "passescompleted", "keypasses",
+      "offsides", "corners", "chancescreated"
+    ] as const;
+
+    for (const p of data.teams[0].playerStatistics) {
+      for (const f of statFields) {
+        home[f] += parseInt((p.statistics as any)[f]) || 0;
       }
-      for (let i in data.teams[1].playerStatistics) {
-        awayShots =
-          awayShots +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.shots) || 0);
-        awayShotsOnTarget =
-          awayShotsOnTarget +
-          (parseInt(
-            data.teams[1].playerStatistics[i].statistics.shotsontarget
-          ) || 0);
-        awayFouls =
-          awayFouls +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.fouls) || 0);
-        awayPasses =
-          awayPasses +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.passes) || 0);
-        awayPassesCompleted =
-          awayPassesCompleted +
-          (parseInt(
-            data.teams[1].playerStatistics[i].statistics.passescompleted
-          ) || 0);
-        awayKeyPasses =
-          awayKeyPasses +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.keypasses) ||
-            0);
-        awayOffsides =
-          awayOffsides +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.offsides) ||
-            0);
-        awayCorners =
-          awayCorners +
-          (parseInt(data.teams[1].playerStatistics[i].statistics.corners) || 0);
-        awayChancesCreated =
-          awayChancesCreated +
-          (parseInt(
-            data.teams[1].playerStatistics[i].statistics.chancescreated
-          ) || 0);
+    }
+    for (const p of data.teams[1].playerStatistics) {
+      for (const f of statFields) {
+        away[f] += parseInt((p.statistics as any)[f]) || 0;
       }
-      data.teams[0].score = homeScore;
-      data.teams[0].scorereceived = awayScore;
-      data.teams[1].score = awayScore;
-      data.teams[1].scorereceived = homeScore;
-      if (homeScore > awayScore) {
-        data.teams[0].result = 1;
-        data.teams[1].result = -1;
-      } else if (awayScore > homeScore) {
-        data.teams[1].result = 1;
-        data.teams[0].result = -1;
-      } else {
-        data.teams[0].result = 0;
-        data.teams[1].result = 0;
-      }
-      data.teams[0].statistics.assists = homeAssists;
-      data.teams[1].statistics.assists = awayAssists;
-      data.teams[0].statistics.secondassists = homeSecondAssists;
-      data.teams[1].statistics.secondassists = awaySecondAssists;
-      data.teams[0].statistics.shots = homeShots;
-      data.teams[1].statistics.shots = awayShots;
-      data.teams[0].statistics.shotsontarget = homeShotsOnTarget;
-      data.teams[1].statistics.shotsontarget = awayShotsOnTarget;
-      data.teams[0].statistics.fouls = homeFouls;
-      data.teams[1].statistics.fouls = awayFouls;
-      data.teams[0].statistics.passes = homePasses;
-      data.teams[1].statistics.passes = awayPasses;
-      data.teams[0].statistics.passescompleted = homePassesCompleted;
-      data.teams[1].statistics.passescompleted = awayPassesCompleted;
-      data.teams[0].statistics.keypasses = homeKeyPasses;
-      data.teams[1].statistics.keypasses = awayKeyPasses;
-      data.teams[0].statistics.offsides = homeOffsides;
-      data.teams[1].statistics.offsides = awayOffsides;
-      data.teams[0].statistics.corners = homeCorners;
-      data.teams[1].statistics.corners = awayCorners;
-      data.teams[0].statistics.chancescreated = homeChancesCreated;
-      data.teams[1].statistics.chancescreated = awayChancesCreated;
-      data.teams[0].statistics.yellowcards =
-        homeYellowCards + homeSecondYellows;
-      data.teams[1].statistics.yellowcards =
-        awayYellowCards + awaySecondYellows;
-      data.teams[0].statistics.redcards = homeRedCards + homeSecondYellows;
-      data.teams[1].statistics.redcards = awayRedCards + homeSecondYellows;
-      if (
-        data.teams[0].statistics.fouls <
-        homeYellowCards + homeRedCards + homeSecondYellows
-      ) {
-        data.teams[0].statistics.fouls =
-          homeYellowCards + homeRedCards + homeSecondYellows;
-      }
-      if (
-        data.teams[1].statistics.fouls <
-        awayYellowCards + awayRedCards + awaySecondYellows
-      ) {
-        data.teams[1].statistics.fouls =
-          awayYellowCards + awayRedCards + awaySecondYellows;
-      }
-      if (data.teams[0].statistics.shots < homeGoals) {
-        data.teams[0].statistics.shots = homeGoals;
-      }
-      if (data.teams[0].statistics.shotsontarget < homeGoals) {
-        data.teams[0].statistics.shotsontarget = homeGoals;
-      }
-      if (data.teams[1].statistics.shots < awayGoals) {
-        data.teams[1].statistics.shots = awayGoals;
-      }
-      if (data.teams[1].statistics.shotsontarget < awayGoals) {
-        data.teams[1].statistics.shotsontarget = awayGoals;
-      }
-      return prevState.map((_, i) =>
-        i === prevState.length - 1 ? data : prevState[i]
-      );
-    });
+    }
+
+    applyScoreResult(data, home.score, away.score);
+
+    const write = (t: typeof home, idx: number) => {
+      const s = data.teams[idx].statistics;
+      s.assists = t.assists;
+      s.secondassists = t.secondassists;
+      s.shots = Math.max(t.shots, t.goals);
+      s.shotsontarget = Math.max(t.shotsontarget, t.goals);
+      s.fouls = Math.max(t.fouls, t.yellowcards + t.redcards + t.secondyellows);
+      s.passes = t.passes;
+      s.passescompleted = t.passescompleted;
+      s.keypasses = t.keypasses;
+      s.offsides = t.offsides;
+      s.corners = t.corners;
+      s.chancescreated = t.chancescreated;
+      s.yellowcards = t.yellowcards + t.secondyellows;
+      s.redcards = t.redcards + t.secondyellows;
+    };
+
+    write(home, 0);
+    write(away, 1);
+
+    return data;
   }
 
-  function predictIndivStats() {
-    setEditableMatch(prevState => {
-      let data = JSON.parse(JSON.stringify(prevState.at(-1)));
-      let events = data.matchevents;
-      let steamids = [];
-      let homePlayerStatistics = data.teams[0].playerStatistics;
-      let awayPlayerStatistics = data.teams[1].playerStatistics;
-      let playerStatistics = data.players;
-      for (let i in homePlayerStatistics) {
-        homePlayerStatistics[i].statistics.goals = 0;
-        homePlayerStatistics[i].statistics.owngoals = 0;
-        homePlayerStatistics[i].statistics.yellowcards = 0;
-        homePlayerStatistics[i].statistics.redcards = 0;
-        homePlayerStatistics[i].statistics.assists = 0;
-        homePlayerStatistics[i].statistics.secondassists = 0;
+  function runPredictIndivStats(data: Match): Match {
+    const events = data.matchevents;
+    const homePlayerStatistics = data.teams[0].playerStatistics;
+    const awayPlayerStatistics = data.teams[1].playerStatistics;
+    const playerStatistics = data.players;
+
+    const resetStats = (p: MatchPlayer) => {
+      p.statistics.goals = 0;
+      p.statistics.owngoals = 0;
+      p.statistics.yellowcards = 0;
+      p.statistics.redcards = 0;
+      p.statistics.assists = 0;
+      p.statistics.secondassists = 0;
+    };
+
+    for (const p of homePlayerStatistics) resetStats(p);
+    for (const p of awayPlayerStatistics) resetStats(p);
+    for (const p of playerStatistics) resetStats(p);
+
+    const seenSteamIds = new Set<string>();
+    const steamids: { steamid: string; side: string; name: string }[] = [];
+
+    for (const ev of events) {
+      if (ev.player1SteamId && !seenSteamIds.has(ev.player1SteamId)) {
+        seenSteamIds.add(ev.player1SteamId);
+        steamids.push({ steamid: ev.player1SteamId, side: ev.team, name: ev.name });
       }
-      for (let i in awayPlayerStatistics) {
-        awayPlayerStatistics[i].statistics.goals = 0;
-        awayPlayerStatistics[i].statistics.owngoals = 0;
-        awayPlayerStatistics[i].statistics.yellowcards = 0;
-        awayPlayerStatistics[i].statistics.redcards = 0;
-        awayPlayerStatistics[i].statistics.assists = 0;
-        awayPlayerStatistics[i].statistics.secondassists = 0;
+      if (ev.player2SteamId && !seenSteamIds.has(ev.player2SteamId)) {
+        seenSteamIds.add(ev.player2SteamId);
+        steamids.push({ steamid: ev.player2SteamId, side: ev.team, name: ev.name2 });
       }
-      for (let i in playerStatistics) {
-        playerStatistics[i].statistics.goals = 0;
-        playerStatistics[i].statistics.owngoals = 0;
-        playerStatistics[i].statistics.yellowcards = 0;
-        playerStatistics[i].statistics.redcards = 0;
-        playerStatistics[i].statistics.assists = 0;
-        playerStatistics[i].statistics.secondassists = 0;
+      if (ev.player3SteamId && !seenSteamIds.has(ev.player3SteamId)) {
+        seenSteamIds.add(ev.player3SteamId);
+        steamids.push({ steamid: ev.player3SteamId, side: ev.team, name: ev.name3 });
       }
-      for (let i in events) {
-        if (!steamids.includes(events[i].player1SteamId)) {
-          steamids.push({
-            steamid: events[i].player1SteamId,
-            side: events[i].team,
-            name: events[i].name
-          });
-        }
-        if (
-          events[i].player2SteamId &&
-          !steamids.includes(events[i].player2SteamId)
-        ) {
-          steamids.push({
-            steamid: events[i].player2SteamId,
-            side: events[i].team,
-            name: events[i].name2
-          });
-        }
-        if (
-          events[i].player3SteamId &&
-          !steamids.includes(events[i].player3SteamId)
-        ) {
-          steamids.push({
-            steamid: events[i].player3SteamId,
-            side: events[i].team,
-            name: events[i].name3
-          });
+    }
+
+    for (const entry of steamids) {
+      let found = false;
+      const all = [
+        ...homePlayerStatistics,
+        ...awayPlayerStatistics,
+        ...playerStatistics
+      ];
+      for (const p of all) {
+        if (p.info.steam_id === entry.steamid) {
+          found = true;
+          predictPlayerStats(p, data);
         }
       }
-      for (let i in steamids) {
-        let found = false;
-        for (let j in homePlayerStatistics) {
-          if (steamids[i].steamid === homePlayerStatistics[j].info.steam_id) {
-            found = true;
-            predictPlayerStats(homePlayerStatistics[j], prevState.at(-1));
+      if (!found) {
+        const player: MatchPlayer = {
+          info: {
+            name: entry.name,
+            steam_id: entry.steamid,
+            team: ""
+          },
+          statistics: {
+            assists: 0,
+            corners: 0,
+            distancecovered: 0,
+            fouls: 0,
+            foulssuffered: 0,
+            freekicks: 0,
+            goalkicks: 0,
+            goals: 0,
+            goalsconceded: 0,
+            interceptions: 0,
+            offsides: 0,
+            owngoals: 0,
+            passes: 0,
+            passescompleted: 0,
+            penalties: 0,
+            positions: [],
+            possession: 0,
+            redcards: 0,
+            saves: 0,
+            savescaught: 0,
+            secondsplayed: 0,
+            shots: 0,
+            shotsontarget: 0,
+            tackles: 0,
+            tacklescompleted: 0,
+            throwins: 0,
+            yellowcards: 0,
+            keypasses: 0,
+            chancescreated: 0,
+            secondassists: 0
           }
+        };
+        if (entry.side === "home") {
+          player.info.team = data.teams[0].teamname;
+          predictPlayerStats(player, data);
+          homePlayerStatistics.push(player);
+        } else if (entry.side === "away") {
+          player.info.team = data.teams[1].teamname;
+          predictPlayerStats(player, data);
+          awayPlayerStatistics.push(player);
         }
-        for (let j in awayPlayerStatistics) {
-          if (steamids[i].steamid === awayPlayerStatistics[j].info.steam_id) {
-            found = true;
-            predictPlayerStats(awayPlayerStatistics[j], prevState.at(-1));
-          }
-        }
-        for (let j in playerStatistics) {
-          if (steamids[i].steamid === playerStatistics[j].info.steam_id) {
-            found = true;
-            predictPlayerStats(playerStatistics[j], prevState.at(-1));
-          }
-        }
-        if (!found) {
-          let player: MatchPlayer = {
-            info: {
-              name: steamids[i].name,
-              steam_id: steamids[i].steamid,
-              team: ""
-            },
-            statistics: {
-              assists: 0,
-              corners: 0,
-              distancecovered: 0,
-              fouls: 0,
-              foulssuffered: 0,
-              freekicks: 0,
-              goalkicks: 0,
-              goals: 0,
-              goalsconceded: 0,
-              interceptions: 0,
-              offsides: 0,
-              owngoals: 0,
-              passes: 0,
-              passescompleted: 0,
-              penalties: 0,
-              positions: [],
-              possession: 0,
-              redcards: 0,
-              saves: 0,
-              savescaught: 0,
-              secondsplayed: 0,
-              shots: 0,
-              shotsontarget: 0,
-              tackles: 0,
-              tacklescompleted: 0,
-              throwins: 0,
-              yellowcards: 0,
-              keypasses: 0,
-              chancescreated: 0,
-              secondassists: 0
-            }
-          };
-          if (steamids[i].side === "home") {
-            player.info.team = data.teams[0].teamname;
-            predictPlayerStats(player, prevState.at(-1));
-            homePlayerStatistics.push(player);
-          } else if (steamids[i].side === "away") {
-            player.info.team = data.teams[1].teamname;
-            predictPlayerStats(player, prevState.at(-1));
-            awayPlayerStatistics.push(player);
-          }
-          playerStatistics.push(player);
-        }
+        playerStatistics.push(player);
       }
-      data.teams[0].playerStatistics = homePlayerStatistics;
-      data.teams[1].playerStatistics = awayPlayerStatistics;
-      data.players = playerStatistics;
-      return prevState.map((_, i) =>
-        i === prevState.length - 1 ? data : prevState[i]
-      );
-    });
+    }
+
+    data.teams[0].playerStatistics = homePlayerStatistics;
+    data.teams[1].playerStatistics = awayPlayerStatistics;
+    data.players = playerStatistics;
+    return data;
   }
 
-  function predictPlayerStats(player: MatchPlayer, prevState: Match) {
-    const events = prevState.matchevents;
-    Object.assign(
-      player.statistics,
-      events.reduce(
-        (acc, item) => {
-          if (item.player1SteamId === player.info.steam_id) {
-            switch (item.event) {
-              case "GOAL":
-                acc.goals += 1;
-                break;
-              case "OWN GOAL":
-                acc.owngoals += 1;
-                break;
-              case "YELLOW CARD":
-                acc.yellowcards += 1;
-                break;
-              case "SECOND YELLOW":
-                acc.yellowcards += 1;
-                acc.redcards += 1;
-                break;
-              case "RED CARD":
-                acc.redcards += 1;
-                break;
-              default:
-            }
-          } else if (
-            item.player2SteamId === player.info.steam_id &&
-            item.event === "GOAL"
-          ) {
-            acc.assists += 1;
-          } else if (
-            item.player3SteamId === player.info.steam_id &&
-            item.event === "GOAL"
-          ) {
-            acc.secondassists += 1;
+  function predictPlayerStats(player: MatchPlayer, match: Match) {
+    const events = match.matchevents;
+    const acc = events.reduce(
+      (a, item) => {
+        if (item.player1SteamId === player.info.steam_id) {
+          switch (item.event) {
+            case "GOAL":          a.goals += 1; break;
+            case "OWN GOAL":      a.owngoals += 1; break;
+            case "YELLOW CARD":   a.yellowcards += 1; break;
+            case "SECOND YELLOW": a.yellowcards += 1; a.redcards += 1; break;
+            case "RED CARD":      a.redcards += 1; break;
           }
-          return acc;
-        },
-        {
-          goals: 0,
-          owngoals: 0,
-          yellowcards: 0,
-          redcards: 0,
-          assists: 0,
-          secondassists: 0
+        } else if (item.player2SteamId === player.info.steam_id && item.event === "GOAL") {
+          a.assists += 1;
+        } else if (item.player3SteamId === player.info.steam_id && item.event === "GOAL") {
+          a.secondassists += 1;
         }
-      )
+        return a;
+      },
+      { goals: 0, owngoals: 0, yellowcards: 0, redcards: 0, assists: 0, secondassists: 0 }
     );
-    if (
-      player.statistics.fouls <
-      player.statistics.yellowcards + player.statistics.redcards
-    ) {
-      player.statistics.fouls =
-        player.statistics.yellowcards + player.statistics.redcards;
+
+    Object.assign(player.statistics, acc);
+
+    if (player.statistics.fouls < player.statistics.yellowcards + player.statistics.redcards) {
+      player.statistics.fouls = player.statistics.yellowcards + player.statistics.redcards;
     }
     if (player.statistics.goals > player.statistics.shots) {
       player.statistics.shots = player.statistics.goals;
@@ -570,11 +347,12 @@ export default function MatchEditor({
     if (player.statistics.goals > player.statistics.shotsontarget) {
       player.statistics.shotsontarget = player.statistics.goals;
     }
-    events.forEach((e: MatchEvent) => {
+
+    for (const e of events) {
       if (e.player1SteamId === player.info.steam_id) {
         player.info.name = e.name;
       }
-    });
+    }
   }
 
   function changeVod(vod: string) {
@@ -595,10 +373,8 @@ export default function MatchEditor({
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics[index] = player;
+      const steamidlookup = oldsteamid || player.info.steam_id;
       let playerExists = false;
-      let steamidlookup: string;
-      if (oldsteamid) steamidlookup = oldsteamid;
-      else steamidlookup = player.info.steam_id;
       for (let i in data.players) {
         if (data.players[i].info.steam_id === steamidlookup) {
           data.players[i] = player;
@@ -619,6 +395,15 @@ export default function MatchEditor({
     predictTeamStats();
   }
 
+  function predictTeamStats() {
+    setEditableMatch(prevState => {
+      const data = JSON.parse(JSON.stringify(prevState.at(-1)));
+      return prevState.map((_, i) =>
+        i === prevState.length - 1 ? runPredictTeamStats(data) : prevState[i]
+      );
+    });
+  }
+
   function removePlayer(
     player: MatchPlayer,
     side: "home" | "away",
@@ -628,11 +413,9 @@ export default function MatchEditor({
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
       data.teams[s].playerStatistics.splice(index, 1);
-      for (let i in data.players) {
-        if (data.players[i].info.steam_id === player.info.steam_id) {
-          data.players.splice(i, 1);
-        }
-      }
+      data.players = data.players.filter(
+        (p: MatchPlayer) => p.info.steam_id !== player.info.steam_id
+      );
       data.matchevents = data.matchevents.filter(
         (event: MatchEvent) => event.player1SteamId !== player.info.steam_id
       );

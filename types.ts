@@ -110,7 +110,7 @@ export interface MatchTeam {
   scorereceived: number;
   result: -1 | 0 | 1;
   statistics: MatchTeamStats;
-  playerStatistics: PlayerStatistics[];
+  playerStatistics: MatchPlayer[];
 }
 
 export interface MatchEvent {
@@ -128,6 +128,7 @@ export interface MatchEvent {
   };
   name: string;
   name2?: string;
+  name3?: string;
 }
 
 export type Event =
