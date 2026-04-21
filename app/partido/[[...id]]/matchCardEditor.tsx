@@ -220,7 +220,9 @@ export default function MatchCardEditor({
                 : data.matchevents[editing.event]
             }
             index={editing.new ? data.matchevents.length : editing.event}
-            players={players}
+            side={editing.new || getEventSide(data.matchevents[editing.event])}
+            homePlayers={data.teams[0].playerStatistics}
+            awayPlayers={data.teams[1].playerStatistics}
             onChangeEvent={onChangeEvent}
             editing={editing}
             setEditing={setEditing}

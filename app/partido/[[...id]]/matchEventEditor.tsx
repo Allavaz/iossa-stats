@@ -17,6 +17,18 @@ export default function MatchEventEditor(props) {
   );
   const [eventType, setEventType] = useState(props.item.event);
 
+  const toAutocompleteShape = (matchPlayers) =>
+    matchPlayers.map(p => ({ _id: p.info.steam_id, name: p.info.name, team: p.info.team }));
+
+  const player1Players = toAutocompleteShape(
+    eventType === "OWN GOAL"
+      ? (props.side === "home" ? props.awayPlayers : props.homePlayers)
+      : (props.side === "home" ? props.homePlayers : props.awayPlayers)
+  );
+  const assistPlayers = toAutocompleteShape(
+    props.side === "home" ? props.homePlayers : props.awayPlayers
+  );
+
   const finishEditing = () => {
     let selectEventValue = (
       document.getElementById("selectEvent" + props.index) as HTMLInputElement
@@ -88,7 +100,7 @@ export default function MatchEventEditor(props) {
         <AutocompletePlayers
           defaultValue={props.item.name}
           defaultId={props.item.player1SteamId}
-          players={props.players}
+          players={player1Players}
           index={props.index}
           onChangePlayer={{ setPlayerName, setPlayerSteamId }}
           changeSteamIdField={changeSteamIdField}
@@ -97,7 +109,7 @@ export default function MatchEventEditor(props) {
         <AutocompleteSteamIDs
           defaultValue={props.item.name}
           defaultId={props.item.player1SteamId}
-          players={props.players}
+          players={player1Players}
           index={props.index}
           onChangePlayer={{ setPlayerName, setPlayerSteamId }}
           changePlayerField={changePlayerField}
@@ -124,7 +136,7 @@ export default function MatchEventEditor(props) {
             <AutocompletePlayers
               defaultValue={props.item.name2 || ""}
               defaultId={props.item.player2SteamId || ""}
-              players={props.players}
+              players={assistPlayers}
               index={props.index}
               onChangePlayer={{
                 setPlayerName: setPlayerName2,
@@ -136,7 +148,7 @@ export default function MatchEventEditor(props) {
             <AutocompleteSteamIDs
               defaultValue={props.item.name2 || ""}
               defaultId={props.item.player2SteamId || ""}
-              players={props.players}
+              players={assistPlayers}
               index={props.index}
               onChangePlayer={{
                 setPlayerName: setPlayerName2,
@@ -153,7 +165,7 @@ export default function MatchEventEditor(props) {
             <AutocompletePlayers
               defaultValue={props.item.name3 || ""}
               defaultId={props.item.player3SteamId || ""}
-              players={props.players}
+              players={assistPlayers}
               index={props.index}
               onChangePlayer={{
                 setPlayerName: setPlayerName3,
@@ -165,7 +177,7 @@ export default function MatchEventEditor(props) {
             <AutocompleteSteamIDs
               defaultValue={props.item.name3 || ""}
               defaultId={props.item.player3SteamId || ""}
-              players={props.players}
+              players={assistPlayers}
               index={props.index}
               onChangePlayer={{
                 setPlayerName: setPlayerName3,

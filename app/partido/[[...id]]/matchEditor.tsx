@@ -255,57 +255,6 @@ export default function MatchEditor({
           predictPlayerStats(p, data);
         }
       }
-      if (!found) {
-        const player: MatchPlayer = {
-          info: {
-            name: entry.name,
-            steam_id: entry.steamid,
-            team: ""
-          },
-          statistics: {
-            assists: 0,
-            corners: 0,
-            distancecovered: 0,
-            fouls: 0,
-            foulssuffered: 0,
-            freekicks: 0,
-            goalkicks: 0,
-            goals: 0,
-            goalsconceded: 0,
-            interceptions: 0,
-            offsides: 0,
-            owngoals: 0,
-            passes: 0,
-            passescompleted: 0,
-            penalties: 0,
-            positions: [],
-            possession: 0,
-            redcards: 0,
-            saves: 0,
-            savescaught: 0,
-            secondsplayed: 0,
-            shots: 0,
-            shotsontarget: 0,
-            tackles: 0,
-            tacklescompleted: 0,
-            throwins: 0,
-            yellowcards: 0,
-            keypasses: 0,
-            chancescreated: 0,
-            secondassists: 0
-          }
-        };
-        if (entry.side === "home") {
-          player.info.team = data.teams[0].teamname;
-          predictPlayerStats(player, data);
-          homePlayerStatistics.push(player);
-        } else if (entry.side === "away") {
-          player.info.team = data.teams[1].teamname;
-          predictPlayerStats(player, data);
-          awayPlayerStatistics.push(player);
-        }
-        playerStatistics.push(player);
-      }
     }
 
     data.teams[0].playerStatistics = homePlayerStatistics;
