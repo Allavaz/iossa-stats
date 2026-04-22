@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Team {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  shortname String
+  logo      String
+
+  homeMatches Match[] @relation("HomeTeam")
+  awayMatches Match[] @relation("AwayTeam")
+}
+
+model Player {
+  id      Int    @id @default(autoincrement())
+  name    String
+  steamid String @unique
+
+  matchPlayers  MatchPlayer[]
+  matchEvents1  MatchEvent[]  @relation("EventPlayer1")
+  matchEvents2  MatchEvent[]  @relation("EventPlayer2")
+  matchEvents3  MatchEvent[]  @relation("EventPlayer3")
+}
+
+model Match {
+  id            Int      @id @default(autoincrement())
+  mongoID       String?  @unique
+  sourceJSON    Json
+  tournament    String
+  homeScore     Int
+  awayScore     Int
+  homeTeamId    Int
+  awayTeamId    Int
+  date          DateTime
+  filename      String?
+  secondsPlayed Int
+  format        Int
+
+  homeTeam      Team         @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam      Team         @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  matchPlayers  MatchPlayer[]
+  matchEvents   MatchEvent[]
+}
+
+enum Side {
+  home
+  away
+}
+
+model MatchPlayer {
+  id               Int    @id @default(autoincrement())
+  matchId          Int
+  playerId         Int
+  side             Side
+
+  goals            Int
+  assists          Int
+  shots            Int
+  shotsontarget    Int
+  passes           Int
+  passescompleted  Int
+  interceptions    Int
+  saves            Int
+  fouls            Int
+  yellowcards      Int
+  redcards         Int
+  owngoals         Int
+  offsides         Int
+  distancecovered  Float
+  possession       Float
+  corners          Int
+  throwins         Int
+  penalties        Int
+  freekicks        Int
+  tackles          Int
+  tacklescompleted Int
+  foulssuffered    Int
+  savescaught      Int
+  goalkicks        Int
+  goalsconceded    Int
+  secondsplayed    Int
+  keypasses        Int
+  chancescreated   Int
+  secondassists    Int
+
+  match             Match                @relation(fields: [matchId], references: [id])
+  player            Player               @relation(fields: [playerId], references: [id])
+  positions         MatchPlayerPosition[]
+
+  @@unique([matchId, playerId])
+}
+
+enum EventType {
+  GOAL
+  YELLOW_CARD
+  SECOND_YELLOW
+  RED_CARD
+  OWN_GOAL
+}
+
+model MatchEvent {
+  id          Int       @id @default(autoincrement())
+  matchId     Int
+  eventType   EventType
+  player1Id   Int?
+  player2Id   Int?
+  player3Id   Int?
+  minute      Int
+
+  match       Match   @relation(fields: [matchId], references: [id])
+  player1     Player? @relation("EventPlayer1", fields: [player1Id], references: [id])
+  player2     Player? @relation("EventPlayer2", fields: [player2Id], references: [id])
+  player3     Player? @relation("EventPlayer3", fields: [player3Id], references: [id])
+}
+
+model MatchPlayerPosition {
+  id            Int    @id @default(autoincrement())
+  matchPlayerId Int
+  position      String
+  secondsPlayed Int
+
+  matchPlayer   MatchPlayer @relation(fields: [matchPlayerId], references: [id])
+}

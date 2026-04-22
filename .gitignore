@@ -44,3 +44,5 @@ steam_cache.db-shm
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/generated/prisma
