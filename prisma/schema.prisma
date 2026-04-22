@@ -41,6 +41,7 @@ model Match {
   filename      String?
   secondsPlayed Int
   format        Int
+  isDefault     Boolean
 
   homeTeam      Team         @relation("HomeTeam", fields: [homeTeamId], references: [id])
   awayTeam      Team         @relation("AwayTeam", fields: [awayTeamId], references: [id])
