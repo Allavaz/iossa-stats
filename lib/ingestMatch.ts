@@ -123,7 +123,7 @@ function statsToObject(stats: number[]) {
 
 export async function ingestMatch(
   json: RawMatchData,
-  tournament: string,
+  tournamentId: number,
   filename?: string
 ) {
   const { matchData } = json;
@@ -162,11 +162,11 @@ export async function ingestMatch(
     const match = await tx.match.create({
       data: {
         sourceJSON: json as object,
-        tournament,
+        tournament: { connect: { id: tournamentId } },
         homeScore,
         awayScore,
-        homeTeamId: homeTeam.id,
-        awayTeamId: awayTeam.id,
+        homeTeam: { connect: { id: homeTeam.id } },
+        awayTeam: { connect: { id: awayTeam.id } },
         date,
         filename: filename ?? null,
         secondsPlayed,

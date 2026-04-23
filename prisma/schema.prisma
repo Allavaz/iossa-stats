@@ -28,11 +28,40 @@ model Player {
   matchEvents3  MatchEvent[]  @relation("EventPlayer3")
 }
 
+model TournamentType {
+  id                  Int              @id @default(autoincrement())
+  name                String           @unique
+  queryCode           String?          @unique
+  logo                String           @default("")
+  tier                String?
+  isSelecciones       Boolean          @default(false)
+  promotionBetween1Id Int?
+  promotionBetween2Id Int?
+  promotionBetween1   TournamentType?  @relation("PromotionB1", fields: [promotionBetween1Id], references: [id])
+  promotionBetween2   TournamentType?  @relation("PromotionB2", fields: [promotionBetween2Id], references: [id])
+  promotionBetween1Of TournamentType[] @relation("PromotionB1")
+  promotionBetween2Of TournamentType[] @relation("PromotionB2")
+  tournaments         Tournament[]
+}
+
+model Tournament {
+  id               Int             @id @default(autoincrement())
+  name             String          @unique
+  queryCode        String?         @unique
+  season           Int?
+  tournamentTypeId Int
+  parentId         Int?
+  tournamentType   TournamentType  @relation(fields: [tournamentTypeId], references: [id])
+  parent           Tournament?     @relation("SubTournament", fields: [parentId], references: [id])
+  children         Tournament[]    @relation("SubTournament")
+  matches          Match[]
+}
+
 model Match {
   id            Int      @id @default(autoincrement())
   mongoID       String?  @unique
   sourceJSON    Json
-  tournament    String
+  tournamentId  Int
   homeScore     Int
   awayScore     Int
   homeTeamId    Int
@@ -41,8 +70,9 @@ model Match {
   filename      String?
   secondsPlayed Int
   format        Int
-  isDefault     Boolean
+  isDefault     Boolean  @default(false)
 
+  tournament    Tournament   @relation(fields: [tournamentId], references: [id])
   homeTeam      Team         @relation("HomeTeam", fields: [homeTeamId], references: [id])
   awayTeam      Team         @relation("AwayTeam", fields: [awayTeamId], references: [id])
   matchPlayers  MatchPlayer[]
