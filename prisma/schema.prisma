@@ -89,6 +89,7 @@ model MatchPlayer {
   matchId          Int
   playerId         Int
   side             Side
+  name             String
 
   goals            Int
   assists          Int
@@ -124,7 +125,7 @@ model MatchPlayer {
   player            Player               @relation(fields: [playerId], references: [id])
   positions         MatchPlayerPosition[]
 
-  @@unique([matchId, playerId])
+  @@unique([matchId, playerId, side])
 }
 
 enum EventType {

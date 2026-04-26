@@ -140,8 +140,9 @@ export async function ingestMatch(
   const homeOwnGoals = homeTeamRaw.matchTotal.statistics[ownGoalsIdx];
   const awayOwnGoals = awayTeamRaw.matchTotal.statistics[ownGoalsIdx];
 
-  const homeScore = homeGoals + homeOwnGoals;
-  const awayScore = awayGoals + awayOwnGoals;
+  // own goals scored by a team count for the opponent
+  const homeScore = homeGoals + awayOwnGoals;
+  const awayScore = awayGoals + homeOwnGoals;
 
   const secondsPlayed = matchInfo.endTime - matchInfo.startTime;
   const date = new Date(matchInfo.startTime * 1000);

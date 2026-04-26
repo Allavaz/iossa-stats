@@ -306,6 +306,12 @@
       },
       {
         "torneo": "Copa del Sur T14 - Eliminatorias"
+      },
+      {
+        "torneo": "Promoción D1/D2 T14"
+      },
+      {
+        "torneo": "Promoción D2/D3 T14"
       }
     ]
   },
@@ -786,6 +792,9 @@
       {
         "torneo": "Recopa Maradei T5",
         "query": "recopamaradeit5"
+      },
+      {
+        "torneo": "Recopa Maradei T5 (Repechaje)"
       }
     ]
   },
@@ -812,6 +821,9 @@
         "torneo": "Copa Gubero",
         "query": "cgt4",
         "challonge": "copagubero"
+      },
+      {
+        "torneo": "Liga D1 T4 - Promoción"
       }
     ]
   },
@@ -838,6 +850,15 @@
         "torneo": "Liga D2 T3 - Desempate 3er Puesto (Vuelta)",
         "tabla": "d2t3",
         "tablaLabel": "Liga D2 T3"
+      },
+      {
+        "torneo": "Supercopa Master T3 (Repechaje)"
+      },
+      {
+        "torneo": "Liga D1 T3 - Promoción (Ida)"
+      },
+      {
+        "torneo": "Liga D1 T3 - Promoción (Vuelta)"
       },
       {
         "torneo": "Copa Master T3",

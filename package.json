@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "cache-manager": "npx tsx scripts/cache-manager.ts"
+    "cache-manager": "npx tsx scripts/cache-manager.ts",
+    "migrate-mongo": "npx tsx scripts/migrateMongoToPostgres.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

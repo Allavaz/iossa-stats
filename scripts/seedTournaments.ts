@@ -1,4 +1,9 @@
-import { prisma } from "@/lib/prisma";
+import { config } from "dotenv";
+config({ path: new URL("../.env.local", import.meta.url).pathname });
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 import fs from "fs";
 import path from "path";
 
@@ -20,19 +25,16 @@ function extractSeason(torneoName: string): number | null {
   return match ? parseInt(match[1]) : null;
 }
 
+function extractSeasonFromTemporada(temporada: string): number | null {
+  const match = temporada.match(/^t(\d+)$/i);
+  if (!match) return null;
+  return parseInt(match[1]); // returns 0 for t0, which is valid
+}
+
 function extractQueryCode(query: string | undefined): string | null {
   if (!query) return null;
-  const baseMatch = query.match(/^([a-z0-9]+)/i);
-  if (!baseMatch) return null;
-  const prefix = baseMatch[1].toLowerCase();
-  const multiCharPrefixes = [
-    "d1", "d2", "d3", "d4", "sd", "cd", "lz", "cg", "lm", "ddh", "cv",
-    "izoro", "izplata", "supercopacasanat"
-  ];
-  if (multiCharPrefixes.some(p => query.toLowerCase().startsWith(p))) {
-    return query.toLowerCase();
-  }
-  return prefix;
+  // strip trailing season number to get the base type query code
+  return query.toLowerCase().replace(/t\d+[a-z]?$/, "") || query.toLowerCase();
 }
 
 function getBaseTypeName(torneoName: string): string {
@@ -84,11 +86,44 @@ async function seedTournaments() {
 
   console.log(`Created ${tournamentTypeMap.size} tournament types`);
 
-  for (const season of data) {
-    if (["all", "primerorden", "segundoorden", "tercerorden", "selecciones"].includes(season.temporada)) continue;
+  // create promotion TournamentTypes and wire up the FKs
+  const promotions: { name: string; between: [string, string] }[] = [
+    { name: "Promoción D1/D2", between: ["Liga D1", "Liga D2"] },
+    { name: "Promoción D2/D3", between: ["Liga D2", "Liga D3"] },
+    { name: "Promoción D3/D4", between: ["Liga D3", "Liga D4"] },
+  ];
 
-    const seasonNum = extractSeason(season.temporada);
-    if (!seasonNum) continue;
+  for (const promo of promotions) {
+    const t1Id = tournamentTypeMap.get(promo.between[0]);
+    const t2Id = tournamentTypeMap.get(promo.between[1]);
+    if (!t1Id || !t2Id) continue;
+
+    await prisma.tournamentType.upsert({
+      where: { name: promo.name },
+      create: {
+        name: promo.name,
+        queryCode: null,
+        promotionBetween1Id: t1Id,
+        promotionBetween2Id: t2Id,
+      },
+      update: {
+        promotionBetween1Id: t1Id,
+        promotionBetween2Id: t2Id,
+      },
+    });
+  }
+
+  const seasonBlocks = data.filter(s =>
+    !["all", "primerorden", "segundoorden", "tercerorden"].includes(s.temporada)
+  );
+
+  // Pass 1: create parent tournaments (entries with a query field)
+  for (const season of seasonBlocks) {
+    const seasonNum = season.temporada === "selecciones"
+      ? null
+      : extractSeasonFromTemporada(season.temporada);
+    // reject non-season temporadas that aren't selecciones
+    if (seasonNum === null && season.temporada !== "selecciones") continue;
 
     for (const tt of season.torneos) {
       if (!tt.query) continue;
@@ -97,57 +132,71 @@ async function seedTournaments() {
       const typeId = tournamentTypeMap.get(baseTypeName);
       if (!typeId) continue;
 
-      const queryCode = extractQueryCode(tt.query);
-      if (!queryCode) continue;
+      const queryCode = tt.query.toLowerCase();
 
-      const existing = await prisma.tournament.findFirst({
-        where: { queryCode: queryCode, season: seasonNum }
-      });
+      const existing = await prisma.tournament.findUnique({ where: { queryCode } });
       if (existing) {
-        parentMap.set(`${baseTypeName}|${seasonNum}`, existing.id);
+        if (seasonNum !== null) parentMap.set(`${baseTypeName}|${seasonNum}`, existing.id);
         continue;
       }
 
       const created = await prisma.tournament.create({
         data: {
           name: tt.torneo,
-          queryCode: queryCode,
+          queryCode,
           season: seasonNum,
           tournamentTypeId: typeId
         }
       });
-      parentMap.set(`${baseTypeName}|${seasonNum}`, created.id);
+      if (seasonNum !== null) parentMap.set(`${baseTypeName}|${seasonNum}`, created.id);
     }
   }
 
-  for (const season of data) {
-    if (["all", "primerorden", "segundoorden", "tercerorden", "selecciones"].includes(season.temporada)) continue;
-
-    const seasonNum = extractSeason(season.temporada);
-    if (!seasonNum) continue;
+  // Pass 2: create sub-tournaments (entries with tabla but no query) and no-key entries
+  for (const season of seasonBlocks) {
+    const seasonNum = season.temporada === "selecciones"
+      ? null
+      : extractSeasonFromTemporada(season.temporada);
+    if (seasonNum === null && season.temporada !== "selecciones") continue;
 
     for (const tt of season.torneos) {
-      if (!tt.tabla || tt.query) continue;
+      if (tt.query) continue; // already handled in pass 1
 
       const parentName = getBaseTypeName(tt.torneo);
-      const parentKey = `${parentName}|${seasonNum}`;
-      const parentId = parentMap.get(parentKey);
-      if (!parentId) continue;
-
-      const queryCode = extractQueryCode(tt.tabla);
-      const existing = await prisma.tournament.findFirst({ where: { queryCode: queryCode } });
-      if (existing) continue;
-
+      const parentKey = seasonNum !== null ? `${parentName}|${seasonNum}` : null;
+      const parentId = parentKey ? parentMap.get(parentKey) : undefined;
       const typeId = tournamentTypeMap.get(parentName);
-      await prisma.tournament.create({
-        data: {
-          name: tt.torneo,
-          queryCode: queryCode,
-          season: seasonNum,
-          tournamentTypeId: typeId ?? 1,
-          parentId: parentId
-        }
-      });
+
+      if (tt.tabla) {
+        // sub-tournament: use tabla as queryCode
+        const queryCode = tt.tabla.toLowerCase();
+        const existing = await prisma.tournament.findFirst({ where: { queryCode } });
+        if (existing) continue;
+
+        await prisma.tournament.create({
+          data: {
+            name: tt.torneo,
+            queryCode,
+            season: seasonNum,
+            tournamentTypeId: typeId ?? 1,
+            parentId: parentId ?? null
+          }
+        });
+      } else {
+        // no query, no tabla — create with null queryCode, matched by exact torneo name
+        const existing = await prisma.tournament.findFirst({ where: { name: tt.torneo } });
+        if (existing) continue;
+
+        await prisma.tournament.create({
+          data: {
+            name: tt.torneo,
+            queryCode: null,
+            season: seasonNum,
+            tournamentTypeId: typeId ?? 1,
+            parentId: parentId ?? null
+          }
+        });
+      }
     }
   }
 

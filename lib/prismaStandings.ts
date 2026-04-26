@@ -24,18 +24,21 @@ export async function getStandings(
       homeTeam: true,
       awayTeam: true
     },
-    orderBy: { date: 'desc' }
+    orderBy: { date: "desc" }
   });
 
-  const teamStats = new Map<string, {
-    PJ: number;
-    PG: number;
-    PE: number;
-    PP: number;
-    GF: number;
-    GC: number;
-    results: number[];
-  }>();
+  const teamStats = new Map<
+    string,
+    {
+      PJ: number;
+      PG: number;
+      PE: number;
+      PP: number;
+      GF: number;
+      GC: number;
+      results: number[];
+    }
+  >();
 
   for (const match of matches) {
     const homeName = match.homeTeam.name;
@@ -44,10 +47,26 @@ export async function getStandings(
     const awayScore = match.awayScore;
 
     if (!teamStats.has(homeName)) {
-      teamStats.set(homeName, { PJ: 0, PG: 0, PE: 0, PP: 0, GF: 0, GC: 0, results: [] });
+      teamStats.set(homeName, {
+        PJ: 0,
+        PG: 0,
+        PE: 0,
+        PP: 0,
+        GF: 0,
+        GC: 0,
+        results: []
+      });
     }
     if (!teamStats.has(awayName)) {
-      teamStats.set(awayName, { PJ: 0, PG: 0, PE: 0, PP: 0, GF: 0, GC: 0, results: [] });
+      teamStats.set(awayName, {
+        PJ: 0,
+        PG: 0,
+        PE: 0,
+        PP: 0,
+        GF: 0,
+        GC: 0,
+        results: []
+      });
     }
 
     const home = teamStats.get(homeName)!;
@@ -78,24 +97,27 @@ export async function getStandings(
     }
   }
 
-  const standings: StandingEntry[] = Array.from(teamStats.entries()).map(([name, stats]) => ({
-    _id: name,
-    teamName: name,
-    PJ: stats.PJ,
-    Pts: stats.PG * 3 + stats.PE,
-    GF: stats.GF,
-    GC: stats.GC,
-    PG: stats.PG,
-    PE: stats.PE,
-    PP: stats.PP,
-    DF: stats.GF - stats.GC,
-    last5: stats.results.slice(0, 5)
-  }));
+  const standings: StandingEntry[] = Array.from(teamStats.entries()).map(
+    ([name, stats]) => ({
+      _id: name,
+      teamName: name,
+      PJ: stats.PJ,
+      Pts: stats.PG * 3 + stats.PE,
+      GF: stats.GF,
+      GC: stats.GC,
+      PG: stats.PG,
+      PE: stats.PE,
+      PP: stats.PP,
+      DF: stats.GF - stats.GC,
+      last5: stats.results.slice(0, 5)
+    })
+  );
 
   standings.sort((a, b) => {
     if (b.Pts !== a.Pts) return b.Pts - a.Pts;
     if (a.PJ !== b.PJ) return a.PJ - b.PJ;
-    return b.DF - a.DF;
+    if (b.DF !== a.DF) return b.DF - a.DF;
+    return a.teamName.localeCompare(b.teamName);
   });
 
   return standings;
@@ -103,16 +125,6 @@ export async function getStandings(
 
 export async function getManyStandings(
   tournamentFilters: Prisma.MatchWhereInput[]
-): Promise<Map<string, StandingEntry[]>> {
-  const result = new Map<string, StandingEntry[]>();
-
-  await Promise.all(
-    tournamentFilters.map(async (filter) => {
-      const key = JSON.stringify(filter);
-      const standings = await getStandings(filter);
-      result.set(key, standings);
-    })
-  );
-
-  return result;
+): Promise<StandingEntry[][]> {
+  return Promise.all(tournamentFilters.map(filter => getStandings(filter)));
 }

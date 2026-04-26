@@ -19,7 +19,7 @@ const primerOrden = [
 const segundoOrden = ["Liga D2", "Copa D2", "Copa Intrazonal de Plata"];
 const tercerOrden = ["Liga D3", "Copa D3", "Liga Zero", "Liga D4"];
 
-function getRegex(arg: string) {
+export function getRegex(arg: string) {
   const tempregex = /^t([0-9]+)/i;
   const d1regex = /^d1t([0-9]+)/i;
   const d2regex = /^d2t([0-9]+)/i;
