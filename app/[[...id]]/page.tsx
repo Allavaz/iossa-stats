@@ -4,6 +4,7 @@ import { getTablas, temporadaActual } from "../../utils/Utils";
 import Home from "./home";
 import MatchEditor from "../partido/[[...id]]/matchEditor";
 import { notFound } from "next/navigation";
+import { isAdmin } from "../../auth";
 
 async function getPosiciones() {
   const listaTablas = getTablas(temporadaActual());
@@ -18,7 +19,8 @@ async function getPosiciones() {
 
 export default async function IndexPage(props) {
   const params = await props.params;
-  if (params.id?.[0] === process.env.ENDPOINT) {
+  if (params.id?.[0] === "create") {
+    if (!await isAdmin()) return notFound();
     const players = await getPlayers("mini");
     return (
       <MatchEditor

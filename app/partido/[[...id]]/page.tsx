@@ -3,6 +3,7 @@ import { getMatch, getPlayers, getPositions } from "../../../lib/getFromDB";
 import Torneos from "../../../utils/Torneos.json";
 import MatchComponent from "./match";
 import MatchEditor from "./matchEditor";
+import { isAdmin } from "../../../auth";
 
 export async function generateMetadata(props) {
   const params = await props.params;
@@ -53,7 +54,7 @@ export default async function MatchPage(props) {
   const params = await props.params;
   const { match, table, challonge } = await getData(params.id?.[0]);
 
-  if (params.id?.[1] === process.env.ENDPOINT) {
+  if (params.id?.[1] === "edit" && await isAdmin()) {
     const players = await getPlayers("mini");
     return (
       <MatchEditor

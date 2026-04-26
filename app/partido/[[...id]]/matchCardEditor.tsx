@@ -53,8 +53,8 @@ export default function MatchCardEditor({
   create: boolean;
   disableUndo: boolean;
   dropFile: (ev: React.DragEvent) => void;
-  updateMatch: (password: string) => void;
-  deleteMatch: (password: string) => void;
+  updateMatch: () => void;
+  deleteMatch: () => void;
   exportMatch: () => void;
   restartEditing: () => void;
   undo: () => void;
@@ -454,20 +454,10 @@ export default function MatchCardEditor({
                     </div>
                   </div>
                 )}
-                <input
-                  className="rounded-lg border border-neutral-200 bg-white p-1 text-center shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
-                  id="password"
-                  disabled={loading}
-                  type="password"
-                  placeholder="Contraseña"
-                />
                 <Button
                   disabled={loading}
                   onClick={e => {
-                    updateMatch(
-                      (document.getElementById("password") as HTMLInputElement)
-                        .value
-                    );
+                    updateMatch();
                   }}
                 >
                   {create ? "Subir partido" : "Guardar cambios"}
@@ -476,13 +466,7 @@ export default function MatchCardEditor({
                   <Button
                     disabled={loading}
                     onClick={e => {
-                      deleteMatch(
-                        (
-                          document.getElementById(
-                            "password"
-                          ) as HTMLInputElement
-                        ).value
-                      );
+                      deleteMatch();
                     }}
                   >
                     Eliminar partido

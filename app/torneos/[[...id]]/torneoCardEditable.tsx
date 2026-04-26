@@ -18,7 +18,6 @@ export default function TorneoCardEditable({
 }) {
   const [winner, setWinner] = useState(winners?.firstPlace || "Agregar equipo");
   const [editing, setEditing] = useState(false);
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -29,16 +28,12 @@ export default function TorneoCardEditable({
     axios
       .post("/api/champion", {
         torneo,
-        teamname: winner,
-        password: password
+        teamname: winner
       })
       .then(res => {
         if (res.data === "Success") {
           alert("Campeón actualizado!");
           router.push(pathname.split("/").slice(0, -1).join("/"));
-        } else if (res.data === "wrong pw") {
-          alert("Contraseña incorrecta");
-          setLoading(false);
         } else {
           alert("Error");
           setLoading(false);
@@ -52,17 +47,13 @@ export default function TorneoCardEditable({
     axios
       .delete("/api/champion", {
         data: {
-          torneo,
-          password: password
+          torneo
         }
       })
       .then(res => {
         if (res.data === "Success") {
           alert("Campeón borrado!");
           router.push(pathname.split("/").slice(0, -1).join("/"));
-        } else if (res.data === "wrong pw") {
-          alert("Contraseña incorrecta");
-          setLoading(false);
         } else {
           alert("Error");
           setLoading(false);
@@ -88,17 +79,10 @@ export default function TorneoCardEditable({
           {editing || !winner ? (
             <div className="flex flex-col items-center gap-4">
               <AutocompleteTeams defaultValue={winner} setValue={setWinner} />
-              <input
-                type="password"
-                placeholder="Contraseña"
-                className="rounded-lg border border-neutral-200 bg-white p-1 text-center shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
-                onChange={e => setPassword(e.target.value)}
-                disabled={loading}
-              />
               <div className="flex gap-2 text-sm">
                 <Button
                   onClick={_ => updateChampion()}
-                  disabled={loading || !password}
+                  disabled={loading}
                 >
                   Guardar
                 </Button>
@@ -106,7 +90,6 @@ export default function TorneoCardEditable({
                   onClick={_ => {
                     setEditing(false);
                     setWinner(winners?.firstPlace || "Agregar equipo");
-                    setPassword("");
                   }}
                   disabled={loading}
                 >
@@ -114,7 +97,7 @@ export default function TorneoCardEditable({
                 </Button>
                 {winners?.firstPlace && (
                   <Button
-                    disabled={loading || !password}
+                    disabled={loading}
                     onClick={_ => deleteChampion()}
                   >
                     Borrar campeón

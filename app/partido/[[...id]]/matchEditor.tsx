@@ -389,13 +389,11 @@ export default function MatchEditor({
     setEditing(null);
   }
 
-  function updateMatch(password: string) {
+  function updateMatch() {
     if (editableMatch.at(-1).torneo === "Torneo") {
       alert("Te faltó elegir el torneo!");
     } else if (editing) {
       alert("Hay cambios sin guardar!");
-    } else if (password === "") {
-      alert("Ingrese la contraseña.");
     } else if (
       editableMatch.at(-1).teams[0].statistics.possession +
         editableMatch.at(-1).teams[1].statistics.possession !==
@@ -406,13 +404,10 @@ export default function MatchEditor({
       setLoading(true);
       axios
         .post(`/api/post${create ? "upload" : "update"}`, {
-          password: password,
           data: editableMatch.at(-1)
         })
         .then(res => {
-          if (res.data === "wrong pw") {
-            alert("Contraseña incorrecta!");
-          } else if (res.data.status === "Success!") {
+          if (res.data.status === "Success!") {
             if (create) {
               setEditableMatch(old =>
                 old.map((e, i) => {
@@ -434,28 +429,21 @@ export default function MatchEditor({
     }
   }
 
-  function deleteMatch(password: string) {
-    if (password === "") {
-      alert("Ingrese la contraseña.");
-    } else {
-      setLoading(true);
-      axios
-        .post("/api/postdelete", {
-          password: password,
-          data: editableMatch.at(-1)
-        })
-        .then(res => {
-          if (res.data === "wrong pw") {
-            alert("Contraseña incorrecta!");
-          } else if (res.data === "Success!") {
-            setSuccess("deleting");
-          } else {
-            alert("Ocurrió un error. Revisá la consola.");
-          }
-          setLoading(false);
-        })
-        .catch(e => console.error(e));
-    }
+  function deleteMatch() {
+    setLoading(true);
+    axios
+      .post("/api/postdelete", {
+        data: editableMatch.at(-1)
+      })
+      .then(res => {
+        if (res.data === "Success!") {
+          setSuccess("deleting");
+        } else {
+          alert("Ocurrió un error. Revisá la consola.");
+        }
+        setLoading(false);
+      })
+      .catch(e => console.error(e));
   }
 
   function undo() {

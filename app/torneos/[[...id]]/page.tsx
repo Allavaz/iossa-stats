@@ -26,12 +26,12 @@ import TorneoSelect from "./torneoSelect";
 import TorneoCardEditable from "./torneoCardEditable";
 import Top10Arqueros from "../../top10/[[...id]]/top10Arqueros";
 import Top10Intercepciones from "../../top10/[[...id]]/top10Intercepciones";
+import { isAdmin } from "../../../auth";
 
 export async function generateMetadata(props) {
   const params = await props.params;
-  const editable = params.id?.includes(process.env.ENDPOINT);
-  if (editable) {
-    params.id = params.id.filter(item => item !== process.env.ENDPOINT);
+  if (params.id?.at(-1) === "edit") {
+    params.id = params.id.slice(0, -1);
   }
   const torneo = params.id?.[0] || "d1";
   const torneoLabel = getTorneoLabel(torneo);
@@ -46,9 +46,9 @@ export async function generateMetadata(props) {
 
 export default async function Torneos(props) {
   const params = await props.params;
-  const editable = params.id?.includes(process.env.ENDPOINT);
-  if (editable) {
-    params.id = params.id.filter(item => item !== process.env.ENDPOINT);
+  const editable = params.id?.at(-1) === "edit" && await isAdmin();
+  if (params.id?.at(-1) === "edit") {
+    params.id = params.id.slice(0, -1);
   }
   const torneo = params.id?.[0] || "d1";
   const torneoLabel = getTorneoLabel(torneo);
