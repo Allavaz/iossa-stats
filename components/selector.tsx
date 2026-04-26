@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import NProgress from "nprogress";
 import Torneos from "../utils/Torneos.json";
 import Button from "./ui/button";
 import Select from "./ui/select";
@@ -9,6 +10,7 @@ export default function Selector({ context, temporada }) {
   const router = useRouter();
 
   const selectTorneo = (context: string, torneo: string) => {
+    NProgress.start();
     router.push(`/${context}/${torneo}`);
   };
 
