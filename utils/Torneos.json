@@ -100,17 +100,112 @@
   {
     "temporada": "primerorden",
     "titulo": "Primer Orden",
-    "torneos": []
+    "torneos": [
+      {
+        "torneo": "Liga D1",
+        "query": "d1"
+      },
+      {
+        "torneo": "Copa Master",
+        "query": "master"
+      },
+      {
+        "torneo": "Copa valencARc",
+        "query": "cv"
+      },
+      {
+        "torneo": "Copa Maradei",
+        "query": "maradei"
+      },
+      {
+        "torneo": "Recopa Master",
+        "query": "recopamaster"
+      },
+      {
+        "torneo": "Recopa Maradei",
+        "query": "recopamaradei"
+      },
+      {
+        "torneo": "Supercopa Master",
+        "query": "supercopamaster"
+      },
+      {
+        "torneo": "Supercopa Casana",
+        "query": "supercopacasana"
+      },
+      {
+        "torneo": "Copa America",
+        "query": "america"
+      },
+      {
+        "torneo": "Copa del Sur",
+        "query": "copadelsur"
+      },
+      {
+        "torneo": "Copa Gubero",
+        "query": "cg"
+      },
+      {
+        "torneo": "Liga Master",
+        "query": "lm"
+      },
+      {
+        "torneo": "Division de Honor",
+        "query": "ddh"
+      },
+      {
+        "torneo": "Superliga D1",
+        "query": "sd1"
+      },
+      {
+        "torneo": "Copa D1",
+        "query": "cd1"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro",
+        "query": "izoro"
+      }
+    ]
   },
   {
     "temporada": "segundoorden",
     "titulo": "Segundo Orden",
-    "torneos": []
+    "torneos": [
+      {
+        "torneo": "Liga D2",
+        "query": "d2"
+      },
+      {
+        "torneo": "Copa D2",
+        "query": "cd2"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata",
+        "query": "izplata"
+      }
+    ]
   },
   {
     "temporada": "tercerorden",
     "titulo": "Tercer Orden",
-    "torneos": []
+    "torneos": [
+      {
+        "torneo": "Liga D3",
+        "query": "d3"
+      },
+      {
+        "torneo": "Copa D3",
+        "query": "cd3"
+      },
+      {
+        "torneo": "Liga Zero",
+        "query": "lz"
+      },
+      {
+        "torneo": "Liga D4",
+        "query": "d4"
+      }
+    ]
   },
   {
     "temporada": "selecciones",

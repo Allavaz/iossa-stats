@@ -1,23 +1,15 @@
-const primerOrden = [
-  "Liga D1",
-  "Copa Master",
-  "Copa valencARc",
-  "Copa Maradei",
-  "Recopa Master",
-  "Recopa Maradei",
-  "Supercopa Master",
-  "Supercopa Casana",
-  "Copa America",
-  "Copa del Sur",
-  "Copa Gubero",
-  "Liga Master",
-  "Division de Honor",
-  "Superliga D1",
-  "Copa D1",
-  "Copa Intrazonal de Oro"
-];
-const segundoOrden = ["Liga D2", "Copa D2", "Copa Intrazonal de Plata"];
-const tercerOrden = ["Liga D3", "Copa D3", "Liga Zero", "Liga D4"];
+import Torneos from "@/utils/Torneos.json";
+
+function getTorneoNames(temporada: string): string[] {
+  return (
+    Torneos.find(t => t.temporada === temporada)?.torneos.map(t => t.torneo) ??
+    []
+  );
+}
+
+const primerOrden = getTorneoNames("primerorden");
+const segundoOrden = getTorneoNames("segundoorden");
+const tercerOrden = getTorneoNames("tercerorden");
 
 function getRegex(arg: string) {
   const tempregex = /^t([0-9]+)/i;
