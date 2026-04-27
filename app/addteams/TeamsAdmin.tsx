@@ -129,6 +129,7 @@ export default function TeamsAdmin({
             <Table.HeaderCell>Logo</Table.HeaderCell>
             <Table.HeaderCell>Nombre</Table.HeaderCell>
             <Table.HeaderCell>Nombre corto</Table.HeaderCell>
+            <Table.HeaderCell>Nombres alternativos</Table.HeaderCell>
             <Table.HeaderCell>Acciones</Table.HeaderCell>
           </Table.HeaderRow>
         </thead>
@@ -158,6 +159,7 @@ function TeamRow({
   onUpdate: (t: TeamDoc) => void;
 }) {
   const [shortname, setShortname] = useState(team.shortname);
+  const [aliasesInput, setAliasesInput] = useState((team.aliases ?? []).join(", "));
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -190,16 +192,17 @@ function TeamRow({
         }
         logofilename = uploaded;
       }
+      const aliases = [...new Set(aliasesInput.split(",").map(s => s.trim()).filter(Boolean))];
       const res = await fetch("/api/teams", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: team.name, shortname, logofilename })
+        body: JSON.stringify({ name: team.name, shortname, logofilename, aliases })
       });
       if (!res.ok) {
         setError("Error al guardar.");
         return;
       }
-      onUpdate({ name: team.name, shortname, logofilename });
+      onUpdate({ name: team.name, shortname, logofilename, aliases });
       setFile(null);
       if (fileRef.current) fileRef.current.value = "";
       setSuccess(true);
@@ -209,7 +212,9 @@ function TeamRow({
     }
   }
 
-  const dirty = shortname !== team.shortname || file !== null;
+  const currentAliases = [...new Set(aliasesInput.split(",").map(s => s.trim()).filter(Boolean))].join(", ");
+  const savedAliases = (team.aliases ?? []).join(", ");
+  const dirty = shortname !== team.shortname || file !== null || currentAliases !== savedAliases;
 
   return (
     <Table.BodyRow>
@@ -227,6 +232,14 @@ function TeamRow({
           maxLength={6}
           onChange={e => setShortname(e.target.value)}
           className="w-20 rounded-md border border-neutral-300 p-1 dark:border-neutral-700 dark:bg-neutral-900"
+        />
+      </Table.BodyCell>
+      <Table.BodyCell>
+        <input
+          value={aliasesInput}
+          onChange={e => setAliasesInput(e.target.value)}
+          placeholder="alias1, alias2"
+          className="w-48 rounded-md border border-neutral-300 p-1 text-sm dark:border-neutral-700 dark:bg-neutral-900"
         />
       </Table.BodyCell>
       <Table.BodyCell>

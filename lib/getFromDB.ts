@@ -475,7 +475,7 @@ export async function getPalmares(teamname?: string) {
   }
 }
 
-export type TeamDoc = { name: string; shortname: string; logofilename: string };
+export type TeamDoc = { name: string; shortname: string; logofilename: string; aliases?: string[] };
 
 export const getTeams = cache(async (): Promise<TeamDoc[]> => {
   try {
@@ -512,4 +512,19 @@ export async function updateTeam(name: string, shortname: string, logofilename: 
   const client = await clientPromise;
   const db = client.db();
   await db.collection("teams").updateOne({ name }, { $set: { shortname, logofilename } });
+}
+
+export async function updateTeamAliases(name: string, aliases: string[]): Promise<void> {
+  const client = await clientPromise;
+  const db = client.db();
+  await db.collection("teams").updateOne({ name }, { $set: { aliases } });
+}
+
+export function resolveTeamName(rawName: string, teams: TeamDoc[]): string {
+  const lower = rawName.toLowerCase();
+  const byName = teams.find(t => t.name.toLowerCase() === lower);
+  if (byName) return byName.name;
+  const byAlias = teams.find(t => t.aliases?.some(a => a.toLowerCase() === lower));
+  if (byAlias) return byAlias.name;
+  return rawName;
 }
