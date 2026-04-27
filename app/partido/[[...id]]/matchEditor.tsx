@@ -139,34 +139,77 @@ export default function MatchEditor({
     const events = data.matchevents;
 
     const home = {
-      score: 0, goals: 0, assists: 0, secondassists: 0,
-      yellowcards: 0, redcards: 0, secondyellows: 0,
-      fouls: 0, passes: 0, passescompleted: 0, keypasses: 0,
-      offsides: 0, corners: 0, shots: 0, shotsontarget: 0, chancescreated: 0
+      score: 0,
+      goals: 0,
+      assists: 0,
+      secondassists: 0,
+      yellowcards: 0,
+      redcards: 0,
+      secondyellows: 0,
+      fouls: 0,
+      passes: 0,
+      passescompleted: 0,
+      keypasses: 0,
+      offsides: 0,
+      corners: 0,
+      shots: 0,
+      shotsontarget: 0,
+      chancescreated: 0
     };
     const away = {
-      score: 0, goals: 0, assists: 0, secondassists: 0,
-      yellowcards: 0, redcards: 0, secondyellows: 0,
-      fouls: 0, passes: 0, passescompleted: 0, keypasses: 0,
-      offsides: 0, corners: 0, shots: 0, shotsontarget: 0, chancescreated: 0
+      score: 0,
+      goals: 0,
+      assists: 0,
+      secondassists: 0,
+      yellowcards: 0,
+      redcards: 0,
+      secondyellows: 0,
+      fouls: 0,
+      passes: 0,
+      passescompleted: 0,
+      keypasses: 0,
+      offsides: 0,
+      corners: 0,
+      shots: 0,
+      shotsontarget: 0,
+      chancescreated: 0
     };
 
     for (const ev of events) {
       const s = ev.team === "home" ? home : away;
       const opp = ev.team === "home" ? away : home;
       switch (ev.event) {
-        case "GOAL":        s.score++; s.goals++; break;
-        case "YELLOW CARD": s.yellowcards++; break;
-        case "RED CARD":    s.redcards++; break;
-        case "SECOND YELLOW": s.secondyellows++; break;
-        case "OWN GOAL":    opp.score++; break;
+        case "GOAL":
+          s.score++;
+          s.goals++;
+          break;
+        case "YELLOW CARD":
+          s.yellowcards++;
+          break;
+        case "RED CARD":
+          s.redcards++;
+          break;
+        case "SECOND YELLOW":
+          s.secondyellows++;
+          break;
+        case "OWN GOAL":
+          opp.score++;
+          break;
       }
     }
 
     const statFields = [
-      "assists", "secondassists", "shots", "shotsontarget",
-      "fouls", "passes", "passescompleted", "keypasses",
-      "offsides", "corners", "chancescreated"
+      "assists",
+      "secondassists",
+      "shots",
+      "shotsontarget",
+      "fouls",
+      "passes",
+      "passescompleted",
+      "keypasses",
+      "offsides",
+      "corners",
+      "chancescreated"
     ] as const;
 
     for (const p of data.teams[0].playerStatistics) {
@@ -230,15 +273,27 @@ export default function MatchEditor({
     for (const ev of events) {
       if (ev.player1SteamId && !seenSteamIds.has(ev.player1SteamId)) {
         seenSteamIds.add(ev.player1SteamId);
-        steamids.push({ steamid: ev.player1SteamId, side: ev.team, name: ev.name });
+        steamids.push({
+          steamid: ev.player1SteamId,
+          side: ev.team,
+          name: ev.name
+        });
       }
       if (ev.player2SteamId && !seenSteamIds.has(ev.player2SteamId)) {
         seenSteamIds.add(ev.player2SteamId);
-        steamids.push({ steamid: ev.player2SteamId, side: ev.team, name: ev.name2 });
+        steamids.push({
+          steamid: ev.player2SteamId,
+          side: ev.team,
+          name: ev.name2
+        });
       }
       if (ev.player3SteamId && !seenSteamIds.has(ev.player3SteamId)) {
         seenSteamIds.add(ev.player3SteamId);
-        steamids.push({ steamid: ev.player3SteamId, side: ev.team, name: ev.name3 });
+        steamids.push({
+          steamid: ev.player3SteamId,
+          side: ev.team,
+          name: ev.name3
+        });
       }
     }
 
@@ -269,26 +324,54 @@ export default function MatchEditor({
       (a, item) => {
         if (item.player1SteamId === player.info.steam_id) {
           switch (item.event) {
-            case "GOAL":          a.goals += 1; break;
-            case "OWN GOAL":      a.owngoals += 1; break;
-            case "YELLOW CARD":   a.yellowcards += 1; break;
-            case "SECOND YELLOW": a.yellowcards += 1; a.redcards += 1; break;
-            case "RED CARD":      a.redcards += 1; break;
+            case "GOAL":
+              a.goals += 1;
+              break;
+            case "OWN GOAL":
+              a.owngoals += 1;
+              break;
+            case "YELLOW CARD":
+              a.yellowcards += 1;
+              break;
+            case "SECOND YELLOW":
+              a.yellowcards += 1;
+              a.redcards += 1;
+              break;
+            case "RED CARD":
+              a.redcards += 1;
+              break;
           }
-        } else if (item.player2SteamId === player.info.steam_id && item.event === "GOAL") {
+        } else if (
+          item.player2SteamId === player.info.steam_id &&
+          item.event === "GOAL"
+        ) {
           a.assists += 1;
-        } else if (item.player3SteamId === player.info.steam_id && item.event === "GOAL") {
+        } else if (
+          item.player3SteamId === player.info.steam_id &&
+          item.event === "GOAL"
+        ) {
           a.secondassists += 1;
         }
         return a;
       },
-      { goals: 0, owngoals: 0, yellowcards: 0, redcards: 0, assists: 0, secondassists: 0 }
+      {
+        goals: 0,
+        owngoals: 0,
+        yellowcards: 0,
+        redcards: 0,
+        assists: 0,
+        secondassists: 0
+      }
     );
 
     Object.assign(player.statistics, acc);
 
-    if (player.statistics.fouls < player.statistics.yellowcards + player.statistics.redcards) {
-      player.statistics.fouls = player.statistics.yellowcards + player.statistics.redcards;
+    if (
+      player.statistics.fouls <
+      player.statistics.yellowcards + player.statistics.redcards
+    ) {
+      player.statistics.fouls =
+        player.statistics.yellowcards + player.statistics.redcards;
     }
     if (player.statistics.goals > player.statistics.shots) {
       player.statistics.shots = player.statistics.goals;
@@ -321,7 +404,8 @@ export default function MatchEditor({
     setEditableMatch(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
-      const oldSeconds = data.teams[s].playerStatistics[index]?.statistics.secondsplayed ?? 0;
+      const oldSeconds =
+        data.teams[s].playerStatistics[index]?.statistics.secondsplayed ?? 0;
       const newSeconds = player.statistics.secondsplayed;
       if (oldSeconds > 0 && newSeconds !== oldSeconds) {
         const ratio = newSeconds / oldSeconds;
@@ -406,7 +490,8 @@ export default function MatchEditor({
     } else if (
       editableMatch.at(-1).teams[0].statistics.possession +
         editableMatch.at(-1).teams[1].statistics.possession !==
-      100
+        100 &&
+      !editableMatch.at(-1).isdefault
     ) {
       alert("Las posesiones están desbalanceadas. Revisá las cuentas.");
     } else {
