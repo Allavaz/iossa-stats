@@ -14,6 +14,7 @@ import { SessionProvider } from "next-auth/react";
 import { TeamsProvider } from "../context/TeamsContext";
 import { getTeams } from "../lib/getFromDB";
 import { buildTeamsMap } from "../utils/Utils";
+import { connection } from "next/server";
 config.autoAddCss = false; /* eslint-disable import/first */
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  await connection();
   const initialTeamsMap = buildTeamsMap(await getTeams());
   return (
     <html lang="es">
