@@ -223,6 +223,15 @@ export default function MatchCardEditor({
             }
             index={editing.new ? data.matchevents.length : editing.event}
             side={editing.new || getEventSide(data.matchevents[editing.event])}
+            teamName={
+              editing.new
+                ? editing.new === "home"
+                  ? data.teams[0].teamname
+                  : data.teams[1].teamname
+                : getEventSide(data.matchevents[editing.event]) === "home"
+                ? data.teams[0].teamname
+                : data.teams[1].teamname
+            }
             homePlayers={data.teams[0].playerStatistics}
             awayPlayers={data.teams[1].playerStatistics}
             onChangeEvent={onChangeEvent}

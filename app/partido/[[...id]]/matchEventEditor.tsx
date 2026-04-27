@@ -1,6 +1,4 @@
 import { useState } from "react";
-import AutocompletePlayers from "./autocompletePlayers";
-import AutocompleteSteamIDs from "./autocompleteSteamIDs";
 import Button from "../../../components/ui/button";
 import Title from "../../../components/ui/title";
 
@@ -16,183 +14,151 @@ export default function MatchEventEditor(props) {
     props.item.player3SteamId || ""
   );
   const [eventType, setEventType] = useState(props.item.event);
+  const [minute, setMinute] = useState(Math.round(props.item.second / 60));
 
-  const toAutocompleteShape = (matchPlayers) =>
-    matchPlayers.map(p => ({ _id: p.info.steam_id, name: p.info.name, team: p.info.team }));
+  const buildOptions = matchPlayers =>
+    matchPlayers.map(p => ({
+      _id: p.info.steam_id,
+      name: p.info.name,
+      team: p.info.team
+    }));
 
-  const player1Players = toAutocompleteShape(
+  const player1Players = buildOptions(
     eventType === "OWN GOAL"
-      ? (props.side === "home" ? props.awayPlayers : props.homePlayers)
-      : (props.side === "home" ? props.homePlayers : props.awayPlayers)
+      ? props.side === "home"
+        ? props.awayPlayers
+        : props.homePlayers
+      : props.side === "home"
+      ? props.homePlayers
+      : props.awayPlayers
   );
-  const assistPlayers = toAutocompleteShape(
+  const assistPlayers = buildOptions(
     props.side === "home" ? props.homePlayers : props.awayPlayers
   );
 
-  const finishEditing = () => {
-    let selectEventValue = (
-      document.getElementById("selectEvent" + props.index) as HTMLInputElement
-    ).value;
-    let selectMinuteValue = (
-      document.getElementById("selectMinute" + props.index) as HTMLInputElement
-    ).value;
-    if (playerName.trim() === "" || playerSteamId.trim() === "") {
-      alert("Faltan datos");
-    } else {
-      props.onChangeEvent(
-        selectEventValue,
-        playerName.trim(),
-        playerSteamId.trim(),
-        playerName2.trim(),
-        playerSteamId2.trim(),
-        playerName3.trim(),
-        playerSteamId3.trim(),
-        selectMinuteValue,
-        props.index
-      );
-      props.setEditing(null);
-    }
+  const finishEditing = e => {
+    e.preventDefault();
+    props.onChangeEvent(
+      eventType,
+      playerName.trim(),
+      playerSteamId.trim(),
+      playerName2.trim(),
+      playerSteamId2.trim(),
+      playerName3.trim(),
+      playerSteamId3.trim(),
+      minute,
+      props.index
+    );
+    props.setEditing(null);
   };
 
   const cancelEditing = () => {
     props.setEditing(null);
   };
 
-  const changeSteamIdField = steamid => {
-    setPlayerSteamId(steamid);
-  };
-
-  const changePlayerField = name => {
-    setPlayerName(name);
-  };
-
-  const changeSteamIdField2 = steamid => {
-    setPlayerSteamId2(steamid);
-  };
-
-  const changePlayerField2 = name => {
-    setPlayerName2(name);
-  };
-
-  const changeSteamIdField3 = steamid => {
-    setPlayerSteamId3(steamid);
-  };
-
-  const changePlayerField3 = name => {
-    setPlayerName3(name);
-  };
-
   return (
     <div className="flex flex-col gap-y-4">
-      <Title>{props.editing.new ? "Crear" : "Editar"} Evento</Title>
-      <div className="flex items-center gap-x-4">
-        <select
-          className="w-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
-          id={"selectEvent" + props.index}
-          defaultValue={props.item.event}
-          onChange={e => setEventType(e.target.value)}
-        >
-          <option value="GOAL">Gol</option>
-          <option value="OWN GOAL">Gol en contra</option>
-          <option value="YELLOW CARD">Amarilla</option>
-          <option value="RED CARD">Roja</option>
-        </select>
-        <AutocompletePlayers
-          defaultValue={props.item.name}
-          defaultId={props.item.player1SteamId}
-          players={player1Players}
-          index={props.index}
-          onChangePlayer={{ setPlayerName, setPlayerSteamId }}
-          changeSteamIdField={changeSteamIdField}
-          value={playerName}
-        />
-        <AutocompleteSteamIDs
-          defaultValue={props.item.name}
-          defaultId={props.item.player1SteamId}
-          players={player1Players}
-          index={props.index}
-          onChangePlayer={{ setPlayerName, setPlayerSteamId }}
-          changePlayerField={changePlayerField}
-          value={playerSteamId}
-        />
-        <div>
-          {"("}
-          <input
-            className="w-14 rounded border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
-            id={"selectMinute" + props.index}
-            type="number"
-            defaultValue={Math.round(props.item.second / 60)}
-            min="0"
-          />
-          {"')"}
+      <Title>
+        {props.editing.new ? "Crear" : "Editar"} Evento - {props.teamName}
+      </Title>
+      <form className="flex flex-col gap-y-4" onSubmit={finishEditing}>
+        <div className="flex items-center gap-x-4">
+          <select
+            className="w-32 rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
+            value={eventType}
+            onChange={e => setEventType(e.target.value)}
+          >
+            <option value="GOAL">Gol</option>
+            <option value="OWN GOAL">Gol en contra</option>
+            <option value="YELLOW CARD">Amarilla</option>
+            <option value="RED CARD">Roja</option>
+          </select>
+          {playerSelector(
+            playerSteamId || props.item.player1SteamId,
+            setPlayerSteamId,
+            setPlayerName,
+            player1Players,
+            true
+          )}
+          <div className="whitespace-nowrap">
+            {"("}
+            <input
+              className="w-14 rounded border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
+              type="number"
+              value={minute}
+              min="1"
+              onChange={e => setMinute(Number(e.target.value))}
+            />
+            {"')"}
+          </div>
         </div>
-      </div>
-      {eventType === "GOAL" && (
-        <>
-          <div className="flex items-center gap-x-4">
-            <div className="w-32 text-center text-sm italic text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400">
-              Asistencia
+        {eventType === "GOAL" && (
+          <>
+            <div className="flex items-center gap-x-4">
+              <div className="w-32 text-center text-sm italic text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400">
+                Asistencia
+              </div>
+              {playerSelector(
+                playerSteamId2,
+                setPlayerSteamId2,
+                setPlayerName2,
+                assistPlayers
+              )}
             </div>
-            <AutocompletePlayers
-              defaultValue={props.item.name2 || ""}
-              defaultId={props.item.player2SteamId || ""}
-              players={assistPlayers}
-              index={props.index}
-              onChangePlayer={{
-                setPlayerName: setPlayerName2,
-                setPlayerSteamId: setPlayerSteamId2
-              }}
-              changeSteamIdField={changeSteamIdField2}
-              value={playerName2}
-            />
-            <AutocompleteSteamIDs
-              defaultValue={props.item.name2 || ""}
-              defaultId={props.item.player2SteamId || ""}
-              players={assistPlayers}
-              index={props.index}
-              onChangePlayer={{
-                setPlayerName: setPlayerName2,
-                setPlayerSteamId: setPlayerSteamId2
-              }}
-              changePlayerField={changePlayerField2}
-              value={playerSteamId2}
-            />
-          </div>
-          <div className="flex items-center gap-x-4">
-            <div className="w-32 text-center text-sm italic text-neutral-500 dark:text-neutral-400">
-              2da Asistencia
+            <div className="flex items-center gap-x-4">
+              <div className="w-32 text-center text-sm italic text-neutral-500 dark:text-neutral-400">
+                2da Asistencia
+              </div>
+              {playerSelector(
+                playerSteamId3,
+                setPlayerSteamId3,
+                setPlayerName3,
+                assistPlayers
+              )}
             </div>
-            <AutocompletePlayers
-              defaultValue={props.item.name3 || ""}
-              defaultId={props.item.player3SteamId || ""}
-              players={assistPlayers}
-              index={props.index}
-              onChangePlayer={{
-                setPlayerName: setPlayerName3,
-                setPlayerSteamId: setPlayerSteamId3
-              }}
-              changeSteamIdField={changeSteamIdField3}
-              value={playerName3}
-            />
-            <AutocompleteSteamIDs
-              defaultValue={props.item.name3 || ""}
-              defaultId={props.item.player3SteamId || ""}
-              players={assistPlayers}
-              index={props.index}
-              onChangePlayer={{
-                setPlayerName: setPlayerName3,
-                setPlayerSteamId: setPlayerSteamId3
-              }}
-              changePlayerField={changePlayerField3}
-              value={playerSteamId3}
-            />
-          </div>
-        </>
-      )}
-      <div className="flex justify-end gap-x-2">
-        <Button onClick={finishEditing}>Guardar</Button>
-        <Button onClick={cancelEditing}>Cancelar</Button>
-      </div>
+          </>
+        )}
+        <div className="flex justify-end gap-x-2">
+          <Button type="submit">Guardar</Button>
+          <Button type="button" onClick={cancelEditing}>
+            Cancelar
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function playerSelector(
+  playerSteamId,
+  setPlayerSteamId,
+  setPlayerName,
+  players,
+  required = false
+) {
+  return (
+    <div className="flex items-center gap-x-4">
+      <select
+        required={required}
+        className="rounded-lg border border-neutral-300 shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
+        onChange={e => {
+          setPlayerSteamId(e.target.value);
+          const selectedPlayer = players.find(p => p._id === e.target.value);
+          if (selectedPlayer) {
+            setPlayerName(selectedPlayer.name);
+          }
+        }}
+        value={playerSteamId}
+      >
+        <option hidden={required} value="">
+          -
+        </option>
+        {players.map(player => (
+          <option key={player._id} value={player._id}>
+            {player.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
