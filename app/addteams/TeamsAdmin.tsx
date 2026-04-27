@@ -231,13 +231,16 @@ function TeamRow({
       </Table.BodyCell>
       <Table.BodyCell>
         <div className="flex items-center justify-center gap-2">
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileRef}
-            onChange={e => setFile(e.target.files?.[0] ?? null)}
-            className="text-xs"
-          />
+          <label className="flex items-center gap-2 text-sm">
+            Cambiar logo:
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileRef}
+              onChange={e => setFile(e.target.files?.[0] ?? null)}
+              className="text-xs"
+            />
+          </label>
           <Button onClick={handleSave} disabled={loading || !dirty}>
             {loading ? "..." : "Guardar"}
           </Button>
