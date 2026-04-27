@@ -6,6 +6,7 @@ import Button from "@/components/ui/button";
 import Table from "@/components/ui/table";
 import Card from "@/components/ui/card";
 import Title from "@/components/ui/title";
+import Link from "next/link";
 
 const inputClass =
   "rounded-md border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900";
@@ -165,7 +166,9 @@ function TeamRow({
   onUpdate: (t: TeamDoc) => void;
 }) {
   const [shortname, setShortname] = useState(team.shortname);
-  const [aliasesInput, setAliasesInput] = useState((team.aliases ?? []).join(", "));
+  const [aliasesInput, setAliasesInput] = useState(
+    (team.aliases ?? []).join(", ")
+  );
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -198,11 +201,23 @@ function TeamRow({
         }
         logofilename = uploaded;
       }
-      const aliases = [...new Set(aliasesInput.split(",").map(s => s.trim()).filter(Boolean))];
+      const aliases = [
+        ...new Set(
+          aliasesInput
+            .split(",")
+            .map(s => s.trim())
+            .filter(Boolean)
+        )
+      ];
       const res = await fetch("/api/teams", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: team.name, shortname, logofilename, aliases })
+        body: JSON.stringify({
+          name: team.name,
+          shortname,
+          logofilename,
+          aliases
+        })
       });
       if (!res.ok) {
         setError("Error al guardar.");
@@ -218,20 +233,36 @@ function TeamRow({
     }
   }
 
-  const currentAliases = [...new Set(aliasesInput.split(",").map(s => s.trim()).filter(Boolean))].join(", ");
+  const currentAliases = [
+    ...new Set(
+      aliasesInput
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean)
+    )
+  ].join(", ");
   const savedAliases = (team.aliases ?? []).join(", ");
-  const dirty = shortname !== team.shortname || file !== null || currentAliases !== savedAliases;
+  const dirty =
+    shortname !== team.shortname ||
+    file !== null ||
+    currentAliases !== savedAliases;
 
   return (
     <Table.BodyRow>
       <Table.BodyCell>
-        <img
-          src={logoUrl}
-          alt={team.name}
-          className="mx-auto h-8 w-8 object-contain"
-        />
+        <Link target="_blank" href={`/equipo/${team.name}`}>
+          <img
+            src={logoUrl}
+            alt={team.name}
+            className="mx-auto h-8 w-8 object-contain"
+          />
+        </Link>
       </Table.BodyCell>
-      <Table.BodyCell>{team.name}</Table.BodyCell>
+      <Table.BodyCell>
+        <Link target="_blank" href={`/equipo/${team.name}`}>
+          {team.name}
+        </Link>
+      </Table.BodyCell>
       <Table.BodyCell>
         <input
           value={shortname}
