@@ -11,9 +11,11 @@ const inputClass =
   "rounded-md border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900";
 
 export default function TeamsAdmin({
-  initialTeams
+  initialTeams,
+  matchCounts
 }: {
   initialTeams: TeamDoc[];
+  matchCounts: Record<string, number>;
 }) {
   const [teams, setTeams] = useState<TeamDoc[]>(initialTeams);
   const [addName, setAddName] = useState("");
@@ -130,6 +132,7 @@ export default function TeamsAdmin({
             <Table.HeaderCell>Nombre</Table.HeaderCell>
             <Table.HeaderCell>Nombre corto</Table.HeaderCell>
             <Table.HeaderCell>Nombres alternativos</Table.HeaderCell>
+            <Table.HeaderCell>Partidos</Table.HeaderCell>
             <Table.HeaderCell>Acciones</Table.HeaderCell>
           </Table.HeaderRow>
         </thead>
@@ -138,6 +141,7 @@ export default function TeamsAdmin({
             <TeamRow
               key={team.name}
               team={team}
+              matchCount={matchCounts[team.name] ?? 0}
               onUpdate={updated =>
                 setTeams(prev =>
                   prev.map(t => (t.name === updated.name ? updated : t))
@@ -153,9 +157,11 @@ export default function TeamsAdmin({
 
 function TeamRow({
   team,
+  matchCount,
   onUpdate
 }: {
   team: TeamDoc;
+  matchCount: number;
   onUpdate: (t: TeamDoc) => void;
 }) {
   const [shortname, setShortname] = useState(team.shortname);
@@ -241,6 +247,11 @@ function TeamRow({
           placeholder="alias1, alias2"
           className="w-48 rounded-md border border-neutral-300 p-1 text-sm dark:border-neutral-700 dark:bg-neutral-900"
         />
+      </Table.BodyCell>
+      <Table.BodyCell>
+        <span className={matchCount === 0 ? "text-neutral-400" : undefined}>
+          {matchCount}
+        </span>
       </Table.BodyCell>
       <Table.BodyCell>
         <div className="flex items-center justify-center gap-2">

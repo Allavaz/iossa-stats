@@ -528,3 +528,14 @@ export function resolveTeamName(rawName: string, teams: TeamDoc[]): string {
   if (byAlias) return byAlias.name;
   return rawName;
 }
+
+export async function getTeamMatchCounts(): Promise<Record<string, number>> {
+  const client = await clientPromise;
+  const db = client.db();
+  const col = process.env.DB_COLLECTION!;
+  const docs = await db.collection(col).aggregate([
+    { $unwind: "$teams" },
+    { $group: { _id: "$teams.teamname", count: { $sum: 1 } } }
+  ]).toArray();
+  return Object.fromEntries(docs.map(d => [d._id as string, d.count as number]));
+}

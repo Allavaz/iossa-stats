@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { isAdmin } from "@/auth";
-import { getTeams } from "@/lib/getFromDB";
+import { getTeams, getTeamMatchCounts } from "@/lib/getFromDB";
 import TeamsAdmin from "./TeamsAdmin";
 
 export default async function AddTeamsPage() {
   if (!await isAdmin()) notFound();
-  const teams = await getTeams();
-  return <TeamsAdmin initialTeams={teams} />;
+  const [teams, matchCounts] = await Promise.all([getTeams(), getTeamMatchCounts()]);
+  return <TeamsAdmin initialTeams={teams} matchCounts={matchCounts} />;
 }
