@@ -36,9 +36,10 @@ export default function AutocompleteTorneos(props) {
     </div>
   );
 
-  const renderSuggestionsContainer = ({ containerProps, children, query }) => {
+  const renderSuggestionsContainer = ({ containerProps: { key, ...containerProps }, children, query }) => {
     return (
       <div
+        key={key}
         {...containerProps}
         className="absolute z-50 w-64 overflow-hidden rounded-lg border-x border-neutral-300 dark:border-neutral-700 dark:bg-neutral-900"
       >

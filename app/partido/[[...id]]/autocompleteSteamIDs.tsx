@@ -47,9 +47,10 @@ export default function AutocompleteSteamIDs(props) {
     </div>
   );
 
-  const renderSuggestionsContainer = ({ containerProps, children, query }) => {
+  const renderSuggestionsContainer = ({ containerProps: { key, ...containerProps }, children, query }) => {
     return (
       <div
+        key={key}
         {...containerProps}
         className="absolute z-50 w-48 overflow-hidden rounded-lg border-x border-neutral-300 dark:border-neutral-700 dark:bg-neutral-900"
       >
