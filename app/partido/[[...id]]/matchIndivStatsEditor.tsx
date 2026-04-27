@@ -9,7 +9,9 @@ function parseValue(id, target) {
   let v = (document.getElementById(id) as HTMLInputElement).value;
   if (v.startsWith("+")) {
     let actualValue = parseInt(v.replace("+", ""));
-    if (id === "passescompleted") {
+    if (id === "secondsplayed") {
+      return target + actualValue * 60;
+    } else if (id === "passescompleted") {
       let passes;
       if (
         (
@@ -144,10 +146,15 @@ function parseValue(id, target) {
     }
   } else if (v.startsWith("-")) {
     let actualValue = parseInt(v.replace("-", ""));
+    if (id === "secondsplayed") {
+      return target - actualValue * 60;
+    }
     return target - actualValue;
   } else {
     let actualValue = parseInt(v);
-    if (id === "passescompleted") {
+    if (id === "secondsplayed") {
+      return actualValue * 60;
+    } else if (id === "passescompleted") {
       let passes;
       if (
         (
@@ -437,6 +444,13 @@ export default function MatchIndivStatsEditor(props) {
       label: "Goles recibidos",
       id: "goalsconceded",
       defaultValue: props.player.statistics.goalsconceded
+    },
+    {
+      label: "Tiempo jugado",
+      id: "secondsplayed",
+      defaultValue: Math.ceil(props.player.statistics.secondsplayed / 60),
+      width: "4ch",
+      extra: "'"
     }
   ];
 
@@ -484,10 +498,6 @@ export default function MatchIndivStatsEditor(props) {
         props.player.statistics.assists +
         parseValue("keypasses", props.player.statistics.keypasses)
     },
-    {
-      id: "secondsplayed",
-      value: () => props.player.statistics.secondsplayed
-    }
   ];
 
   const inputSane = () => {
