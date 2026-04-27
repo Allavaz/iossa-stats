@@ -224,6 +224,7 @@ function TeamRow({
       <Table.BodyCell>
         <input
           value={shortname}
+          maxLength={6}
           onChange={e => setShortname(e.target.value)}
           className="w-20 rounded-md border border-neutral-300 p-1 dark:border-neutral-700 dark:bg-neutral-900"
         />
