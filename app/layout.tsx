@@ -12,6 +12,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { SessionProvider } from "next-auth/react";
 import { TeamsProvider } from "../context/TeamsContext";
+import { getTeams } from "../lib/getFromDB";
+import { buildTeamsMap } from "../utils/Utils";
 config.autoAddCss = false; /* eslint-disable import/first */
 
 export const metadata: Metadata = {
@@ -37,16 +39,17 @@ export const viewport: Viewport = {
   themeColor: "#e28800"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  const initialTeamsMap = buildTeamsMap(await getTeams());
   return (
     <html lang="es">
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
         <SessionProvider>
-          <TeamsProvider>
+          <TeamsProvider initialTeamsMap={initialTeamsMap}>
             <NextTopLoader color="#ff9800" height={2} />
             <Navigation />
             <Header />
