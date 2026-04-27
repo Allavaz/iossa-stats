@@ -321,6 +321,15 @@ export default function MatchEditor({
     setEditableMatch(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       let s = side === "home" ? 0 : 1;
+      const oldSeconds = data.teams[s].playerStatistics[index].statistics.secondsplayed;
+      const newSeconds = player.statistics.secondsplayed;
+      if (oldSeconds > 0 && newSeconds !== oldSeconds) {
+        const ratio = newSeconds / oldSeconds;
+        player.statistics.positions = player.statistics.positions.map(p => ({
+          ...p,
+          seconds: Math.round(p.seconds * ratio)
+        }));
+      }
       data.teams[s].playerStatistics[index] = player;
       const steamidlookup = oldsteamid || player.info.steam_id;
       let playerExists = false;
