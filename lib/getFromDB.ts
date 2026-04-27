@@ -1,3 +1,4 @@
+import { cache } from "react";
 import clientPromise from "./mongodb";
 import { ObjectId } from "mongodb";
 import { Match, Player } from "../types";
@@ -476,7 +477,7 @@ export async function getPalmares(teamname?: string) {
 
 export type TeamDoc = { name: string; shortname: string; logofilename: string };
 
-export async function getTeams(): Promise<TeamDoc[]> {
+export const getTeams = cache(async (): Promise<TeamDoc[]> => {
   try {
     const client = await clientPromise;
     const db = client.db();
@@ -485,4 +486,4 @@ export async function getTeams(): Promise<TeamDoc[]> {
     console.error(error);
     return [];
   }
-}
+});
