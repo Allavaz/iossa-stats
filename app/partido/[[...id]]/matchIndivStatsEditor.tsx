@@ -497,7 +497,7 @@ export default function MatchIndivStatsEditor(props) {
       value: () =>
         props.player.statistics.assists +
         parseValue("keypasses", props.player.statistics.keypasses)
-    },
+    }
   ];
 
   const inputSane = () => {
@@ -544,10 +544,10 @@ export default function MatchIndivStatsEditor(props) {
   };
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex max-h-[100vh] flex-col gap-y-4 overflow-y-auto">
       <Title>{props.editing.new ? "Crear" : "Editar"} JUGADOR</Title>
       <Title>Información</Title>
-      <div className="flex flex-wrap items-center gap-x-4">
+      <div className="flex flex-wrap items-center gap-4">
         <div className="flex gap-x-2">
           <div>Nombre:</div>
           <div>
