@@ -12,7 +12,6 @@ IOSoccer Sudamérica Stats is a full-stack web application for tracking competit
 npm run dev        # Start development server (localhost:3000)
 npm run build      # Build for production
 npm run start      # Run production server
-npm run lint       # ESLint (broken in this env — use npx tsc --noEmit for type checking instead)
 npx tsc --noEmit   # TypeScript type check
 npm run format     # Prettier formatting
 npm run cache-manager  # Manage Steam profile cache (stats/cleanup/clear)
@@ -21,6 +20,7 @@ npm run cache-manager  # Manage Steam profile cache (stats/cleanup/clear)
 ## Architecture
 
 ### Stack
+
 - **Frontend**: React 19 + Next.js 16 App Router, Tailwind CSS, TanStack React Table
 - **Backend**: Next.js API routes + Server Actions, MongoDB (via aggregation pipelines)
 - **Auth**: NextAuth 5 with Discord OAuth
@@ -28,6 +28,7 @@ npm run cache-manager  # Manage Steam profile cache (stats/cleanup/clear)
 - **Automation**: Puppeteer for match card image generation
 
 ### Data Flow
+
 ```
 Client (React pages)
   → API Routes (/app/api/*) or Server Actions
@@ -48,6 +49,7 @@ Client (React pages)
 ### Environment Variables
 
 Required in `.env.local`:
+
 ```
 DB_HOST, DB_USER, DB_PASS, DB_NAME
 DB_COLLECTION=matches2
