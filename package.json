@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "cache-manager": "npx tsx scripts/cache-manager.ts",
-    "seed-teams": "npx tsx scripts/seedTeams.ts"
+    "cache-manager": "npx tsx scripts/cache-manager.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

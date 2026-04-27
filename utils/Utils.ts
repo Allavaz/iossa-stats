@@ -1,5 +1,4 @@
 import { Match } from "../types";
-import TeamsJSON from "./Teams.json";
 import TorneosJSON from "./Torneos.json";
 import type { TeamDoc } from "../lib/getFromDB";
 import { DateTime } from "luxon";
@@ -113,34 +112,17 @@ export function buildTeamsMap(teams: TeamDoc[]): TeamsMap {
   return Object.fromEntries(teams.map(t => [t.name, t]));
 }
 
-export function getTeamLogo(teamname: string, teamsMap?: TeamsMap) {
-  if (teamsMap) {
-    const team = teamsMap[teamname];
-    if (team) return `https://cdn.iosoccer-sa.com/clubs/${team.logofilename}`;
-    return "/logo-iosoccer-128.png";
-  }
-  try {
-    let shortname = TeamsJSON[teamname].toLowerCase();
-    return `/clubs/${shortname}.png`;
-  } catch {
-    return "/logo-iosoccer-128.png";
-  }
+export function getTeamLogo(teamname: string, teamsMap: TeamsMap) {
+  const team = teamsMap[teamname];
+  if (team) return `https://cdn.iosoccer-sa.com/clubs/${team.logofilename}`;
+  return "/logo-iosoccer-128.png";
 }
 
-export function getTeamShortname(teamname: string, teamsMap?: TeamsMap) {
-  if (teamsMap) {
-    const team = teamsMap[teamname];
-    if (team) return team.shortname;
-    let len = Math.min(3, teamname.length);
-    return teamname.substring(0, len).toUpperCase();
-  }
-  const shortname = TeamsJSON[teamname];
-  if (shortname) {
-    return shortname;
-  } else {
-    let len = Math.min(3, teamname.length);
-    return teamname.substring(0, len).toUpperCase();
-  }
+export function getTeamShortname(teamname: string, teamsMap: TeamsMap) {
+  const team = teamsMap[teamname];
+  if (team) return team.shortname;
+  let len = Math.min(3, teamname.length);
+  return teamname.substring(0, len).toUpperCase();
 }
 
 export function getTablas(temp) {
