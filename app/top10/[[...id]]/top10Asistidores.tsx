@@ -1,9 +1,9 @@
-import { getTeamLogo } from "../../../utils/Utils";
+import { getTeamLogo, TeamsMap } from "../../../utils/Utils";
 import Link from "next/link";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 
-export default function Top10Asistidores({ players, category }) {
+export default function Top10Asistidores({ players, category, teamsMap }: { players: any[]; category: string; teamsMap: TeamsMap }) {
   return (
     <div className="flex w-full flex-col gap-y-4">
       <Title>
@@ -30,7 +30,7 @@ export default function Top10Asistidores({ players, category }) {
                 >
                   <img
                     className="h-6"
-                    src={getTeamLogo(item.team)}
+                    src={getTeamLogo(item.team, teamsMap)}
                     alt={item.team}
                   />
                   <div>{item.name}</div>

@@ -1,12 +1,12 @@
 import { DateTime } from "luxon";
-import { getTeamLogo } from "../../../utils/Utils";
+import { getTeamLogo, TeamsMap } from "../../../utils/Utils";
 import Link from "next/link";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 
 const dateFormat = "dd/LL/yyyy";
 
-export default function PlayerTeamsTable({ teams }) {
+export default function PlayerTeamsTable({ teams, teamsMap }: { teams: any[]; teamsMap: TeamsMap }) {
   return (
     <div className="flex flex-col gap-y-4">
       <Title>Historial de Equipos</Title>
@@ -31,7 +31,7 @@ export default function PlayerTeamsTable({ teams }) {
                   >
                     <img
                       className="h-6"
-                      src={getTeamLogo(item.team)}
+                      src={getTeamLogo(item.team, teamsMap)}
                       alt={item._id}
                     />
                     {item.team}

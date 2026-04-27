@@ -2,11 +2,12 @@
 
 import Button from "@/components/ui/button";
 import { sendComment } from "./actions";
-import Teams from "../../utils/Teams.json";
 import { useRef } from "react";
 import { useFormStatus } from "react-dom";
+import { useTeamsMap } from "../../context/TeamsContext";
 
 export default function Form() {
+  const teamsMap = useTeamsMap();
   const ref = useRef<HTMLFormElement>(null);
 
   return (
@@ -37,7 +38,7 @@ export default function Form() {
             <option value="" hidden>
               Equipo
             </option>
-            {Object.keys(Teams).map(team => (
+            {Object.keys(teamsMap).map(team => (
               <option key={team} value={team}>
                 {team}
               </option>

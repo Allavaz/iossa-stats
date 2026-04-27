@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTeamLogo } from "../../../utils/Utils";
+import { getTeamLogo, TeamsMap } from "../../../utils/Utils";
 import Card from "../../../components/ui/card";
 
 function getPosColor(pos: string) {
@@ -96,7 +96,14 @@ export default function PlayerCard({
   player,
   steamInfo,
   playerPositions,
-  playerMatches
+  playerMatches,
+  teamsMap
+}: {
+  player: any;
+  steamInfo: any;
+  playerPositions: any[];
+  playerMatches: any[];
+  teamsMap: TeamsMap;
 }) {
   const posSpecificStats =
     player.saves > player.shotsontarget ? goalkeeperStats : fieldPlayerStats;
@@ -150,7 +157,7 @@ export default function PlayerCard({
             >
               <img
                 className="h-6"
-                src={getTeamLogo(player.team)}
+                src={getTeamLogo(player.team, teamsMap)}
                 alt={player.team}
               />
               <div>{player.team}</div>

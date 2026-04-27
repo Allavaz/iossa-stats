@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import { getTeamLogo } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 
 export default function AutocompleteSteamIDs(props) {
+  const teamsMap = useTeamsMap();
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
@@ -12,7 +14,7 @@ export default function AutocompleteSteamIDs(props) {
       steamid: props.players[i]._id,
       name: props.players[i].name,
       team: props.players[i].team,
-      teamlogo: getTeamLogo(props.players[i].team)
+      teamlogo: getTeamLogo(props.players[i].team, teamsMap)
     });
   }
 

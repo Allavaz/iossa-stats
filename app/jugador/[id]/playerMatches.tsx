@@ -21,6 +21,7 @@ import {
   getTorneoLink,
   getTournamentIcon
 } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 
 function WonOrLost(match, playerID) {
   for (let i in match.teams[0].playerStatistics) {
@@ -53,6 +54,7 @@ interface Props {
 }
 
 export default function PlayerMatches(props: Props) {
+  const teamsMap = useTeamsMap();
   const columnHelper = createColumnHelper<Match>();
 
   const columns = [
@@ -79,9 +81,9 @@ export default function PlayerMatches(props: Props) {
           className="flex items-center justify-end gap-x-1"
         >
           <div className="hidden sm:block">{info.getValue()}</div>
-          <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
+          <div className="sm:hidden">{getTeamShortname(info.getValue(), teamsMap)}</div>
           <img
-            src={getTeamLogo(info.getValue())}
+            src={getTeamLogo(info.getValue(), teamsMap)}
             alt={info.getValue()}
             className="h-6"
           />
@@ -119,12 +121,12 @@ export default function PlayerMatches(props: Props) {
           className="flex items-center justify-start gap-x-1"
         >
           <img
-            src={getTeamLogo(info.getValue())}
+            src={getTeamLogo(info.getValue(), teamsMap)}
             alt={info.getValue()}
             className="h-6"
           />
           <div className="hidden sm:block">{info.getValue()}</div>
-          <div className="sm:hidden">{getTeamShortname(info.getValue())}</div>
+          <div className="sm:hidden">{getTeamShortname(info.getValue(), teamsMap)}</div>
         </Link>
       )
     }),

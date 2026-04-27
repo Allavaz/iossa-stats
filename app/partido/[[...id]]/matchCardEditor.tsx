@@ -13,6 +13,7 @@ import Card from "../../../components/ui/card";
 import Modal from "../../../components/ui/modal";
 import { Event, Match, MatchEvent, Player } from "../../../types";
 import { fecha, getTeamLogo, getTeamShortname } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 import DateTimeEditor from "./dateTimeEditor";
 import MatchEventEditable from "./matchEventEditable";
 import MatchEventEditor from "./matchEventEditor";
@@ -59,6 +60,7 @@ export default function MatchCardEditor({
   restartEditing: () => void;
   undo: () => void;
 }) {
+  const teamsMap = useTeamsMap();
   const [dragging, setDragging] = useState(false);
 
   function getEventSide(event: MatchEvent): "home" | "away" {
@@ -274,7 +276,7 @@ export default function MatchCardEditor({
                       {data.teams[0].teamname}
                     </div>
                     <div className="sm:hidden">
-                      {getTeamShortname(data.teams[0].teamname)}
+                      {getTeamShortname(data.teams[0].teamname, teamsMap)}
                     </div>
                   </Link>
                   <FontAwesomeIcon
@@ -327,7 +329,7 @@ export default function MatchCardEditor({
                       {data.teams[1].teamname}
                     </div>
                     <div className="sm:hidden">
-                      {getTeamShortname(data.teams[1].teamname)}
+                      {getTeamShortname(data.teams[1].teamname, teamsMap)}
                     </div>
                   </Link>
                   <FontAwesomeIcon
@@ -347,7 +349,7 @@ export default function MatchCardEditor({
                 <Link href={`/equipo/${data.teams[0].teamname}`}>
                   <img
                     alt={data.teams[0].teamname}
-                    src={getTeamLogo(data.teams[0].teamname)}
+                    src={getTeamLogo(data.teams[0].teamname, teamsMap)}
                   />
                 </Link>
               </div>
@@ -384,7 +386,7 @@ export default function MatchCardEditor({
                 <Link href={`/equipo/${data.teams[1].teamname}`}>
                   <img
                     alt={data.teams[1].teamname}
-                    src={getTeamLogo(data.teams[1].teamname)}
+                    src={getTeamLogo(data.teams[1].teamname, teamsMap)}
                   />
                 </Link>
               </div>

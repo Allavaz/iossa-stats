@@ -2,7 +2,8 @@ import Link from "next/link";
 import {
   getTeamLogo,
   getTorneoLink,
-  getTournamentIcon
+  getTournamentIcon,
+  TeamsMap
 } from "../../../utils/Utils";
 import Table from "../../../components/ui/table";
 import Title from "../../../components/ui/title";
@@ -16,6 +17,7 @@ interface Props {
     lastmatch: string;
     position?: number;
   }[];
+  teamsMap: TeamsMap;
 }
 
 export default function TeamLigas(props: Props) {
@@ -48,7 +50,7 @@ export default function TeamLigas(props: Props) {
                   className="flex items-center justify-center gap-x-1"
                 >
                   <img
-                    src={getTeamLogo(tournament.team)}
+                    src={getTeamLogo(tournament.team, props.teamsMap)}
                     alt={tournament.team}
                     className="h-6"
                   />

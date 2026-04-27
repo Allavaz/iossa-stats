@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import { secondsToMinutes } from "../../../lib/Utils";
 import { Player } from "../../../types";
 import { getTeamLogo } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 import Button from "../../../components/ui/button";
 import Table from "../../../components/ui/table";
 import Title from "../../../components/ui/title";
@@ -26,6 +27,7 @@ interface Props {
 
 export default function IndividualStats(props: Props) {
   const pathname = usePathname();
+  const teamsMap = useTeamsMap();
   const columnHelper = createColumnHelper<Player>();
 
   const columns = [
@@ -46,7 +48,7 @@ export default function IndividualStats(props: Props) {
         >
           <img
             className="h-6"
-            src={getTeamLogo(info.getValue())}
+            src={getTeamLogo(info.getValue(), teamsMap)}
             alt={info.getValue()}
           />
           <div>{info.getValue()}</div>

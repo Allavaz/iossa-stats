@@ -9,9 +9,11 @@ import {
   getTop10Goals,
   getTop10Interceptions,
   getTop10Rusticos,
-  getTop10Saves
+  getTop10Saves,
+  getTeams
 } from "../../../lib/getFromDB";
 import {
+  buildTeamsMap,
   getAllQueries,
   getCategory,
   getTemporada,
@@ -38,30 +40,34 @@ export default async function Top10(props) {
 
   const category = getCategory(id);
   const temporada = getTemporada(id);
-  const goleadores = await getTop10Goals(id);
-  const asistidores = await getTop10Assists(id);
-  const rusticos = await getTop10Rusticos(id);
-  const arqueros = await getTop10Saves(id);
-  const intercepciones = await getTop10Interceptions(id);
+  const [goleadores, asistidores, rusticos, arqueros, intercepciones, teamsData] = await Promise.all([
+    getTop10Goals(id),
+    getTop10Assists(id),
+    getTop10Rusticos(id),
+    getTop10Saves(id),
+    getTop10Interceptions(id),
+    getTeams()
+  ]);
+  const teamsMap = buildTeamsMap(teamsData);
 
   return (
     <div className="flex flex-col gap-y-4">
       <Selector context={"top10"} temporada={temporada} />
       <div className="flex flex-wrap justify-evenly gap-4">
         <div className="grow overflow-x-auto">
-          <Top10Goleadores players={goleadores} category={category} />
+          <Top10Goleadores players={goleadores} category={category} teamsMap={teamsMap} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Asistidores players={asistidores} category={category} />
+          <Top10Asistidores players={asistidores} category={category} teamsMap={teamsMap} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Arqueros players={arqueros} category={category} />
+          <Top10Arqueros players={arqueros} category={category} teamsMap={teamsMap} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Intercepciones players={intercepciones} category={category} />
+          <Top10Intercepciones players={intercepciones} category={category} teamsMap={teamsMap} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Rusticos players={rusticos} category={category} />
+          <Top10Rusticos players={rusticos} category={category} teamsMap={teamsMap} />
         </div>
       </div>
     </div>

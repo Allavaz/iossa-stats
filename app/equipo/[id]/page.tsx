@@ -5,10 +5,11 @@ import {
   getTeamMatches,
   getTeamPlayers,
   getTeamRivals,
-  getTeamStats
+  getTeamStats,
+  getTeams
 } from "../../../lib/getFromDB";
 import { getSteamInfo } from "../../../lib/getFromSteam";
-import { getTeamLogo, temporadaActual } from "../../../utils/Utils";
+import { buildTeamsMap, getTeamLogo, temporadaActual } from "../../../utils/Utils";
 import Palmares from "./palmares";
 import Roster from "./roster";
 import TeamArqueros from "./teamArqueros";
@@ -33,7 +34,7 @@ export default async function EquipoPage(props) {
   const params = await props.params;
   const teamName = decodeURIComponent(params.id);
 
-  const [matches, allPlayers, roster, rosterInfo, rivals, stats, palmares] =
+  const [matches, allPlayers, roster, rosterInfo, rivals, stats, palmares, teamsData] =
     await Promise.all([
       getTeamMatches(teamName, "all"),
       getTeamPlayers(teamName, "all"),
@@ -45,8 +46,10 @@ export default async function EquipoPage(props) {
       ),
       getTeamRivals(teamName),
       getTeamStats(teamName, "all"),
-      getPalmares(teamName)
+      getPalmares(teamName),
+      getTeams()
     ]);
+  const teamsMap = buildTeamsMap(teamsData);
 
   if (matches.length === 0) return notFound();
 
@@ -54,7 +57,7 @@ export default async function EquipoPage(props) {
     if (!data) return notFound();
   }
 
-  const teamLogo = getTeamLogo(teamName);
+  const teamLogo = getTeamLogo(teamName, teamsMap);
 
   for (const player of roster) {
     const playerInfo = rosterInfo.find(
@@ -95,7 +98,7 @@ export default async function EquipoPage(props) {
           <TeamArqueros players={allPlayers} />
         </div>
         <div className="max-w-xl grow overflow-x-auto">
-          <TeamRivals rivals={rivals.filter(r => r.matches > 2)} />
+          <TeamRivals rivals={rivals.filter(r => r.matches > 2)} teamsMap={teamsMap} />
         </div>
       </div>
       <TeamMatches matches={matches} teamname={teamName} />

@@ -9,8 +9,10 @@ import {
   getTop10Goals,
   getTop10Interceptions,
   getTop10Saves,
-  getTournamentWinners
+  getTournamentWinners,
+  getTeams
 } from "../../../lib/getFromDB";
+import { buildTeamsMap } from "../../../utils/Utils";
 import {
   getChallongeTorneo,
   getTablasTorneo,
@@ -65,14 +67,24 @@ export default async function Torneos(props) {
   }));
   const challonge = getChallongeTorneo(torneoLabel, temporada);
   const isMultiStage = listaTablas.length > 1;
-  const top10Goleadores = await getTop10Goals(torneo + temporada);
-  const top10Asistidores = await getTop10Assists(torneo + temporada);
-  const top10Arqueros = await getTop10Saves(torneo + temporada);
-  const top10Intercepciones = await getTop10Interceptions(torneo + temporada);
-  const resultados = await getMatches(torneo + temporada);
-  const winners = await getTournamentWinners(
-    torneoLabel + " " + temporada.toUpperCase()
-  );
+  const [
+    top10Goleadores,
+    top10Asistidores,
+    top10Arqueros,
+    top10Intercepciones,
+    resultados,
+    winners,
+    teamsData
+  ] = await Promise.all([
+    getTop10Goals(torneo + temporada),
+    getTop10Assists(torneo + temporada),
+    getTop10Saves(torneo + temporada),
+    getTop10Interceptions(torneo + temporada),
+    getMatches(torneo + temporada),
+    getTournamentWinners(torneoLabel + " " + temporada.toUpperCase()),
+    getTeams()
+  ]);
+  const teamsMap = buildTeamsMap(teamsData);
 
   return (
     <div className="flex max-w-6xl flex-col gap-4 lg:flex-row">
@@ -101,6 +113,7 @@ export default async function Torneos(props) {
             torneoLabel={torneoLabel}
             temporada={temporada}
             winners={winners}
+            teamsMap={teamsMap}
           />
         )}
         {challonge && (
@@ -131,19 +144,20 @@ export default async function Torneos(props) {
                 )
             )}
           <div className="grow overflow-x-auto">
-            <Top10Goleadores players={top10Goleadores} category={null} />
+            <Top10Goleadores players={top10Goleadores} category={null} teamsMap={teamsMap} />
           </div>
           <div className="grow overflow-x-auto">
             <Top10Intercepciones
               players={top10Intercepciones}
               category={null}
+              teamsMap={teamsMap}
             />
           </div>
           <div className="grow overflow-x-auto">
-            <Top10Asistidores players={top10Asistidores} category={null} />
+            <Top10Asistidores players={top10Asistidores} category={null} teamsMap={teamsMap} />
           </div>
           <div className="grow overflow-x-auto">
-            <Top10Arqueros players={top10Arqueros} category={null} />
+            <Top10Arqueros players={top10Arqueros} category={null} teamsMap={teamsMap} />
           </div>
         </div>
         <Results matches={resultados} isMultiStage={isMultiStage} />

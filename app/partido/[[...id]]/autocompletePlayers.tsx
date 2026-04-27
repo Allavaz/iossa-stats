@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import { getTeamLogo } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 
 export default function AutocompletePlayers(props) {
+  const teamsMap = useTeamsMap();
   let players = [];
   for (let i in props.players) {
     players.push({
       steamid: props.players[i]._id,
       name: props.players[i].name,
       team: props.players[i].team,
-      teamlogo: getTeamLogo(props.players[i].team)
+      teamlogo: getTeamLogo(props.players[i].team, teamsMap)
     });
   }
 

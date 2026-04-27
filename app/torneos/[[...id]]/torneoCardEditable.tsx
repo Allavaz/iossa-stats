@@ -3,6 +3,7 @@
 import Card from "../../../components/ui/card";
 import Title from "../../../components/ui/title";
 import { getTeamLogo, getTournamentIcon } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -16,6 +17,7 @@ export default function TorneoCardEditable({
   temporada,
   winners
 }) {
+  const teamsMap = useTeamsMap();
   const [winner, setWinner] = useState(winners?.firstPlace || "Agregar equipo");
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -75,7 +77,7 @@ export default function TorneoCardEditable({
           </Title>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <img src={getTeamLogo(winner)} alt={winner} />
+          <img src={getTeamLogo(winner, teamsMap)} alt={winner} />
           {editing || !winner ? (
             <div className="flex flex-col items-center gap-4">
               <AutocompleteTeams defaultValue={winner} setValue={setWinner} />

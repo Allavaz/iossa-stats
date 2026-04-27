@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { getTeamLogo, getTeamShortname, plus } from "../utils/Utils";
 import Title from "./ui/title";
 import Table from "./ui/table";
 import Form from "./form";
+import { useTeamsMap } from "../context/TeamsContext";
 
 const ColoredBar = ({ color }) => {
   return (
@@ -120,6 +123,7 @@ export default function PositionsComponent({
   mini?: boolean;
   highlight?: string;
 }) {
+  const teamsMap = useTeamsMap();
   const classification = classifications.find(c =>
     c.matchingTournaments(header)
   );
@@ -146,10 +150,10 @@ export default function PositionsComponent({
                 }
               />
             )}
-          <img className="h-6" src={getTeamLogo(item._id)} alt={item._id} />
+          <img className="h-6" src={getTeamLogo(item._id, teamsMap)} alt={item._id} />
           <div className={`${!mini && "hidden"} sm:block`}>{item._id}</div>
           {!mini && (
-            <div className="sm:hidden">{getTeamShortname(item._id)}</div>
+            <div className="sm:hidden">{getTeamShortname(item._id, teamsMap)}</div>
           )}
         </Link>
       )

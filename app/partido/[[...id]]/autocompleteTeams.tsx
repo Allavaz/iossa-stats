@@ -1,19 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
-import Teams from "../../../utils/Teams.json";
 import { getTeamLogo } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 
 export default function AutocompleteTeams(props) {
+  const teamsMap = useTeamsMap();
   const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
-  let teams = [];
-  for (let i in Teams) {
-    teams.push({
-      team: i,
-      logo: getTeamLogo(i)
-    });
-  }
+  const teams = Object.keys(teamsMap).map(name => ({
+    team: name,
+    logo: getTeamLogo(name, teamsMap)
+  }));
 
   const getSuggestions = value => {
     const inputValue = value.toLowerCase();

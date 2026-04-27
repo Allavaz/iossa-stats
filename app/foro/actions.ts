@@ -1,7 +1,7 @@
 "use server";
 
 import { getMessage, pushMessage, pushVote } from "@/lib/forum";
-import Teams from "../../utils/Teams.json";
+import { getTeams } from "@/lib/getFromDB";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
@@ -34,7 +34,8 @@ export async function sendComment(formData: FormData) {
     return "Mensaje muy largo";
   }
 
-  if (!Object.keys(Teams).includes(rawFormData.team.toString())) {
+  const teams = await getTeams();
+  if (!teams.some(t => t.name === rawFormData.team.toString())) {
     return "Equipo inválido";
   }
 

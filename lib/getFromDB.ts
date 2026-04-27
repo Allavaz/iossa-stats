@@ -473,3 +473,16 @@ export async function getPalmares(teamname?: string) {
     console.error(error);
   }
 }
+
+export type TeamDoc = { name: string; shortname: string; logofilename: string };
+
+export async function getTeams(): Promise<TeamDoc[]> {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    return db.collection("teams").find({}).sort({ name: 1 }).toArray() as Promise<TeamDoc[]>;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
