@@ -267,20 +267,21 @@ export default function MatchCardEditor({
                   setEditing={setEditing}
                 />
               ) : (
-                <div className="flex items-center justify-center gap-x-2">
+                <div>
                   <Link
                     href={`/equipo/${data.teams[0].teamname}`}
-                    className="font-heading text-2xl"
+                    className="inline font-heading text-2xl"
                   >
-                    <div className="hidden sm:block">
+                    <span className="hidden sm:inline">
                       {data.teams[0].teamname}
-                    </div>
-                    <div className="sm:hidden">
+                    </span>
+                    <span className="sm:hidden">
                       {getTeamShortname(data.teams[0].teamname, teamsMap)}
-                    </div>
+                    </span>{" "}
+                    <span></span>
                   </Link>
                   <FontAwesomeIcon
-                    className="cursor-pointer"
+                    className="cursor-pointer sm:font-heading sm:text-2xl"
                     icon={faEdit}
                     onClick={_ => {
                       setEditing("homeTeamName");
@@ -320,22 +321,23 @@ export default function MatchCardEditor({
                   setEditing={setEditing}
                 />
               ) : (
-                <div className="flex items-center justify-center gap-x-2">
+                <div>
                   <Link
                     href={`/equipo/${data.teams[1].teamname}`}
-                    className="font-heading text-2xl"
+                    className="inline font-heading text-2xl"
                   >
-                    <div className="hidden sm:block">
+                    <span className="hidden sm:inline">
                       {data.teams[1].teamname}
-                    </div>
-                    <div className="sm:hidden">
+                    </span>
+                    <span className="sm:hidden">
                       {getTeamShortname(data.teams[1].teamname, teamsMap)}
-                    </div>
+                    </span>{" "}
+                    <span></span>
                   </Link>
                   <FontAwesomeIcon
-                    className="cursor-pointer"
+                    className="cursor-pointer sm:font-heading sm:text-2xl"
                     icon={faEdit}
-                    onClick={() => {
+                    onClick={_ => {
                       setEditing("awayTeamName");
                     }}
                   />
