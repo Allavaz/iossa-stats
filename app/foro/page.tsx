@@ -33,8 +33,8 @@ export default async function Foro(props) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <Title>Foro IOSoccer Sudamerica</Title>
+    <div className="flex flex-col gap-4">
+      <Title>Foro IOSoccer Sudamérica</Title>
       {session ? (
         <Form />
       ) : (
@@ -42,7 +42,7 @@ export default async function Foro(props) {
           Inicia sesión para participar
         </div>
       )}
-      <div className="my-2 w-full border-t border-dashed border-neutral-300 dark:border-neutral-600" />
+      <div className=" w-full border-t border-dashed border-neutral-300 dark:border-neutral-600" />
       <div className="flex flex-wrap justify-center gap-2">
         {Array.from({ length: pageCount }, (_, i) => (
           <Button
@@ -57,7 +57,11 @@ export default async function Foro(props) {
       <Card>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[auto_1fr] sm:gap-8">
           {messages.map(message => (
-            <Message key={message._id.toString()} message={message} teamsMap={teamsMap} />
+            <Message
+              key={message._id.toString()}
+              message={message}
+              teamsMap={teamsMap}
+            />
           ))}
           {!messages.length && (
             <div className="col-span-1 text-center font-bold sm:col-span-2">
