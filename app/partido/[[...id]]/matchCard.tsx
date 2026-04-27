@@ -129,15 +129,9 @@ export default function MatchCard({ match }: { match: Match }) {
             <td></td>
             <td>
               <ul>
-                {filterEvents(match.matchevents, "away").map(
-                  (item: MatchEvent, index) => (
-                    <MatchEventComponent
-                      item={item}
-                      key={index}
-                      index={index}
-                    />
-                  )
-                )}
+                {filterEvents(match.matchevents, "away").map((item, index) => (
+                  <MatchEventComponent item={item} key={index} index={index} />
+                ))}
               </ul>
             </td>
           </tr>
