@@ -487,3 +487,29 @@ export const getTeams = cache(async (): Promise<TeamDoc[]> => {
     return [];
   }
 });
+
+export async function teamNameExists(name: string): Promise<boolean> {
+  const client = await clientPromise;
+  const db = client.db();
+  const doc = await db.collection("teams").findOne({ name }, { projection: { _id: 1 } });
+  return doc !== null;
+}
+
+export async function logoFilenameExists(logofilename: string): Promise<boolean> {
+  const client = await clientPromise;
+  const db = client.db();
+  const doc = await db.collection("teams").findOne({ logofilename }, { projection: { _id: 1 } });
+  return doc !== null;
+}
+
+export async function createTeam(name: string, shortname: string, logofilename: string): Promise<void> {
+  const client = await clientPromise;
+  const db = client.db();
+  await db.collection("teams").insertOne({ name, shortname, logofilename });
+}
+
+export async function updateTeam(name: string, shortname: string, logofilename: string): Promise<void> {
+  const client = await clientPromise;
+  const db = client.db();
+  await db.collection("teams").updateOne({ name }, { $set: { shortname, logofilename } });
+}
