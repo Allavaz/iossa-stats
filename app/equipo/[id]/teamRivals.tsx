@@ -1,17 +1,16 @@
 import Link from "next/link";
-import { getTeamLogo, TeamsMap } from "../../../utils/Utils";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 
 interface Props {
   rivals: {
     _id: string;
+    teamLogo?: string;
     matches: number;
     wins: number;
     draws: number;
     losses: number;
   }[];
-  teamsMap: TeamsMap;
 }
 
 export default function TeamRivals(props: Props) {
@@ -48,7 +47,7 @@ export default function TeamRivals(props: Props) {
                 >
                   <img
                     className="h-6"
-                    src={getTeamLogo(rival._id, props.teamsMap)}
+                    src={rival.teamLogo}
                     alt={rival._id}
                   />
                   {rival._id}

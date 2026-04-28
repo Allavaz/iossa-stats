@@ -1,7 +1,13 @@
 import { Match } from "../types";
 import TorneosJSON from "./Torneos.json";
-import type { TeamDoc } from "../lib/getFromDB";
 import { DateTime } from "luxon";
+
+export type TeamDoc = {
+  name: string;
+  shortname: string;
+  logofilename: string;
+  aliases?: string[];
+};
 
 const temporadaRegex = /^t(\d+)/;
 const ordenes = ["primerorden", "segundoorden", "tercerorden"];

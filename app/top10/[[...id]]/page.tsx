@@ -9,11 +9,9 @@ import {
   getTop10Goals,
   getTop10Interceptions,
   getTop10Rusticos,
-  getTop10Saves,
-  getTeams
+  getTop10Saves
 } from "../../../lib/getFromDB";
 import {
-  buildTeamsMap,
   getAllQueries,
   getCategory,
   getTemporada,
@@ -40,34 +38,32 @@ export default async function Top10(props) {
 
   const category = getCategory(id);
   const temporada = getTemporada(id);
-  const [goleadores, asistidores, rusticos, arqueros, intercepciones, teamsData] = await Promise.all([
+  const [goleadores, asistidores, rusticos, arqueros, intercepciones] = await Promise.all([
     getTop10Goals(id),
     getTop10Assists(id),
     getTop10Rusticos(id),
     getTop10Saves(id),
-    getTop10Interceptions(id),
-    getTeams()
+    getTop10Interceptions(id)
   ]);
-  const teamsMap = buildTeamsMap(teamsData);
 
   return (
     <div className="flex flex-col gap-y-4">
       <Selector context={"top10"} temporada={temporada} />
       <div className="flex flex-wrap justify-evenly gap-4">
         <div className="grow overflow-x-auto">
-          <Top10Goleadores players={goleadores} category={category} teamsMap={teamsMap} />
+          <Top10Goleadores players={goleadores} category={category} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Asistidores players={asistidores} category={category} teamsMap={teamsMap} />
+          <Top10Asistidores players={asistidores} category={category} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Arqueros players={arqueros} category={category} teamsMap={teamsMap} />
+          <Top10Arqueros players={arqueros} category={category} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Intercepciones players={intercepciones} category={category} teamsMap={teamsMap} />
+          <Top10Intercepciones players={intercepciones} category={category} />
         </div>
         <div className="grow overflow-x-auto">
-          <Top10Rusticos players={rusticos} category={category} teamsMap={teamsMap} />
+          <Top10Rusticos players={rusticos} category={category} />
         </div>
       </div>
     </div>

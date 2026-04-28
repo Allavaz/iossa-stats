@@ -4,14 +4,8 @@ import Link from "next/link";
 import DefaultIndicator from "../../../components/defaultIndicator";
 import Card from "../../../components/ui/card";
 import { Match, MatchEvent } from "../../../types";
-import {
-  fecha,
-  getTeamLogo,
-  getTeamShortname,
-  getTorneoLink
-} from "../../../utils/Utils";
+import { fecha, getTorneoLink } from "../../../utils/Utils";
 import MatchEventComponent from "./matchEvent";
-import { useTeamsMap } from "../../../context/TeamsContext";
 
 export function filterEvents(events: MatchEvent[], side: "home" | "away") {
   if (side === "home") {
@@ -30,7 +24,6 @@ export function filterEvents(events: MatchEvent[], side: "home" | "away") {
 }
 
 export default function MatchCard({ match }: { match: Match }) {
-  const teamsMap = useTeamsMap();
   return (
     <Card>
       <table className="w-full table-fixed text-center align-middle">
@@ -58,7 +51,7 @@ export default function MatchCard({ match }: { match: Match }) {
                     {match.teams[0].teamname}
                   </div>
                   <div className="sm:hidden">
-                    {getTeamShortname(match.teams[0].teamname, teamsMap)}
+                    {match.teams[0].shortname}
                   </div>
                 </Link>
               </div>
@@ -80,7 +73,7 @@ export default function MatchCard({ match }: { match: Match }) {
                     {match.teams[1].teamname}
                   </div>
                   <div className="sm:hidden">
-                    {getTeamShortname(match.teams[1].teamname, teamsMap)}
+                    {match.teams[1].shortname}
                   </div>
                 </Link>
               </div>
@@ -92,7 +85,7 @@ export default function MatchCard({ match }: { match: Match }) {
                 <Link href={`/equipo/${match.teams[0].teamname}`}>
                   <img
                     alt={match.teams[0].teamname}
-                    src={getTeamLogo(match.teams[0].teamname, teamsMap)}
+                    src={match.teams[0].teamLogo}
                   />
                 </Link>
               </div>
@@ -112,7 +105,7 @@ export default function MatchCard({ match }: { match: Match }) {
                 <Link href={`/equipo/${match.teams[1].teamname}`}>
                   <img
                     alt={match.teams[1].teamname}
-                    src={getTeamLogo(match.teams[1].teamname, teamsMap)}
+                    src={match.teams[1].teamLogo}
                   />
                 </Link>
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import type { TeamDoc } from "@/lib/getFromDB";
+import type { TeamDoc } from "@/utils/Utils";
 import Button from "@/components/ui/button";
 import Table from "@/components/ui/table";
 import Card from "@/components/ui/card";

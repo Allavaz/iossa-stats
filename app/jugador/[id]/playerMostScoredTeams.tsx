@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { getTeamLogo, TeamsMap } from "../../../utils/Utils";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 
 interface Props {
   teams: {
     teamname: string;
+    teamLogo?: string;
     goalsscored: number;
   }[];
-  teamsMap: TeamsMap;
 }
 
 export default function PlayerMostScoredTeams(props: Props) {
@@ -43,7 +42,7 @@ export default function PlayerMostScoredTeams(props: Props) {
                 >
                   <img
                     className="h-6"
-                    src={getTeamLogo(team.teamname, props.teamsMap)}
+                    src={team.teamLogo}
                     alt={team.teamname}
                   />
                   <div>{team.teamname}</div>

@@ -12,8 +12,7 @@ import Button from "../../../components/ui/button";
 import Card from "../../../components/ui/card";
 import Modal from "../../../components/ui/modal";
 import { Event, Match, MatchEvent, Player } from "../../../types";
-import { fecha, getTeamLogo, getTeamShortname } from "../../../utils/Utils";
-import { useTeamsMap } from "../../../context/TeamsContext";
+import { fecha } from "../../../utils/Utils";
 import DateTimeEditor from "./dateTimeEditor";
 import MatchEventEditable from "./matchEventEditable";
 import MatchEventEditor from "./matchEventEditor";
@@ -39,7 +38,8 @@ export default function MatchCardEditor({
   deleteMatch,
   exportMatch,
   restartEditing,
-  undo
+  undo,
+  teamsMap
 }: {
   data: Match;
   players: Player[];
@@ -59,8 +59,8 @@ export default function MatchCardEditor({
   exportMatch: () => void;
   restartEditing: () => void;
   undo: () => void;
+  teamsMap: any;
 }) {
-  const teamsMap = useTeamsMap();
   const [dragging, setDragging] = useState(false);
 
   function getEventSide(event: MatchEvent): "home" | "away" {
@@ -274,6 +274,7 @@ export default function MatchCardEditor({
                   side="home"
                   onChangeTeam={onChangeTeam}
                   setEditing={setEditing}
+                  teamsMap={teamsMap}
                 />
               ) : (
                 <div>
@@ -285,7 +286,7 @@ export default function MatchCardEditor({
                       {data.teams[0].teamname}
                     </span>
                     <span className="sm:hidden">
-                      {getTeamShortname(data.teams[0].teamname, teamsMap)}
+                      {data.teams[0].shortname}
                     </span>{" "}
                     <span></span>
                   </Link>
@@ -328,6 +329,7 @@ export default function MatchCardEditor({
                   side="away"
                   onChangeTeam={onChangeTeam}
                   setEditing={setEditing}
+                  teamsMap={teamsMap}
                 />
               ) : (
                 <div>
@@ -339,7 +341,7 @@ export default function MatchCardEditor({
                       {data.teams[1].teamname}
                     </span>
                     <span className="sm:hidden">
-                      {getTeamShortname(data.teams[1].teamname, teamsMap)}
+                      {data.teams[1].shortname}
                     </span>{" "}
                     <span></span>
                   </Link>
@@ -360,7 +362,7 @@ export default function MatchCardEditor({
                 <Link href={`/equipo/${data.teams[0].teamname}`}>
                   <img
                     alt={data.teams[0].teamname}
-                    src={getTeamLogo(data.teams[0].teamname, teamsMap)}
+                    src={data.teams[0].teamLogo}
                   />
                 </Link>
               </div>
@@ -397,7 +399,7 @@ export default function MatchCardEditor({
                 <Link href={`/equipo/${data.teams[1].teamname}`}>
                   <img
                     alt={data.teams[1].teamname}
-                    src={getTeamLogo(data.teams[1].teamname, teamsMap)}
+                    src={data.teams[1].teamLogo}
                   />
                 </Link>
               </div>

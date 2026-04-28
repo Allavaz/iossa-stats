@@ -12,12 +12,12 @@ import {
   getTournamentWinners,
   getTeams
 } from "../../../lib/getFromDB";
-import { buildTeamsMap } from "../../../utils/Utils";
 import {
   getChallongeTorneo,
   getTablasTorneo,
   getTemporadas,
-  getTorneoLabel
+  getTorneoLabel,
+  buildTeamsMap
 } from "../../../utils/Utils";
 import Top10Asistidores from "../../top10/[[...id]]/top10Asistidores";
 import Top10Goleadores from "../../top10/[[...id]]/top10Goleadores";
@@ -48,7 +48,7 @@ export async function generateMetadata(props) {
 
 export default async function Torneos(props) {
   const params = await props.params;
-  const editable = params.id?.at(-1) === "edit" && await isAdmin();
+  const editable = params.id?.at(-1) === "edit" && (await isAdmin());
   if (params.id?.at(-1) === "edit") {
     params.id = params.id.slice(0, -1);
   }
@@ -84,7 +84,7 @@ export default async function Torneos(props) {
     getTournamentWinners(torneoLabel + " " + temporada.toUpperCase()),
     getTeams()
   ]);
-  const teamsMap = buildTeamsMap(teamsData);
+  const teamsForAutocomplete = buildTeamsMap(teamsData);
 
   return (
     <div className="flex max-w-6xl flex-col gap-4 lg:flex-row">
@@ -104,16 +104,16 @@ export default async function Torneos(props) {
         </div>
         {editable ? (
           <TorneoCardEditable
-            torneoLabel={torneoLabel}
+            tournamentLabel={torneoLabel}
             temporada={temporada}
             winners={winners}
+            teamsMap={teamsForAutocomplete}
           />
         ) : (
           <TorneoCard
             torneoLabel={torneoLabel}
             temporada={temporada}
             winners={winners}
-            teamsMap={teamsMap}
           />
         )}
         {challonge && (
@@ -144,20 +144,19 @@ export default async function Torneos(props) {
                 )
             )}
           <div className="grow overflow-x-auto">
-            <Top10Goleadores players={top10Goleadores} category={null} teamsMap={teamsMap} />
+            <Top10Goleadores players={top10Goleadores} category={null} />
           </div>
           <div className="grow overflow-x-auto">
             <Top10Intercepciones
               players={top10Intercepciones}
               category={null}
-              teamsMap={teamsMap}
             />
           </div>
           <div className="grow overflow-x-auto">
-            <Top10Asistidores players={top10Asistidores} category={null} teamsMap={teamsMap} />
+            <Top10Asistidores players={top10Asistidores} category={null} />
           </div>
           <div className="grow overflow-x-auto">
-            <Top10Arqueros players={top10Arqueros} category={null} teamsMap={teamsMap} />
+            <Top10Arqueros players={top10Arqueros} category={null} />
           </div>
         </div>
         <Results matches={resultados} isMultiStage={isMultiStage} />

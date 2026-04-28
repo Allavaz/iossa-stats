@@ -25,12 +25,14 @@ export default function MatchEditor({
   players,
   table,
   challonge,
-  create
+  create,
+  teamsMap
 }) {
   const router = useRouter();
   const [editableMatch, setEditableMatch] = useState(
     create ? [buildBlankMatch()] : [JSON.parse(JSON.stringify(match))]
   );
+  console.log(editableMatch.at(-1));
   const [editableTable, setEditableTable] = useState({
     positions: table && JSON.parse(JSON.stringify(table.positions)),
     header: create ? "" : table && table.header
@@ -639,6 +641,7 @@ export default function MatchEditor({
           disableUndo={editableMatch.length < 2}
           create={create}
           dropFile={dropFile}
+          teamsMap={teamsMap}
         />
         <div className="flex flex-wrap justify-center gap-4">
           <div className="max-w-xl grow">

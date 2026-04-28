@@ -16,12 +16,9 @@ import Title from "../../../components/ui/title";
 import { Match } from "../../../types";
 import {
   fecha,
-  getTeamLogo,
-  getTeamShortname,
   getTorneoLink,
   getTournamentIcon
 } from "../../../utils/Utils";
-import { useTeamsMap } from "../../../context/TeamsContext";
 
 function WonOrLost(match, playerID) {
   for (let i in match.teams[0].playerStatistics) {
@@ -54,7 +51,6 @@ interface Props {
 }
 
 export default function PlayerMatches(props: Props) {
-  const teamsMap = useTeamsMap();
   const columnHelper = createColumnHelper<Match>();
 
   const columns = [
@@ -75,20 +71,24 @@ export default function PlayerMatches(props: Props) {
     columnHelper.accessor(row => row.teams[0].teamname, {
       id: "home",
       header: "Local",
-      cell: info => (
+      cell: info => {
+        const match = info.row.original;
+        const homeTeam = match.teams[0];
+        return (
         <Link
-          href={`/equipo/${info.getValue()}`}
+          href={`/equipo/${homeTeam.teamname}`}
           className="flex items-center justify-end gap-x-1"
         >
-          <div className="hidden sm:block">{info.getValue()}</div>
-          <div className="sm:hidden">{getTeamShortname(info.getValue(), teamsMap)}</div>
+          <div className="hidden sm:block">{homeTeam.teamname}</div>
+          <div className="sm:hidden">{homeTeam.shortname}</div>
           <img
-            src={getTeamLogo(info.getValue(), teamsMap)}
-            alt={info.getValue()}
+            src={homeTeam.teamLogo}
+            alt={homeTeam.teamname}
             className="h-6"
           />
         </Link>
-      )
+      );
+      }
     }),
     columnHelper.accessor(
       row => {
@@ -115,20 +115,24 @@ export default function PlayerMatches(props: Props) {
     columnHelper.accessor(row => row.teams[1].teamname, {
       id: "away",
       header: "Visitante",
-      cell: info => (
+      cell: info => {
+        const match = info.row.original;
+        const awayTeam = match.teams[1];
+        return (
         <Link
-          href={`/equipo/${info.getValue()}`}
+          href={`/equipo/${awayTeam.teamname}`}
           className="flex items-center justify-start gap-x-1"
         >
           <img
-            src={getTeamLogo(info.getValue(), teamsMap)}
-            alt={info.getValue()}
+            src={awayTeam.teamLogo}
+            alt={awayTeam.teamname}
             className="h-6"
           />
-          <div className="hidden sm:block">{info.getValue()}</div>
-          <div className="sm:hidden">{getTeamShortname(info.getValue(), teamsMap)}</div>
+          <div className="hidden sm:block">{awayTeam.teamname}</div>
+          <div className="sm:hidden">{awayTeam.shortname}</div>
         </Link>
-      )
+      );
+      }
     }),
     columnHelper.accessor("torneo", {
       header: "Torneo",

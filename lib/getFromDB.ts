@@ -2,7 +2,13 @@ import { cache } from "react";
 import clientPromise from "./mongodb";
 import { ObjectId } from "mongodb";
 import { Match, Player } from "../types";
-import { temporadaActual } from "../utils/Utils";
+import {
+  temporadaActual,
+  buildTeamsMap,
+  getTeamShortname,
+  getTeamLogo,
+  TeamDoc
+} from "../utils/Utils";
 import player from "./aggregations/player";
 import playerPositions from "./aggregations/playerPositions";
 import playerScoredTeams from "./aggregations/playerScoredTeams";
@@ -22,6 +28,42 @@ import palmares from "./aggregations/palmares";
 import top10Interceptions from "./aggregations/top10Interceptions";
 
 const OBJECT_ID_LENGTH = 24;
+
+export const getTeams = cache(async () => {
+  const client = await clientPromise;
+  const db = client.db();
+  return db
+    .collection("teams")
+    .find({}, { projection: { _id: 0 } })
+    .sort({ name: 1 })
+    .toArray();
+});
+
+async function enrichWithTeamData(docs: any[], teamField: string = "team") {
+  const teams = await getTeams();
+  const teamsMap = buildTeamsMap(teams as any);
+  return docs.map(doc => ({
+    ...doc,
+    teamLogo: getTeamLogo(doc[teamField], teamsMap),
+    shortname: getTeamShortname(doc[teamField], teamsMap)
+  }));
+}
+
+async function enrichMatchesWithTeamData(docs: any[]) {
+  const teams = await getTeams();
+  const teamsMap = buildTeamsMap(teams as any);
+  return docs.map(doc => {
+    const match = serializableMatch(doc);
+    return {
+      ...match,
+      teams: doc.teams.map((t: any) => ({
+        ...t,
+        teamLogo: getTeamLogo(t.teamname, teamsMap),
+        shortname: getTeamShortname(t.teamname, teamsMap)
+      }))
+    };
+  });
+}
 
 function serializableMatch(doc) {
   return {
@@ -59,7 +101,7 @@ export async function getMatches(id) {
         .project({ fecha: 1, torneo: 1, teams: 1, isdefault: 1 })
         .toArray();
     }
-    return docs.map(doc => serializableMatch(doc));
+    return enrichMatchesWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -74,7 +116,7 @@ export async function getMatchesAPI(id) {
       .find(queries(id))
       .sort({ fecha: -1 })
       .toArray();
-    return docs.map(doc => serializableMatch(doc));
+    return enrichMatchesWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -88,7 +130,7 @@ export async function getPositions(arg: string) {
       .collection(process.env.DB_COLLECTION)
       .aggregate(positions(queries(arg, true)))
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs, "_id");
   } catch (error) {
     console.error(error);
   }
@@ -105,7 +147,7 @@ export async function getManyPositions(ids: string[]) {
           .collection(process.env.DB_COLLECTION)
           .aggregate(positions(queries(ids[i], true)))
           .toArray();
-        tables.push(doc);
+        tables.push(await enrichWithTeamData(doc, "_id"));
       }
       return tables;
     } catch (error) {
@@ -122,7 +164,16 @@ export async function getMatch(id: string) {
     let doc = await db
       .collection(process.env.DB_COLLECTION)
       .findOne({ _id: o_id });
-    return serializableMatch(doc) as Match;
+    if (!doc) return null;
+    const teams = await getTeams();
+    const teamsMap = buildTeamsMap(teams as any);
+    const match = serializableMatch(doc) as Match;
+    match.teams = match.teams.map((t: any) => ({
+      ...t,
+      teamLogo: getTeamLogo(t.teamname, teamsMap),
+      shortname: getTeamShortname(t.teamname, teamsMap)
+    }));
+    return match;
   } catch (e) {
     return null;
   }
@@ -152,7 +203,7 @@ export async function getPlayers(arg: string) {
         .aggregate(players(arg))
         .toArray();
     }
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -168,7 +219,7 @@ export async function getTop10Goals(id) {
       .sort({ goals: -1, matches: 1 })
       .limit(10)
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -184,7 +235,7 @@ export async function getTop10Assists(id) {
       .sort({ assists: -1, matches: 1 })
       .limit(10)
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -200,7 +251,7 @@ export async function getTop10Rusticos(id) {
       .sort({ redcards: -1, yellowcards: -1, fouls: 1, matches: 1 })
       .limit(10)
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -216,7 +267,7 @@ export async function getTop10Saves(id) {
       .sort({ savescaught: -1, saves: -1, goalsconceded: 1, matches: 1 })
       .limit(10)
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -232,7 +283,7 @@ export async function getTop10Interceptions(id) {
       .sort({ interceptions: -1, matches: 1 })
       .limit(10)
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -247,7 +298,7 @@ export async function getPlayerMatches(id) {
       .find({ "players.info.steam_id": id })
       .sort({ fecha: -1 })
       .toArray();
-    return docs.map(doc => serializableMatch(doc));
+    return enrichMatchesWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -263,13 +314,27 @@ export async function getPlayer(steam_id: string, arg: string) {
         .collection(process.env.DB_COLLECTION)
         .aggregate([{ $match: { _id: o_id } }, ...player(steam_id)])
         .toArray();
-      return docs[0];
+      const result = docs[0];
+      if (result) {
+        const teams = await getTeams();
+        const teamsMap = buildTeamsMap(teams as any);
+        result.teamLogo = getTeamLogo(result.team, teamsMap);
+        result.shortname = getTeamShortname(result.team, teamsMap);
+      }
+      return result;
     } else {
       let docs = await db
         .collection(process.env.DB_COLLECTION)
         .aggregate([{ $match: queries(arg) }, ...player(steam_id)])
         .toArray();
-      return docs[0];
+      const result = docs[0];
+      if (result) {
+        const teams = await getTeams();
+        const teamsMap = buildTeamsMap(teams as any);
+        result.teamLogo = getTeamLogo(result.team, teamsMap);
+        result.shortname = getTeamShortname(result.team, teamsMap);
+      }
+      return result;
     }
   } catch (error) {
     console.error(error);
@@ -288,7 +353,7 @@ export async function getTeamPlayers(
       .collection(process.env.DB_COLLECTION)
       .aggregate(teamPlayers(teamname, arg))
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -306,7 +371,7 @@ export async function getTeamMatches(
       .find({ ...queries(arg), "teams.teamname": teamname })
       .sort({ fecha: -1 })
       .toArray();
-    return docs.map(doc => serializableMatch(doc));
+    return enrichMatchesWithTeamData(docs);
   } catch (error) {
     console.error(error);
   }
@@ -355,10 +420,13 @@ export async function getPlayerTournaments(steamid: string) {
       .collection(process.env.DB_COLLECTION)
       .aggregate(playerTournaments(steamid))
       .toArray();
+    const teams = await getTeams();
+    const teamsMap = buildTeamsMap(teams as any);
     return docs.map(doc => ({
       ...doc,
       firstmatch: doc.firstmatch.toISOString(),
-      lastmatch: doc.lastmatch.toISOString()
+      lastmatch: doc.lastmatch.toISOString(),
+      teamLogo: getTeamLogo(doc.team, teamsMap)
     }));
   } catch (error) {
     console.error(error);
@@ -373,7 +441,7 @@ export async function getTeamRivals(teamname: string) {
       .collection(process.env.DB_COLLECTION)
       .aggregate(teamRivals(teamname))
       .toArray();
-    return docs;
+    return enrichWithTeamData(docs, "_id");
   } catch (error) {
     console.error(error);
   }
@@ -387,7 +455,14 @@ export async function getTeamStats(teamname: string, arg: string) {
       .collection(process.env.DB_COLLECTION)
       .aggregate(team(teamname, arg))
       .toArray();
-    return docs[0];
+    const result = docs[0];
+    if (result) {
+      const teams = await getTeams();
+      const teamsMap = buildTeamsMap(teams as any);
+      result.teamLogo = getTeamLogo(teamname, teamsMap);
+      result.shortname = getTeamShortname(teamname, teamsMap);
+    }
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -418,10 +493,11 @@ export async function getPlayerScoredTeams(steamid: string) {
       .collection(process.env.DB_COLLECTION)
       .aggregate(playerScoredTeams(steamid))
       .toArray();
-    return docs.map(doc => ({
+    const result = docs.map(doc => ({
       teamname: doc._id,
       goalsscored: doc.goalsscored
     }));
+    return enrichWithTeamData(result, "teamname");
   } catch (error) {
     console.error(error);
   }
@@ -451,7 +527,13 @@ export async function getTournamentWinners(torneo: string) {
     const doc = await db
       .collection(process.env.DB_COLLECTION_TOURNAMENTS)
       .findOne({ torneo: torneo });
+    if (!doc) return null;
     delete doc._id;
+    if (doc.firstPlace) {
+      const teams = await getTeams();
+      const teamsMap = buildTeamsMap(teams as any);
+      doc.firstPlaceLogo = getTeamLogo(doc.firstPlace, teamsMap);
+    }
     return doc;
   } catch (error) {
     return null;
@@ -475,46 +557,52 @@ export async function getPalmares(teamname?: string) {
   }
 }
 
-export type TeamDoc = { name: string; shortname: string; logofilename: string; aliases?: string[] };
-
-export const getTeams = cache(async (): Promise<TeamDoc[]> => {
-  try {
-    const client = await clientPromise;
-    const db = client.db();
-    return db.collection("teams").find({}, { projection: { _id: 0 } }).sort({ name: 1 }).toArray() as Promise<TeamDoc[]>;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-});
-
 export async function teamNameExists(name: string): Promise<boolean> {
   const client = await clientPromise;
   const db = client.db();
-  const doc = await db.collection("teams").findOne({ name }, { projection: { _id: 1 } });
+  const doc = await db
+    .collection("teams")
+    .findOne({ name }, { projection: { _id: 1 } });
   return doc !== null;
 }
 
-export async function logoFilenameExists(logofilename: string): Promise<boolean> {
+export async function logoFilenameExists(
+  logofilename: string
+): Promise<boolean> {
   const client = await clientPromise;
   const db = client.db();
-  const doc = await db.collection("teams").findOne({ logofilename }, { projection: { _id: 1 } });
+  const doc = await db
+    .collection("teams")
+    .findOne({ logofilename }, { projection: { _id: 1 } });
   return doc !== null;
 }
 
-export async function createTeam(name: string, shortname: string, logofilename: string): Promise<void> {
+export async function createTeam(
+  name: string,
+  shortname: string,
+  logofilename: string
+): Promise<void> {
   const client = await clientPromise;
   const db = client.db();
   await db.collection("teams").insertOne({ name, shortname, logofilename });
 }
 
-export async function updateTeam(name: string, shortname: string, logofilename: string): Promise<void> {
+export async function updateTeam(
+  name: string,
+  shortname: string,
+  logofilename: string
+): Promise<void> {
   const client = await clientPromise;
   const db = client.db();
-  await db.collection("teams").updateOne({ name }, { $set: { shortname, logofilename } });
+  await db
+    .collection("teams")
+    .updateOne({ name }, { $set: { shortname, logofilename } });
 }
 
-export async function updateTeamAliases(name: string, aliases: string[]): Promise<void> {
+export async function updateTeamAliases(
+  name: string,
+  aliases: string[]
+): Promise<void> {
   const client = await clientPromise;
   const db = client.db();
   await db.collection("teams").updateOne({ name }, { $set: { aliases } });
@@ -524,7 +612,9 @@ export function resolveTeamName(rawName: string, teams: TeamDoc[]): string {
   const lower = rawName.toLowerCase();
   const byName = teams.find(t => t.name.toLowerCase() === lower);
   if (byName) return byName.name;
-  const byAlias = teams.find(t => t.aliases?.some(a => a.toLowerCase() === lower));
+  const byAlias = teams.find(t =>
+    t.aliases?.some(a => a.toLowerCase() === lower)
+  );
   if (byAlias) return byAlias.name;
   return rawName;
 }
@@ -533,9 +623,14 @@ export async function getTeamMatchCounts(): Promise<Record<string, number>> {
   const client = await clientPromise;
   const db = client.db();
   const col = process.env.DB_COLLECTION!;
-  const docs = await db.collection(col).aggregate([
-    { $unwind: "$teams" },
-    { $group: { _id: "$teams.teamname", count: { $sum: 1 } } }
-  ]).toArray();
-  return Object.fromEntries(docs.map(d => [d._id as string, d.count as number]));
+  const docs = await db
+    .collection(col)
+    .aggregate([
+      { $unwind: "$teams" },
+      { $group: { _id: "$teams.teamname", count: { $sum: 1 } } }
+    ])
+    .toArray();
+  return Object.fromEntries(
+    docs.map(d => [d._id as string, d.count as number])
+  );
 }

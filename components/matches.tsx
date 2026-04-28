@@ -3,8 +3,6 @@
 import { Match } from "../types";
 import {
   fecha,
-  getTeamLogo,
-  getTeamShortname,
   getTournamentIcon
 } from "../utils/Utils";
 import Title from "./ui/title";
@@ -12,10 +10,8 @@ import React from "react";
 import Button from "./ui/button";
 import ResultWithDefault from "./resultWithDefault";
 import Link from "next/link";
-import { useTeamsMap } from "../context/TeamsContext";
 
 export default function Matches({ matches }: { matches: Match[] }) {
-  const teamsMap = useTeamsMap();
   return (
     <div className="flex grow flex-col items-center gap-y-4">
       <div className="w-full space-y-4 text-sm">
@@ -34,11 +30,11 @@ export default function Matches({ matches }: { matches: Match[] }) {
                   {match.teams[0].teamname}
                 </div>
                 <div className="sm:hidden">
-                  {getTeamShortname(match.teams[0].teamname, teamsMap)}
+                  {match.teams[0].shortname}
                 </div>
                 <img
                   className="h-6"
-                  src={getTeamLogo(match.teams[0].teamname, teamsMap)}
+                  src={match.teams[0].teamLogo}
                   alt={match.teams[0].teamname}
                 />
               </Link>
@@ -58,14 +54,14 @@ export default function Matches({ matches }: { matches: Match[] }) {
               >
                 <img
                   className="h-6"
-                  src={getTeamLogo(match.teams[1].teamname, teamsMap)}
+                  src={match.teams[1].teamLogo}
                   alt={match.teams[1].teamname}
                 />
                 <div className="hidden overflow-hidden overflow-ellipsis whitespace-nowrap sm:block">
                   {match.teams[1].teamname}
                 </div>
                 <div className="sm:hidden">
-                  {getTeamShortname(match.teams[1].teamname, teamsMap)}
+                  {match.teams[1].shortname}
                 </div>
               </Link>
               <Link

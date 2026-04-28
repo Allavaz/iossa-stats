@@ -1,5 +1,7 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "./mongodb";
+import { buildTeamsMap, getTeamLogo } from "../utils/Utils";
+import { getTeams } from "./getFromDB";
 
 const PAGE_SIZE = 10;
 
@@ -46,14 +48,21 @@ export async function getMessages(page?: number) {
       }
     }
   ]);
+  let docs;
   if (page) {
-    return baseQuery
+    docs = await baseQuery
       .skip((page - 1) * PAGE_SIZE)
       .limit(PAGE_SIZE)
       .toArray();
   } else {
-    return baseQuery.limit(PAGE_SIZE).toArray();
+    docs = await baseQuery.limit(PAGE_SIZE).toArray();
   }
+  const teamData = await getTeams();
+  const teamsMap = buildTeamsMap(teamData);
+  return docs.map(doc => ({
+    ...doc,
+    teamLogo: getTeamLogo(doc.team, teamsMap)
+  }));
 }
 
 export async function getPageCount() {

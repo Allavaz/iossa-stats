@@ -1,9 +1,8 @@
-import { getTeamLogo, TeamsMap } from "../../../utils/Utils";
 import Link from "next/link";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 
-export default function Top10Rusticos({ players, category, teamsMap }: { players: any[]; category: string; teamsMap: TeamsMap }) {
+export default function Top10Rusticos({ players, category }: { players: any[]; category: string }) {
   return (
     <div className="flex w-full flex-col gap-y-4">
       <Title>
@@ -32,7 +31,7 @@ export default function Top10Rusticos({ players, category, teamsMap }: { players
                 >
                   <img
                     className="h-6"
-                    src={getTeamLogo(item.team, teamsMap)}
+                    src={item.teamLogo}
                     alt={item.team}
                   />
                   <div>{item.name}</div>

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Card from "../../../components/ui/card";
 import Title from "../../../components/ui/title";
-import { getTeamLogo, getTournamentIcon, TeamsMap } from "../../../utils/Utils";
+import { getTournamentIcon } from "../../../utils/Utils";
 
-export default function TorneoCard({ torneoLabel, temporada, winners, teamsMap }: { torneoLabel: string; temporada: string; winners: any; teamsMap: TeamsMap }) {
+export default function TorneoCard({ torneoLabel, temporada, winners }: { torneoLabel: string; temporada: string; winners: any }) {
   return (
     <Card>
       <div className="flex flex-col items-center justify-evenly gap-4 sm:flex-row">
@@ -23,7 +23,7 @@ export default function TorneoCard({ torneoLabel, temporada, winners, teamsMap }
             className="flex flex-col items-center gap-2"
           >
             <img
-              src={getTeamLogo(winners.firstPlace, teamsMap)}
+              src={winners.firstPlaceLogo || winners.firstPlaceLogo}
               alt={winners.firstPlace}
             />
             <div className="flex items-center gap-2 text-center font-heading text-xl">

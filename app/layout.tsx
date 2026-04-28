@@ -11,10 +11,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { SessionProvider } from "next-auth/react";
-import { TeamsProvider } from "../context/TeamsContext";
-import { getTeams } from "../lib/getFromDB";
-import { buildTeamsMap } from "../utils/Utils";
-import { connection } from "next/server";
 config.autoAddCss = false; /* eslint-disable import/first */
 
 export const metadata: Metadata = {
@@ -45,21 +41,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await connection();
-  const initialTeamsMap = buildTeamsMap(await getTeams());
   return (
     <html lang="es">
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">
         <SessionProvider>
-          <TeamsProvider initialTeamsMap={initialTeamsMap}>
-            <NextTopLoader color="#ff9800" height={2} />
-            <Navigation />
-            <Header />
-            <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
-              <main>{children}</main>
-            </div>
-            <Footer />
-          </TeamsProvider>
+          <NextTopLoader color="#ff9800" height={2} />
+          <Navigation />
+          <Header />
+          <div className="mt-16 px-2 sm:m-auto sm:max-w-6xl sm:p-0">
+            <main>{children}</main>
+          </div>
+          <Footer />
         </SessionProvider>
       </body>
     </html>
