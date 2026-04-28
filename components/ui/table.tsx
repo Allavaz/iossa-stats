@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export default function Table({
   children,
   sticky
@@ -22,15 +24,16 @@ export default function Table({
   );
 }
 
-Table.HeaderRow = ({ children }) => {
+function HeaderRow({ children }: { children: any }): JSX.Element {
   return (
     <tr className="border-b border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900">
       {children}
     </tr>
   );
-};
+}
+Table.HeaderRow = HeaderRow;
 
-Table.HeaderCell = ({
+function HeaderCell({
   children,
   colSpan,
   sticky
@@ -38,7 +41,7 @@ Table.HeaderCell = ({
   children: any;
   colSpan?: number;
   sticky?: boolean;
-}) => {
+}): JSX.Element {
   return (
     <th
       className={`border-b border-neutral-200 px-2 py-1 dark:border-neutral-700 ${
@@ -51,9 +54,10 @@ Table.HeaderCell = ({
       {children}
     </th>
   );
-};
+}
+Table.HeaderCell = HeaderCell;
 
-Table.BodyRow = ({ children, sticky }: { children: any; sticky?: boolean }) => {
+function BodyRow({ children, sticky }: { children: any; sticky?: boolean }): JSX.Element {
   return (
     <tr
       className={`border-b border-neutral-200 last:border-none odd:bg-neutral-100 even:bg-white dark:border-neutral-800 dark:odd:bg-neutral-950 dark:even:bg-neutral-900 ${
@@ -63,9 +67,10 @@ Table.BodyRow = ({ children, sticky }: { children: any; sticky?: boolean }) => {
       {children}
     </tr>
   );
-};
+}
+Table.BodyRow = BodyRow;
 
-Table.BodyCell = ({
+function BodyCell({
   children,
   colSpan,
   sticky,
@@ -75,7 +80,7 @@ Table.BodyCell = ({
   colSpan?: number;
   sticky?: boolean;
   className?: string;
-}) => {
+}): JSX.Element {
   return (
     <td
       className={
@@ -90,4 +95,5 @@ Table.BodyCell = ({
       {children}
     </td>
   );
-};
+}
+Table.BodyCell = BodyCell;
