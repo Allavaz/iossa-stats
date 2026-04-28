@@ -12,12 +12,6 @@ export default function Navigation() {
   const [logoShown, setLogoShown] = useState(false);
   const { data: session } = useSession();
 
-  useEffect(() => {
-    const header = document.querySelector("#header")!;
-    const observer = new IntersectionObserver(hideLogo);
-    observer.observe(header);
-  }, []);
-
   function hideLogo(entries) {
     if (entries[0].isIntersecting) {
       setLogoShown(false);
@@ -25,6 +19,12 @@ export default function Navigation() {
       setLogoShown(true);
     }
   }
+
+  useEffect(() => {
+    const header = document.querySelector("#header")!;
+    const observer = new IntersectionObserver(hideLogo);
+    observer.observe(header);
+  }, []);
 
   return (
     <nav onScroll={hideLogo}>
@@ -108,6 +108,7 @@ export default function Navigation() {
                   <img
                     className="h-6 w-6 rounded-full"
                     src={session.user.image}
+                    alt={session.user.name || session.user.email}
                   />
                   <div>{session.user.name || session.user.email}</div>
                   <FontAwesomeIcon icon={faSignOutAlt} />
