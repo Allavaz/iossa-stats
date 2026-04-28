@@ -12,6 +12,7 @@ IOSoccer Sudamérica Stats is a full-stack web application for tracking competit
 npm run dev        # Start development server (localhost:3000)
 npm run build      # Build for production
 npm run start      # Run production server
+npm run lint       # ESLint
 npx tsc --noEmit   # TypeScript type check
 npm run format     # Prettier formatting
 npm run cache-manager  # Manage Steam profile cache (stats/cleanup/clear)
