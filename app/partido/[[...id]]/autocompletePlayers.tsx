@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Autosuggest from "react-autosuggest";
 
 export default function AutocompletePlayers(props) {
@@ -11,10 +11,6 @@ export default function AutocompletePlayers(props) {
       teamlogo: props.players[i].teamLogo
     });
   }
-
-  useEffect(() => {
-    setValue(props.value);
-  }, [props]);
 
   const getSuggestions = value => {
     const inputValue = value.toLowerCase();
@@ -41,7 +37,11 @@ export default function AutocompletePlayers(props) {
     </div>
   );
 
-  const renderSuggestionsContainer = ({ containerProps: { key, ...containerProps }, children, query }) => {
+  const renderSuggestionsContainer = ({
+    containerProps: { key, ...containerProps },
+    children,
+    query
+  }) => {
     return (
       <div
         key={key}
@@ -61,16 +61,13 @@ export default function AutocompletePlayers(props) {
     />
   );
 
-  const [value, setValue] = useState(props.defaultValue);
   const [suggestions, setSuggestions] = useState([]);
 
   const onChange = (event, { newValue }) => {
-    setValue(newValue);
     props.onChangePlayer.setPlayerName(newValue.trim());
   };
 
   const onSuggestionSelected = (event, { suggestion }) => {
-    setValue(suggestion.name);
     props.onChangePlayer.setPlayerName(suggestion.name);
     props.onChangePlayer.setPlayerSteamId(suggestion.steamid);
     props.changeSteamIdField(suggestion.steamid);
@@ -87,7 +84,7 @@ export default function AutocompletePlayers(props) {
   };
 
   const inputProps = {
-    value,
+    value: props.value,
     onChange: onChange,
     placeholder: "Nombre"
   };
