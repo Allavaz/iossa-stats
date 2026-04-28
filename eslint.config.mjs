@@ -5,7 +5,8 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   {
     rules: {
-      "@next/next/no-img-element": "off"
+      "@next/next/no-img-element": "off",
+      "react-hooks/incompatible-library": "off"
     }
   },
   // Override default ignores of eslint-config-next.
