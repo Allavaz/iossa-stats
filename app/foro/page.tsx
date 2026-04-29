@@ -6,8 +6,11 @@ import Title from "@/components/ui/title";
 import Button from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import Vote from "./vote";
+import { getTeams } from "@/lib/getFromDB";
+import { buildTeamsMap } from "@/utils/Utils";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Foro"
 };
 
@@ -19,6 +22,8 @@ export default async function Foro(props) {
     getMessages(parseInt(searchParams.page || 1))
   ]);
   const currentPage = parseInt(searchParams.page || 1);
+  const teamData = await getTeams();
+  const teamsMap = buildTeamsMap(teamData);
 
   if (
     (pageCount && currentPage > pageCount) ||
@@ -32,7 +37,7 @@ export default async function Foro(props) {
     <div className="flex flex-col gap-4">
       <Title>Foro IOSoccer Sudamérica</Title>
       {session ? (
-        <Form />
+        <Form teamsMap={teamsMap} />
       ) : (
         <div className="w-full text-center font-bold">
           Inicia sesión para participar

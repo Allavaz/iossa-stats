@@ -36,7 +36,7 @@ export const getTeams = cache(async () => {
     .collection("teams")
     .find({}, { projection: { _id: 0 } })
     .sort({ name: 1 })
-    .toArray();
+    .toArray() as TeamDoc[];
 });
 
 async function enrichWithTeamData(docs: any[], teamField: string = "team") {

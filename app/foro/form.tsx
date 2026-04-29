@@ -4,10 +4,9 @@ import Button from "@/components/ui/button";
 import { sendComment } from "./actions";
 import { useRef } from "react";
 import { useFormStatus } from "react-dom";
-import { useTeamsMap } from "../../context/TeamsContext";
+import { TeamsMap } from "@/utils/Utils";
 
-export default function Form() {
-  const teamsMap = useTeamsMap();
+export default function Form({ teamsMap }: { teamsMap: TeamsMap }) {
   const ref = useRef<HTMLFormElement>(null);
 
   return (
