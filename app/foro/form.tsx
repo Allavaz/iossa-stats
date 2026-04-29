@@ -9,16 +9,13 @@ import { TeamsMap } from "@/utils/Utils";
 export default function Form({ teamsMap }: { teamsMap: TeamsMap }) {
   const ref = useRef<HTMLFormElement>(null);
 
+  async function action(formData: FormData) {
+    await sendComment(formData);
+    ref.current?.reset();
+  }
+
   return (
-    <form
-      ref={ref}
-      action={
-        (async formData => {
-          await sendComment(formData);
-          ref.current?.reset();
-        }) as undefined as string
-      }
-    >
+    <form ref={ref} action={action}>
       <div className="flex flex-col gap-2">
         <div className="flex w-full flex-wrap justify-between gap-2">
           <input
