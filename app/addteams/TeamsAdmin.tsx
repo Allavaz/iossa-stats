@@ -39,7 +39,7 @@ export default function TeamsAdmin({
     return logofilename;
   }
 
-  async function handleAdd(e: React.FormEvent) {
+  async function handleAdd(e: React.SubmitEvent) {
     e.preventDefault();
     setAddError("");
     if (!addFile) {
