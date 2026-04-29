@@ -14,27 +14,40 @@ import { MatchPlayer } from "../../../types";
 import Title from "../../../components/ui/title";
 import Table from "../../../components/ui/table";
 import Modal from "../../../components/ui/modal";
+import { useMatchEditor } from "../../../context/MatchEditorContext";
 
-export default function MatchIndividualStatsEditable(props) {
+export default function MatchIndividualStatsEditable({
+  side
+}: {
+  side: "home" | "away";
+}) {
+  const {
+    match,
+    editing,
+    setEditing,
+    players: playersAutocomplete,
+    changeIndivStats,
+    removePlayer
+  } = useMatchEditor();
+
+  const teamIndex = side === "home" ? 0 : 1;
+  const players = match.teams[teamIndex].playerStatistics;
+  const teamName = match.teams[teamIndex].teamname;
+
   function onChangeIndivStats(player) {
     let oldsteamid;
     if (
-      !props.editing.new &&
-      player.info.steam_id !== props.players[props.editing.player].info.steam_id
+      !editing.new &&
+      player.info.steam_id !== players[editing.player].info.steam_id
     ) {
-      oldsteamid = props.players[props.editing.player].info.steam_id;
+      oldsteamid = players[editing.player].info.steam_id;
     }
-    props.changeIndivStats(
-      player,
-      props.side,
-      props.editing.player,
-      oldsteamid
-    );
-    props.setEditing(null);
+    changeIndivStats(player, side, editing.player, oldsteamid);
+    setEditing(null);
   }
 
   function onRemovePlayer(index) {
-    props.removePlayer(props.players[index], props.side, index);
+    removePlayer(players[index], side, index);
   }
 
   const newItem = () => {
@@ -42,7 +55,7 @@ export default function MatchIndividualStatsEditable(props) {
       info: {
         name: "",
         steam_id: "",
-        team: props.teamName
+        team: teamName
       },
       statistics: {
         assists: 0,
@@ -95,9 +108,9 @@ export default function MatchIndividualStatsEditable(props) {
               icon={faEdit}
               className="cursor-pointer"
               onClick={() =>
-                props.setEditing({
+                setEditing({
                   player: info.row.index,
-                  side: props.side
+                  side
                 })
               }
             />
@@ -256,7 +269,7 @@ export default function MatchIndividualStatsEditable(props) {
   ];
 
   const table = useReactTable({
-    data: props.players,
+    data: players,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel()
@@ -265,35 +278,35 @@ export default function MatchIndividualStatsEditable(props) {
   return (
     <>
       <div>
-        {props.editing &&
-        typeof props.editing.player !== "undefined" &&
-        props.editing.side === props.side ? (
+        {editing &&
+        typeof editing.player !== "undefined" &&
+        editing.side === side ? (
           <Modal>
             <MatchIndivStatsEditor
               player={
-                props.editing.new
+                editing.new
                   ? newItem()
-                  : props.players[props.editing.player]
+                  : players[editing.player]
               }
-              team={props.teamName}
-              players={props.playersAutocomplete}
+              team={teamName}
+              players={playersAutocomplete}
               onChangeIndivStats={onChangeIndivStats}
-              setEditing={props.setEditing}
-              editing={props.editing}
+              setEditing={setEditing}
+              editing={editing}
             />
           </Modal>
         ) : null}
         <div className="flex items-center gap-x-2">
           <Title style={{ display: "inline", width: "fit-content" }}>
-            Estadísticas Individuales - {props.teamName}
+            Estadísticas Individuales - {teamName}
           </Title>
           <FontAwesomeIcon
             className="cursor-pointer"
             icon={faPlus}
             onClick={_ => {
-              props.setEditing({
-                player: props.players.length,
-                side: props.side,
+              setEditing({
+                player: players.length,
+                side,
                 new: true
               });
             }}

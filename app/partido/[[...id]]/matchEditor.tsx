@@ -19,6 +19,7 @@ import Challonge from "../../../components/challonge";
 import Vod from "./vod";
 import VodEditor from "./vodEditor";
 import MatchTeamStats from "./matchTeamStats";
+import { MatchEditorProvider } from "../../../context/MatchEditorContext";
 
 export default function MatchEditor({
   match,
@@ -620,87 +621,64 @@ export default function MatchEditor({
       </div>
     );
   } else {
+    const currentMatch = editableMatch.at(-1);
     return (
-      <div className="flex flex-col gap-y-4">
-        <MatchCardEditor
-          data={editableMatch.at(-1)}
-          players={players}
-          changeTorneo={changeTorneo}
-          changeDate={changeDate}
-          changeTeam={changeTeam}
-          changeScore={changeScore}
-          changeEvents={changeEvents}
-          loading={loading}
-          exportMatch={exportMatch}
-          restartEditing={restartEditing}
-          updateMatch={updateMatch}
-          deleteMatch={deleteMatch}
-          editing={editing}
-          setEditing={setEditing}
-          undo={undo}
-          disableUndo={editableMatch.length < 2}
-          create={create}
-          dropFile={dropFile}
-          teamsMap={teamsMap}
-        />
-        <div className="flex flex-wrap justify-center gap-4">
-          <div className="max-w-xl grow">
-            <MatchTeamStats match={editableMatch.at(-1)} />
-          </div>
-          {editableChallonge && (
-            <>
-              <Title>{editableMatch.at(-1).torneo}</Title>
-              <Challonge id={editableChallonge || challonge} />
-            </>
-          )}
-          {editableTable.positions && (
-            <div className="flex grow flex-col gap-y-2 overflow-x-auto">
-              <PositionsComponent
-                teams={editableTable.positions}
-                header={editableTable.header}
-              />
-              <div className="text-sm italic text-neutral-500 dark:text-neutral-400">
-                La tabla se actualizará luego de subir el partido.
-              </div>
+      <MatchEditorProvider
+        value={{
+          match: currentMatch,
+          players,
+          editing,
+          setEditing,
+          loading,
+          create,
+          disableUndo: editableMatch.length < 2,
+          teamsMap,
+          changeTorneo,
+          changeDate,
+          changeTeam,
+          changeScore,
+          changeEvents,
+          changeIndivStats,
+          removePlayer,
+          changeVod,
+          updateMatch,
+          deleteMatch,
+          exportMatch,
+          restartEditing,
+          undo,
+          dropFile
+        }}
+      >
+        <div className="flex flex-col gap-y-4">
+          <MatchCardEditor />
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="max-w-xl grow">
+              <MatchTeamStats match={currentMatch} />
             </div>
-          )}
+            {editableChallonge && (
+              <>
+                <Title>{currentMatch.torneo}</Title>
+                <Challonge id={editableChallonge || challonge} />
+              </>
+            )}
+            {editableTable.positions && (
+              <div className="flex grow flex-col gap-y-2 overflow-x-auto">
+                <PositionsComponent
+                  teams={editableTable.positions}
+                  header={editableTable.header}
+                />
+                <div className="text-sm italic text-neutral-500 dark:text-neutral-400">
+                  La tabla se actualizará luego de subir el partido.
+                </div>
+              </div>
+            )}
+          </div>
+          <MatchIndividualStatsEditable side="home" />
+          <MatchIndividualStatsEditable side="away" />
+          {currentMatch.vod && editing !== "vod" && <Vod editable />}
+          {(currentMatch.vod === null || editing === "vod") && <VodEditor />}
         </div>
-        <MatchIndividualStatsEditable
-          players={editableMatch.at(-1).teams[0].playerStatistics}
-          teamName={editableMatch.at(-1).teams[0].teamname}
-          playersAutocomplete={players}
-          changeIndivStats={changeIndivStats}
-          removePlayer={removePlayer}
-          side="home"
-          editing={editing}
-          setEditing={setEditing}
-        />
-        <MatchIndividualStatsEditable
-          players={editableMatch.at(-1).teams[1].playerStatistics}
-          teamName={editableMatch.at(-1).teams[1].teamname}
-          playersAutocomplete={players}
-          changeIndivStats={changeIndivStats}
-          removePlayer={removePlayer}
-          side="away"
-          editing={editing}
-          setEditing={setEditing}
-        />
-        {editableMatch.at(-1).vod && editing !== "vod" && (
-          <Vod
-            vod={editableMatch.at(-1).vod}
-            setEditing={setEditing}
-            changeVod={changeVod}
-          />
-        )}
-        {editableMatch.at(-1).vod === null ||
-          (editing === "vod" && (
-            <VodEditor
-              vod={editableMatch.at(-1).vod}
-              changeVod={changeVod}
-              setEditing={setEditing}
-            />
-          ))}
-      </div>
+      </MatchEditorProvider>
     );
   }
 }

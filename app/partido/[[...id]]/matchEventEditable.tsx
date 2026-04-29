@@ -3,18 +3,19 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { MatchEvent } from "../../../types";
+import { useMatchEditor } from "../../../context/MatchEditorContext";
 
 export default function MatchEventEditable({
   item,
   index,
-  onRemoveEvent,
-  setEditing
+  onRemoveEvent
 }: {
   item: MatchEvent;
   index: number;
   onRemoveEvent: (index: number) => void;
-  setEditing: (editing: any) => void;
 }) {
+  const { setEditing } = useMatchEditor();
+
   return (
     <li key={index}>
       <div className="flex items-center justify-center gap-x-1 p-1 text-sm">

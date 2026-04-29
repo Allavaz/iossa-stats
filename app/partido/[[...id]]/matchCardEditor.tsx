@@ -11,8 +11,9 @@ import DefaultIndicator from "../../../components/defaultIndicator";
 import Button from "../../../components/ui/button";
 import Card from "../../../components/ui/card";
 import Modal from "../../../components/ui/modal";
-import { Event, Match, MatchEvent, Player } from "../../../types";
+import { Event, MatchEvent } from "../../../types";
 import { fecha } from "../../../utils/Utils";
+import { useMatchEditor } from "../../../context/MatchEditorContext";
 import DateTimeEditor from "./dateTimeEditor";
 import MatchEventEditable from "./matchEventEditable";
 import MatchEventEditor from "./matchEventEditor";
@@ -20,47 +21,29 @@ import ScoreEditor from "./scoreEditor";
 import TeamNameEditor from "./teamNameEditor";
 import TorneoEditor from "./torneoEditor";
 
-export default function MatchCardEditor({
-  data,
-  editing,
-  players,
-  loading,
-  setEditing,
-  changeTorneo,
-  changeDate,
-  changeTeam,
-  changeScore,
-  changeEvents,
-  create,
-  disableUndo,
-  dropFile,
-  updateMatch,
-  deleteMatch,
-  exportMatch,
-  restartEditing,
-  undo,
-  teamsMap
-}: {
-  data: Match;
-  players: Player[];
-  editing: any;
-  loading: boolean;
-  setEditing: (editing: any) => void;
-  changeTorneo: (newTorneo: string) => void;
-  changeDate: (newDate: string) => void;
-  changeTeam: (newTeam: string, side: "home" | "away") => void;
-  changeScore: (home: number, away: number, isDefault: boolean) => void;
-  changeEvents: (matchEvents: MatchEvent[]) => void;
-  create: boolean;
-  disableUndo: boolean;
-  dropFile: (ev: React.DragEvent) => void;
-  updateMatch: () => void;
-  deleteMatch: () => void;
-  exportMatch: () => void;
-  restartEditing: () => void;
-  undo: () => void;
-  teamsMap: any;
-}) {
+export default function MatchCardEditor() {
+  const {
+    match: data,
+    editing,
+    setEditing,
+    players,
+    loading,
+    create,
+    disableUndo,
+    teamsMap,
+    changeTorneo,
+    changeDate,
+    changeTeam,
+    changeScore,
+    changeEvents,
+    updateMatch,
+    deleteMatch,
+    exportMatch,
+    restartEditing,
+    undo,
+    dropFile
+  } = useMatchEditor();
+
   const [dragging, setDragging] = useState(false);
 
   function getEventSide(event: MatchEvent): "home" | "away" {
@@ -416,7 +399,6 @@ export default function MatchCardEditor({
                         key={index}
                         index={index}
                         onRemoveEvent={onRemoveEvent}
-                        setEditing={setEditing}
                       />
                     )
                 )}
@@ -524,7 +506,6 @@ export default function MatchCardEditor({
                         key={index}
                         index={index}
                         onRemoveEvent={onRemoveEvent}
-                        setEditing={setEditing}
                       />
                     )
                 )}
