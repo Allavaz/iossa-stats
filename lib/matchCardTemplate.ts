@@ -1,6 +1,7 @@
-import { fecha, getTeamLogo } from "../utils/Utils";
+import { buildTeamsMap, fecha, getTeamLogo } from "../utils/Utils";
 import { readFileSync } from "fs";
 import path from "path";
+import { getTeams } from "./getFromDB";
 const publicPath = path.resolve("./public");
 
 function getGoalEvents(data, side) {
@@ -65,8 +66,16 @@ function getGoalEvents(data, side) {
 
 export default async function matchCardTemplate(data) {
   try {
+    const teams = await getTeams();
+    const teamsMap = buildTeamsMap(teams);
     const homeGoals = getGoalEvents(data.matchevents, "home");
     const awayGoals = getGoalEvents(data.matchevents, "away");
+    const homeLogo = getTeamLogo(data.teams[0].teamname, teamsMap);
+    const awayLogo = getTeamLogo(data.teams[1].teamname, teamsMap);
+    const fallbackLogo = `data:image/png;base64,${readFileSync(
+      path.join(publicPath, "logo-iosoccer-128.png")
+    ).toString("base64")}`;
+
     let template = `
       <body>
       <div class="container">
@@ -81,13 +90,9 @@ export default async function matchCardTemplate(data) {
               <td><h2>${data.teams[1].teamname}</h2></td>
             </tr>
             <tr>
-              <td><img height="128px" src='data:image/png;base64,${readFileSync(
-                path.join(publicPath, getTeamLogo(data.teams[0].teamname))
-              ).toString("base64")}'></td>
-              <td><h1>${data.teams[0].score} - ${data.teams[1].score}</h1></td>
-              <td><img height="128px" src='data:image/png;base64,${readFileSync(
-                path.join(publicPath, getTeamLogo(data.teams[1].teamname))
-              ).toString("base64")}'></td>
+            <td><img height="128px" src='${homeLogo}' onerror="this.src='${fallbackLogo}';"></td>
+            <td><h1>${data.teams[0].score} - ${data.teams[1].score}</h1></td>
+            <td><img height="128px" src='${awayLogo}' onerror="this.src='${fallbackLogo}';"></td>
             </tr>
             <tr class="eventtr">
               <td>
