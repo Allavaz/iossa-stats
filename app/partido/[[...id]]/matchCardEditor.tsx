@@ -26,7 +26,6 @@ export default function MatchCardEditor() {
     match: data,
     editing,
     setEditing,
-    players,
     loading,
     create,
     disableUndo,
@@ -268,10 +267,7 @@ export default function MatchCardEditor() {
                     <span className="hidden sm:inline">
                       {data.teams[0].teamname}
                     </span>
-                    <span className="sm:hidden">
-                      {data.teams[0].shortname}
-                    </span>{" "}
-                    <span></span>
+                    <span className="sm:hidden">{data.teams[0].shortname}</span>{" "}
                   </Link>
                   <FontAwesomeIcon
                     className="cursor-pointer sm:font-heading sm:text-2xl"
@@ -323,9 +319,7 @@ export default function MatchCardEditor() {
                     <span className="hidden sm:inline">
                       {data.teams[1].teamname}
                     </span>
-                    <span className="sm:hidden">
-                      {data.teams[1].shortname}
-                    </span>{" "}
+                    <span className="sm:hidden">{data.teams[1].shortname}</span>{" "}
                     <span></span>
                   </Link>
                   <FontAwesomeIcon

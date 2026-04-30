@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { buildBlankMatch } from "../../../utils/Utils";
+import { buildBlankMatch, getTeamLogo } from "../../../utils/Utils";
 import Torneos from "../../../utils/Torneos.json";
 import axios from "axios";
 import { Match, MatchEvent, MatchPlayer } from "../../../types";
@@ -33,7 +33,6 @@ export default function MatchEditor({
   const [editableMatch, setEditableMatch] = useState(
     create ? [buildBlankMatch()] : [JSON.parse(JSON.stringify(match))]
   );
-  console.log(editableMatch.at(-1));
   const [editableTable, setEditableTable] = useState({
     positions: table && JSON.parse(JSON.stringify(table.positions)),
     header: create ? "" : table && table.header
@@ -104,6 +103,7 @@ export default function MatchEditor({
     setEditableMatch(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.teams[s].teamname = newName;
+      data.teams[s].teamLogo = getTeamLogo(newName, teamsMap);
       for (let i in data.teams[s].playerStatistics) {
         data.teams[s].playerStatistics[i].info.team = newName;
         for (let j in data.players) {

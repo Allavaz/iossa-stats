@@ -1,3 +1,4 @@
+import { getTeamLogo } from "@/utils/Utils";
 import { useState } from "react";
 import Autosuggest from "react-autosuggest";
 
@@ -7,7 +8,7 @@ export default function AutocompleteTeams(props) {
 
   const teams = Object.keys(props.teamsMap).map(name => ({
     team: name,
-    logo: props.teamsMap[name].teamLogo
+    logo: getTeamLogo(name, props.teamsMap)
   }));
 
   const getSuggestions = value => {
