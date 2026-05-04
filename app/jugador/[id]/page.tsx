@@ -6,11 +6,11 @@ import {
   getPlayerScoredTeams,
   getPlayerTournaments,
   getTournamentPosition,
-  getTeams
+  getTeamsMap
 } from "../../../lib/getFromDB";
 import { getSteamInfo } from "../../../lib/getFromSteam";
 import PlayerTeams from "../../../utils/PlayerTeams";
-import { buildTeamsMap, temporadaActual } from "../../../utils/Utils";
+import { temporadaActual } from "../../../utils/Utils";
 import PlayerCard from "./playerCard";
 import PlayerLigas from "./playerLigas";
 import PlayerMatches from "./playerMatches";
@@ -40,7 +40,7 @@ export default async function Jugador(props) {
     player,
     playerPositions,
     playerTournaments,
-    teamsData
+    teamsMap
   ] = await Promise.all([
     getPlayerMatches(steamid),
     getSteamInfo([steamid]),
@@ -48,9 +48,8 @@ export default async function Jugador(props) {
     getPlayer(steamid, "all"),
     getPlayerPositions(steamid, temporadaActual()),
     getPlayerTournaments(steamid),
-    getTeams()
+    getTeamsMap()
   ]);
-  const teamsMap = buildTeamsMap(teamsData);
 
   if (playerMatches.length === 0) notFound();
 

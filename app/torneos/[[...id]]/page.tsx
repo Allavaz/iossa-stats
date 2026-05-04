@@ -10,9 +10,8 @@ import {
   getTop10Interceptions,
   getTop10Saves,
   getTournamentWinners,
-  getTeams
+  getTeamsMap
 } from "../../../lib/getFromDB";
-import { buildTeamsMap } from "../../../utils/Utils";
 import {
   getChallongeTorneo,
   getTablasTorneo,
@@ -74,7 +73,7 @@ export default async function Torneos(props) {
     top10Intercepciones,
     resultados,
     winners,
-    teamsData
+    teamsMap
   ] = await Promise.all([
     getTop10Goals(torneo + temporada),
     getTop10Assists(torneo + temporada),
@@ -82,9 +81,8 @@ export default async function Torneos(props) {
     getTop10Interceptions(torneo + temporada),
     getMatches(torneo + temporada),
     getTournamentWinners(torneoLabel + " " + temporada.toUpperCase()),
-    getTeams()
+    getTeamsMap()
   ]);
-  const teamsMap = buildTeamsMap(teamsData);
 
   return (
     <div className="flex max-w-6xl flex-col gap-4 lg:flex-row">

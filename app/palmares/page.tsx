@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Title from "../../components/ui/title";
-import { getPalmares, getTeams } from "../../lib/getFromDB";
+import { getPalmares, getTeamsMap } from "../../lib/getFromDB";
 import {
-  buildTeamsMap,
   getTeamLogo,
   getTorneoQuery,
   getTournamentIcon
@@ -88,8 +87,7 @@ function addScore(teams) {
 }
 
 export default async function Palmares() {
-  const [palmaresData, teams] = await Promise.all([getPalmares(), getTeams()]);
-  const teamsMap = buildTeamsMap(teams);
+  const [palmaresData, teamsMap] = await Promise.all([getPalmares(), getTeamsMap()]);
   let palmares = addScore(palmaresData);
   palmares.sort(sortTeams);
 

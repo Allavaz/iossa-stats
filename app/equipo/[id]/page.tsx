@@ -6,10 +6,10 @@ import {
   getTeamPlayers,
   getTeamRivals,
   getTeamStats,
-  getTeams
+  getTeamsMap
 } from "../../../lib/getFromDB";
 import { getSteamInfo } from "../../../lib/getFromSteam";
-import { buildTeamsMap, getTeamLogo, temporadaActual } from "../../../utils/Utils";
+import { getTeamLogo, temporadaActual } from "../../../utils/Utils";
 import Palmares from "./palmares";
 import Roster from "./roster";
 import TeamArqueros from "./teamArqueros";
@@ -34,22 +34,29 @@ export default async function EquipoPage(props) {
   const params = await props.params;
   const teamName = decodeURIComponent(params.id);
 
-  const [matches, allPlayers, roster, rosterInfo, rivals, stats, palmares, teamsData] =
-    await Promise.all([
-      getTeamMatches(teamName, "all"),
-      getTeamPlayers(teamName, "all"),
-      getTeamPlayers(teamName, temporadaActual()),
-      getSteamInfo(
-        (
-          await getTeamPlayers(teamName, temporadaActual())
-        ).map(player => player._id)
-      ),
-      getTeamRivals(teamName),
-      getTeamStats(teamName, "all"),
-      getPalmares(teamName),
-      getTeams()
-    ]);
-  const teamsMap = buildTeamsMap(teamsData);
+  const [
+    matches,
+    allPlayers,
+    roster,
+    rosterInfo,
+    rivals,
+    stats,
+    palmares,
+    teamsMap
+  ] = await Promise.all([
+    getTeamMatches(teamName, "all"),
+    getTeamPlayers(teamName, "all"),
+    getTeamPlayers(teamName, temporadaActual()),
+    getSteamInfo(
+      (
+        await getTeamPlayers(teamName, temporadaActual())
+      ).map(player => player._id)
+    ),
+    getTeamRivals(teamName),
+    getTeamStats(teamName, "all"),
+    getPalmares(teamName),
+    getTeamsMap()
+  ]);
 
   if (matches.length === 0) return notFound();
 
@@ -98,7 +105,10 @@ export default async function EquipoPage(props) {
           <TeamArqueros players={allPlayers} />
         </div>
         <div className="max-w-xl grow overflow-x-auto">
-          <TeamRivals rivals={rivals.filter(r => r.matches > 2)} teamsMap={teamsMap} />
+          <TeamRivals
+            rivals={rivals.filter(r => r.matches > 2)}
+            teamsMap={teamsMap}
+          />
         </div>
       </div>
       <TeamMatches matches={matches} teamname={teamName} />

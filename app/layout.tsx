@@ -12,8 +12,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { SessionProvider } from "next-auth/react";
 import { TeamsProvider } from "../context/TeamsContext";
-import { getTeams } from "../lib/getFromDB";
-import { buildTeamsMap } from "../utils/Utils";
+import { getTeamsMap } from "../lib/getFromDB";
 import { connection } from "next/server";
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -46,7 +45,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   await connection();
-  const initialTeamsMap = buildTeamsMap(await getTeams());
+  const initialTeamsMap = await getTeamsMap();
   return (
     <html lang="es">
       <body className="bg-neutral-50 dark:bg-neutral-950 dark:text-white">

@@ -2,7 +2,7 @@ import { cache } from "react";
 import clientPromise from "./mongodb";
 import { ObjectId } from "mongodb";
 import { Match, Player } from "../types";
-import { temporadaActual } from "../utils/Utils";
+import { buildTeamsMap, temporadaActual } from "../utils/Utils";
 import player from "./aggregations/player";
 import playerPositions from "./aggregations/playerPositions";
 import playerScoredTeams from "./aggregations/playerScoredTeams";
@@ -496,6 +496,11 @@ export const getTeams = cache(async (): Promise<TeamDoc[]> => {
     return [];
   }
 });
+
+export async function getTeamsMap(): Promise<Record<string, TeamDoc>> {
+  const teams = await getTeams();
+  return buildTeamsMap(teams);
+}
 
 export async function teamNameExists(name: string): Promise<boolean> {
   const client = await clientPromise;

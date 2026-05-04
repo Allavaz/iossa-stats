@@ -10,10 +10,9 @@ import {
   getTop10Interceptions,
   getTop10Rusticos,
   getTop10Saves,
-  getTeams
+  getTeamsMap
 } from "../../../lib/getFromDB";
 import {
-  buildTeamsMap,
   getAllQueries,
   getCategory,
   getTemporada,
@@ -40,15 +39,14 @@ export default async function Top10(props) {
 
   const category = getCategory(id);
   const temporada = getTemporada(id);
-  const [goleadores, asistidores, rusticos, arqueros, intercepciones, teamsData] = await Promise.all([
+  const [goleadores, asistidores, rusticos, arqueros, intercepciones, teamsMap] = await Promise.all([
     getTop10Goals(id),
     getTop10Assists(id),
     getTop10Rusticos(id),
     getTop10Saves(id),
     getTop10Interceptions(id),
-    getTeams()
+    getTeamsMap()
   ]);
-  const teamsMap = buildTeamsMap(teamsData);
 
   return (
     <div className="flex flex-col gap-y-4">

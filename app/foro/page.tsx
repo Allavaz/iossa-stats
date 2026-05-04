@@ -1,15 +1,13 @@
 import { auth } from "@/auth";
 import Card from "@/components/ui/card";
 import { getMessages, getPageCount } from "@/lib/forum";
-import { getTeams } from "@/lib/getFromDB";
-import { buildTeamsMap, getTeamLogo } from "@/utils/Utils";
+import { getTeamsMap } from "@/lib/getFromDB";
+import { getTeamLogo } from "@/utils/Utils";
 import Form from "./form";
 import Title from "@/components/ui/title";
 import Button from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import Vote from "./vote";
-import { getTeams } from "@/lib/getFromDB";
-import { buildTeamsMap } from "@/utils/Utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,15 +17,12 @@ export const metadata: Metadata = {
 export default async function Foro(props) {
   const searchParams = await props.searchParams;
   const session = await auth();
-  const [pageCount, messages, teamsData] = await Promise.all([
+  const [pageCount, messages, teamsMap] = await Promise.all([
     getPageCount(),
     getMessages(parseInt(searchParams.page || 1)),
-    getTeams()
+    getTeamsMap()
   ]);
-  const teamsMap = buildTeamsMap(teamsData);
   const currentPage = parseInt(searchParams.page || 1);
-  const teamData = await getTeams();
-  const teamsMap = buildTeamsMap(teamData);
 
   if (
     (pageCount && currentPage > pageCount) ||

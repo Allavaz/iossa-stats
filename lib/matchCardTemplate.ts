@@ -1,7 +1,7 @@
-import { buildTeamsMap, fecha, getTeamLogo } from "../utils/Utils";
+import { fecha, getTeamLogo } from "../utils/Utils";
 import { readFileSync } from "fs";
 import path from "path";
-import { getTeams } from "./getFromDB";
+import { getTeamsMap } from "./getFromDB";
 const publicPath = path.resolve("./public");
 
 function getGoalEvents(data, side) {
@@ -66,8 +66,7 @@ function getGoalEvents(data, side) {
 
 export default async function matchCardTemplate(data) {
   try {
-    const teams = await getTeams();
-    const teamsMap = buildTeamsMap(teams);
+    const teamsMap = await getTeamsMap();
     const homeGoals = getGoalEvents(data.matchevents, "home");
     const awayGoals = getGoalEvents(data.matchevents, "away");
     const homeLogo = getTeamLogo(data.teams[0].teamname, teamsMap);
