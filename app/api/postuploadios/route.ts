@@ -4,7 +4,9 @@ import createMatchCard from "../../../lib/createMatchCard";
 import discordPostMatch from "../../../lib/discordPostMatch";
 
 export async function POST(request: Request) {
+  console.log("(postuploadios) Received POST request");
   const body = await request.json();
+  console.log("(postuploadios) Request body: ", body);
   const strArr = body.access_token?.split("&", 2);
   if (strArr?.length === 2) {
     if (strArr[0] == process.env.KEY) {
