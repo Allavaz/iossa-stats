@@ -1,9 +1,11 @@
 "use client";
 
-import { percentage } from "../../../utils/Utils";
+import { getTeamLogo, percentage } from "../../../utils/Utils";
 import Table from "../../../components/ui/table";
+import { useTeamsMap } from "../../../context/TeamsContext";
 
 export default function MatchTeamStats({ match }) {
+  const teamsMap = useTeamsMap();
   const baseObject = i => match.teams[i].statistics;
   const rows = [
     {
@@ -60,7 +62,7 @@ export default function MatchTeamStats({ match }) {
               <img
                 className="h-6"
                 alt={match.teams[0].teamname}
-                src={match.teams[0].teamLogo}
+                src={getTeamLogo(match.teams[0].teamname, teamsMap)}
               />
             </div>
           </Table.HeaderCell>
@@ -70,7 +72,7 @@ export default function MatchTeamStats({ match }) {
               <img
                 className="h-6"
                 alt={match.teams[1].teamname}
-                src={match.teams[1].teamLogo}
+                src={getTeamLogo(match.teams[1].teamname, teamsMap)}
               />
             </div>
           </Table.HeaderCell>

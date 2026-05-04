@@ -98,7 +98,7 @@ export default async function EquipoPage(props) {
           <TeamArqueros players={allPlayers} />
         </div>
         <div className="max-w-xl grow overflow-x-auto">
-          <TeamRivals rivals={rivals.filter(r => r.matches > 2)} />
+          <TeamRivals rivals={rivals.filter(r => r.matches > 2)} teamsMap={teamsMap} />
         </div>
       </div>
       <TeamMatches matches={matches} teamname={teamName} />

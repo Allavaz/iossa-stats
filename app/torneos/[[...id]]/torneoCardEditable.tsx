@@ -3,6 +3,7 @@
 import Card from "../../../components/ui/card";
 import Title from "../../../components/ui/title";
 import { getTeamLogo, getTournamentIcon } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -12,11 +13,11 @@ import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function TorneoCardEditable({
-  tournamentLabel,
+  torneoLabel,
   temporada,
-  winners,
-  teamsMap
+  winners
 }) {
+  const teamsMap = useTeamsMap();
   const [winner, setWinner] = useState(winners?.firstPlace || "Agregar equipo");
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export default function TorneoCardEditable({
 
   const updateChampion = async () => {
     setLoading(true);
-    const torneo = tournamentLabel + " " + temporada.toUpperCase();
+    const torneo = torneoLabel + " " + temporada.toUpperCase();
     axios
       .post("/api/champion", {
         torneo,
@@ -44,7 +45,7 @@ export default function TorneoCardEditable({
 
   const deleteChampion = async () => {
     setLoading(true);
-    const torneo = tournamentLabel + " " + temporada.toUpperCase();
+    const torneo = torneoLabel + " " + temporada.toUpperCase();
     axios
       .delete("/api/champion", {
         data: {
@@ -67,19 +68,19 @@ export default function TorneoCardEditable({
       <div className="flex flex-col items-center justify-evenly gap-4 sm:flex-row">
         <div className="flex flex-col items-center justify-center gap-4">
           <img
-            src={getTournamentIcon(tournamentLabel)}
-            alt={tournamentLabel}
+            src={getTournamentIcon(torneoLabel)}
+            alt={torneoLabel}
             className="w-[128px]"
           />
           <Title>
-            {tournamentLabel} - Temporada {temporada.replace("t", "")}
+            {torneoLabel} - Temporada {temporada.replace("t", "")}
           </Title>
         </div>
         <div className="flex flex-col items-center gap-2">
           <img src={getTeamLogo(winner, teamsMap)} alt={winner} />
           {editing || !winner ? (
             <div className="flex flex-col items-center gap-4">
-              <AutocompleteTeams defaultValue={winner} setValue={setWinner} teamsMap={teamsMap} />
+              <AutocompleteTeams defaultValue={winner} setValue={setWinner} />
               <div className="flex gap-2 text-sm">
                 <Button
                   onClick={_ => updateChampion()}

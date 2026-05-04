@@ -111,8 +111,6 @@ export interface MatchTeam {
   result: -1 | 0 | 1;
   statistics: MatchTeamStats;
   playerStatistics: MatchPlayer[];
-  teamLogo?: string;
-  shortname?: string;
 }
 
 export interface MatchEvent {

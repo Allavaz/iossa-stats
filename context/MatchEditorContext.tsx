@@ -2,7 +2,6 @@
 
 import { createContext, useContext, ReactNode } from "react";
 import { Match, MatchEvent, MatchPlayer, Player } from "../types";
-import { TeamsMap } from "../utils/Utils";
 
 interface MatchEditorContextValue {
   match: Match;
@@ -12,7 +11,6 @@ interface MatchEditorContextValue {
   loading: boolean;
   create: boolean;
   disableUndo: boolean;
-  teamsMap: TeamsMap;
   changeTorneo: (torneo: string) => void;
   changeDate: (date: string) => void;
   changeTeam: (newName: string, side: "home" | "away") => void;
@@ -24,7 +22,11 @@ interface MatchEditorContextValue {
     index: number,
     oldsteamid: string
   ) => void;
-  removePlayer: (player: MatchPlayer, side: "home" | "away", index: number) => void;
+  removePlayer: (
+    player: MatchPlayer,
+    side: "home" | "away",
+    index: number
+  ) => void;
   changeVod: (vod: string) => void;
   updateMatch: () => void;
   deleteMatch: () => void;

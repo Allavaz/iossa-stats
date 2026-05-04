@@ -1,6 +1,8 @@
 import { auth } from "@/auth";
 import Card from "@/components/ui/card";
 import { getMessages, getPageCount } from "@/lib/forum";
+import { getTeams } from "@/lib/getFromDB";
+import { buildTeamsMap, getTeamLogo } from "@/utils/Utils";
 import Form from "./form";
 import Title from "@/components/ui/title";
 import Button from "@/components/ui/button";
@@ -17,10 +19,12 @@ export const metadata: Metadata = {
 export default async function Foro(props) {
   const searchParams = await props.searchParams;
   const session = await auth();
-  const [pageCount, messages] = await Promise.all([
+  const [pageCount, messages, teamsData] = await Promise.all([
     getPageCount(),
-    getMessages(parseInt(searchParams.page || 1))
+    getMessages(parseInt(searchParams.page || 1)),
+    getTeams()
   ]);
+  const teamsMap = buildTeamsMap(teamsData);
   const currentPage = parseInt(searchParams.page || 1);
   const teamData = await getTeams();
   const teamsMap = buildTeamsMap(teamData);
@@ -58,7 +62,11 @@ export default async function Foro(props) {
       <Card>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[auto_1fr] sm:gap-8">
           {messages.map(message => (
-            <Message key={message._id.toString()} message={message} />
+            <Message
+              key={message._id.toString()}
+              message={message}
+              teamsMap={teamsMap}
+            />
           ))}
           {!messages.length && (
             <div className="col-span-1 text-center font-bold sm:col-span-2">
@@ -71,14 +79,14 @@ export default async function Foro(props) {
   );
 }
 
-function Message({ message }) {
+function Message({ message, teamsMap }) {
   return (
     <>
       <div className="flex flex-col items-center gap-2">
         <div className="font-bold">{message.user}</div>
         <img
           className="h-[64px]"
-          src={message.teamLogo}
+          src={getTeamLogo(message.team, teamsMap)}
           alt={message.team}
           title={message.team}
         />

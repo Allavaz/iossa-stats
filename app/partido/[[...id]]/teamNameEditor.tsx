@@ -15,7 +15,6 @@ export default function TeamNameEditor(props) {
         defaultValue={props.teams[s].teamname}
         setValue={setValue}
         side={props.side}
-        teamsMap={props.teamsMap}
       />
       <div
         style={{

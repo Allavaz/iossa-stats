@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
-import { getMatch, getPlayers, getPositions, getTeams } from "../../../lib/getFromDB";
-import { buildTeamsMap } from "../../../utils/Utils";
+import { getMatch, getPlayers, getPositions } from "../../../lib/getFromDB";
 import Torneos from "../../../utils/Torneos.json";
 import MatchComponent from "./match";
 import MatchEditor from "./matchEditor";
@@ -54,8 +53,6 @@ async function getData(matchId: string) {
 export default async function MatchPage(props) {
   const params = await props.params;
   const { match, table, challonge } = await getData(params.id?.[0]);
-  const allTeams = await getTeams();
-  const teamsMap = buildTeamsMap(allTeams);
 
   if (params.id?.[1] === "edit" && await isAdmin()) {
     const players = await getPlayers("mini");
@@ -66,7 +63,6 @@ export default async function MatchPage(props) {
         create={false}
         table={table}
         challonge={challonge}
-        teamsMap={teamsMap}
       />
     );
   } else {

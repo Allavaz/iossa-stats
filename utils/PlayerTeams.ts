@@ -19,8 +19,6 @@ export default function PlayerTeams(steam_id: string, matches: Match[]) {
     if (teams.length === 0 || teams.at(-1).team !== player.info.team) {
       teams.push({
         team: player.info.team,
-        teamLogo: match.teams.find(t => t.teamname === player.info.team)
-          ?.teamLogo,
         firstMatch: match.fecha,
         lastMatch: match.fecha
       });

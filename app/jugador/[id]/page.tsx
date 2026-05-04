@@ -5,11 +5,12 @@ import {
   getPlayerPositions,
   getPlayerScoredTeams,
   getPlayerTournaments,
-  getTournamentPosition
+  getTournamentPosition,
+  getTeams
 } from "../../../lib/getFromDB";
 import { getSteamInfo } from "../../../lib/getFromSteam";
 import PlayerTeams from "../../../utils/PlayerTeams";
-import { temporadaActual } from "../../../utils/Utils";
+import { buildTeamsMap, temporadaActual } from "../../../utils/Utils";
 import PlayerCard from "./playerCard";
 import PlayerLigas from "./playerLigas";
 import PlayerMatches from "./playerMatches";
@@ -38,15 +39,18 @@ export default async function Jugador(props) {
     teamsMostScored,
     player,
     playerPositions,
-    playerTournaments
+    playerTournaments,
+    teamsData
   ] = await Promise.all([
     getPlayerMatches(steamid),
     getSteamInfo([steamid]),
     getPlayerScoredTeams(steamid),
     getPlayer(steamid, "all"),
     getPlayerPositions(steamid, temporadaActual()),
-    getPlayerTournaments(steamid)
+    getPlayerTournaments(steamid),
+    getTeams()
   ]);
+  const teamsMap = buildTeamsMap(teamsData);
 
   if (playerMatches.length === 0) notFound();
 
@@ -79,18 +83,20 @@ export default async function Jugador(props) {
         steamInfo={steamInfo[0]}
         playerPositions={playerPositions}
         playerMatches={playerMatches}
+        teamsMap={teamsMap}
       />
       <div className="flex flex-wrap justify-center gap-4">
         <div className="max-w-xl grow overflow-x-auto">
-          <PlayerTeamsTable teams={playerTeams} />
+          <PlayerTeamsTable teams={playerTeams} teamsMap={teamsMap} />
         </div>
         <div className="max-w-xl grow overflow-x-auto">
           <PlayerLigas
             tournaments={playerTournaments.filter(t => t.position)}
+            teamsMap={teamsMap}
           />
         </div>
         <div className="max-w-xl grow overflow-x-auto">
-          <PlayerMostScoredTeams teams={teamsMostScored} />
+          <PlayerMostScoredTeams teams={teamsMostScored} teamsMap={teamsMap} />
         </div>
       </div>
       <PlayerMatches matches={playerMatches} id={player.steamid} />

@@ -11,17 +11,19 @@ import DefaultIndicator from "../../../components/defaultIndicator";
 import Button from "../../../components/ui/button";
 import Card from "../../../components/ui/card";
 import Modal from "../../../components/ui/modal";
-import { Event, MatchEvent } from "../../../types";
-import { fecha } from "../../../utils/Utils";
-import { useMatchEditor } from "../../../context/MatchEditorContext";
+import { Event, Match, MatchEvent, Player } from "../../../types";
+import { fecha, getTeamLogo, getTeamShortname } from "../../../utils/Utils";
+import { useTeamsMap } from "../../../context/TeamsContext";
 import DateTimeEditor from "./dateTimeEditor";
 import MatchEventEditable from "./matchEventEditable";
 import MatchEventEditor from "./matchEventEditor";
 import ScoreEditor from "./scoreEditor";
 import TeamNameEditor from "./teamNameEditor";
 import TorneoEditor from "./torneoEditor";
+import { useMatchEditor } from "@/context/MatchEditorContext";
 
 export default function MatchCardEditor() {
+  const teamsMap = useTeamsMap();
   const {
     match: data,
     editing,
@@ -29,7 +31,6 @@ export default function MatchCardEditor() {
     loading,
     create,
     disableUndo,
-    teamsMap,
     changeTorneo,
     changeDate,
     changeTeam,
@@ -256,7 +257,6 @@ export default function MatchCardEditor() {
                   side="home"
                   onChangeTeam={onChangeTeam}
                   setEditing={setEditing}
-                  teamsMap={teamsMap}
                 />
               ) : (
                 <div>
@@ -267,7 +267,9 @@ export default function MatchCardEditor() {
                     <span className="hidden sm:inline">
                       {data.teams[0].teamname}
                     </span>
-                    <span className="sm:hidden">{data.teams[0].shortname}</span>{" "}
+                    <span className="sm:hidden">
+                      {getTeamShortname(data.teams[0].teamname, teamsMap)}
+                    </span>{" "}
                   </Link>
                   <FontAwesomeIcon
                     className="cursor-pointer sm:font-heading sm:text-2xl"
@@ -308,7 +310,6 @@ export default function MatchCardEditor() {
                   side="away"
                   onChangeTeam={onChangeTeam}
                   setEditing={setEditing}
-                  teamsMap={teamsMap}
                 />
               ) : (
                 <div>
@@ -319,8 +320,9 @@ export default function MatchCardEditor() {
                     <span className="hidden sm:inline">
                       {data.teams[1].teamname}
                     </span>
-                    <span className="sm:hidden">{data.teams[1].shortname}</span>{" "}
-                    <span></span>
+                    <span className="sm:hidden">
+                      {getTeamShortname(data.teams[1].teamname, teamsMap)}
+                    </span>{" "}
                   </Link>
                   <FontAwesomeIcon
                     className="cursor-pointer sm:font-heading sm:text-2xl"
@@ -339,7 +341,7 @@ export default function MatchCardEditor() {
                 <Link href={`/equipo/${data.teams[0].teamname}`}>
                   <img
                     alt={data.teams[0].teamname}
-                    src={data.teams[0].teamLogo}
+                    src={getTeamLogo(data.teams[0].teamname, teamsMap)}
                   />
                 </Link>
               </div>
@@ -376,7 +378,7 @@ export default function MatchCardEditor() {
                 <Link href={`/equipo/${data.teams[1].teamname}`}>
                   <img
                     alt={data.teams[1].teamname}
-                    src={data.teams[1].teamLogo}
+                    src={getTeamLogo(data.teams[1].teamname, teamsMap)}
                   />
                 </Link>
               </div>

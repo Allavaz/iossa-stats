@@ -26,8 +26,7 @@ export default function MatchEditor({
   players,
   table,
   challonge,
-  create,
-  teamsMap
+  create
 }) {
   const router = useRouter();
   const [editableMatch, setEditableMatch] = useState(
@@ -103,7 +102,6 @@ export default function MatchEditor({
     setEditableMatch(prevState => {
       let data = JSON.parse(JSON.stringify(prevState.at(-1)));
       data.teams[s].teamname = newName;
-      data.teams[s].teamLogo = getTeamLogo(newName, teamsMap);
       for (let i in data.teams[s].playerStatistics) {
         data.teams[s].playerStatistics[i].info.team = newName;
         for (let j in data.players) {
@@ -632,7 +630,6 @@ export default function MatchEditor({
           loading,
           create,
           disableUndo: editableMatch.length < 2,
-          teamsMap,
           changeTorneo,
           changeDate,
           changeTeam,
