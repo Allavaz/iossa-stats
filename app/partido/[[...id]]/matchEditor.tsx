@@ -16,10 +16,10 @@ import MatchIndividualStatsEditable from "./matchIndividualStatsEditable";
 import MatchCardEditor from "./matchCardEditor";
 import Title from "../../../components/ui/title";
 import Challonge from "../../../components/challonge";
-import Vod from "./vod";
 import VodEditor from "./vodEditor";
 import MatchTeamStats from "./matchTeamStats";
 import { MatchEditorProvider } from "../../../context/MatchEditorContext";
+import VodEditable from "./vodEditable";
 
 export default function MatchEditor({
   match,
@@ -675,7 +675,9 @@ export default function MatchEditor({
           </div>
           <MatchIndividualStatsEditable side="home" />
           <MatchIndividualStatsEditable side="away" />
-          {currentMatch.vod && editing !== "vod" && <Vod editable />}
+          {currentMatch.vod && editing !== "vod" && (
+            <VodEditable vod={currentMatch.vod} />
+          )}
           {(currentMatch.vod === null || editing === "vod") && <VodEditor />}
         </div>
       </MatchEditorProvider>
