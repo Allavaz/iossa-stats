@@ -335,7 +335,6 @@ export function buildBlankMatch(): Match {
     teams: [
       {
         teamname: "Local",
-        teamLogo: "/logo-iosoccer-128.png",
         side: "home",
         score: 0,
         scorereceived: 0,
@@ -373,7 +372,6 @@ export function buildBlankMatch(): Match {
       },
       {
         teamname: "Visitante",
-        teamLogo: "/logo-iosoccer-128.png",
         side: "away",
         score: 0,
         scorereceived: 0,
