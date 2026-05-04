@@ -4,7 +4,7 @@ import uploadMatch from "../../../lib/uploadMatch";
 import { isAdmin } from "../../../auth";
 
 export async function POST(request: Request) {
-  if (!await isAdmin()) return new Response("Unauthorized", { status: 401 });
+  if (!(await isAdmin())) return new Response("Unauthorized", { status: 401 });
   const body = await request.json();
   try {
     const data = await uploadMatch(body.data);
