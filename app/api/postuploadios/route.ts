@@ -4,12 +4,7 @@ import createMatchCard from "../../../lib/createMatchCard";
 import discordPostMatch from "../../../lib/discordPostMatch";
 
 export async function POST(request: Request) {
-  let body: any;
-  try {
-    body = await request.json();
-  } catch (e) {
-    return new Response("Error parsing JSON body");
-  }
+  const body = await request.json();
   const strArr = body.access_token?.split("&", 2);
   if (strArr?.length === 2) {
     if (strArr[0] == process.env.KEY) {
@@ -21,9 +16,11 @@ export async function POST(request: Request) {
       }).then(() => discordPostMatch(data));
       return new Response("Success!");
     } else {
+      console.error("(postuploadios) Wrong password attempted: " + strArr[0]);
       return new Response("Wrong password");
     }
   } else {
+    console.error("(postuploadios) Invalid request body");
     return new Response("Wrong body");
   }
 }
