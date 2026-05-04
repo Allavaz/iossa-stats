@@ -14,6 +14,7 @@ export async function POST(request: Request) {
         ...data,
         fecha: data.fecha.toISOString()
       }).then(() => discordPostMatch(data));
+      console.log("(postuploadios) Match uploaded successfully: " + data.id);
       return new Response("Success!");
     } else {
       console.error("(postuploadios) Wrong password attempted: " + strArr[0]);
