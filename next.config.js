@@ -5,7 +5,6 @@ module.exports = {
   }
 };
 
-
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
@@ -42,7 +41,7 @@ module.exports = withSentryConfig(module.exports, {
     // Tree-shaking options for reducing bundle size
     treeshake: {
       // Automatically tree-shake Sentry logger statements to reduce bundle size
-      removeDebugLogging: true,
-    },
-  },
+      removeDebugLogging: true
+    }
+  }
 });
