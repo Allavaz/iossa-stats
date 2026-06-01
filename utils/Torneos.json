@@ -298,6 +298,29 @@
         "torneo": "Liga D3 T16",
         "query": "d3t16",
         "tabla": "d3t16"
+      },
+      {
+        "torneo": "Copa Maradei T16",
+        "query": "maradeit16"
+      },
+      {
+        "torneo": "Copa Maradei T16 - Grupo A",
+        "tabla": "maradeit16a"
+      },
+      {
+        "torneo": "Copa Maradei T16 - Grupo B",
+        "tabla": "maradeit16b"
+      },
+      {
+        "torneo": "Copa Maradei T16 - Grupo C",
+        "tabla": "maradeit16c"
+      },
+      {
+        "torneo": "Copa Maradei T16 - Grupo D",
+        "tabla": "maradeit16d"
+      },
+      {
+        "torneo": "Copa Maradei T16 - Eliminatorias"
       }
     ]
   },
