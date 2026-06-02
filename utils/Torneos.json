@@ -277,6 +277,29 @@
         "torneo": "Copa valencARc T17",
         "query": "cvt17",
         "challonge": "xmorono3"
+      },
+      {
+        "torneo": "Copa Maradei T17",
+        "query": "maradeit17"
+      },
+      {
+        "torneo": "Copa Maradei T17 - Grupo A",
+        "tabla": "maradeit17a"
+      },
+      {
+        "torneo": "Copa Maradei T17 - Grupo B",
+        "tabla": "maradeit17b"
+      },
+      {
+        "torneo": "Copa Maradei T17 - Grupo C",
+        "tabla": "maradeit17c"
+      },
+      {
+        "torneo": "Copa Maradei T17 - Grupo D",
+        "tabla": "maradeit17d"
+      },
+      {
+        "torneo": "Copa Maradei T17 - Eliminatorias"
       }
     ]
   },
@@ -298,29 +321,6 @@
         "torneo": "Liga D3 T16",
         "query": "d3t16",
         "tabla": "d3t16"
-      },
-      {
-        "torneo": "Copa Maradei T16",
-        "query": "maradeit16"
-      },
-      {
-        "torneo": "Copa Maradei T16 - Grupo A",
-        "tabla": "maradeit16a"
-      },
-      {
-        "torneo": "Copa Maradei T16 - Grupo B",
-        "tabla": "maradeit16b"
-      },
-      {
-        "torneo": "Copa Maradei T16 - Grupo C",
-        "tabla": "maradeit16c"
-      },
-      {
-        "torneo": "Copa Maradei T16 - Grupo D",
-        "tabla": "maradeit16d"
-      },
-      {
-        "torneo": "Copa Maradei T16 - Eliminatorias"
       }
     ]
   },
