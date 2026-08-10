@@ -65,7 +65,7 @@ AUTH_SECRET
 
 ### Deployment
 
-GitHub Actions (`.github/workflows/deploy.yaml`) builds on CI and SCPs the compiled `.next/`, `public/`, and `package.json` to a VPS, then restarts the `iossa-stats` systemd service. The VPS does not build — only the CI runner does.
+GitHub Actions (`.github/workflows/deploy.yaml`) builds on CI and SCPs the compiled `.next/`, `public/`, and `package.json` to my VPS (which you can access by doing `ssh vps`), then restarts the `iossa-stats` systemd service. The VPS does not build — only the CI runner does.
 
 ### Patterns & Conventions
 
