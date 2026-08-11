@@ -261,13 +261,13 @@ export async function getPlayer(steam_id: string, arg: string) {
       const o_id = new ObjectId(arg);
       let docs = await db
         .collection(process.env.DB_COLLECTION)
-        .aggregate([{ $match: { _id: o_id } }, ...player(steam_id)])
+        .aggregate(player(steam_id, { _id: o_id }))
         .toArray();
       return docs[0];
     } else {
       let docs = await db
         .collection(process.env.DB_COLLECTION)
-        .aggregate([{ $match: queries(arg) }, ...player(steam_id)])
+        .aggregate(player(steam_id, queries(arg)))
         .toArray();
       return docs[0];
     }
