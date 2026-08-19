@@ -76,6 +76,9 @@ export default function IndividualStats(props: Props) {
     columnHelper.accessor("secondassists", {
       header: () => "Segundas asistencias"
     }),
+    columnHelper.accessor("expectedgoals", {
+      header: () => "Goles esperados"
+    }),
     columnHelper.accessor("shots", {
       header: () => "Tiros (al arco)",
       cell: info => `${info.getValue()} (${info.row.original.shotsontarget})`

@@ -139,6 +139,10 @@ export default function MatchIndividualStatsEditable({
       id: "secondassists",
       header: "Segundas asistencias"
     }),
+    columnHelper.accessor(row => row.statistics.expectedgoals, {
+      id: "expectedgoals",
+      header: "Goles esperados"
+    }),
     columnHelper.accessor(row => row.statistics.shots, {
       id: "shots",
       header: "Tiros (al arco)",
@@ -283,11 +287,7 @@ export default function MatchIndividualStatsEditable({
         editing.side === side ? (
           <Modal>
             <MatchIndivStatsEditor
-              player={
-                editing.new
-                  ? newItem()
-                  : players[editing.player]
-              }
+              player={editing.new ? newItem() : players[editing.player]}
               team={teamName}
               players={playersAutocomplete}
               onChangeIndivStats={onChangeIndivStats}

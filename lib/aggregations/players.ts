@@ -169,6 +169,9 @@ export default function players(arg) {
         },
         secondassists: {
           $sum: "$players.statistics.secondassists"
+        },
+        expectedgoals: {
+          $sum: "$players.statistics.expectedgoals"
         }
       }
     },

@@ -30,6 +30,7 @@ export interface PlayerStatistics {
   keypasses: number;
   chancescreated: number;
   secondassists: number;
+  expectedgoals: number;
   positions: {
     position: string;
     seconds: number;
@@ -64,6 +65,7 @@ export interface MatchTeamStats {
   keypasses: number;
   chancescreated: number;
   secondassists: number;
+  expectedgoals: number;
 }
 
 export interface Player extends PlayerStatistics {

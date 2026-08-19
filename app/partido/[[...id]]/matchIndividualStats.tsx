@@ -44,6 +44,10 @@ export default function MatchIndividualStats(props) {
       id: "secondassists",
       header: "Segundas asistencias"
     }),
+    columnHelper.accessor(row => row.statistics.expectedgoals, {
+      id: "expectedgoals",
+      header: "Goles esperados"
+    }),
     columnHelper.accessor(row => row.statistics.shots, {
       id: "shots",
       header: "Tiros (al arco)",

@@ -202,6 +202,7 @@ export default function MatchEditor({
     const statFields = [
       "assists",
       "secondassists",
+      "expectedgoals",
       "shots",
       "shotsontarget",
       "fouls",
@@ -262,6 +263,7 @@ export default function MatchEditor({
       p.statistics.redcards = 0;
       p.statistics.assists = 0;
       p.statistics.secondassists = 0;
+      p.statistics.expectedgoals = 0;
     };
 
     for (const p of homePlayerStatistics) resetStats(p);
@@ -361,7 +363,8 @@ export default function MatchEditor({
         yellowcards: 0,
         redcards: 0,
         assists: 0,
-        secondassists: 0
+        secondassists: 0,
+        expectedgoals: 0
       }
     );
 

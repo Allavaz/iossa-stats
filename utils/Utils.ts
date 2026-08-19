@@ -366,7 +366,8 @@ export function buildBlankMatch(): Match {
           goalkicks: 0,
           keypasses: 0,
           chancescreated: 0,
-          secondassists: 0
+          secondassists: 0,
+          expectedgoals: 0
         },
         playerStatistics: []
       },
@@ -403,7 +404,8 @@ export function buildBlankMatch(): Match {
           goalkicks: 0,
           keypasses: 0,
           chancescreated: 0,
-          secondassists: 0
+          secondassists: 0,
+          expectedgoals: 0
         },
         playerStatistics: []
       }

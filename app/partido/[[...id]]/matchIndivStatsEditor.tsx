@@ -493,6 +493,10 @@ export default function MatchIndivStatsEditor(props) {
       value: () => props.player.statistics.secondassists
     },
     {
+      id: "expectedgoals",
+      value: () => props.player.statistics.expectedgoals
+    },
+    {
       id: "chancescreated",
       value: () =>
         props.player.statistics.assists +
