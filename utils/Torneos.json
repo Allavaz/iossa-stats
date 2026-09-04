@@ -251,6 +251,39 @@
     ]
   },
   {
+    "temporada": "t18",
+    "titulo": "Temporada 18",
+    "torneos": [
+      {
+        "torneo": "Liga D1 T18",
+        "query": "d1t18",
+        "tabla": "d1t18"
+      },
+      {
+        "torneo": "Liga D2 T18",
+        "query": "d2t18",
+        "tabla": "d2t18"
+      },
+      {
+        "torneo": "Liga D3 T18",
+        "query": "d3t18",
+        "tabla": "d3t18"
+      },
+      {
+        "torneo": "Copa Intrazonal de Oro T18",
+        "query": "izorot18"
+      },
+      {
+        "torneo": "Copa Intrazonal de Plata T18",
+        "query": "izplatat18"
+      },
+      {
+        "torneo": "Supercopa de Oro T18",
+        "query": "supercopaorot18"
+      }
+    ]
+  },
+  {
     "temporada": "t17",
     "titulo": "Temporada 17",
     "torneos": [
