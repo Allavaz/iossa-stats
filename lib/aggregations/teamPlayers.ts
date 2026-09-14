@@ -178,7 +178,7 @@ export default function teamPlayers(teamname: string, arg: any) {
           $sum: "$players.statistics.secondassists"
         },
         expectedgoals: {
-          $sum: "$players.statistics.expectedgoals"
+          $avg: "$players.statistics.expectedgoals"
         }
       }
     },

@@ -46,7 +46,8 @@ export default function MatchIndividualStats(props) {
     }),
     columnHelper.accessor(row => row.statistics.expectedgoals, {
       id: "expectedgoals",
-      header: "Goles esperados"
+      header: "Goles esperados",
+      cell: info => `${(info.getValue() / 100).toFixed(2)}`
     }),
     columnHelper.accessor(row => row.statistics.shots, {
       id: "shots",
