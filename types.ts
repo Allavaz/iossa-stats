@@ -103,6 +103,7 @@ export interface Match {
   teams: MatchTeam[];
   players: MatchPlayer[];
   matchevents: MatchEvent[];
+  raw?: any;
 }
 
 export interface MatchTeam {

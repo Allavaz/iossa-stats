@@ -65,7 +65,7 @@ export async function getMatches(id) {
   }
 }
 
-export async function getMatchesAPI(id) {
+export async function getMatchesAPI(id, includeRaw = false) {
   try {
     const client = await clientPromise;
     const db = client.db();
@@ -73,6 +73,7 @@ export async function getMatchesAPI(id) {
       .collection(process.env.DB_COLLECTION)
       .find(queries(id))
       .sort({ fecha: -1 })
+      .project(includeRaw ? {} : { raw: 0 })
       .toArray();
     return docs.map(doc => serializableMatch(doc));
   } catch (error) {
@@ -114,14 +115,17 @@ export async function getManyPositions(ids: string[]) {
   }
 }
 
-export async function getMatch(id: string) {
+export async function getMatch(id: string, includeRaw = false) {
   try {
     const client = await clientPromise;
     const db = client.db();
     const o_id = new ObjectId(id);
     let doc = await db
       .collection(process.env.DB_COLLECTION)
-      .findOne({ _id: o_id });
+      .findOne(
+        { _id: o_id },
+        includeRaw ? {} : { projection: { raw: 0 } }
+      );
     return serializableMatch(doc) as Match;
   } catch (e) {
     return null;
