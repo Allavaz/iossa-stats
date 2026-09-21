@@ -570,6 +570,9 @@ export default function MatchEditor({
               lastData.vod,
               file.name
             );
+            if (lastData._id) {
+              doc._id = lastData._id;
+            }
             setEditableMatch(old => [...old, doc]);
           });
         } catch (error) {
