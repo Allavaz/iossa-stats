@@ -26,7 +26,7 @@ npm run cache-manager  # Manage Steam profile cache (stats/cleanup/clear)
 - **Backend**: Next.js API routes + Server Actions, MongoDB (via aggregation pipelines)
 - **Auth**: NextAuth 5 with Discord OAuth
 - **External APIs**: Steam Web API (with local SQLite cache, 24hr TTL)
-- **Automation**: Puppeteer for match card image generation
+- **Automation**: `@vercel/og` (Satori) for match card image generation
 
 ### Data Flow
 
@@ -40,7 +40,7 @@ Client (React pages)
 
 ### Key Directories
 
-- **`/app/api`** — 13+ API endpoints. Match CRUD lives under `postupload`, `postdelete`, `postupdate`. Player/team queries are `jugador`, `jugadores`, `equipo`. `matchcard/[id]` generates shareable match images via Puppeteer.
+- **`/app/api`** — 13+ API endpoints. Match CRUD lives under `postupload`, `postdelete`, `postupdate`. Player/team queries are `jugador`, `jugadores`, `equipo`. `matchcard/[id]` generates shareable match images via `@vercel/og`.
 - **`/lib/aggregations`** — 21 MongoDB aggregation pipeline files. This is where all stats computation happens (standings, leaderboards, player totals). `queries.ts` builds the base `$match` filter for tournament/season/team filtering.
 - **`/lib/getFromDB.ts`** — Single entry point for all DB queries; imports aggregations and returns typed results.
 - **`/lib/steamCache.ts`** — SQLite-backed cache for Steam profile lookups to avoid hitting rate limits.
@@ -74,3 +74,13 @@ GitHub Actions (`.github/workflows/deploy.yaml`) builds on CI and SCPs the compi
 - **Server Actions** are used for forum vote mutations (configured in `next.config.js` for `iosoccer-sa.com` and `localhost`).
 - MongoDB results contain `ObjectId` and `Date` objects — serialize them to strings before passing to client components.
 - Statistics tracked per player span ~35+ fields (goals, assists, saves, cards, distance, possession %, etc.) — see `types.ts` for the full `Player` interface.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
