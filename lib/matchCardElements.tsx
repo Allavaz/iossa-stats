@@ -159,16 +159,37 @@ function estimateHeight(data: Match) {
   );
 }
 
+function normalizeMatchText(data: Match): Match {
+  return {
+    ...data,
+    torneo: data.torneo.normalize("NFC"),
+    teams: data.teams.map(team => ({
+      ...team,
+      teamname: team.teamname.normalize("NFC")
+    })),
+    matchevents: data.matchevents.map(event => ({
+      ...event,
+      name: event.name?.normalize("NFC"),
+      name2: event.name2?.normalize("NFC"),
+      name3: event.name3?.normalize("NFC")
+    }))
+  };
+}
+
 export async function buildMatchCard(data: Match) {
-  const height = estimateHeight(data);
-  const element = await buildMatchCardElement(data);
+  const normalized = normalizeMatchText(data);
+  const height = estimateHeight(normalized);
+  const element = await buildMatchCardElement(normalized);
   return { element, width: CARD_WIDTH, height };
 }
 
 async function buildMatchCardElement(data: Match) {
   const teamsMap = await getTeamsMap();
-  const homeLogo = getTeamLogo(data.teams[0].teamname, teamsMap);
-  const awayLogo = getTeamLogo(data.teams[1].teamname, teamsMap);
+  const normalizedTeamsMap = Object.fromEntries(
+    Object.entries(teamsMap).map(([name, team]) => [name.normalize("NFC"), team])
+  );
+  const homeLogo = getTeamLogo(data.teams[0].teamname, normalizedTeamsMap);
+  const awayLogo = getTeamLogo(data.teams[1].teamname, normalizedTeamsMap);
   const fallbackLogo = `data:image/png;base64,${readFileSync(
     path.join(publicPath, "logo-iosoccer-128.png")
   ).toString("base64")}`;
