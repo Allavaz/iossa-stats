@@ -122,10 +122,14 @@ function GoalList({
 }
 
 const BASE_HEIGHT = 260;
+const BOTTOM_MARGIN = 16;
 const GOAL_ROW_LINE_HEIGHT = 22;
 const GOAL_ROW_CHARS_PER_LINE = Math.floor((GOAL_COLUMN_WIDTH - 20) / 8);
 const TEAM_NAME_COLUMN_WIDTH = CARD_WIDTH / 3 - 8;
-const TEAM_NAME_CHARS_PER_LINE = Math.floor(TEAM_NAME_COLUMN_WIDTH / 14);
+// Conservative average char width for 24px bold Poppins so borderline
+// names (e.g. "Milwaukee Bucks") are predicted to wrap like they
+// actually render, rather than undershooting and clipping the margin.
+const TEAM_NAME_CHARS_PER_LINE = Math.floor(TEAM_NAME_COLUMN_WIDTH / 16);
 const TEAM_NAME_LINE_HEIGHT = 30;
 
 function estimatePlayerLines(name: string, secondsString: string) {
@@ -155,7 +159,8 @@ function estimateHeight(data: Match) {
   return (
     BASE_HEIGHT +
     estimateTeamNameExtraHeight(data) +
-    Math.max(homeHeight, awayHeight)
+    Math.max(homeHeight, awayHeight) +
+    BOTTOM_MARGIN
   );
 }
 
