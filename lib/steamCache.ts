@@ -1,4 +1,4 @@
-const Database = require("better-sqlite3");
+import { DatabaseSync } from "node:sqlite";
 import * as path from "path";
 
 interface SteamUserData {
@@ -9,7 +9,7 @@ interface SteamUserData {
 }
 
 class SteamCache {
-  private db: any;
+  private db: DatabaseSync;
   private static instance: SteamCache;
 
   // Cache entries expire after 24 hours (in milliseconds)
@@ -18,7 +18,7 @@ class SteamCache {
   private constructor() {
     // Create database in the project root
     const dbPath = path.join(process.cwd(), "steam_cache.db");
-    this.db = new Database(dbPath);
+    this.db = new DatabaseSync(dbPath);
     this.init();
   }
 
@@ -94,20 +94,21 @@ class SteamCache {
       VALUES (?, ?, ?, ?)
     `);
 
-    const transaction = this.db.transaction(
-      (users: Omit<SteamUserData, "lastUpdated">[]) => {
-        for (const user of users) {
-          insertStmt.run(
-            user.steamid,
-            user.personaname,
-            user.profilePicture,
-            now
-          );
-        }
+    this.db.exec("BEGIN");
+    try {
+      for (const user of users) {
+        insertStmt.run(
+          user.steamid,
+          user.personaname,
+          user.profilePicture,
+          now
+        );
       }
-    );
-
-    transaction(users);
+      this.db.exec("COMMIT");
+    } catch (e) {
+      this.db.exec("ROLLBACK");
+      throw e;
+    }
   }
 
   /**
@@ -119,7 +120,7 @@ class SteamCache {
       "DELETE FROM steam_users WHERE lastUpdated <= ?"
     );
     const result = stmt.run(cutoffTime);
-    return result.changes;
+    return Number(result.changes);
   }
 
   /**

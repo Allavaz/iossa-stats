@@ -15,8 +15,15 @@ export async function POST(request: Request) {
       createMatchCard({
         ...data,
         fecha: data.fecha.toISOString()
-      }).then(() => discordPostMatch(data));
-      console.log("(postuploadios) Match uploaded successfully: " + data.id);
+      }).catch((e) =>
+        console.error("(postuploadios) createMatchCard failed:", e)
+      );
+      discordPostMatch(data).catch((e) =>
+        console.error("(postuploadios) discordPostMatch failed:", e)
+      );
+      console.log(
+        "(postuploadios) Match uploaded successfully: " + data._id.toString()
+      );
       return new Response("Success!");
     } else {
       console.error("(postuploadios) Wrong password attempted: " + strArr[0]);

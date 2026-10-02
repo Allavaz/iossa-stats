@@ -11,7 +11,10 @@ export async function POST(request: Request) {
     createMatchCard({
       ...data,
       fecha: data.fecha.toISOString()
-    }).then(() => discordPostMatch(data));
+    }).catch((e) => console.error("(postupload) createMatchCard failed:", e));
+    discordPostMatch(data).catch((e) =>
+      console.error("(postupload) discordPostMatch failed:", e)
+    );
     return Response.json({ status: "Success!", id: data._id.toString() });
   } catch (e) {
     console.error(e);
