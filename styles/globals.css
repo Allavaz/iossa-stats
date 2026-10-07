@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @font-face {
   font-family: "Inter var";
@@ -12,6 +10,15 @@
   src: url("../public/fonts/Poppins-Bold.ttf");
   font-weight: bold;
 }
+
+@theme {
+  --font-sans: "Inter var", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", sans-serif;
+}
+
+@source "../app/**/*.{js,jsx,ts,tsx,mdx}";
+@source "../components/**/*.{js,jsx,ts,tsx,mdx}";
+@source "../utils/**/*.{js,jsx,ts,tsx,mdx}";
 
 .dark {
   color-scheme: dark;
