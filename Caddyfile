@@ -2,7 +2,7 @@ iosoccer-sa.com {
     reverse_proxy app:3000
 }
 
-cdn.yourdomain.com {
+cdn.iosoccer-sa.com {
     root * /srv/uploads
     file_server
 
