@@ -1,3 +1,14 @@
 iosoccer-sa.com {
     reverse_proxy app:3000
 }
+
+cdn.yourdomain.com {
+    root * /srv/uploads
+    file_server
+
+    header {
+        Cache-Control "public, max-age=31536000, immutable"
+        Access-Control-Allow-Origin *
+        X-Content-Type-Options nosniff
+    }
+}
