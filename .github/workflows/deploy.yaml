@@ -24,7 +24,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/allavaz/iossa-stats:latest
-            ghcr.io/allavaz/iossa-stats:latest:${{ github.sha }}
+            ghcr.io/allavaz/iossa-stats:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
