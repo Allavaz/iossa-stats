@@ -17,7 +17,7 @@ class SteamCache {
 
   private constructor() {
     // Create database in the project root
-    const dbPath = path.join(process.cwd(), "steam_cache.db");
+    const dbPath = "/tmp/steam_cache.db";
     this.db = new DatabaseSync(dbPath);
     this.init();
   }
