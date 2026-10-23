@@ -2,7 +2,8 @@ module.exports = {
   reactStrictMode: true,
   experimental: {
     serverActions: { allowedOrigins: ["iosoccer-sa.com", "localhost:3000"] }
-  }
+  },
+  output: "standalone"
 };
 
 // Injected content via Sentry wizard below

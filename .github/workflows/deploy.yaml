@@ -1,4 +1,4 @@
-name: CI/CD
+name: Build and deploy
 
 on:
   push:
@@ -7,73 +7,39 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
         with:
-          node-version: lts/*
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-artifact@v4
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
         with:
-          name: build-output
-          include-hidden-files: true
-          path: |
-            .next/
-            public/
-            package.json
-            package-lock.json
-          retention-days: 1
+          context: .
+          push: true
+          tags: |
+            ghcr.io/allavaz/iossa-stats:latest
+            ghcr.io/allavaz/iossa-stats:latest:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: build-output
-
-      - name: Get package.json changes
-        id: changes-package-json
-        uses: tj-actions/changed-files@v46
-        with:
-          since_last_remote_commit: true
-          files: package.json
-
-      - name: Copy build to VPS
-        uses: appleboy/scp-action@v0.1.7
+      - uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          source: ".next/,public/,package.json,package-lock.json"
-          target: ${{ secrets.PATH }}
-
-      - if: steps.changes-package-json.outputs.any_changed == 'true'
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ${{ secrets.PATH }}
-            npm ci --omit=dev
-            systemctl restart iossa-stats
-          debug: true
-
-      - if: steps.changes-package-json.outputs.any_changed == 'false'
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            systemctl restart iossa-stats
-          debug: true
+            cd ~/iossa-stats
+            docker compose pull app
+            docker compose up -d
+            docker image prune -f
