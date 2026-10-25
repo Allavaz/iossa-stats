@@ -40,6 +40,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/iossa-stats
+            git pull
             docker compose pull app
             docker compose up -d
             docker image prune -f
