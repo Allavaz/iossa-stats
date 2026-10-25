@@ -18,7 +18,7 @@
     "@opentelemetry/api-logs": "^0.216.0",
     "@opentelemetry/instrumentation": "^0.216.0",
     "@opentelemetry/sdk-logs": "^0.219.0",
-    "@sentry/nextjs": "^10.58.0",
+    "@sentry/nextjs": "^10.75.2",
     "@tailwindcss/postcss": "^4.3.3",
     "@tanstack/react-table": "^8.8.5",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
