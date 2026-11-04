@@ -271,11 +271,13 @@
       },
       {
         "torneo": "Copa Intrazonal de Oro T18",
-        "query": "izorot18"
+        "query": "izorot18",
+        "challonge": "7u6dflmd"
       },
       {
         "torneo": "Copa Intrazonal de Plata T18",
-        "query": "izplatat18"
+        "query": "izplatat18",
+        "challonge": "btpnm6h4"
       },
       {
         "torneo": "Supercopa de Oro T18",
